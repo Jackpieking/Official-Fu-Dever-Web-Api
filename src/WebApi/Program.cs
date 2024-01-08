@@ -1,10 +1,20 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using Persistence.SqlServer2016;
+
+// Custom settings.
+Console.OutputEncoding = Encoding.UTF8;
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args: args);
 
+var services = builder.Services;
+var configuration = builder.Configuration;
+
 // Add services to the container.
-builder.Services.AddControllers();
+services.AddPersistenceSqlServer2016(configuration: configuration);
 
 var app = builder.Build();
 

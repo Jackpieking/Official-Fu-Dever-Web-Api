@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <Trimming>full</Trimming>
   </PropertyGroup>
 
@@ -18,7 +18,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\OtherResouces\OtherResources.csproj" />
     <ProjectReference Include="..\Persistence.SqlServer2016\Persistence.SqlServer2016.csproj" />
+    <ProjectReference Include="..\BackgroundJob.HangFire\BackgroundJob.HangFire.csproj" />
   </ItemGroup>
 
 </Project>
