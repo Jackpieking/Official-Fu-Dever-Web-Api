@@ -15,7 +15,7 @@ using Domain.Specifications.Entities.UserJoiningStatus.Manager;
 using Domain.Specifications.Entities.UserPlatform.Manager;
 using Domain.Specifications.Entities.UserSkill.Manager;
 
-namespace Domain.Specifications.Others;
+namespace Domain.Specifications.Others.Interfaces;
 
 /// <summary>
 ///     Represent a factory contain all entity
