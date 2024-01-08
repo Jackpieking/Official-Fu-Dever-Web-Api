@@ -11,7 +11,7 @@ public interface IBlogSpecificationManager
     ///     Blog by author id specification.
     /// </summary>
     /// <param name="authorId">
-    ///     Author id to find blog having that.
+    ///     Author id to find blog.
     /// </param>
     /// <returns>
     ///     Specification.

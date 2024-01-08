@@ -23,7 +23,7 @@ public interface IHobbySpecificationManager
     IHobbyTemporarilyRemovedSpecification HobbyTemporarilyRemovedSpecification { get; }
 
     /// <summary>
-    ///     Hobby by id specification.
+    ///     Hobby by hobby id specification.
     /// </summary>
     /// <param name="hobbyId">
     ///     Hobby id for finding hobby.
@@ -34,7 +34,7 @@ public interface IHobbySpecificationManager
     IHobbyByIdSpecification HobbyByIdSpecification(Guid hobbyId);
 
     /// <summary>
-    ///     Hobby by name specification.
+    ///     Hobby by hobby name specification.
     /// </summary>
     /// <param name="hobbyName">
     ///     Hobby name for finding hobby.
@@ -50,7 +50,7 @@ public interface IHobbySpecificationManager
         bool isCaseSensitive);
 
     /// <summary>
-    ///     Select field from hobby table specification.
+    ///     Select field from "Hobbies" table specification.
     /// </summary>
     ISelectFieldsFromHobbySpecification SelectFieldsFromHobbySpecification { get; }
 }

@@ -23,12 +23,12 @@ public interface IDepartmentSpecificationManager
     IDepartmentTemporarilyRemovedSpecification DepartmentTemporarilyRemovedSpecification { get; }
 
     /// <summary>
-    ///     Select field from department table specification.
+    ///     Select field from "Departments" table specification.
     /// </summary>
     ISelectFieldsFromDepartmentSpecification SelectFieldsFromDepartmentSpecification { get; }
 
     /// <summary>
-    ///     Department by id specification
+    ///     Department by department id specification
     /// </summary>
     /// <param name="departmentId">
     ///     Department id for finding department.
@@ -39,7 +39,7 @@ public interface IDepartmentSpecificationManager
     IDepartmentByIdSpecification DepartmentByIdSpecification(Guid departmentId);
 
     /// <summary>
-    ///     Department by name specification.
+    ///     Department by department name specification.
     /// </summary>
     /// <param name="departmentName">
     ///     Department name for finding department.

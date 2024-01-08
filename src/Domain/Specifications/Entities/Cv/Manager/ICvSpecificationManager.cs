@@ -8,10 +8,10 @@ namespace Domain.Specifications.Entities.Cv.Manager;
 public interface ICvSpecificationManager
 {
     /// <summary>
-    ///     Cv by email specification.
+    ///     Cv by student email specification.
     /// </summary>
     /// <param name="email">
-    ///     Email for finding cv.
+    ///     Student email for finding cv.
     /// </param>
     /// <returns>
     ///     Specification.
@@ -30,7 +30,7 @@ public interface ICvSpecificationManager
     ICvByStudentIdSpecification CvByStudentIdSpecification(string studentId);
 
     /// <summary>
-    ///     Cv by id specification.
+    ///     Cv by cv id specification.
     /// </summary>
     /// <param name="cvId">
     ///     Cv id for finding cv.
@@ -46,7 +46,7 @@ public interface ICvSpecificationManager
     ICvAsNoTrackingSpecification CvAsNoTrackingSpecification { get; }
 
     /// <summary>
-    ///     Select field from cv table specification
+    ///     Select field from "Cvs" table specification
     /// </summary>
     ISelectFieldsFromCvSpecification SelectFieldsFromCvSpecification { get; }
 }
