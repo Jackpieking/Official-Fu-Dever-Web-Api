@@ -7,5 +7,7 @@ namespace Domain.Specifications.Entities.RefreshToken;
 /// </summary>
 public interface ISelectFieldsFromRefreshTokenSpecification : IBaseSpecification<Domain.Entities.RefreshToken>
 {
+    ISelectFieldsFromRefreshTokenSpecification Ver1();
 
+    ISelectFieldsFromRefreshTokenSpecification Ver2();
 }

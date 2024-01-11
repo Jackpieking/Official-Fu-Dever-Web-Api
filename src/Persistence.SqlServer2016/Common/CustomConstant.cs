@@ -2,26 +2,29 @@ using System;
 
 namespace Persistence.SqlServer2016.Common;
 
-public static class CustomConstant
+/// <summary>
+///     Represent set of constant.
+/// </summary>
+internal static class CustomConstant
 {
-    public static class DbDataType
+    internal static class DbDataType
     {
-        public const string DATETIME = "DATETIME";
+        internal const string DATETIME = "DATETIME";
 
-        public const string NVARCHAR_MAX = "NVARCHAR(MAX)";
+        internal const string NVARCHAR_MAX = "NVARCHAR(MAX)";
 
-        public const string NVARCHAR_100 = "NVARCHAR(100)";
+        internal const string NVARCHAR_100 = "NVARCHAR(100)";
 
-        public const string NVARCHAR_200 = "NVARCHAR(100)";
+        internal const string NVARCHAR_200 = "NVARCHAR(100)";
 
-        public const string NVARCHAR_50 = "NVARCHAR(50)";
+        internal const string NVARCHAR_50 = "NVARCHAR(50)";
 
-        public const string NVARCHAR_30 = "NVARCHAR(30)";
+        internal const string NVARCHAR_30 = "NVARCHAR(30)";
     }
 
-    public static class DbDefaultValue
+    internal static class DbDefaultValue
     {
-        public static readonly DateTime MinDateTime = new(
+        internal static readonly DateTime MIN_DATE_TIME = new(
             year: 1753,
             month: 1,
             day: 1,
@@ -29,5 +32,10 @@ public static class CustomConstant
             minute: 0,
             second: 0,
             kind: DateTimeKind.Utc);
+    }
+
+    internal static class DbCollation
+    {
+        internal const string SQL_LATIN1_GENERAL_CP1_CS_AS = "SQL_Latin1_General_CP1_CS_AS";
     }
 }

@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "BlogComments" table configuration.
 /// </summary>
-public sealed class BlogCommentEntityConfiguration : IEntityTypeConfiguration<BlogComment>
+internal sealed class BlogCommentEntityConfiguration : IEntityTypeConfiguration<BlogComment>
 {
     public void Configure(EntityTypeBuilder<BlogComment> builder)
     {

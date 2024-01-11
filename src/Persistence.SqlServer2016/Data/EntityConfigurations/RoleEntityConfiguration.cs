@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "Roles" table configuration.
 /// </summary>
-public sealed class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
+internal sealed class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {

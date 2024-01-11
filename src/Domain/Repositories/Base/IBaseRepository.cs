@@ -16,6 +16,10 @@ namespace Domain.Repositories.Base;
 ///     Represent the table of the database or
 ///     in the simple term, entity of the system.
 /// </typeparam>
+/// <remarks>
+///     All repository interfaces must inherit from
+///     this base interface.
+/// </remarks>
 public interface IBaseRepository<TEntity> where TEntity :
     class,
     IBaseEntity
@@ -40,8 +44,8 @@ public interface IBaseRepository<TEntity> where TEntity :
         CancellationToken cancellationToken);
 
     /// <summary>
-    ///     Asynchronously change the state list of entities to
-    ///     <seealso cref="EntityState.Added"/>.
+    ///     Asynchronously change the state of list of
+    ///     entities to <seealso cref="EntityState.Added"/>.
     /// </summary>
     /// <param name="newEntities">
     ///     List of entities for adding to the database.
@@ -74,30 +78,25 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     A task containing a boolean result of operation.
     /// </returns>
     Task<bool> IsFoundBySpecificationsAsync(
-        CancellationToken cancellationToken,
-        params IBaseSpecification<TEntity>[] specifications);
+        IList<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken);
 
     /// <summary>
-    ///     Asynchronously check the existence of the entity.
+    ///     Synchronously get a list of entity which satisfies
+    ///     the specifications.
     /// </summary>
-    /// <param name="cancellationToken">
-    ///     A token that is used to notify the system
-    ///     to cancel the current operation when user stop
-    ///     the request.
-    /// </param>
     /// <param name="specifications">
     ///     List of specifications that are used for
     ///     constructing a complete query.
     /// </param>
     /// <returns>
-    ///     A task containing a boolean result of operation.
+    ///     List of found entities.
     /// </returns>
-    Task<IEnumerable<TEntity>> GetAllBySpecificationsAsync(
-        CancellationToken cancellationToken,
-        params IBaseSpecification<TEntity>[] specifications);
+    IEnumerable<TEntity> GetAllBySpecifications(IList<IBaseSpecification<TEntity>> specifications);
 
     /// <summary>
-    ///     Asynchronously check the existence of the entity.
+    ///     Asynchronously find the entity which satisfies
+    ///     the specifications.
     /// </summary>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -109,9 +108,9 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     constructing a complete query.
     /// </param>
     /// <returns>
-    ///     A task containing a boolean result of operation.
+    ///     A task containing the found entity.
     /// </returns>
     Task<TEntity> FindBySpecificationsAsync(
-        CancellationToken cancellationToken,
-        params IBaseSpecification<TEntity>[] specifications);
+        IList<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken);
 }

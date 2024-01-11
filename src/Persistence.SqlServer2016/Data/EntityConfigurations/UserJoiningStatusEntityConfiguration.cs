@@ -2,14 +2,13 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SqlServer2016.Common;
-using System;
 
 namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 
 /// <summary>
 ///     Represent "UserJoiningStatuses" table configuration.
 /// </summary>
-public sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfiguration<UserJoiningStatus>
+internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfiguration<UserJoiningStatus>
 {
     public void Configure(EntityTypeBuilder<UserJoiningStatus> builder)
     {

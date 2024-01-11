@@ -14,6 +14,10 @@ namespace Domain.Specifications.Base;
 ///     Represent the table of the database or in the simple term,
 ///     entity of the app.
 /// </typeparam>
+/// <remarks>
+///     All specification interfaces must inherit from this
+///     base interface or the implementation of it.
+/// </remarks>
 public interface IBaseSpecification<TEntity> where TEntity :
     class,
     IBaseEntity

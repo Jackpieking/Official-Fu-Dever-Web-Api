@@ -7,5 +7,9 @@ namespace Domain.Specifications.Entities.Skill;
 /// </summary>
 public interface ISelectFieldsFromSkillSpecification : IBaseSpecification<Domain.Entities.Skill>
 {
+    ISelectFieldsFromSkillSpecification Ver1();
 
+    ISelectFieldsFromSkillSpecification Ver2();
+
+    ISelectFieldsFromSkillSpecification Ver3();
 }

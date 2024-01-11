@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "UserSkills" table configuration.
 /// </summary>
-public sealed class UserSkillEntityConfiguration : IEntityTypeConfiguration<UserSkill>
+internal sealed class UserSkillEntityConfiguration : IEntityTypeConfiguration<UserSkill>
 {
     public void Configure(EntityTypeBuilder<UserSkill> builder)
     {

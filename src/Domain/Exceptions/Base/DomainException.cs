@@ -7,7 +7,7 @@ namespace Domain.Exceptions.Base;
 /// </summary>
 /// <remarks>
 ///     All exceptions that are related to domain
-///     must be inherit from this.
+///     must be inherit from this base class.
 /// </remarks>
 public sealed class DomainException : Exception
 {

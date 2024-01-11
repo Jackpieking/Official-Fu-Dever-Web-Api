@@ -7,5 +7,5 @@ namespace Domain.Specifications.Entities.UserPlatform;
 /// </summary>
 public interface ISelectFieldsFromUserPlatformSpecification : IBaseSpecification<Domain.Entities.UserPlatform>
 {
-
+    ISelectFieldsFromUserPlatformSpecification Ver1();
 }

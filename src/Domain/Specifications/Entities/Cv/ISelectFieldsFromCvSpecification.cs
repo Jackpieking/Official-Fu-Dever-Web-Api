@@ -7,5 +7,5 @@ namespace Domain.Specifications.Entities.Cv;
 /// </summary>
 public interface ISelectFieldsFromCvSpecification : IBaseSpecification<Domain.Entities.Cv>
 {
-
+    ISelectFieldsFromCvSpecification Ver1();
 }

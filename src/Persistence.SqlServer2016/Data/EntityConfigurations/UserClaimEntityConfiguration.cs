@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "UserClaims" table configuration.
 /// </summary>
-public sealed class UserClaimEntityConfiguration : IEntityTypeConfiguration<UserClaim>
+internal sealed class UserClaimEntityConfiguration : IEntityTypeConfiguration<UserClaim>
 {
     public void Configure(EntityTypeBuilder<UserClaim> builder)
     {

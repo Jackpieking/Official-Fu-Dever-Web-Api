@@ -1,0 +1,16 @@
+using System;
+using Domain.Data;
+using Persistence.SqlServer2016.Common;
+
+namespace Persistence.SqlServer2016.Data;
+
+/// <summary>
+///     Implementation of database min date time handler.
+/// </summary>
+internal sealed class DbMinTimeHandler : IDbMinTimeHandler
+{
+    public DateTime Get()
+    {
+        return CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+    }
+}

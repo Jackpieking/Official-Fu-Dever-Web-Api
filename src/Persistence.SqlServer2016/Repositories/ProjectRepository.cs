@@ -1,0 +1,32 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Domain.Data;
+using Domain.Entities;
+using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Repositories.Base;
+
+namespace Persistence.SqlServer2016.Repositories;
+
+/// <summary>
+///     Implementation of project repository.
+/// </summary>
+internal sealed class ProjectRepository :
+    BaseRepository<Project>,
+    IProjectRepository
+{
+    internal ProjectRepository(IFuDeverContext context) : base(context: context)
+    {
+    }
+
+    public Task<int> BulkRemoveByAuthorIdAsync(
+        Guid authorId,
+        CancellationToken cancellationToken)
+    {
+        return _dbSet
+            .Where(predicate: project => project.AuthorId == authorId)
+            .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+    }
+}

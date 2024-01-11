@@ -7,5 +7,13 @@ namespace Domain.Specifications.Entities.User;
 /// </summary>
 public interface ISelectFieldsFromUserSpecification : IBaseSpecification<Domain.Entities.User>
 {
+    ISelectFieldsFromUserSpecification Ver1();
 
+    ISelectFieldsFromUserSpecification Ver2();
+
+    ISelectFieldsFromUserSpecification Ver3();
+
+    ISelectFieldsFromUserSpecification Ver4();
+
+    ISelectFieldsFromUserSpecification Ver5();
 }

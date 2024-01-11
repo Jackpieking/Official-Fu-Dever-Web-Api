@@ -7,5 +7,7 @@ namespace Domain.Specifications.Entities.Role;
 /// </summary>
 public interface ISelectFieldsFromRoleSpecification : IBaseSpecification<Domain.Entities.Role>
 {
+    ISelectFieldsFromRoleSpecification Ver1();
 
+    ISelectFieldsFromRoleSpecification Ver2();
 }

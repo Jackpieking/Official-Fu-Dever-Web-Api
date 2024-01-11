@@ -7,5 +7,9 @@ namespace Domain.Specifications.Entities.Hobby;
 /// </summary>
 public interface ISelectFieldsFromHobbySpecification : IBaseSpecification<Domain.Entities.Hobby>
 {
+    ISelectFieldsFromHobbySpecification Ver1();
 
+    ISelectFieldsFromHobbySpecification Ver2();
+
+    ISelectFieldsFromHobbySpecification Ver3();
 }

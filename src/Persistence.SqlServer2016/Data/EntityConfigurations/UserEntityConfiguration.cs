@@ -2,14 +2,13 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SqlServer2016.Common;
-using System;
 
 namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 
 /// <summary>
 ///     Represent "Users" table configuration.
 /// </summary>
-public sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
+internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {

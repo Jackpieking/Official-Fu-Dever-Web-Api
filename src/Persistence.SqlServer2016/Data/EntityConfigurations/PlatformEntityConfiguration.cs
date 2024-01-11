@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "Platforms" table configuration.
 /// </summary>
-public sealed class PlatformEntityConfiguration : IEntityTypeConfiguration<Platform>
+internal sealed class PlatformEntityConfiguration : IEntityTypeConfiguration<Platform>
 {
     public void Configure(EntityTypeBuilder<Platform> builder)
     {

@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "Projects" table configuration.
 /// </summary>
-public sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Project>
+internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Project>
 {
     public void Configure(EntityTypeBuilder<Project> builder)
     {

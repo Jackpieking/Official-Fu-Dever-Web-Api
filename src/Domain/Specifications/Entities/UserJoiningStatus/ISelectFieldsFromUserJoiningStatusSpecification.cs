@@ -7,5 +7,5 @@ namespace Domain.Specifications.Entities.UserJoiningStatus;
 /// </summary>
 public interface ISelectFieldsFromUserJoiningStatusSpecification : IBaseSpecification<Domain.Entities.UserJoiningStatus>
 {
-
+    ISelectFieldsFromUserJoiningStatusSpecification Ver1();
 }

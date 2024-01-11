@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "UserTokens" table configuration.
 /// </summary>
-public sealed class UserTokenEntityConfiguration : IEntityTypeConfiguration<UserToken>
+internal sealed class UserTokenEntityConfiguration : IEntityTypeConfiguration<UserToken>
 {
     public void Configure(EntityTypeBuilder<UserToken> builder)
     {

@@ -3,7 +3,7 @@ using System;
 namespace Application.Common;
 
 /// <summary>
-/// 
+///     Represent set of constant.
 /// </summary>
 public static class CustomConstant
 {

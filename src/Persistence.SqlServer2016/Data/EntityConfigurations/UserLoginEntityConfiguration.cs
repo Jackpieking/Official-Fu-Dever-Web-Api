@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "UserLogins" table configuration.
 /// </summary>
-public sealed class UserLoginEntityConfiguration : IEntityTypeConfiguration<UserLogin>
+internal sealed class UserLoginEntityConfiguration : IEntityTypeConfiguration<UserLogin>
 {
     public void Configure(EntityTypeBuilder<UserLogin> builder)
     {

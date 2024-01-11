@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "RoleClaims" table configuration.
 /// </summary>
-public sealed class RoleClaimEntityConfiguration : IEntityTypeConfiguration<RoleClaim>
+internal sealed class RoleClaimEntityConfiguration : IEntityTypeConfiguration<RoleClaim>
 {
     public void Configure(EntityTypeBuilder<RoleClaim> builder)
     {

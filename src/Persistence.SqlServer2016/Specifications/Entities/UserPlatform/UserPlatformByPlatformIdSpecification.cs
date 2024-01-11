@@ -1,0 +1,19 @@
+using System;
+using Domain.Specifications.Base;
+using Domain.Specifications.Entities.UserPlatform;
+
+namespace Persistence.SqlServer2016.Specifications.Entities.UserPlatform;
+
+/// <summary>
+///     Represent implementation of user platform by platform
+///     id specification.
+/// </summary>
+internal sealed class UserPlatformByPlatformIdSpecification :
+    BaseSpecification<Domain.Entities.UserPlatform>,
+    IUserPlatformByPlatformIdSpecification
+{
+    internal UserPlatformByPlatformIdSpecification(Guid platformId)
+    {
+        WhereExpression = userPlatform => userPlatform.PlatformId == platformId;
+    }
+}

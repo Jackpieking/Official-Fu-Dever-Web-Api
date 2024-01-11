@@ -7,5 +7,5 @@ namespace Domain.Specifications.Entities.Project;
 /// </summary>
 public interface ISelectFieldsFromProjectSpecification : IBaseSpecification<Domain.Entities.Project>
 {
-
+    ISelectFieldsFromProjectSpecification Ver1();
 }

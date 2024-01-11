@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "BlogTags" configuration.
 /// </summary>
-public sealed class BlogTagEntityConfiguration : IEntityTypeConfiguration<BlogTag>
+internal sealed class BlogTagEntityConfiguration : IEntityTypeConfiguration<BlogTag>
 {
     public void Configure(EntityTypeBuilder<BlogTag> builder)
     {

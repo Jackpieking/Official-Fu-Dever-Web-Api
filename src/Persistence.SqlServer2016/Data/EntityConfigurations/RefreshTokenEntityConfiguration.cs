@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "RefreshTokens" table configuration.
 /// </summary>
-public sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration<RefreshToken>
+internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
     public void Configure(EntityTypeBuilder<RefreshToken> builder)
     {

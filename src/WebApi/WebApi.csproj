@@ -18,9 +18,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\OtherResouces\OtherResources.csproj" />
     <ProjectReference Include="..\Persistence.SqlServer2016\Persistence.SqlServer2016.csproj" />
     <ProjectReference Include="..\BackgroundJob.HangFire\BackgroundJob.HangFire.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Options\" />
   </ItemGroup>
 
 </Project>

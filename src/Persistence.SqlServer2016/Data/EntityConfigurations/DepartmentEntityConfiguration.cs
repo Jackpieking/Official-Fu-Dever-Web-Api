@@ -2,14 +2,13 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SqlServer2016.Common;
-using System;
 
 namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 
 /// <summary>
 ///     Represent "Departments" tables configuration.
 /// </summary>
-public sealed class DepartmentEntityConfiguration : IEntityTypeConfiguration<Department>
+internal sealed class DepartmentEntityConfiguration : IEntityTypeConfiguration<Department>
 {
     public void Configure(EntityTypeBuilder<Department> builder)
     {

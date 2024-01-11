@@ -3,6 +3,10 @@ namespace Domain.Errors.Base;
 /// <summary>
 ///     Represent the error.
 /// </summary>
+/// <remarks>
+///     All errors must inherit from this
+///     base class.
+/// </remarks>
 public sealed class Error
 {
     /// <summary>

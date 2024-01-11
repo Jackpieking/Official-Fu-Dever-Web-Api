@@ -7,7 +7,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "UserHobbies" table configuration.
 /// </summary>
-public sealed class UserHobbyEntityConfiguration : IEntityTypeConfiguration<UserHobby>
+internal sealed class UserHobbyEntityConfiguration : IEntityTypeConfiguration<UserHobby>
 {
     public void Configure(EntityTypeBuilder<UserHobby> builder)
     {

@@ -6,9 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.SqlServer2016.Data;
 
-public static class EntityDataSeeding
+/// <summary>
+///     Represent data seeding for database.
+/// </summary>
+internal static class EntityDataSeeding
 {
-    public static void Seed(this ModelBuilder builder)
+    /// <summary>
+    ///     Seed data
+    /// </summary>
+    /// <param name="builder">
+    ///     Database builder to apply seeding.
+    /// </param>
+    internal static void Seed(this ModelBuilder builder)
     {
         #region Departments
         List<Department> newDepartments =
@@ -636,7 +645,7 @@ public static class EntityDataSeeding
             Career = string.Empty,
             Workplaces = string.Empty,
             EducationPlaces = string.Empty,
-            BirthDay = Common.CustomConstant.DbDefaultValue.MinDateTime,
+            BirthDay = Common.CustomConstant.DbDefaultValue.MIN_DATE_TIME,
             HomeAddress = string.Empty,
             SelfDescription = string.Empty,
             JoinDate = DateTime.UtcNow,

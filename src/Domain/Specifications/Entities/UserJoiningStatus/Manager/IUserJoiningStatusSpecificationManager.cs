@@ -21,13 +21,8 @@ public interface IUserJoiningStatusSpecificationManager
     /// <param name="userJoiningStatusType">
     ///     User joining status type for finding user joining status.
     /// </param>
-    /// <param name="isCaseSensitive">
-    ///     Does user joining status type need searching in a sensitive way.
-    /// </param>
     /// <returns>
     ///     Specification.
     /// </returns>
-    IUserJoiningStatusByTypeSpecification UserJoiningStatusByTypeSpecification(
-        string userJoiningStatusType,
-        bool isCaseSensitive);
+    IUserJoiningStatusByTypeSpecification UserJoiningStatusByTypeSpecification(string userJoiningStatusType);
 }

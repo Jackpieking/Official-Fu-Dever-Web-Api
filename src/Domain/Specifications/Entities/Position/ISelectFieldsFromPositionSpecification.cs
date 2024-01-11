@@ -7,5 +7,7 @@ namespace Domain.Specifications.Entities.Position;
 /// </summary>
 public interface ISelectFieldsFromPositionSpecification : IBaseSpecification<Domain.Entities.Position>
 {
+    ISelectFieldsFromPositionSpecification Ver1();
 
+    ISelectFieldsFromPositionSpecification Ver2();
 }

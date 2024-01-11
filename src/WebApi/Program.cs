@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Persistence.SqlServer2016;
+using WebApi;
 
 // Custom settings.
 Console.OutputEncoding = Encoding.UTF8;
@@ -15,6 +16,7 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 services.AddPersistenceSqlServer2016(configuration: configuration);
+services.AddWebApi(configuration: configuration);
 
 var app = builder.Build();
 

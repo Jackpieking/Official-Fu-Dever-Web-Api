@@ -7,5 +7,7 @@ namespace Domain.Specifications.Entities.Major;
 /// </summary>
 public interface ISelectFieldsFromMajorSpecification : IBaseSpecification<Domain.Entities.Major>
 {
+    ISelectFieldsFromMajorSpecification Ver1();
 
+    ISelectFieldsFromMajorSpecification Ver2();
 }

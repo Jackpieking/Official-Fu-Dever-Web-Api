@@ -1,34 +1,45 @@
 using System;
-using Application.Interfaces.Data;
+using System.Threading;
+using System.Threading.Tasks;
+using Domain.Data;
 using Domain.Entities;
 using Domain.Entities.Base;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Persistence.SqlServer2016.Data.EntityConfigurations;
 
 namespace Persistence.SqlServer2016.Data;
 
 /// <summary>
-///
+///     Implementation of Fu dever context.
 /// </summary>
-public sealed class FuDeverContext :
+internal sealed class FuDeverContext :
     IdentityDbContext<User, Role, Guid>,
     IFuDeverContext
 {
-    /// <summary>
-    ///     Implementation of entity set getter.
-    /// </summary>
-    /// <typeparam name="TEntity">
-    ///     Entity (table) of the database.
-    /// </typeparam>
-    /// <returns>
-    ///     Set of that entity.
-    /// </returns>
+    internal FuDeverContext(DbContextOptions<FuDeverContext> options) : base(options: options)
+    {
+    }
+
+    public DatabaseFacade DatabaseFacade
+    {
+        get
+        {
+            return Database;
+        }
+    }
+
     public DbSet<TEntity> DomainSet<TEntity>() where TEntity :
         class,
         IBaseEntity
     {
         return Set<TEntity>();
+    }
+
+    public Task<int> CustomSaveChangeAsync(CancellationToken cancellationToken)
+    {
+        return SaveChangesAsync(cancellationToken: cancellationToken);
     }
 
     /// <summary>

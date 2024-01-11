@@ -2,14 +2,13 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SqlServer2016.Common;
-using System;
 
 namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 
 /// <summary>
 ///     Represent "Cvs" table configuration.
 /// </summary>
-public sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
+internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
 {
     public void Configure(EntityTypeBuilder<Cv> builder)
     {

@@ -2,14 +2,13 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.SqlServer2016.Common;
-using System;
 
 namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 
 /// <summary>
 ///     Represent "Majors" table configuration.
 /// </summary>
-public sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
+internal sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
 {
     public void Configure(EntityTypeBuilder<Major> builder)
     {

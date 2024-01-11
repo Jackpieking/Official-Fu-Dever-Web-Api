@@ -8,7 +8,7 @@ namespace Persistence.SqlServer2016.Data.EntityConfigurations;
 /// <summary>
 ///     Represent "Positions" table configuration.
 /// </summary>
-public sealed class PositionEntityConfiguration : IEntityTypeConfiguration<Position>
+internal sealed class PositionEntityConfiguration : IEntityTypeConfiguration<Position>
 {
     public void Configure(EntityTypeBuilder<Position> builder)
     {
