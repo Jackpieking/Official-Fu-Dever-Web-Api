@@ -33,37 +33,37 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         // Title property configuration.
         builder
             .Property(propertyExpression: project => project.Title)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
             .IsRequired();
 
         // Description property configuration.
         builder
             .Property(propertyExpression: project => project.Description)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // SourceCodeUrl property configuration.
         builder
             .Property(propertyExpression: project => project.SourceCodeUrl)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // DemoUrl property configuration.
         builder
             .Property(propertyExpression: project => project.DemoUrl)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         //ThumbnailUrl property configuration.
         builder
             .Property(propertyExpression: project => project.ThumbnailUrl)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: project => project.CreatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -74,7 +74,7 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         //UpdatedAt property configuration.
         builder
             .Property(propertyExpression: project => project.UpdatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // UpdatedBy property configuration.

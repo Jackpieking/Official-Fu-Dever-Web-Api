@@ -6,6 +6,8 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
     <Trimming>full</Trimming>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,10 +22,16 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Persistence.SqlServer2016\Persistence.SqlServer2016.csproj" />
     <ProjectReference Include="..\BackgroundJob.HangFire\BackgroundJob.HangFire.csproj" />
+    <ProjectReference Include="..\Cache.InMemory\Cache.InMemory.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Options\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
 </Project>

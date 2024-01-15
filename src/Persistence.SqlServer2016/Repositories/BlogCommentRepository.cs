@@ -6,6 +6,7 @@ using Domain.Data;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
 namespace Persistence.SqlServer2016.Repositories;
@@ -17,7 +18,7 @@ internal sealed class BlogCommentRepository :
     BaseRepository<BlogComment>,
     IBlogCommentRepository
 {
-    internal BlogCommentRepository(IFuDeverContext context) : base(context: context)
+    internal BlogCommentRepository(FuDeverContext context) : base(context: context)
     {
     }
 

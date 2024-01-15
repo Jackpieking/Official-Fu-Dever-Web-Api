@@ -22,11 +22,6 @@ internal sealed class FuDeverDatabaseOption
     internal int EnableRetryOnFailure { get; set; }
 
     /// <summary>
-    ///     Name of assembly that contains migration.
-    /// </summary>
-    //internal string MigrationsAssembly { get; set; }
-
-    /// <summary>
     ///     Database sensitive data logging.
     /// </summary>
     internal bool EnableSensitiveDataLogging { get; set; }

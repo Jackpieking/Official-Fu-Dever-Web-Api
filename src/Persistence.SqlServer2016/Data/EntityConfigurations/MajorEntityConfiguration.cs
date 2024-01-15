@@ -28,13 +28,13 @@ internal sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
         // Name property configuration.
         builder
             .Property(propertyExpression: major => major.Name)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
             .IsRequired();
 
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: major => major.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.

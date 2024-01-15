@@ -15,7 +15,7 @@ internal sealed class RoleNotTemporarilyRemovedSpecification :
 {
     internal RoleNotTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = role =>
             role.RemovedBy == Guid.Empty &&

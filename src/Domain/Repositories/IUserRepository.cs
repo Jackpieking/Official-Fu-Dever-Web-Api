@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Entities;
@@ -18,8 +19,14 @@ public interface IUserRepository : IBaseRepository<User>
     /// <summary>
     ///     Update user asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundUser">
-    ///     User to be updated.
+    /// <param name="userId">
+    ///     Id of updated user.
+    /// </param>
+    /// <param name="userUpdatedAt">
+    ///     When is user updated.
+    /// </param>
+    /// <param name="userUpdatedBy">
+    ///     User is updated by whom.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -38,15 +45,26 @@ public interface IUserRepository : IBaseRepository<User>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interfaces
     /// </remarks>
-    Task<int> BulkUpdateByIdVer1Async(
-        User foundUser,
+    Task<int> BulkUpdateByUserIdAsync(
+        Guid userId,
+        DateTime userUpdatedAt,
+        Guid userUpdatedBy,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Update user asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundUser">
-    ///     User to be updated.
+    /// <param name="userId">
+    ///     Id of updated user.
+    /// </param>
+    /// <param name="userUpdatedAt">
+    ///     When is user updated.
+    /// </param>
+    /// <param name="userUpdatedBy">
+    ///     User is updated by whom.
+    /// </param>
+    /// <param name="positionId">
+    ///     Position id of user.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -65,7 +83,10 @@ public interface IUserRepository : IBaseRepository<User>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interfaces
     /// </remarks>
-    Task<int> BulkUpdateByIdVer2Async(
-        User foundUser,
+    Task<int> BulkUpdateByUserIdAsync(
+        Guid userId,
+        DateTime userUpdatedAt,
+        Guid userUpdatedBy,
+        Guid positionId,
         CancellationToken cancellationToken);
 }

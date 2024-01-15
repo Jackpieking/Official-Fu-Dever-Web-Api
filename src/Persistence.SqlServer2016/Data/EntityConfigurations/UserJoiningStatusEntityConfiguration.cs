@@ -28,13 +28,13 @@ internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfigur
         // Name property configuration.
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.Type)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_50)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_50)
             .IsRequired();
 
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.

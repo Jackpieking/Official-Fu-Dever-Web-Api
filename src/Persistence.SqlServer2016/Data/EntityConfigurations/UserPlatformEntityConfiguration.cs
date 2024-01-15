@@ -32,7 +32,7 @@ internal sealed class UserPlatformEntityConfiguration : IEntityTypeConfiguration
         // PlatformUrl Property configuration.
         builder
             .Property(propertyExpression: userPlatform => userPlatform.PlatformUrl)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
     }
 }

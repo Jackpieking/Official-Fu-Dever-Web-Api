@@ -27,7 +27,7 @@ internal sealed class RoleByNameSpecification :
         WhereExpression = role => EF.Functions
             .Collate(
                 role.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(roleName);
     }
 }

@@ -15,7 +15,7 @@ internal sealed class SkillTemporarilyRemovedSpecification :
 {
     internal SkillTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = skill =>
             skill.RemovedBy != Guid.Empty &&

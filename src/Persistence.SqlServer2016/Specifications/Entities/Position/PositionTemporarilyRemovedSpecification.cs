@@ -14,7 +14,7 @@ internal sealed class PositionTemporarilyRemovedSpecification :
 {
     internal PositionTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = position =>
             position.RemovedBy != Guid.Empty &&

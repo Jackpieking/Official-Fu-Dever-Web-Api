@@ -27,7 +27,7 @@ internal sealed class PlatformByNameSpecification :
         WhereExpression = platform => EF.Functions
             .Collate(
                 platform.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(platformName);
     }
 }

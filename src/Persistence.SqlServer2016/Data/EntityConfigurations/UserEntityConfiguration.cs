@@ -30,7 +30,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: user => user.CreatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -41,7 +41,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // UpdatedAt property configuration.
         builder
             .Property(propertyExpression: user => user.UpdatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // UpdatedBy property configuration.
@@ -52,7 +52,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: user => user.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.
@@ -78,55 +78,55 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // FirstName property configuration.
         builder
             .Property(propertyExpression: user => user.FirstName)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
             .IsRequired();
 
         // LastName property configuration.
         builder
             .Property(propertyExpression: user => user.LastName)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
             .IsRequired();
 
         // Career property configuration.
         builder
             .Property(propertyExpression: user => user.Career)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
             .IsRequired();
 
         // Workplaces property configuration.
         builder
             .Property(propertyExpression: user => user.Workplaces)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // EducationPlaces property configuration.
         builder
             .Property(propertyExpression: user => user.EducationPlaces)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // BirthDay property configuration.
         builder
             .Property(propertyExpression: user => user.BirthDay)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // HomeAddress property configuration.
         builder
             .Property(propertyExpression: user => user.HomeAddress)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_50)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_50)
             .IsRequired();
 
         // SelfDescription property configuration.
         builder
             .Property(propertyExpression: user => user.SelfDescription)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // JoinDate property configuration.
         builder
             .Property(propertyExpression: user => user.JoinDate)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // ActivityPoints property configuration.
@@ -137,7 +137,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // AvatarUrl property configuration.
         builder
             .Property(propertyExpression: user => user.AvatarUrl)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // Table relationship configurations.

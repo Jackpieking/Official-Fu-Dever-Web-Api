@@ -5,7 +5,7 @@ namespace Persistence.SqlServer2016.Common;
 /// <summary>
 ///     Represent set of constant.
 /// </summary>
-internal static class CustomConstant
+internal static class CommonConstant
 {
     internal static class DbDataType
     {

@@ -19,8 +19,14 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     /// <summary>
     ///     Update platform asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPlatform">
-    ///     Platform to be updated.
+    /// <param name="platformId">
+    ///     Id of updated platform.
+    /// </param>
+    /// <param name="platformRemovedAt">
+    ///     When is platform removed.
+    /// </param>
+    /// <param name="platformRemovedBy">
+    ///     Platform is removed by whom.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -39,15 +45,20 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer1Async(
-        Platform foundPlatform,
+    Task<int> BulkUpdateByPlatformIdAsync(
+        Guid platformId,
+        DateTime platformRemovedAt,
+        Guid platformRemovedBy,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Update platform asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPlatform">
-    ///     Platform to be updated.
+    /// <param name="platformId">
+    ///     Id of updated platform.
+    /// </param>
+    /// <param name="platformName">
+    ///     Name of updated platform.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -66,15 +77,16 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer2Async(
-        Platform foundPlatform,
+    Task<int> BulkUpdateByPlatformIdAsync(
+        Guid platformId,
+        string platformName,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Remove platform asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPlatform">
-    ///     Platform to be removed.
+    /// <param name="platformId">
+    ///     Id of removed platform.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -93,7 +105,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkRemoveByIdAsync(
+    Task<int> BulkRemoveByPlatformIdAsync(
         Guid platformId,
         CancellationToken cancellationToken);
 }

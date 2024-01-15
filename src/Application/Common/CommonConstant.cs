@@ -5,7 +5,7 @@ namespace Application.Common;
 /// <summary>
 ///     Represent set of constant.
 /// </summary>
-public static class CustomConstant
+public static class CommonConstant
 {
     public static class App
     {

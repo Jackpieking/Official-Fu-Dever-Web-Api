@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Options.AspNetCoreIdentity;
 using Persistence.SqlServer2016.Options.Database;
@@ -18,102 +17,124 @@ using Persistence.SqlServer2016.UnitOfWorks;
 namespace Persistence.SqlServer2016;
 
 /// <summary>
-///
+///     Config services for this layer.
 /// </summary>
 public static class DependencyInjection
 {
     /// <summary>
-    ///
+    ///     Entry to configuring multiple services.
     /// </summary>
     /// <param name="services">
+    ///     Service container.
     /// </param>
     /// <param name="configuration">
+    ///     Load configuration for configuration
+    ///     file (appsetting).
     /// </param>
     public static void AddPersistenceSqlServer2016(
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        services.ConfigDbContextPool();
+        services.ConfigureDbContextPool(configuration: configuration);
 
-        services.ConfigCore();
+        services.ConfigureCore();
 
-        services.ConfigAspNetCoreIdentity();
+        services.ConfigureAspNetCoreIdentity(configuration: configuration);
     }
 
     /// <summary>
-    ///
+    ///     Config the db context pool service.
     /// </summary>
     /// <param name="services">
+    ///     Service container.
     /// </param>
     /// <param name="configuration">
+    ///     Load configuration for configuration
+    ///     file (appsetting).
     /// </param>
-    public static void ConfigDbContextPool(this IServiceCollection services)
+    private static void ConfigureDbContextPool(
+        this IServiceCollection services,
+        IConfigurationManager configuration)
     {
         services.AddDbContextPool<FuDeverContext>(optionsAction: (provider, config) =>
         {
-            var databaseOptions = provider.GetRequiredService<IOptions<FuDeverDatabaseOption>>().Value;
+            const string DatabaseSection = "Database";
+            const string FuDeverDbSection = "FuDever";
+
+            var fuDeverDatabaseOption = configuration
+                .GetRequiredSection(key: DatabaseSection)
+                .GetRequiredSection(key: FuDeverDbSection)
+                .Get<FuDeverDatabaseOption>();
 
             config.UseSqlServer(
-                    connectionString: databaseOptions.ConnectionString,
+                    connectionString: fuDeverDatabaseOption.ConnectionString,
                     sqlServerOptionsAction: databaseOptionsAction =>
                 {
                     databaseOptionsAction
-                        .CommandTimeout(commandTimeout: databaseOptions.CommandTimeOut)
-                        .EnableRetryOnFailure(maxRetryCount: databaseOptions.EnableRetryOnFailure)
-                        .MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().FullName);
+                        .CommandTimeout(commandTimeout: fuDeverDatabaseOption.CommandTimeOut)
+                        .EnableRetryOnFailure(maxRetryCount: fuDeverDatabaseOption.EnableRetryOnFailure)
+                        .MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().GetName().Name);
                 })
-                .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: databaseOptions.EnableSensitiveDataLogging)
-                .EnableDetailedErrors(detailedErrorsEnabled: databaseOptions.EnableDetailedErrors)
-                .EnableThreadSafetyChecks(enableChecks: databaseOptions.EnableThreadSafetyChecks)
-                .EnableServiceProviderCaching(cacheServiceProvider: databaseOptions.EnableServiceProviderCaching);
+                .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: fuDeverDatabaseOption.EnableSensitiveDataLogging)
+                .EnableDetailedErrors(detailedErrorsEnabled: fuDeverDatabaseOption.EnableDetailedErrors)
+                .EnableThreadSafetyChecks(enableChecks: fuDeverDatabaseOption.EnableThreadSafetyChecks)
+                .EnableServiceProviderCaching(cacheServiceProvider: fuDeverDatabaseOption.EnableServiceProviderCaching);
         });
-
-        services.AddScoped<IFuDeverContext>(implementationFactory: provider =>
-            provider.GetRequiredService<FuDeverContext>());
     }
 
     /// <summary>
-    ///
+    ///     Config core services.
     /// </summary>
     /// <param name="services">
+    ///     Service container.
     /// </param>
-    public static void ConfigCore(this IServiceCollection services)
+    private static void ConfigureCore(this IServiceCollection services)
     {
-        services
-            .ConfigureOptions<FuDeverDatabaseOptionSetup>()
-            .ConfigureOptions<AspNetCoreIdentityOptionSetup>();
-
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<ISuperSpecificationManager, SuperSpecificationManager>();
     }
 
     /// <summary>
-    ///
+    ///     Config asp net core identity service.
     /// </summary>
     /// <param name="services">
+    ///     Service container.
     /// </param>
-    public static void ConfigAspNetCoreIdentity(this IServiceCollection services)
+    /// <param name="configuration">
+    ///     Load configuration for configuration
+    ///     file (appsetting).
+    /// </param>
+    private static void ConfigureAspNetCoreIdentity(
+        this IServiceCollection services,
+        IConfigurationManager configuration)
     {
         services
-            .AddIdentity<User, Role>(setupAction: options =>
+            .AddIdentity<User, Role>(setupAction: config =>
             {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 4;
-                options.Password.RequiredUniqueChars = 0;
+                const string AspNetCoreIdentitySection = "AspNetCoreIdentity";
 
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(value: 1);
-                options.Lockout.MaxFailedAccessAttempts = 3;
-                options.Lockout.AllowedForNewUsers = true;
+                var aspNetCoreIdentityOption = configuration
+                    .GetRequiredSection(key: AspNetCoreIdentitySection)
+                    .Get<AspNetCoreIdentityOption>();
 
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
+                config.Password.RequireDigit = aspNetCoreIdentityOption.Password.RequireDigit;
+                config.Password.RequireLowercase = aspNetCoreIdentityOption.Password.RequireLowercase;
+                config.Password.RequireNonAlphanumeric = aspNetCoreIdentityOption.Password.RequireNonAlphanumeric;
+                config.Password.RequireUppercase = aspNetCoreIdentityOption.Password.RequireUppercase;
+                config.Password.RequiredLength = aspNetCoreIdentityOption.Password.RequiredLength;
+                config.Password.RequiredUniqueChars = aspNetCoreIdentityOption.Password.RequiredUniqueChars;
 
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(value:
+                    aspNetCoreIdentityOption.Lockout.DefaultLockoutTimeSpanInSecond);
+                config.Lockout.MaxFailedAccessAttempts = aspNetCoreIdentityOption.Lockout.MaxFailedAccessAttempts;
+                config.Lockout.AllowedForNewUsers = aspNetCoreIdentityOption.Lockout.AllowedForNewUsers;
+
+                config.User.AllowedUserNameCharacters = aspNetCoreIdentityOption.User.AllowedUserNameCharacters;
+                config.User.RequireUniqueEmail = aspNetCoreIdentityOption.User.RequireUniqueEmail;
+
+                config.SignIn.RequireConfirmedEmail = aspNetCoreIdentityOption.SignIn.RequireConfirmedEmail;
+                config.SignIn.RequireConfirmedPhoneNumber = aspNetCoreIdentityOption.SignIn.RequireConfirmedPhoneNumber;
             })
             .AddEntityFrameworkStores<FuDeverContext>()
             .AddDefaultTokenProviders();

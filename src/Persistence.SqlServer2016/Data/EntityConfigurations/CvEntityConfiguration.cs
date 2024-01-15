@@ -28,13 +28,13 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // FullName property configuration.
         builder
             .Property(propertyExpression: cv => cv.FullName)
-            .HasColumnType(CustomConstant.DbDataType.NVARCHAR_50)
+            .HasColumnType(CommonConstant.DbDataType.NVARCHAR_50)
             .IsRequired();
 
         // Email property configuration.
         builder
             .Property(propertyExpression: cv => cv.Email)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // StudentId property configuration.
@@ -50,7 +50,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: cv => cv.CreatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -61,7 +61,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: cv => cv.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.

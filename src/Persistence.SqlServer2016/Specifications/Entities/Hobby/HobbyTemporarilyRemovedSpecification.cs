@@ -14,7 +14,7 @@ internal sealed class HobbyTemporarilyRemovedSpecification :
 {
     internal HobbyTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = hobby =>
             hobby.RemovedBy != Guid.Empty &&

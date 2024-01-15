@@ -28,13 +28,13 @@ internal sealed class SkillEntityConfiguration : IEntityTypeConfiguration<Skill>
         // Name property configuration.
         builder
             .Property(propertyExpression: skill => skill.Name)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
             .IsRequired();
 
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: skill => skill.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.

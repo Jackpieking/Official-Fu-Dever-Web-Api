@@ -25,7 +25,7 @@ internal sealed class DepartmentByNameSpecification :
         WhereExpression = department => EF.Functions
             .Collate(
                 department.Name,
-                Common.CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                Common.CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(departmentName);
     }
 }

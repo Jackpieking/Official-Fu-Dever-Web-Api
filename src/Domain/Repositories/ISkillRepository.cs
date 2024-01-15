@@ -19,8 +19,14 @@ public interface ISkillRepository : IBaseRepository<Skill>
     /// <summary>
     ///     Update skill asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundSkill">
-    ///     Skill to be updated.
+    /// <param name="skillId">
+    ///     Id of updated skill.
+    /// </param>
+    /// <param name="skillRemovedAt">
+    ///     When is skill removed.
+    /// </param>
+    /// <param name="skillRemovedBy">
+    ///     Skill is removed by whom.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -39,15 +45,20 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer1Async(
-        Skill foundSkill,
+    Task<int> BulkUpdateBySkillIdAsync(
+        Guid skillId,
+        DateTime skillRemovedAt,
+        Guid skillRemovedBy,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Update skill asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundSkill">
-    ///     Skill to be updated.
+    /// <param name="skillId">
+    ///     Id of updated skill.
+    /// </param>
+    /// <param name="skillName">
+    ///     Name of updated skill.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -66,15 +77,16 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer2Async(
-        Skill foundSkill,
+    Task<int> BulkUpdateBySkillIdAsync(
+        Guid skillId,
+        string skillName,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Remove skill asynchronously and directly to database.
     /// </summary>
     /// <param name="skillId">
-    ///     Skill to be removed.
+    ///     Id of removed skill.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -93,7 +105,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkRemoveByIdAsync(
+    Task<int> BulkRemoveBySkillIdAsync(
         Guid skillId,
         CancellationToken cancellationToken);
 }

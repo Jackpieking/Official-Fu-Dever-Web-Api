@@ -33,31 +33,31 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // Title property configuration.
         builder
             .Property(propertyExpression: blog => blog.Title)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
             .IsRequired();
 
         // Thumbnail property configuration.
         builder
             .Property(propertyExpression: blog => blog.Thumbnail)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_200)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_200)
             .IsRequired();
 
         // UploadDate property configuration.
         builder
             .Property(propertyExpression: blog => blog.UploadDate)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // Content property configuration.
         builder
             .Property(propertyExpression: blog => blog.Content)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.CreatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -68,7 +68,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // UpdatedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.UpdatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // UpdatedBy property configuration.
@@ -79,7 +79,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.RemovedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // RemovedBy property configuration.

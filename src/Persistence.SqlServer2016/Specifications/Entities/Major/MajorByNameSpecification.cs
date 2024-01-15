@@ -23,7 +23,7 @@ internal sealed class MajorByNameSpecification :
         WhereExpression = major => EF.Functions
             .Collate(
                 major.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(majorName);
     }
 }

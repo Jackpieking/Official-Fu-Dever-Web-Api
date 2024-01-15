@@ -8,7 +8,7 @@ namespace Application.Common;
 /// <summary>
 ///     Represent set of commonly used methods.
 /// </summary>
-public static class CustomMethod
+public static class CommonMethod
 {
     /// <summary>
     ///     Create a foreach loop that run synchronously

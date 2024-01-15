@@ -11,6 +11,6 @@ internal sealed class DbMinTimeHandler : IDbMinTimeHandler
 {
     public DateTime Get()
     {
-        return CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        return CommonConstant.DbDefaultValue.MIN_DATE_TIME;
     }
 }

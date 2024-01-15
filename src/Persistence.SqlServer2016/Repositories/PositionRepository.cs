@@ -6,6 +6,7 @@ using Domain.Data;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
 namespace Persistence.SqlServer2016.Repositories;
@@ -17,11 +18,11 @@ internal sealed class PositionRepository :
     BaseRepository<Position>,
     IPositionRepository
 {
-    internal PositionRepository(IFuDeverContext context) : base(context: context)
+    internal PositionRepository(FuDeverContext context) : base(context: context)
     {
     }
 
-    public Task<int> BulkRemoveByIdAsync(
+    public Task<int> BulkRemoveByPositionIdAsync(
         Guid positionId,
         CancellationToken cancellationToken)
     {
@@ -30,34 +31,37 @@ internal sealed class PositionRepository :
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer1Async(
-        Position foundPosition,
+    public Task<int> BulkUpdateByPositionIdAsync(
+        Guid positionId,
+        DateTime positionRemovedAt,
+        Guid positionRemovedBy,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: position => position.Id == foundPosition.Id)
+            .Where(predicate: position => position.Id == positionId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         position => position.RemovedAt,
-                        foundPosition.RemovedAt)
+                        positionRemovedAt)
                     .SetProperty(
                         position => position.RemovedBy,
-                        foundPosition.RemovedBy),
+                        positionRemovedBy),
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer2Async(
-        Position foundPosition,
+    public Task<int> BulkUpdateByPositionIdAsync(
+        Guid positionId,
+        string positionName,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: position => position.Id == foundPosition.Id)
+            .Where(predicate: position => position.Id == positionId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         position => position.Name,
-                        foundPosition.Name),
+                        positionName),
                 cancellationToken: cancellationToken);
     }
 }

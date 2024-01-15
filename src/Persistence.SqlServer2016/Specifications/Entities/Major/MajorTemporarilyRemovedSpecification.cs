@@ -14,7 +14,7 @@ internal sealed class MajorTemporarilyRemovedSpecification :
 {
     internal MajorTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = major =>
             major.RemovedBy != Guid.Empty &&

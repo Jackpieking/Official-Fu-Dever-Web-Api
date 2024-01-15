@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Data;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
 namespace Persistence.SqlServer2016.Repositories;
@@ -17,11 +17,11 @@ internal sealed class PlatformRepository :
     BaseRepository<Platform>,
     IPlatformRepository
 {
-    internal PlatformRepository(IFuDeverContext context) : base(context: context)
+    internal PlatformRepository(FuDeverContext context) : base(context: context)
     {
     }
 
-    public Task<int> BulkRemoveByIdAsync(
+    public Task<int> BulkRemoveByPlatformIdAsync(
         Guid platformId,
         CancellationToken cancellationToken)
     {
@@ -30,34 +30,37 @@ internal sealed class PlatformRepository :
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer1Async(
-        Platform foundPlatform,
+    public Task<int> BulkUpdateByPlatformIdAsync(
+        Guid platformId,
+        DateTime platformRemovedAt,
+        Guid platformRemovedBy,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: platform => platform.Id == foundPlatform.Id)
+            .Where(predicate: platform => platform.Id == platformId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         platform => platform.RemovedAt,
-                        foundPlatform.RemovedAt)
+                        platformRemovedAt)
                     .SetProperty(
                         platform => platform.RemovedBy,
-                        foundPlatform.RemovedBy),
+                        platformRemovedBy),
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer2Async(
-        Platform foundPlatform,
+    public Task<int> BulkUpdateByPlatformIdAsync(
+        Guid platformId,
+        string platformName,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: platform => platform.Id == foundPlatform.Id)
+            .Where(predicate: platform => platform.Id == platformId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         platform => platform.Name,
-                        foundPlatform.Name),
+                        platformName),
                 cancellationToken: cancellationToken);
     }
 }

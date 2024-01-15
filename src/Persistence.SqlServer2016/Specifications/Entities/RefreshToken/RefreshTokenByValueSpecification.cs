@@ -18,7 +18,7 @@ internal sealed class RefreshTokenByValueSpecification :
         WhereExpression = refreshToken => EF.Functions
             .Collate(
                 refreshToken.Value,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(refreshTokenValue);
     }
 }

@@ -14,7 +14,7 @@ internal sealed class PlatformTemporarilyRemovedSpecification :
 {
     internal PlatformTemporarilyRemovedSpecification()
     {
-        var minDateTimeInDatabase = CustomConstant.DbDefaultValue.MIN_DATE_TIME;
+        var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = platform =>
             platform.RemovedBy != Guid.Empty &&

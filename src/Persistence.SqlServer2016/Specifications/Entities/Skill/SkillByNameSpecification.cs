@@ -27,7 +27,7 @@ internal sealed class SkillByNameSpecification :
         WhereExpression = skill => EF.Functions
             .Collate(
                 skill.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(skillName);
     }
 }

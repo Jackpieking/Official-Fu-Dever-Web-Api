@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Data;
 using Domain.Repositories;
 using Domain.UnitOfWorks;
 using Microsoft.EntityFrameworkCore.Storage;
+using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories;
 
 namespace Persistence.SqlServer2016.UnitOfWorks;
@@ -14,7 +14,7 @@ namespace Persistence.SqlServer2016.UnitOfWorks;
 internal sealed class UnitOfWork : IUnitOfWork
 {
     //Backing fields.
-    private readonly IFuDeverContext _context;
+    private readonly FuDeverContext _context;
     private IDbContextTransaction _dbContextTransaction;
     private IUserRepository _userRepository;
     private IRefreshTokenRepository _refreshTokenRepository;
@@ -34,7 +34,7 @@ internal sealed class UnitOfWork : IUnitOfWork
     private IProjectRepository _projectRepository;
     private ICvRepository _cvRepository;
 
-    public UnitOfWork(IFuDeverContext context)
+    public UnitOfWork(FuDeverContext context)
     {
         _context = context;
     }

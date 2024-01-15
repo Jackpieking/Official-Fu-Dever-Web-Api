@@ -19,8 +19,14 @@ public interface IPositionRepository : IBaseRepository<Position>
     /// <summary>
     ///     Update position asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPosition">
-    ///     Position to be updated.
+    /// <param name="positionId">
+    ///     Id of updated position.
+    /// </param>
+    /// <param name="positionRemovedAt">
+    ///     When is position removed.
+    /// </param>
+    /// <param name="positionRemovedBy">
+    ///     Position is removed by whom.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -39,15 +45,20 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer1Async(
-        Position foundPosition,
+    Task<int> BulkUpdateByPositionIdAsync(
+        Guid positionId,
+        DateTime positionRemovedAt,
+        Guid positionRemovedBy,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Update position asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPosition">
-    ///     Position to be updated.
+    /// <param name="positionId">
+    ///     Id of updated position.
+    /// </param>
+    /// <param name="positionName">
+    ///     Name of updated position.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -66,15 +77,16 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByIdVer2Async(
-        Position foundPosition,
+    Task<int> BulkUpdateByPositionIdAsync(
+        Guid positionId,
+        string positionName,
         CancellationToken cancellationToken);
 
     /// <summary>
     ///     Remove position asynchronously and directly to database.
     /// </summary>
-    /// <param name="foundPosition">
-    ///     Position to be removed.
+    /// <param name="positionId">
+    ///     Id of removed position.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -93,7 +105,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkRemoveByIdAsync(
+    Task<int> BulkRemoveByPositionIdAsync(
         Guid positionId,
         CancellationToken cancellationToken);
 }

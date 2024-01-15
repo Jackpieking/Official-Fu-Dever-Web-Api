@@ -49,7 +49,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             }
         ];
@@ -192,7 +192,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             }
         ];
@@ -230,7 +230,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             }
         ];
@@ -273,7 +273,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             }
         ];
@@ -341,7 +341,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             },
         ];
@@ -569,7 +569,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Name = string.Empty
             }
         ];
@@ -602,7 +602,7 @@ internal static class EntityDataSeeding
             },
             new()
             {
-                Id = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 Type = string.Empty
             }
         ];
@@ -637,15 +637,15 @@ internal static class EntityDataSeeding
             Id = Guid.NewGuid(),
             UserName = "ledinhdangkhoa10a9@gmail.com",
             UserJoiningStatusId = newUserJoiningStatuses[2].Id,
-            PositionId = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            MajorId = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            DepartmentId = Application.Common.CustomConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+            PositionId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+            MajorId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+            DepartmentId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
             FirstName = string.Empty,
             LastName = string.Empty,
             Career = string.Empty,
             Workplaces = string.Empty,
             EducationPlaces = string.Empty,
-            BirthDay = Common.CustomConstant.DbDefaultValue.MIN_DATE_TIME,
+            BirthDay = Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
             HomeAddress = string.Empty,
             SelfDescription = string.Empty,
             JoinDate = DateTime.UtcNow,

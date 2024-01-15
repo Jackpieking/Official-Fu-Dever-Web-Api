@@ -17,7 +17,7 @@ internal sealed class UserByUsernameSpecification :
         WhereExpression = user => EF.Functions
             .Collate(
                 user.UserName,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(username);
     }
 }

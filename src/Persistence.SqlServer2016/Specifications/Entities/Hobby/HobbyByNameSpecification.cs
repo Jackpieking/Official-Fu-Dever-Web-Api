@@ -26,7 +26,7 @@ internal sealed class HobbyByNameSpecification :
         WhereExpression = hobby => EF.Functions
             .Collate(
                 hobby.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(hobbyName);
     }
 }

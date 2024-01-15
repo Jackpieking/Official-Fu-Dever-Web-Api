@@ -5,6 +5,7 @@ using Domain.Repositories.Base;
 using Domain.Specifications.Base;
 using Domain.Specifications.Others;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -30,7 +31,7 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 {
     protected readonly DbSet<TEntity> _dbSet;
 
-    protected BaseRepository(IFuDeverContext context)
+    protected BaseRepository(FuDeverContext context)
     {
         _dbSet = context.DomainSet<TEntity>();
     }

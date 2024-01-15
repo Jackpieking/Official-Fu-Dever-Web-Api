@@ -17,7 +17,7 @@ internal sealed class ProjectByTitleSpecification :
         WhereExpression = project => EF.Functions
             .Collate(
                 project.Title,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(projectTitle);
     }
 }

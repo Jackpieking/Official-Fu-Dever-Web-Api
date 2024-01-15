@@ -26,7 +26,7 @@ internal sealed class PositionByNameSpecification :
         WhereExpression = position => EF.Functions
             .Collate(
                 position.Name,
-                CustomConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
+                CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(positionName);
     }
 }

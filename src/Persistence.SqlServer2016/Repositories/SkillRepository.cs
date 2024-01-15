@@ -6,6 +6,7 @@ using Domain.Data;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
 namespace Persistence.SqlServer2016.Repositories;
@@ -17,11 +18,11 @@ internal sealed class SkillRepository :
     BaseRepository<Skill>,
     ISkillRepository
 {
-    internal SkillRepository(IFuDeverContext context) : base(context: context)
+    internal SkillRepository(FuDeverContext context) : base(context: context)
     {
     }
 
-    public Task<int> BulkRemoveByIdAsync(
+    public Task<int> BulkRemoveBySkillIdAsync(
         Guid skillId,
         CancellationToken cancellationToken)
     {
@@ -30,34 +31,37 @@ internal sealed class SkillRepository :
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer1Async(
-        Skill foundSkill,
+    public Task<int> BulkUpdateBySkillIdAsync(
+        Guid skillId,
+        DateTime skillRemovedAt,
+        Guid skillRemovedBy,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: skill => skill.Id == foundSkill.Id)
+            .Where(predicate: skill => skill.Id == skillId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         skill => skill.RemovedAt,
-                        foundSkill.RemovedAt)
+                        skillRemovedAt)
                     .SetProperty(
                         skill => skill.RemovedBy,
-                        foundSkill.RemovedBy),
+                        skillRemovedBy),
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByIdVer2Async(
-        Skill foundSkill,
+    public Task<int> BulkUpdateBySkillIdAsync(
+        Guid skillId,
+        string skillName,
         CancellationToken cancellationToken)
     {
         return _dbSet
-            .Where(predicate: skill => skill.Id == foundSkill.Id)
+            .Where(predicate: skill => skill.Id == skillId)
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
                         skill => skill.Name,
-                        foundSkill.Name),
+                        skillName),
                 cancellationToken: cancellationToken);
     }
 }

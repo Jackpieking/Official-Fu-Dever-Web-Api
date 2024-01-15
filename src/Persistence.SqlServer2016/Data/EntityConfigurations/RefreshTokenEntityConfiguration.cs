@@ -33,7 +33,7 @@ internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration
         // Value property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.Value)
-            .HasColumnType(typeName: CustomConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // AccessTokenId property configuration.
@@ -44,13 +44,13 @@ internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration
         // ExpiredDate property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.ExpiredDate)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.CreatedAt)
-            .HasColumnType(typeName: CustomConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
             .IsRequired();
 
         // CreatedBy property configuration.

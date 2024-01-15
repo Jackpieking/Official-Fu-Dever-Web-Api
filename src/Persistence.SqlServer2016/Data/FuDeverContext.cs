@@ -14,9 +14,7 @@ namespace Persistence.SqlServer2016.Data;
 /// <summary>
 ///     Implementation of Fu dever context.
 /// </summary>
-internal sealed class FuDeverContext :
-    IdentityDbContext<User, Role, Guid>,
-    IFuDeverContext
+internal sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
 {
     internal FuDeverContext(DbContextOptions<FuDeverContext> options) : base(options: options)
     {
