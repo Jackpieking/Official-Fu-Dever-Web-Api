@@ -25,7 +25,7 @@ internal sealed class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: role => role.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

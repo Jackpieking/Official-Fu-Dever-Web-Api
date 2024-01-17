@@ -34,7 +34,7 @@ internal sealed class DepartmentEntityConfiguration : IEntityTypeConfiguration<D
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: department => department.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

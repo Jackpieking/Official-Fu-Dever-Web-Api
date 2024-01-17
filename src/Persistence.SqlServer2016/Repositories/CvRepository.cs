@@ -1,4 +1,3 @@
-using Domain.Data;
 using Domain.Entities;
 using Domain.Repositories;
 using Persistence.SqlServer2016.Data;

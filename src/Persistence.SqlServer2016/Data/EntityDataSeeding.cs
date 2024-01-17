@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Common;
 
 namespace Persistence.SqlServer2016.Data;
 
@@ -25,32 +26,44 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Board of Directors"
+                Name = "Board of Directors",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Academic Board"
+                Name = "Academic Board",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Administrative Board"
+                Name = "Administrative Board",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Events Board"
+                Name = "Events Board",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Media Board"
+                Name = "Media Board",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
+                Name = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -63,137 +76,191 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Volunteering"
+                Name = "Volunteering",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Cooking"
+                Name = "Cooking",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Collecting"
+                Name = "Collecting",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Writing"
+                Name = "Writing",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Camping"
+                Name = "Camping",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Sports"
+                Name = "Sports",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Yoga"
+                Name = "Yoga",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Photography"
+                Name = "Photography",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Chess"
+                Name = "Chess",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Taekwondo"
+                Name = "Taekwondo",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Birdwatching"
+                Name = "Birdwatching",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "DIY Crafts"
+                Name = "DIY Crafts",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Games"
+                Name = "Games",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Baking"
+                Name = "Baking",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Fishing"
+                Name = "Fishing",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Coding"
+                Name = "Coding",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Drawing"
+                Name = "Drawing",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Playing an Instrument"
+                Name = "Playing an Instrument",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Painting"
+                Name = "Painting",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Gardening"
+                Name = "Gardening",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Hiking"
+                Name = "Hiking",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Reading"
+                Name = "Reading",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Dancing"
+                Name = "Dancing",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Home Improvement"
+                Name = "Home Improvement",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Surfing"
+                Name = "Surfing",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Traveling"
+                Name = "Traveling",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
+                Name = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -206,32 +273,44 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Software Engineering"
+                Name = "Software Engineering",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Information Security"
+                Name = "Information Security",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Digital Art Design"
+                Name = "Digital Art Design",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Information System"
+                Name = "Information System",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Artificial Intelligence"
+                Name = "Artificial Intelligence",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
+                Name = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -244,37 +323,51 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "LinkedIn"
+                Name = "LinkedIn",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "GitHub"
+                Name = "GitHub",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Facebook"
+                Name = "Facebook",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Youtube"
+                Name = "Youtube",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Twitter"
+                Name = "Twitter",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Instagram"
+                Name = "Instagram",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
+                Name = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -287,62 +380,86 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Club President"
+                Name = "Club President",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Vice Club President"
+                Name = "Vice Club President",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Member"
+                Name = "Member",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Administrative Department Head"
+                Name = "Administrative Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Vice Academic Department Head"
+                Name = "Vice Academic Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Secretary"
+                Name = "Secretary",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Media Department Head"
+                Name = "Media Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Vice Administrative Department Head"
+                Name = "Vice Administrative Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Events Department Head"
+                Name = "Events Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Vice Events Department Head"
+                Name = "Vice Events Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "Academic Department Head"
+                Name = "Academic Department Head",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
+                Name = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
         ];
 
@@ -352,226 +469,182 @@ internal static class EntityDataSeeding
         #region Skills
         List<Skill> newSkills =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Vue.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Caching"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Flexbox"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Docker"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Next.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "SQL Server"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "HTML/CSS"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Github"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Git"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Node.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Dart"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "MySQL"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Authorization"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "JavaScript"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Web Security"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "ASP.NET Core"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Devops"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Python"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Apache"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "PostgreSQL"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "RESTful API"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Express.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Flask"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Bootstrap"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Spring Boot"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "GraphQL"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "MongoDB"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "React.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "C#"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Agile"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Java"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "C++"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Authentication"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Django"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Angular.js"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Ruby"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "React Native"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Typescript"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "C"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "SQL"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Swift"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Flutter"
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "PHP"
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty
-            }
+            new(
+                skillName: "Vue.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Caching",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Flexbox",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Docker",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Next.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "SQL Server",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "HTML/CSS",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Github",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Git",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Node.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Dart",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "MySQL",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Authorization",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "JavaScript",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Web Security",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "ASP.NET Core",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Devops",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Python",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Apache",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "PostgreSQL",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "RESTful API",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Express.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Flask",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Bootstrap",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Spring Boot",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "GraphQL",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "MongoDB",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "React.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "C#",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Agile",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Java",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "C++",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Authentication",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Django",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Angular.js",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Ruby",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "React Native",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Typescript",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "C",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "SQL",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Swift",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "Flutter",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: "PHP",
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
+            new(
+                skillName: string.Empty,
+                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Guid.Empty),
         ];
 
         builder.Entity<Skill>().HasData(data: newSkills);
@@ -583,27 +656,37 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Type = "Pending"
+                Type = "Pending",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Type = "Approved"
+                Type = "Approved",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Type = "Expired"
+                Type = "Expired",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Type = "Rejected"
+                Type = "Rejected",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Type = string.Empty
+                Type = string.Empty,
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -616,12 +699,16 @@ internal static class EntityDataSeeding
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "admin"
+                Name = "admin",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             },
             new()
             {
                 Id = Guid.NewGuid(),
-                Name = "user"
+                Name = "user",
+                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                RemovedBy = Guid.Empty
             }
         ];
 
@@ -645,12 +732,16 @@ internal static class EntityDataSeeding
             Career = string.Empty,
             Workplaces = string.Empty,
             EducationPlaces = string.Empty,
-            BirthDay = Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            BirthDay = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
             HomeAddress = string.Empty,
             SelfDescription = string.Empty,
             JoinDate = DateTime.UtcNow,
             AvatarUrl = "https://firebasestorage.googleapis.com/v0/b/comic-image-storage.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=2309abba-282c-4f81-846e-6336235103dc",
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            RemovedBy = Guid.Empty,
+            UpdatedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            UpdatedBy = Guid.Empty,
         };
 
         admin.Email = admin.UserName;

@@ -45,7 +45,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // UploadDate property configuration.
         builder
             .Property(propertyExpression: blog => blog.UploadDate)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // Content property configuration.
@@ -57,7 +57,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -68,7 +68,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // UpdatedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.UpdatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // UpdatedBy property configuration.
@@ -79,7 +79,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: blog => blog.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

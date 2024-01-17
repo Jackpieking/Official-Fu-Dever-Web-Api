@@ -1,5 +1,4 @@
 using Application.Common;
-using Domain.Data;
 using Domain.Entities.Base;
 using Domain.Repositories.Base;
 using Domain.Specifications.Base;
@@ -33,7 +32,7 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 
     protected BaseRepository(FuDeverContext context)
     {
-        _dbSet = context.DomainSet<TEntity>();
+        _dbSet = context.Set<TEntity>();
     }
 
     public async Task AddAsync(
@@ -55,7 +54,7 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     public Task<bool> IsFoundBySpecificationsAsync(
-        IList<IBaseSpecification<TEntity>> specifications,
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken)
     {
         IQueryable<TEntity> queryable = _dbSet;
@@ -67,7 +66,9 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return queryable.AnyAsync(cancellationToken: cancellationToken);
     }
 
-    public IEnumerable<TEntity> GetAllBySpecifications(IList<IBaseSpecification<TEntity>> specifications)
+    public async Task<IEnumerable<TEntity>> GetAllBySpecificationsAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken)
     {
         IQueryable<TEntity> queryable = _dbSet;
 
@@ -75,11 +76,11 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
             queryable: queryable,
             specifications: specifications);
 
-        return queryable.AsEnumerable();
+        return await queryable.ToListAsync(cancellationToken: cancellationToken);
     }
 
     public Task<TEntity> FindBySpecificationsAsync(
-        IList<IBaseSpecification<TEntity>> specifications,
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken)
     {
         IQueryable<TEntity> queryable = _dbSet;
@@ -103,7 +104,7 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     /// </param>
     private static void ApplySpecificationToQueryable(
         IQueryable<TEntity> queryable,
-        IList<IBaseSpecification<TEntity>> specifications)
+        IEnumerable<IBaseSpecification<TEntity>> specifications)
     {
         specifications.ParallelForEach(action: specification =>
         {

@@ -50,7 +50,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: cv => cv.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -61,7 +61,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: cv => cv.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

@@ -38,7 +38,7 @@ internal sealed class BlogCommentEntityConfiguration : IEntityTypeConfiguration<
         // UploadDate property configuration.
         builder
             .Property(propertyExpression: blogComment => blogComment.UploadDate)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // Content property configuration.
@@ -50,7 +50,7 @@ internal sealed class BlogCommentEntityConfiguration : IEntityTypeConfiguration<
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: blogComment => blogComment.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -61,7 +61,7 @@ internal sealed class BlogCommentEntityConfiguration : IEntityTypeConfiguration<
         // UpdatedAt property configuration.
         builder
             .Property(propertyExpression: blogComment => blogComment.UpdatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // UpdatedBy property configuration.

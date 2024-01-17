@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Domain.Data;
 using Domain.Entities;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;

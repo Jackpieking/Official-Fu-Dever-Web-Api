@@ -7,7 +7,7 @@ namespace Domain.Entities.Base;
 ///     about the person updating the entity and the time
 ///     is it updated.
 /// </summary>
-public interface IUpdatedEntity
+internal interface IUpdatedEntity
 {
     /// <summary>
     ///     When is entity updated.

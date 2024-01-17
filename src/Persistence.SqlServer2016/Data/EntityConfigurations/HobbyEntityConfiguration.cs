@@ -34,7 +34,7 @@ internal sealed class HobbyEntityConfiguration : IEntityTypeConfiguration<Hobby>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: hobby => hobby.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

@@ -11,6 +11,27 @@ public sealed class Skill :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
+    public Skill(
+        string skillName,
+        DateTime skillRemovedAt)
+    {
+        Id = Guid.NewGuid();
+        Name = skillName;
+        RemovedAt = skillRemovedAt;
+        RemovedBy = Guid.Empty;
+    }
+
+    public Skill(
+        string skillName,
+        DateTime skillRemovedAt,
+        Guid skillRemovedBy)
+    {
+        Id = Guid.NewGuid();
+        Name = skillName;
+        RemovedAt = skillRemovedAt;
+        RemovedBy = skillRemovedBy;
+    }
+
     /// <summary>
     ///     Skill id.
     /// </summary>

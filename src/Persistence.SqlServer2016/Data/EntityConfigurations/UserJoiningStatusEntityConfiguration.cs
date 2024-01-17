@@ -34,7 +34,7 @@ internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfigur
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

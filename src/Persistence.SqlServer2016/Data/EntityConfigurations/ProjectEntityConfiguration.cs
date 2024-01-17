@@ -63,7 +63,7 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: project => project.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -74,7 +74,7 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         //UpdatedAt property configuration.
         builder
             .Property(propertyExpression: project => project.UpdatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // UpdatedBy property configuration.

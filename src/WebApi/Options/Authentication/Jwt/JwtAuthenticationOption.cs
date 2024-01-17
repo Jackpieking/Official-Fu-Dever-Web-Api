@@ -1,41 +1,41 @@
 namespace WebApi.Options.Authentication.Jwt;
 
-internal sealed class JwtAuthenticationOption
+public sealed class JwtAuthenticationOption
 {
-    internal CommonOption Common { get; set; } = new();
+    public CommonOption Common { get; set; } = new();
 
-    internal TypeOption Type { get; set; } = new();
+    public TypeOption Type { get; set; } = new();
 
-    internal sealed class CommonOption
+    public sealed class CommonOption
     {
-        internal string DefaultAuthenticateScheme { get; set; }
+        public string DefaultAuthenticateScheme { get; set; }
 
-        internal string DefaultScheme { get; set; }
+        public string DefaultScheme { get; set; }
 
-        internal string DefaultChallengeScheme { get; set; }
+        public string DefaultChallengeScheme { get; set; }
     }
 
-    internal sealed class TypeOption
+    public sealed class TypeOption
     {
-        internal JwtOption Jwt { get; set; } = new();
+        public JwtOption Jwt { get; set; } = new();
 
-        internal sealed class JwtOption
+        public sealed class JwtOption
         {
-            internal bool ValidateIssuer { get; set; }
+            public bool ValidateIssuer { get; set; }
 
-            internal bool ValidateAudience { get; set; }
+            public bool ValidateAudience { get; set; }
 
-            internal bool ValidateLifetime { get; set; }
+            public bool ValidateLifetime { get; set; }
 
-            internal bool ValidateIssuerSigningKey { get; set; }
+            public bool ValidateIssuerSigningKey { get; set; }
 
-            internal bool RequireExpirationTime { get; set; }
+            public bool RequireExpirationTime { get; set; }
 
-            internal string ValidIssuer { get; set; }
+            public string ValidIssuer { get; set; }
 
-            internal string ValidAudience { get; set; }
+            public string ValidAudience { get; set; }
 
-            internal string IssuerSigningKey { get; set; }
+            public string IssuerSigningKey { get; set; }
         }
     }
 }

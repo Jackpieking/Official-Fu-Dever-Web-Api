@@ -1,37 +1,37 @@
 namespace WebApi.Options.Authorization;
 
-internal sealed class AuthorizationOption
+public sealed class AuthorizationOption
 {
-    internal CommonOption Common { get; set; } = new();
+    public CommonOption Common { get; set; } = new();
 
-    internal PolicyOption Policy { get; set; } = new();
+    public PolicyOption Policy { get; set; } = new();
 
-    internal sealed class CommonOption
+    public sealed class CommonOption
     {
-        internal bool InvokeHandlersAfterFailure { get; set; }
+        public bool InvokeHandlersAfterFailure { get; set; }
     }
 
-    internal sealed class PolicyOption
+    public sealed class PolicyOption
     {
-        internal DefaultOption Default { get; set; } = new();
+        public DefaultOption Default { get; set; } = new();
 
-        internal AdminRoleRequireOption AdminRoleRequire { get; set; } = new();
+        public AdminRoleRequireOption AdminRoleRequire { get; set; } = new();
 
-        internal RefreshAccessTokenRequireOption RefreshAccessTokenRequire { get; set; } = new();
+        public RefreshAccessTokenRequireOption RefreshAccessTokenRequire { get; set; } = new();
 
-        internal sealed class DefaultOption
+        public sealed class DefaultOption
         {
-            internal string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; }
         }
 
-        internal sealed class AdminRoleRequireOption
+        public sealed class AdminRoleRequireOption
         {
-            internal string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; }
         }
 
-        internal sealed class RefreshAccessTokenRequireOption
+        public sealed class RefreshAccessTokenRequireOption
         {
-            internal string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; }
         }
     }
 }

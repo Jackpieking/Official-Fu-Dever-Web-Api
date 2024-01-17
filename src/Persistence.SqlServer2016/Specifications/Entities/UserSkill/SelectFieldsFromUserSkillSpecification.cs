@@ -16,10 +16,7 @@ internal sealed class SelectFieldsFromUserSkillSpecification :
         SelectExpression = userSkill => new()
         {
             SkillId = userSkill.SkillId,
-            Skill = new()
-            {
-                Name = userSkill.Skill.Name
-            }
+            Skill = new(userSkill.Skill.Name)
         };
 
         return this;

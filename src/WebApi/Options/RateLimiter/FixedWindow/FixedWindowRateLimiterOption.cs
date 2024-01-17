@@ -1,19 +1,19 @@
 namespace WebApi.Options.RateLimiter.FixedWindow;
 
-internal sealed class FixedWindowRateLimiterOption
+public sealed class FixedWindowRateLimiterOption
 {
-    internal RemoteIpAddressOption RemoteIpAddress { get; set; } = new();
+    public RemoteIpAddressOption RemoteIpAddress { get; set; } = new();
 
-    internal sealed class RemoteIpAddressOption
+    public sealed class RemoteIpAddressOption
     {
-        internal int PermitLimit { get; set; }
+        public int PermitLimit { get; set; }
 
-        internal int QueueProcessingOrder { get; set; }
+        public int QueueProcessingOrder { get; set; }
 
-        internal int QueueLimit { get; set; }
+        public int QueueLimit { get; set; }
 
-        internal int Window { get; set; }
+        public int Window { get; set; }
 
-        internal bool AutoReplenishment { get; set; }
+        public bool AutoReplenishment { get; set; }
     }
 }

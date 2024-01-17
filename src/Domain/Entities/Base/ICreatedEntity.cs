@@ -7,7 +7,7 @@ namespace Domain.Entities.Base;
 ///     about the person creating the entity and the time
 ///     is it created.
 /// </summary>
-public interface ICreatedEntity
+internal interface ICreatedEntity
 {
     /// <summary>
     ///     When is entity created.

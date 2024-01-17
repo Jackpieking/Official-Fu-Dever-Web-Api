@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain.Data;
+namespace Application.Interfaces.Data;
 
 /// <summary>
 ///     Represent the handler for database min time.

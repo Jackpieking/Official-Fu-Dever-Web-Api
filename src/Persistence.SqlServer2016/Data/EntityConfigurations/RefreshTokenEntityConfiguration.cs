@@ -44,13 +44,13 @@ internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration
         // ExpiredDate property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.ExpiredDate)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.

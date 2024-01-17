@@ -1,6 +1,6 @@
 namespace WebApi.Options.ApiController;
 
-internal sealed class ApiControllerOption
+public sealed class ApiControllerOption
 {
-    internal bool SuppressAsyncSuffixInActionNames { get; set; }
+    public bool SuppressAsyncSuffixInActionNames { get; set; }
 }

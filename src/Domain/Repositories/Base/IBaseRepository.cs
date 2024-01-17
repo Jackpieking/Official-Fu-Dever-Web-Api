@@ -78,7 +78,7 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     A task containing a boolean result of operation.
     /// </returns>
     Task<bool> IsFoundBySpecificationsAsync(
-        IList<IBaseSpecification<TEntity>> specifications,
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken);
 
     /// <summary>
@@ -89,10 +89,17 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     List of specifications that are used for
     ///     constructing a complete query.
     /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used to notify the system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
     /// <returns>
-    ///     List of found entities.
+    ///     A task containing list of found entities.
     /// </returns>
-    IEnumerable<TEntity> GetAllBySpecifications(IList<IBaseSpecification<TEntity>> specifications);
+    Task<IEnumerable<TEntity>> GetAllBySpecificationsAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken);
 
     /// <summary>
     ///     Asynchronously find the entity which satisfies
@@ -111,6 +118,6 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     A task containing the found entity.
     /// </returns>
     Task<TEntity> FindBySpecificationsAsync(
-        IList<IBaseSpecification<TEntity>> specifications,
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken);
 }

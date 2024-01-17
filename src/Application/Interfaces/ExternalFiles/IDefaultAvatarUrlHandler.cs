@@ -1,4 +1,4 @@
-namespace Application.ExternalFiles;
+namespace Application.Interfaces.ExternalFiles;
 
 /// <summary>
 ///     Represent the handler for default user avatar url.

@@ -212,7 +212,7 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public async Task CreateTransactionAsync(CancellationToken cancellationToken)
     {
-        _dbContextTransaction = await _context.DatabaseFacade.BeginTransactionAsync(cancellationToken: cancellationToken);
+        _dbContextTransaction = await _context.Database.BeginTransactionAsync(cancellationToken: cancellationToken);
     }
 
     public Task CommitTransactionAsync(CancellationToken cancellationToken)
@@ -232,12 +232,12 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public IExecutionStrategy CreateExecutionStrategy()
     {
-        return _context.DatabaseFacade.CreateExecutionStrategy();
+        return _context.Database.CreateExecutionStrategy();
     }
 
 
     public Task SaveToDatabaseAsync(CancellationToken cancellationToken)
     {
-        return _context.CustomSaveChangeAsync(cancellationToken: cancellationToken);
+        return _context.SaveChangesAsync(cancellationToken: cancellationToken);
     }
 }

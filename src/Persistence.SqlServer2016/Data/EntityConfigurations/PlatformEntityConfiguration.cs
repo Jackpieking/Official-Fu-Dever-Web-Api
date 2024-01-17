@@ -34,7 +34,7 @@ internal sealed class PlatformEntityConfiguration : IEntityTypeConfiguration<Pla
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: platform => platform.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

@@ -7,5 +7,7 @@ namespace Domain.Specifications.Entities.UserSkill;
 /// </summary>
 public interface ISelectFieldsFromUserSkillSpecification : IBaseSpecification<Domain.Entities.UserSkill>
 {
+    ISelectFieldsFromUserSkillSpecification Ver1();
 
+    ISelectFieldsFromUserSkillSpecification Ver2();
 }

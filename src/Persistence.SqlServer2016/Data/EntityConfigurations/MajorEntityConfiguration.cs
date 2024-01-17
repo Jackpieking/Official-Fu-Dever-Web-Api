@@ -34,7 +34,7 @@ internal sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: major => major.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

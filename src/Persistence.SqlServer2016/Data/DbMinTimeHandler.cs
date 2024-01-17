@@ -1,5 +1,5 @@
 using System;
-using Domain.Data;
+using Application.Interfaces.Data;
 using Persistence.SqlServer2016.Common;
 
 namespace Persistence.SqlServer2016.Data;

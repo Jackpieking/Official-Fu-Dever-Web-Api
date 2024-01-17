@@ -34,7 +34,7 @@ internal sealed class SkillEntityConfiguration : IEntityTypeConfiguration<Skill>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: skill => skill.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.

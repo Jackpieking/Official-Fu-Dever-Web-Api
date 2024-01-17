@@ -30,7 +30,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // CreatedAt property configuration.
         builder
             .Property(propertyExpression: user => user.CreatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // CreatedBy property configuration.
@@ -41,7 +41,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // UpdatedAt property configuration.
         builder
             .Property(propertyExpression: user => user.UpdatedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // UpdatedBy property configuration.
@@ -52,7 +52,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // RemovedAt property configuration.
         builder
             .Property(propertyExpression: user => user.RemovedAt)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // RemovedBy property configuration.
@@ -108,7 +108,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // BirthDay property configuration.
         builder
             .Property(propertyExpression: user => user.BirthDay)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // HomeAddress property configuration.
@@ -126,7 +126,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // JoinDate property configuration.
         builder
             .Property(propertyExpression: user => user.JoinDate)
-            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME)
+            .HasColumnType(typeName: CommonConstant.DbDataType.DATETIME_2)
             .IsRequired();
 
         // ActivityPoints property configuration.

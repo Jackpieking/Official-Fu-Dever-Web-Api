@@ -9,7 +9,7 @@ internal static class CommonConstant
 {
     internal static class DbDataType
     {
-        internal const string DATETIME = "DATETIME";
+        internal const string DATETIME_2 = "DATETIME2";
 
         internal const string NVARCHAR_MAX = "NVARCHAR(MAX)";
 
@@ -24,14 +24,7 @@ internal static class CommonConstant
 
     internal static class DbDefaultValue
     {
-        internal static readonly DateTime MIN_DATE_TIME = new(
-            year: 1753,
-            month: 1,
-            day: 1,
-            hour: 0,
-            minute: 0,
-            second: 0,
-            kind: DateTimeKind.Utc);
+        internal static readonly DateTime MIN_DATE_TIME = DateTime.MinValue.ToUniversalTime();
     }
 
     internal static class DbCollation
