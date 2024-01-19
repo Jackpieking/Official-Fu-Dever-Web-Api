@@ -16,7 +16,7 @@ internal sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
     }
 
     /// <summary>
-    ///     Config tables and seed initial data here.
+    ///     Configure tables and seed initial data here.
     /// </summary>
     /// <param name="builder">
     ///     Builder to config the tables and seed data.

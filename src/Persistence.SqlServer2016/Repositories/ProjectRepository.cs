@@ -25,6 +25,11 @@ internal sealed class ProjectRepository :
         Guid authorId,
         CancellationToken cancellationToken)
     {
+        if (authorId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: project => project.AuthorId == authorId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);

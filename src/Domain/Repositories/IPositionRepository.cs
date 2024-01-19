@@ -45,7 +45,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByPositionIdAsync(
+    Task<int> BulkUpdateByPositionIdVer1Async(
         Guid positionId,
         DateTime positionRemovedAt,
         Guid positionRemovedBy,
@@ -77,7 +77,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByPositionIdAsync(
+    Task<int> BulkUpdateByPositionIdVer2Async(
         Guid positionId,
         string positionName,
         CancellationToken cancellationToken);

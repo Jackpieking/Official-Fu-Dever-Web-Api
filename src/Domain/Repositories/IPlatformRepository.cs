@@ -45,7 +45,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByPlatformIdAsync(
+    Task<int> BulkUpdateByPlatformIdVer1Async(
         Guid platformId,
         DateTime platformRemovedAt,
         Guid platformRemovedBy,
@@ -77,7 +77,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateByPlatformIdAsync(
+    Task<int> BulkUpdateByPlatformIdVer2Async(
         Guid platformId,
         string platformName,
         CancellationToken cancellationToken);

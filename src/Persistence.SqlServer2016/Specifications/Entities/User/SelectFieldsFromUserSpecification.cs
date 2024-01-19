@@ -108,10 +108,7 @@ internal sealed class SelectFieldsFromUserSpecification :
             }),
             UserSkills = user.UserSkills.Select(userSkill => new Domain.Entities.UserSkill
             {
-                Skill = new()
-                {
-                    Name = userSkill.Skill.Name
-                }
+                Skill = Domain.Entities.Skill.Init(userSkill.Skill.Name)
             }),
             UserHobbies = user.UserHobbies.Select(userHobby => new Domain.Entities.UserHobby
             {

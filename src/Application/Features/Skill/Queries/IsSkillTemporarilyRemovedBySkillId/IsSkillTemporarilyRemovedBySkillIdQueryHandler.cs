@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using FluentValidation;
 
 namespace Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillId;
 
@@ -16,13 +17,16 @@ internal sealed class IsSkillTemporarilyRemovedBySkillIdQueryHandler : IQueryHan
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
+    private readonly IValidator<IsSkillTemporarilyRemovedBySkillIdQuery> _validator;
 
     internal IsSkillTemporarilyRemovedBySkillIdQueryHandler(
         IUnitOfWork unitOfWork,
-        ISuperSpecificationManager superSpecificationManager)
+        ISuperSpecificationManager superSpecificationManager,
+        IValidator<IsSkillTemporarilyRemovedBySkillIdQuery> validator)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
+        _validator = validator;
     }
 
     /// <summary>
@@ -39,16 +43,20 @@ internal sealed class IsSkillTemporarilyRemovedBySkillIdQueryHandler : IQueryHan
     /// <returns>
     ///     A task containing the boolean result.
     /// </returns>
-    public Task<bool> Handle(
+    public async Task<bool> Handle(
         IsSkillTemporarilyRemovedBySkillIdQuery request,
         CancellationToken cancellationToken)
     {
-        if (request.SkillId == Guid.Empty)
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
-            return Task.FromResult(result: false);
+            return false;
         }
 
-        var isSkillTemporarilyRemoved = _unitOfWork.SkillRepository.IsFoundBySpecificationsAsync(
+        var isSkillTemporarilyRemoved = await _unitOfWork.SkillRepository.IsFoundBySpecificationsAsync(
             specifications:
             [
                 _superSpecificationManager.Skill.SkillByIdSpecification(skillId: request.SkillId),

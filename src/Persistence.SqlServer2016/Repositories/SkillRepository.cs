@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Common;
 using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
@@ -25,17 +26,30 @@ internal sealed class SkillRepository :
         Guid skillId,
         CancellationToken cancellationToken)
     {
+        if (skillId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: skill => skill.Id == skillId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateBySkillIdAsync(
+    public Task<int> BulkUpdateBySkillIdVer1Async(
         Guid skillId,
         DateTime skillRemovedAt,
         Guid skillRemovedBy,
         CancellationToken cancellationToken)
     {
+        if (skillId == Guid.Empty ||
+            skillRemovedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
+            skillRemovedAt > DateTime.UtcNow ||
+            skillRemovedBy == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: skill => skill.Id == skillId)
             .ExecuteUpdateAsync(
@@ -49,11 +63,20 @@ internal sealed class SkillRepository :
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateBySkillIdAsync(
+    public Task<int> BulkUpdateBySkillIdVer2Async(
         Guid skillId,
         string skillName,
         CancellationToken cancellationToken)
     {
+        const int MaxSkillNameLength = 100;
+
+        if (skillId == Guid.Empty ||
+            string.IsNullOrWhiteSpace(value: skillName) ||
+            skillName.Length > MaxSkillNameLength)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: skill => skill.Id == skillId)
             .ExecuteUpdateAsync(

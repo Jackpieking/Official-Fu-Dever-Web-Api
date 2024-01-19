@@ -1,9 +1,9 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using FluentValidation;
 
 namespace Application.Features.Skill.Queries.IsSkillFoundBySkillId;
 
@@ -16,13 +16,16 @@ internal sealed class IsSkillFoundBySkillIdQueryHandler : IQueryHandler<
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
+    private readonly IValidator<IsSkillFoundBySkillIdQuery> _validator;
 
     internal IsSkillFoundBySkillIdQueryHandler(
         IUnitOfWork unitOfWork,
-        ISuperSpecificationManager superSpecificationManager)
+        ISuperSpecificationManager superSpecificationManager,
+        IValidator<IsSkillFoundBySkillIdQuery> validator)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
+        _validator = validator;
     }
 
     /// <summary>
@@ -39,16 +42,20 @@ internal sealed class IsSkillFoundBySkillIdQueryHandler : IQueryHandler<
     /// <returns>
     ///     A task containing the boolean result.
     /// </returns>
-    public Task<bool> Handle(
+    public async Task<bool> Handle(
         IsSkillFoundBySkillIdQuery request,
         CancellationToken cancellationToken)
     {
-        if (request.SkillId == Guid.Empty)
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
-            return Task.FromResult(result: false);
+            return false;
         }
 
-        var isSkillFound = _unitOfWork.SkillRepository.IsFoundBySpecificationsAsync(
+        var isSkillFound = await _unitOfWork.SkillRepository.IsFoundBySpecificationsAsync(
             specifications:
             [
                 _superSpecificationManager.Skill.SkillByIdSpecification(skillId: request.SkillId),

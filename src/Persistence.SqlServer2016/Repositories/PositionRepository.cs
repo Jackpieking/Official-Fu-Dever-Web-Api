@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Common;
 using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
@@ -25,17 +26,30 @@ internal sealed class PositionRepository :
         Guid positionId,
         CancellationToken cancellationToken)
     {
+        if (positionId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: position => position.Id == positionId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByPositionIdAsync(
+    public Task<int> BulkUpdateByPositionIdVer1Async(
         Guid positionId,
         DateTime positionRemovedAt,
         Guid positionRemovedBy,
         CancellationToken cancellationToken)
     {
+        if (positionId == Guid.Empty ||
+            positionRemovedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
+            positionRemovedAt > DateTime.UtcNow ||
+            positionRemovedBy == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: position => position.Id == positionId)
             .ExecuteUpdateAsync(
@@ -49,11 +63,20 @@ internal sealed class PositionRepository :
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByPositionIdAsync(
+    public Task<int> BulkUpdateByPositionIdVer2Async(
         Guid positionId,
         string positionName,
         CancellationToken cancellationToken)
     {
+        const int MaxPositionNameLength = 100;
+
+        if (positionId == Guid.Empty ||
+            string.IsNullOrWhiteSpace(value: positionName) ||
+            positionName.Length > MaxPositionNameLength)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: position => position.Id == positionId)
             .ExecuteUpdateAsync(

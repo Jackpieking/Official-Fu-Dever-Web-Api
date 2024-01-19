@@ -20,9 +20,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Cache.Redis\Cache.Redis.csproj" />
+    <ProjectReference Include="..\Image.Firebase\Image.Firebase.csproj" />
+    <ProjectReference Include="..\Mail.GoogleGmail\Mail.GoogleGmail.csproj" />
     <ProjectReference Include="..\Persistence.SqlServer2016\Persistence.SqlServer2016.csproj" />
     <ProjectReference Include="..\BackgroundJob.HangFire\BackgroundJob.HangFire.csproj" />
-    <ProjectReference Include="..\Cache.InMemory\Cache.InMemory.csproj" />
   </ItemGroup>
 
   <ItemGroup>

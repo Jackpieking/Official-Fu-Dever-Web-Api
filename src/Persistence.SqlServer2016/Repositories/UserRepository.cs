@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.SqlServer2016.Common;
 using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories.Base;
 
@@ -21,12 +22,20 @@ internal sealed class UserRepository :
     {
     }
 
-    public Task<int> BulkUpdateByUserIdAsync(
+    public Task<int> BulkUpdateByUserIdVer1Async(
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
         CancellationToken cancellationToken)
     {
+        if (userId == Guid.Empty ||
+            userUpdatedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
+            userUpdatedAt > DateTime.UtcNow ||
+            userUpdatedBy == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: user => user.Id == userId)
             .ExecuteUpdateAsync(
@@ -40,13 +49,22 @@ internal sealed class UserRepository :
                 cancellationToken: cancellationToken);
     }
 
-    public Task<int> BulkUpdateByUserIdAsync(
+    public Task<int> BulkUpdateByUserIdVer2Async(
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
         Guid positionId,
         CancellationToken cancellationToken)
     {
+        if (userId == Guid.Empty ||
+            userUpdatedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
+            userUpdatedAt > DateTime.UtcNow ||
+            userUpdatedBy == Guid.Empty ||
+            positionId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: user => user.Id == userId)
             .ExecuteUpdateAsync(

@@ -27,7 +27,7 @@ using WebApi.Options.RateLimiter.FixedWindow;
 namespace WebApi;
 
 /// <summary>
-///     Config services for this layer.
+///     Configure services for this layer.
 /// </summary>
 internal static class DependencyInjection
 {
@@ -65,7 +65,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the authentication service.
+    ///     Configure the authentication service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -113,7 +113,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the authorization service.
+    ///     Configure the authorization service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -177,7 +177,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the core services.
+    ///     Configure the core services.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -193,7 +193,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the logging service.
+    ///     Configure the logging service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -208,7 +208,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the CORS service.
+    ///     Configure the CORS service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -228,7 +228,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the controller service.
+    ///     Configure the controller service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -262,7 +262,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the swagger service.
+    ///     Configure the swagger service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -352,7 +352,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the rate limiter service.
+    ///     Configure the rate limiter service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -414,7 +414,7 @@ internal static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the exception handler service.
+    ///     Configure the exception handler service.
     /// </summary>
     /// <param name="services">
     ///     Service container.

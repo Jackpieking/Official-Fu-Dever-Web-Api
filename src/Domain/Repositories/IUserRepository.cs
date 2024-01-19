@@ -45,7 +45,7 @@ public interface IUserRepository : IBaseRepository<User>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interfaces
     /// </remarks>
-    Task<int> BulkUpdateByUserIdAsync(
+    Task<int> BulkUpdateByUserIdVer1Async(
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
@@ -83,7 +83,7 @@ public interface IUserRepository : IBaseRepository<User>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interfaces
     /// </remarks>
-    Task<int> BulkUpdateByUserIdAsync(
+    Task<int> BulkUpdateByUserIdVer2Async(
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,

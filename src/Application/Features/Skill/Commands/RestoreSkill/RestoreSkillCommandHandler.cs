@@ -1,8 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Interfaces.Data;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Skill.Commands.RestoreSkill;
@@ -15,10 +17,17 @@ internal sealed class RestoreSkillCommandHandler : ICommandHandler<
     bool>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDbMinTimeHandler _dbMinTimeHandler;
+    private readonly IValidator<RestoreSkillCommand> _validator;
 
-    internal RestoreSkillCommandHandler(IUnitOfWork unitOfWork)
+    internal RestoreSkillCommandHandler(
+        IUnitOfWork unitOfWork,
+        IDbMinTimeHandler dbMinTimeHandler,
+        IValidator<RestoreSkillCommand> validator)
     {
         _unitOfWork = unitOfWork;
+        _dbMinTimeHandler = dbMinTimeHandler;
+        _validator = validator;
     }
 
     /// <summary>
@@ -39,8 +48,11 @@ internal sealed class RestoreSkillCommandHandler : ICommandHandler<
         RestoreSkillCommand request,
         CancellationToken cancellationToken)
     {
-        if (request.SkillId == Guid.Empty ||
-            request.SkillRestoredBy == Guid.Empty)
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
             return false;
         }
@@ -55,10 +67,10 @@ internal sealed class RestoreSkillCommandHandler : ICommandHandler<
 
                 try
                 {
-                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdAsync(
+                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
                         skillId: request.SkillId,
-                        skillRemovedAt: request.SkillRestoredAt,
-                        skillRemovedBy: request.SkillRestoredBy,
+                        skillRemovedAt: _dbMinTimeHandler.Get(),
+                        skillRemovedBy: Guid.Empty,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

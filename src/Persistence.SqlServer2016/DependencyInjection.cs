@@ -16,7 +16,7 @@ using Persistence.SqlServer2016.UnitOfWorks;
 namespace Persistence.SqlServer2016;
 
 /// <summary>
-///     Config services for this layer.
+///     Configure services for this layer.
 /// </summary>
 public static class DependencyInjection
 {
@@ -42,7 +42,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config the db context pool service.
+    ///     Configure the db context pool service.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -82,7 +82,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config core services.
+    ///     Configure core services.
     /// </summary>
     /// <param name="services">
     ///     Service container.
@@ -95,7 +95,7 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Config asp net core identity service.
+    ///     Configure asp net core identity service.
     /// </summary>
     /// <param name="services">
     ///     Service container.

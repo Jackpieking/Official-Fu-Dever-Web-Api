@@ -25,6 +25,11 @@ internal sealed class UserSkillRepository :
         Guid skillId,
         CancellationToken cancellationToken)
     {
+        if (skillId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: userSkill => userSkill.SkillId == skillId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
@@ -34,6 +39,11 @@ internal sealed class UserSkillRepository :
         Guid userId,
         CancellationToken cancellationToken)
     {
+        if (userId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: userSkill => userSkill.UserId == userId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);

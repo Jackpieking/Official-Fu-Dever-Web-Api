@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Skill.Commands.RemoveSkillTemporarily;
@@ -15,10 +16,14 @@ internal sealed class RemoveSkillTemporarilyCommandHandler : ICommandHandler<
     bool>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IValidator<RemoveSkillTemporarilyCommand> _validator;
 
-    internal RemoveSkillTemporarilyCommandHandler(IUnitOfWork unitOfWork)
+    internal RemoveSkillTemporarilyCommandHandler(
+        IUnitOfWork unitOfWork,
+        IValidator<RemoveSkillTemporarilyCommand> validator)
     {
         _unitOfWork = unitOfWork;
+        _validator = validator;
     }
 
     /// <summary>
@@ -39,8 +44,11 @@ internal sealed class RemoveSkillTemporarilyCommandHandler : ICommandHandler<
         RemoveSkillTemporarilyCommand request,
         CancellationToken cancellationToken)
     {
-        if (request.SkillId == Guid.Empty ||
-            request.SkillRemovedBy == Guid.Empty)
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
             return false;
         }
@@ -55,9 +63,9 @@ internal sealed class RemoveSkillTemporarilyCommandHandler : ICommandHandler<
 
                 try
                 {
-                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdAsync(
+                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
                         skillId: request.SkillId,
-                        skillRemovedAt: request.SkillRemovedAt,
+                        skillRemovedAt: DateTime.UtcNow,
                         skillRemovedBy: request.SkillRemovedBy,
                         cancellationToken: cancellationToken);
 

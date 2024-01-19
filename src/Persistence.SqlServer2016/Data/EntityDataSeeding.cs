@@ -469,179 +469,223 @@ internal static class EntityDataSeeding
         #region Skills
         List<Skill> newSkills =
         [
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Vue.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Caching",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Flexbox",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Docker",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Next.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "SQL Server",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "HTML/CSS",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Github",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Git",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Node.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Dart",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "MySQL",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Authorization",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "JavaScript",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Web Security",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "ASP.NET Core",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Devops",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Python",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Apache",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "PostgreSQL",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "RESTful API",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Express.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Flask",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Bootstrap",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Spring Boot",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "GraphQL",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "MongoDB",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "React.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "C#",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Agile",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Java",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "C++",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Authentication",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Django",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Angular.js",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Ruby",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "React Native",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Typescript",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "C",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "SQL",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Swift",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "Flutter",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Guid.NewGuid(),
                 skillName: "PHP",
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),
-            new(
+            Skill.Init(
+                skillId: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                 skillName: string.Empty,
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
                 skillRemovedBy: Guid.Empty),

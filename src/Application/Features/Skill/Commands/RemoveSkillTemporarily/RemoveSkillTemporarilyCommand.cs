@@ -17,9 +17,4 @@ public sealed class RemoveSkillTemporarilyCommand : ICommand<bool>
     ///     Skill is removed by whom.
     /// </summary>
     public Guid SkillRemovedBy { get; set; }
-
-    /// <summary>
-    ///     When is skill removed.
-    /// </summary>
-    public DateTime SkillRemovedAt { get; set; }
 }

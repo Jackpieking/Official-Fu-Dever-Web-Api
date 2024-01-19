@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common;
 using Application.Interfaces.Messaging;
 using Domain.Entities;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Skill.Commands.RemoveSkillPermanently;
@@ -20,13 +20,16 @@ internal sealed class RemoveSkillPermanentlyCommandHandler : ICommandHandler<
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
+    private readonly IValidator<RemoveSkillPermanentlyCommand> _validator;
 
     internal RemoveSkillPermanentlyCommandHandler(
         IUnitOfWork unitOfWork,
-        ISuperSpecificationManager superSpecificationManager)
+        ISuperSpecificationManager superSpecificationManager,
+        IValidator<RemoveSkillPermanentlyCommand> validator)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
+        _validator = validator;
     }
 
     /// <summary>
@@ -47,8 +50,11 @@ internal sealed class RemoveSkillPermanentlyCommandHandler : ICommandHandler<
         RemoveSkillPermanentlyCommand request,
         CancellationToken cancellationToken)
     {
-        if (request.SkillId == Guid.Empty ||
-            request.SkillRemovedBy == Guid.Empty)
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
             return false;
         }
@@ -73,7 +79,8 @@ internal sealed class RemoveSkillPermanentlyCommandHandler : ICommandHandler<
 
                     await SetUpdateSectionOfUserToLatestAsync(
                         foundUserSkills: foundUserSkills,
-                        skillRemovedBy: request.SkillRemovedBy);
+                        skillRemovedBy: request.SkillRemovedBy,
+                        cancellationToken: cancellationToken);
 
                     await _unitOfWork.UserSkillRepository.BulkRemoveBySkillIdAsync(
                         skillId: request.SkillId,
@@ -120,15 +127,16 @@ internal sealed class RemoveSkillPermanentlyCommandHandler : ICommandHandler<
     /// </returns>
     private async Task SetUpdateSectionOfUserToLatestAsync(
         IEnumerable<UserSkill> foundUserSkills,
-        Guid skillRemovedBy)
+        Guid skillRemovedBy,
+        CancellationToken cancellationToken)
     {
-        await foundUserSkills.ParallelForEachAsync(async (foundUserSkill, cancellationToken) =>
+        foreach (var foundUserSkill in foundUserSkills)
         {
-            await _unitOfWork.UserRepository.BulkUpdateByUserIdAsync(
+            await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
                 userId: foundUserSkill.UserId,
                 userUpdatedAt: DateTime.UtcNow,
                 userUpdatedBy: skillRemovedBy,
                 cancellationToken: cancellationToken);
-        });
+        }
     }
 }

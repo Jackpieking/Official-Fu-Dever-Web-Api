@@ -25,6 +25,11 @@ internal sealed class BlogCommentRepository :
         Guid authorId,
         CancellationToken cancellationToken)
     {
+        if (authorId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(predicate: blogComment => blogComment.AuthorId == authorId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);

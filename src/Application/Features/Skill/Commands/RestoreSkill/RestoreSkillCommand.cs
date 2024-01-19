@@ -12,14 +12,4 @@ public sealed class RestoreSkillCommand : ICommand<bool>
     ///     Id of restored skill.
     /// </summary>
     public Guid SkillId { get; set; }
-
-    /// <summary>
-    ///     Skill is restore by whom.
-    /// </summary>
-    public Guid SkillRestoredBy { get; set; }
-
-    /// <summary>
-    ///     When is skill restored.
-    /// </summary>
-    public DateTime SkillRestoredAt { get; set; }
 }

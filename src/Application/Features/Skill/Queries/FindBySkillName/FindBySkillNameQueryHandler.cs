@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using FluentValidation;
 
 namespace Application.Features.Skill.Queries.FindBySkillName;
 
@@ -17,13 +17,16 @@ internal sealed class FindBySkillNameQueryHandler : IQueryHandler<
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
+    private readonly IValidator<FindBySkillNameQuery> _validator;
 
     internal FindBySkillNameQueryHandler(
         IUnitOfWork unitOfWork,
-        ISuperSpecificationManager superSpecificationManager)
+        ISuperSpecificationManager superSpecificationManager,
+        IValidator<FindBySkillNameQuery> validator)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
+        _validator = validator;
     }
 
     /// <summary>
@@ -40,16 +43,20 @@ internal sealed class FindBySkillNameQueryHandler : IQueryHandler<
     /// <returns>
     ///     A task containing the boolean result.
     /// </returns>
-    public Task<IEnumerable<Domain.Entities.Skill>> Handle(
+    public async Task<IEnumerable<Domain.Entities.Skill>> Handle(
         FindBySkillNameQuery request,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(value: request.SkillName))
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
-            return Task.FromResult(result: Enumerable.Empty<Domain.Entities.Skill>());
+            return [];
         }
 
-        var foundSkills = _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
+        var foundSkills = await _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
             specifications:
             [
                 _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,

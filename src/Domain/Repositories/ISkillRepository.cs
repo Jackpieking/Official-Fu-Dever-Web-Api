@@ -45,7 +45,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateBySkillIdAsync(
+    Task<int> BulkUpdateBySkillIdVer1Async(
         Guid skillId,
         DateTime skillRemovedAt,
         Guid skillRemovedBy,
@@ -77,7 +77,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     All transaction methods are situated in
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
-    Task<int> BulkUpdateBySkillIdAsync(
+    Task<int> BulkUpdateBySkillIdVer2Async(
         Guid skillId,
         string skillName,
         CancellationToken cancellationToken);

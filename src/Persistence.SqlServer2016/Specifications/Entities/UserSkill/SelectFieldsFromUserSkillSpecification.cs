@@ -16,7 +16,7 @@ internal sealed class SelectFieldsFromUserSkillSpecification :
         SelectExpression = userSkill => new()
         {
             SkillId = userSkill.SkillId,
-            Skill = new(userSkill.Skill.Name)
+            Skill = Domain.Entities.Skill.Init(userSkill.Skill.Name)
         };
 
         return this;

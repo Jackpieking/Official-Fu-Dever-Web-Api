@@ -1,8 +1,11 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Common;
 using Application.Interfaces.Data;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Skill.Commands.CreateSkill;
@@ -14,13 +17,16 @@ internal sealed class CreateSkillCommandHandler : ICommandHandler<CreateSkillCom
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDbMinTimeHandler _dbMinTimeHandler;
+    private readonly IValidator<CreateSkillCommand> _validator;
 
     internal CreateSkillCommandHandler(
         IUnitOfWork unitOfWork,
-        IDbMinTimeHandler dbMinTimeHandler)
+        IDbMinTimeHandler dbMinTimeHandler,
+        IValidator<CreateSkillCommand> validator)
     {
         _unitOfWork = unitOfWork;
         _dbMinTimeHandler = dbMinTimeHandler;
+        _validator = validator;
     }
 
     /// <summary>
@@ -41,10 +47,14 @@ internal sealed class CreateSkillCommandHandler : ICommandHandler<CreateSkillCom
         CreateSkillCommand request,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(value: request.NewSkillName))
+        var inputValidationResult = await _validator.ValidateAsync(
+            instance: request,
+            cancellation: cancellationToken);
+
+        if (!inputValidationResult.IsValid)
         {
             return false;
-        }
+        }   
 
         var executedTransactionResult = false;
 
@@ -57,9 +67,11 @@ internal sealed class CreateSkillCommandHandler : ICommandHandler<CreateSkillCom
                 try
                 {
                     await _unitOfWork.SkillRepository.AddAsync(
-                        newEntity: new(
+                        newEntity: Domain.Entities.Skill.Init(
+                            skillId: Guid.NewGuid(),
                             skillName: request.NewSkillName,
-                            skillRemovedAt: _dbMinTimeHandler.Get()),
+                            skillRemovedAt: _dbMinTimeHandler.Get(),
+                            skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

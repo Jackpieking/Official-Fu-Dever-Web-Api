@@ -25,6 +25,11 @@ internal sealed class UserHobbyRepository :
         Guid hobbyId,
         CancellationToken cancellationToken)
     {
+        if (hobbyId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(userHobby => userHobby.HobbyId == hobbyId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
@@ -34,6 +39,11 @@ internal sealed class UserHobbyRepository :
         Guid userId,
         CancellationToken cancellationToken)
     {
+        if (userId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(userHobby => userHobby.UserId == userId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);

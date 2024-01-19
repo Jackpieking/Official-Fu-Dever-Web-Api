@@ -25,6 +25,11 @@ internal sealed class UserPlatformRepository :
         Guid platformId,
         CancellationToken cancellationToken)
     {
+        if (platformId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(userPlatform => userPlatform.PlatformId == platformId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
@@ -34,6 +39,11 @@ internal sealed class UserPlatformRepository :
         Guid userId,
         CancellationToken cancellationToken)
     {
+        if (userId == Guid.Empty)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
         return _dbSet
             .Where(userPlatform => userPlatform.UserId == userId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
