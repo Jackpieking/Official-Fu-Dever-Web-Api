@@ -1,4 +1,3 @@
-using Application.Common;
 using Domain.Entities.Base;
 using Domain.Repositories.Base;
 using Domain.Specifications.Base;
@@ -106,9 +105,9 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         IQueryable<TEntity> queryable,
         IEnumerable<IBaseSpecification<TEntity>> specifications)
     {
-        specifications.ParallelForEach(action: specification =>
+        foreach (var specification in specifications)
         {
             queryable = queryable.Apply(specification: specification);
-        });
+        }
     }
 }

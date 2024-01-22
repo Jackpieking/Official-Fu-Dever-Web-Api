@@ -1,14 +1,14 @@
-using System;
 using FluentValidation;
+using System;
 
 namespace Application.Features.Skill.Queries.IsSkillFoundBySkillId;
 
 /// <summary>
 ///     Is skill found by skill id query modal validator.
 /// </summary>
-internal sealed class IsSkillFoundBySkillIdQueryValidator : AbstractValidator<IsSkillFoundBySkillIdQuery>
+public sealed class IsSkillFoundBySkillIdQueryValidator : AbstractValidator<IsSkillFoundBySkillIdQuery>
 {
-    internal IsSkillFoundBySkillIdQueryValidator()
+    public IsSkillFoundBySkillIdQueryValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 

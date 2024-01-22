@@ -1,10 +1,10 @@
 namespace WebApi.Options.RateLimiter.FixedWindow;
 
-public sealed class FixedWindowRateLimiterOption
+internal sealed class FixedWindowRateLimiterOption
 {
     public RemoteIpAddressOption RemoteIpAddress { get; set; } = new();
 
-    public sealed class RemoteIpAddressOption
+    internal sealed class RemoteIpAddressOption
     {
         public int PermitLimit { get; set; }
 

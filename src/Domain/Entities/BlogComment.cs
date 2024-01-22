@@ -1,5 +1,5 @@
-using System;
 using Domain.Entities.Base;
+using System;
 
 namespace Domain.Entities;
 
@@ -11,6 +11,10 @@ public sealed class BlogComment :
     ICreatedEntity,
     IUpdatedEntity
 {
+    private BlogComment()
+    {
+    }
+
     /// <summary>
     ///     Comment id.
     /// </summary>
@@ -48,4 +52,15 @@ public sealed class BlogComment :
     public Blog Blog { get; set; }
 
     public User User { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <returns>
+    ///     A new blog comment object.
+    /// </returns>
+    public static BlogComment Init()
+    {
+        return new();
+    }
 }

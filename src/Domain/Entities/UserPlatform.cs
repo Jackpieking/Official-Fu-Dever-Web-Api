@@ -1,14 +1,17 @@
-using System;
 using Domain.Entities.Base;
+using System;
 
 namespace Domain.Entities;
 
 /// <summary>
 ///     Represent the "UserPlatforms" table.
 /// </summary>
-public sealed class UserPlatform :
-    IBaseEntity
+public sealed class UserPlatform : IBaseEntity
 {
+    private UserPlatform()
+    {
+    }
+
     /// <summary>
     ///     Platform id.
     /// </summary>
@@ -28,4 +31,49 @@ public sealed class UserPlatform :
     public Platform Platform { get; set; }
 
     public User User { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="platformId">
+    ///     Platform id of user platform.
+    /// </param>
+    /// <param name="platformUrl">
+    ///     Platform url of user platform.
+    /// </param>
+    /// <param name="platform">
+    ///     Platform of user platform.
+    /// </param>
+    /// <returns>
+    ///     A new user platform object.
+    /// </returns>
+    public static UserPlatform Init(
+        Guid platformId,
+        string platformUrl,
+        Platform platform)
+    {
+        return new()
+        {
+            PlatformId = platformId,
+            PlatformUrl = platformUrl,
+            Platform = platform
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="userId">
+    ///     Platform id of user platform.
+    /// </param>
+    /// <returns>
+    ///     A new user platform object.
+    /// </returns>
+    public static UserPlatform Init(Guid userId)
+    {
+        return new()
+        {
+            UserId = userId
+        };
+    }
 }

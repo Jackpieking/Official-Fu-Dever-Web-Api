@@ -13,6 +13,10 @@ public sealed class Blog :
     ITemporarilyRemovedEntity,
     IUpdatedEntity
 {
+    private Blog()
+    {
+    }
+
     /// <summary>
     ///     Blog id.
     /// </summary>
@@ -62,4 +66,43 @@ public sealed class Blog :
     public IEnumerable<BlogTag> BlogTags { get; set; }
 
     public IEnumerable<BlogComment> BlogComments { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <returns>
+    ///     A new blog object.
+    /// </returns>
+    public static Blog Init()
+    {
+        return new();
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Title property.
+        /// </summary>
+        public static class Title
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
+        }
+
+        /// <summary>
+        ///     Thumbnail property.
+        /// </summary>
+        public static class Thumbnail
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 200;
+        }
+    }
 }

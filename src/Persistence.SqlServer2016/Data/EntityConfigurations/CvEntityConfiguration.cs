@@ -27,24 +27,28 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
 
         // FullName property configuration.
         builder
-            .Property(propertyExpression: cv => cv.FullName)
-            .HasColumnType(CommonConstant.DbDataType.NVARCHAR_50)
+            .Property(propertyExpression: cv => cv.StudentFullName)
+            .HasColumnType(CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: Cv.Metadata.StudentFullName.MaxLength))
             .IsRequired();
 
         // Email property configuration.
         builder
-            .Property(propertyExpression: cv => cv.Email)
+            .Property(propertyExpression: cv => cv.StudentEmail)
             .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // StudentId property configuration.
         builder
             .Property(propertyExpression: cv => cv.StudentId)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: Cv.Metadata.StudentId.MaxLength))
             .IsRequired();
 
         // CvFileId property configuration.
         builder
-            .Property(propertyExpression: cv => cv.CvFileId)
+            .Property(propertyExpression: cv => cv.StudentCvFileId)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
             .IsRequired();
 
         // CreatedAt property configuration.

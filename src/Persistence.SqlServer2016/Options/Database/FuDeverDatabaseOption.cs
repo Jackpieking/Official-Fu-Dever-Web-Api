@@ -4,7 +4,7 @@ namespace Persistence.SqlServer2016.Options.Database;
 ///     Represent "FuDever" section in
 ///     appsetting.json configuration file.
 /// </summary>
-public sealed class FuDeverDatabaseOption
+internal sealed class FuDeverDatabaseOption
 {
     /// <summary>
     ///     Database connection string.

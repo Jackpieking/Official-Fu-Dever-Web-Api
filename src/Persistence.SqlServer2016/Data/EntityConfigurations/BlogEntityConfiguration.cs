@@ -33,13 +33,15 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // Title property configuration.
         builder
             .Property(propertyExpression: blog => blog.Title)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: Blog.Metadata.Title.MaxLength))
             .IsRequired();
 
         // Thumbnail property configuration.
         builder
             .Property(propertyExpression: blog => blog.Thumbnail)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_200)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: Blog.Metadata.Thumbnail.MaxLength))
             .IsRequired();
 
         // UploadDate property configuration.

@@ -78,19 +78,22 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // FirstName property configuration.
         builder
             .Property(propertyExpression: user => user.FirstName)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: 30))
             .IsRequired();
 
         // LastName property configuration.
         builder
             .Property(propertyExpression: user => user.LastName)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: 30))
             .IsRequired();
 
         // Career property configuration.
         builder
             .Property(propertyExpression: user => user.Career)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_30)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: 30))
             .IsRequired();
 
         // Workplaces property configuration.
@@ -114,7 +117,8 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // HomeAddress property configuration.
         builder
             .Property(propertyExpression: user => user.HomeAddress)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_50)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: 50))
             .IsRequired();
 
         // SelfDescription property configuration.

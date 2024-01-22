@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using WebApi.ApiReturnCodes.Base;
 
 namespace WebApi.Common;
@@ -32,5 +31,5 @@ internal sealed class CommonResponse
     /// <summary>
     ///     Response errors messages.
     /// </summary>
-    public object ErrorMessages { get; init; } = Enumerable.Empty<object>();
+    public object ErrorMessages { get; init; } = new();
 }

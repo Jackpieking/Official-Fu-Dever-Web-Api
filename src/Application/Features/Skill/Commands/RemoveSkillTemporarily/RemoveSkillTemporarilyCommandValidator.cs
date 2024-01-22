@@ -1,14 +1,14 @@
-using System;
 using FluentValidation;
+using System;
 
 namespace Application.Features.Skill.Commands.RemoveSkillTemporarily;
 
 /// <summary>
 ///     Remove skill temporarily command modal validator.
 /// </summary>
-internal sealed class RemoveSkillTemporarilyCommandValidator : AbstractValidator<RemoveSkillTemporarilyCommand>
+public sealed class RemoveSkillTemporarilyCommandValidator : AbstractValidator<RemoveSkillTemporarilyCommand>
 {
-    internal RemoveSkillTemporarilyCommandValidator()
+    public RemoveSkillTemporarilyCommandValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 

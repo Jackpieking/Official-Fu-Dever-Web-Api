@@ -1,8 +1,8 @@
+using Domain.Entities;
+using Domain.Repositories.Base;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Entities;
-using Domain.Repositories.Base;
 
 namespace Domain.Repositories;
 

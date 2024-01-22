@@ -1,7 +1,7 @@
-using System.Linq;
 using Domain.Entities.Base;
 using Domain.Specifications.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Domain.Specifications.Others;
 

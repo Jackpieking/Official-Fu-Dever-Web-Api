@@ -1,6 +1,6 @@
+using Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
-using Domain.Entities.Base;
 
 namespace Domain.Entities;
 
@@ -11,8 +11,6 @@ public sealed class Skill :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
-    private const int MaxSkillNameLength = 100;
-
     private Skill()
     {
     }
@@ -62,7 +60,7 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > MaxSkillNameLength)
+            skillName.Length > Metadata.Name.MaxLength)
         {
             return default;
         }
@@ -100,7 +98,7 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > MaxSkillNameLength)
+            skillName.Length > Metadata.Name.MaxLength)
         {
             return default;
         }
@@ -129,7 +127,7 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > MaxSkillNameLength)
+            skillName.Length > Metadata.Name.MaxLength)
         {
             return default;
         }
@@ -168,5 +166,22 @@ public sealed class Skill :
         {
             Id = skillId
         };
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Name property.
+        /// </summary>
+        public static class Name
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
+        }
     }
 }

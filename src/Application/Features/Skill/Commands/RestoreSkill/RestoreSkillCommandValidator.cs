@@ -1,14 +1,14 @@
-using System;
 using FluentValidation;
+using System;
 
 namespace Application.Features.Skill.Commands.RestoreSkill;
 
 /// <summary>
 ///     Restore skill command modal validator.
 /// </summary>
-internal sealed class RestoreSkillCommandValidator : AbstractValidator<RestoreSkillCommand>
+public sealed class RestoreSkillCommandValidator : AbstractValidator<RestoreSkillCommand>
 {
-    internal RestoreSkillCommandValidator()
+    public RestoreSkillCommandValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 

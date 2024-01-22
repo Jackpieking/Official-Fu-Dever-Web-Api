@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Entities;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Commands.RemoveSkillPermanently;
 
@@ -22,7 +22,7 @@ internal sealed class RemoveSkillPermanentlyCommandHandler : ICommandHandler<
     private readonly ISuperSpecificationManager _superSpecificationManager;
     private readonly IValidator<RemoveSkillPermanentlyCommand> _validator;
 
-    internal RemoveSkillPermanentlyCommandHandler(
+    public RemoveSkillPermanentlyCommandHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager,
         IValidator<RemoveSkillPermanentlyCommand> validator)

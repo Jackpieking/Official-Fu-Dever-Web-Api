@@ -1,6 +1,6 @@
-using System.Linq;
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.User;
+using System.Linq;
 
 namespace Persistence.SqlServer2016.Specifications.Entities.User;
 
@@ -16,10 +16,7 @@ internal sealed class SelectFieldsFromUserSpecification :
     {
         SelectExpression = user => new()
         {
-            UserJoiningStatus = new()
-            {
-                Type = user.UserJoiningStatus.Type
-            }
+            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type)
         };
 
         return this;
@@ -33,18 +30,9 @@ internal sealed class SelectFieldsFromUserSpecification :
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Position = new()
-            {
-                Name = user.Position.Name
-            },
-            Department = new()
-            {
-                Name = user.Department.Name
-            },
-            UserJoiningStatus = new()
-            {
-                Type = user.UserJoiningStatus.Type
-            },
+            Position = Domain.Entities.Position.Init(user.Position.Name),
+            Department = Domain.Entities.Department.Init(user.Department.Name),
+            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type),
             AvatarUrl = user.AvatarUrl,
             RemovedAt = user.RemovedAt,
             RemovedBy = user.RemovedBy
@@ -68,55 +56,35 @@ internal sealed class SelectFieldsFromUserSpecification :
             SelfDescription = user.SelfDescription,
             JoinDate = user.JoinDate,
             EducationPlaces = user.EducationPlaces,
-            Position = new()
-            {
-                Id = user.Position.Id,
-                Name = user.Position.Name
-            },
-            Major = new()
-            {
-                Id = user.Major.Id,
-                Name = user.Major.Name
-            },
-            Department = new()
-            {
-                Id = user.Department.Id,
-                Name = user.Department.Name
-            },
+            Position = Domain.Entities.Position.Init(
+                user.PositionId,
+                user.Position.Name),
+            Major = Domain.Entities.Major.Init(
+                user.MajorId,
+                user.Major.Name),
+            Department = Domain.Entities.Department.Init(
+                user.DepartmentId,
+                user.Department.Name),
             AvatarUrl = user.AvatarUrl,
-            UserPlatforms = user.UserPlatforms.Select(userPlatform => new Domain.Entities.UserPlatform
-            {
-                PlatformId = userPlatform.PlatformId,
-                PlatformUrl = userPlatform.PlatformUrl,
-                Platform = new()
-                {
-                    Name = userPlatform.Platform.Name
-                }
-            }),
+            UserPlatforms = user.UserPlatforms.Select(userPlatform => Domain.Entities.UserPlatform.Init(
+                userPlatform.PlatformId,
+                userPlatform.PlatformUrl,
+                Domain.Entities.Platform.Init(userPlatform.Platform.Name))),
             Workplaces = user.Workplaces,
-            Projects = user.Projects.Select(project => new Domain.Entities.Project
-            {
-                Id = project.Id,
-                Title = project.Title,
-                AuthorId = project.AuthorId,
-                Description = project.Description,
-                SourceCodeUrl = project.SourceCodeUrl,
-                DemoUrl = project.DemoUrl,
-                ThumbnailUrl = project.ThumbnailUrl,
-                CreatedAt = project.CreatedAt,
-                UpdatedAt = project.UpdatedAt
-            }),
-            UserSkills = user.UserSkills.Select(userSkill => new Domain.Entities.UserSkill
-            {
-                Skill = Domain.Entities.Skill.Init(userSkill.Skill.Name)
-            }),
-            UserHobbies = user.UserHobbies.Select(userHobby => new Domain.Entities.UserHobby
-            {
-                Hobby = new()
-                {
-                    Name = userHobby.Hobby.Name
-                }
-            })
+            Projects = user.Projects.Select(project => Domain.Entities.Project.Init(
+                project.Id,
+                project.Title,
+                project.AuthorId,
+                project.Description,
+                project.SourceCodeUrl,
+                project.DemoUrl,
+                project.ThumbnailUrl,
+                project.CreatedAt,
+                project.UpdatedAt)),
+            UserSkills = user.UserSkills.Select(userSkill => Domain.Entities.UserSkill.Init(
+                Domain.Entities.Skill.Init(userSkill.Skill.Name))),
+            UserHobbies = user.UserHobbies.Select(userHobby => Domain.Entities.UserHobby.Init(
+                Domain.Entities.Hobby.Init(userHobby.Hobby.Name)))
         };
 
         return this;
@@ -130,18 +98,9 @@ internal sealed class SelectFieldsFromUserSpecification :
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Position = new()
-            {
-                Name = user.Position.Name
-            },
-            Department = new()
-            {
-                Name = user.Department.Name
-            },
-            UserJoiningStatus = new()
-            {
-                Type = user.UserJoiningStatus.Type
-            },
+            Position = Domain.Entities.Position.Init(user.Position.Name),
+            Department = Domain.Entities.Department.Init(user.Department.Name),
+            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type),
             AvatarUrl = user.AvatarUrl
         };
 

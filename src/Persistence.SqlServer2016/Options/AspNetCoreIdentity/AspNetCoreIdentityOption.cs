@@ -4,7 +4,7 @@ namespace Persistence.SqlServer2016.Options.AspNetCoreIdentity;
 ///     Represent section of "AspNetCoreIdentity" section in
 ///     appsetting.json configuration file.
 /// </summary>
-public sealed class AspNetCoreIdentityOption
+internal sealed class AspNetCoreIdentityOption
 {
     /// <summary>
     ///     Reference to password section.
@@ -29,7 +29,7 @@ public sealed class AspNetCoreIdentityOption
     /// <summary>
     ///     Password section.
     /// </summary>
-    public sealed class PasswordOption
+    internal sealed class PasswordOption
     {
         /// <summary>
         ///     Password require digit.
@@ -65,7 +65,7 @@ public sealed class AspNetCoreIdentityOption
     /// <summary>
     ///     Lockout section.
     /// </summary>
-    public sealed class LockoutOption
+    internal sealed class LockoutOption
     {
         /// <summary>
         ///     Default lock out time.
@@ -86,7 +86,7 @@ public sealed class AspNetCoreIdentityOption
     /// <summary>
     ///     User section.
     /// </summary>
-    public sealed class UserOption
+    internal sealed class UserOption
     {
         /// <summary>
         ///     List of characters that username can have.
@@ -102,7 +102,7 @@ public sealed class AspNetCoreIdentityOption
     /// <summary>
     ///     Sign in section.
     /// </summary>
-    public sealed class SignInOption
+    internal sealed class SignInOption
     {
         /// <summary>
         ///     User email need confirming or not.

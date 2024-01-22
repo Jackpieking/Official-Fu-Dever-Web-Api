@@ -25,10 +25,11 @@ internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfigur
         // Primary key configuration.
         builder.HasKey(keyExpression: userJoiningStatus => userJoiningStatus.Id);
 
-        // Name property configuration.
+        // Type property configuration.
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.Type)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_50)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: UserJoiningStatus.Metadata.Type.MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

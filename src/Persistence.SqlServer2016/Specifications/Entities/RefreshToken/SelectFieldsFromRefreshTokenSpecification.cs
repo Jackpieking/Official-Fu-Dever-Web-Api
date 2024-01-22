@@ -13,20 +13,14 @@ internal sealed class SelectFieldsFromRefreshTokenSpecification :
 {
     public ISelectFieldsFromRefreshTokenSpecification Ver1()
     {
-        SelectExpression = refreshToken => new()
-        {
-            Id = refreshToken.Id
-        };
+        SelectExpression = refreshToken => Domain.Entities.RefreshToken.Init(refreshToken.Id);
 
         return this;
     }
 
     public ISelectFieldsFromRefreshTokenSpecification Ver2()
     {
-        SelectExpression = refreshToken => new()
-        {
-            UserId = refreshToken.UserId
-        };
+        SelectExpression = refreshToken => Domain.Entities.RefreshToken.Init(refreshToken.UserId);
 
         return this;
     }

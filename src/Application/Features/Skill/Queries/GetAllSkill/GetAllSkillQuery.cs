@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Application.Interfaces.Messaging;
+using System.Collections.Generic;
 
 namespace Application.Features.Skill.Queries.GetAllSkill;
 

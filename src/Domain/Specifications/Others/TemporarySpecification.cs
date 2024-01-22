@@ -1,7 +1,7 @@
-using System;
-using System.Linq.Expressions;
 using Domain.Entities.Base;
 using Domain.Specifications.Base;
+using System;
+using System.Linq.Expressions;
 
 namespace Domain.Specifications.Others;
 

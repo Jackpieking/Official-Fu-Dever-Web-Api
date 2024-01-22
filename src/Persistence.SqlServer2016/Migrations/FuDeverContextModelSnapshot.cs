@@ -47,7 +47,7 @@ namespace Persistence.SqlServer2016.Migrations
 
                     b.Property<string>("Thumbnail")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(100)");
+                        .HasColumnType("NVARCHAR(200)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -145,27 +145,27 @@ namespace Persistence.SqlServer2016.Migrations
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CvFileId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR(50)");
-
                     b.Property<DateTime>("RemovedAt")
                         .HasColumnType("DATETIME2");
 
                     b.Property<Guid>("RemovedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("StudentCvFileId")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<string>("StudentEmail")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<string>("StudentFullName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(50)");
+
                     b.Property<string>("StudentId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("NVARCHAR(10)");
 
                     b.HasKey("Id");
 
@@ -197,50 +197,6 @@ namespace Persistence.SqlServer2016.Migrations
                         {
                             t.HasComment("Contain department record.");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0f74178a-ce63-40fd-a4b7-e610a890772a"),
-                            Name = "Board of Directors",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("a8168a8a-65e6-4c39-98e2-d235e49b4f56"),
-                            Name = "Academic Board",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("eb0d949f-01e7-4b93-b7fe-fadfe4257419"),
-                            Name = "Administrative Board",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("a4d8e1e0-2143-4814-932b-2b489ee13e6a"),
-                            Name = "Events Board",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("fca05289-0706-4574-a808-eaff6ca384a5"),
-                            Name = "Media Board",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Hobby", b =>
@@ -264,197 +220,6 @@ namespace Persistence.SqlServer2016.Migrations
                     b.ToTable("Hobbies", null, t =>
                         {
                             t.HasComment("Contain hobby record.");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("07b5d72c-7f0e-45d4-97e9-23a1a14d2c6e"),
-                            Name = "Volunteering",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("f3725983-20a6-4c70-bd07-32c81a4a7acd"),
-                            Name = "Cooking",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("5bdb3fff-5543-4f39-a1f9-2de18660d5f6"),
-                            Name = "Collecting",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("aa3b9cc4-85b0-4558-8985-2e0840dd5d84"),
-                            Name = "Writing",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("b332c9ed-e9a8-44cf-8aee-7f0bc87680b7"),
-                            Name = "Camping",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("a95a6144-78f8-4850-a700-7a1fa7dc7874"),
-                            Name = "Sports",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("dfbc0ba0-fdcf-4e9e-a59e-fecd0cebcbb6"),
-                            Name = "Yoga",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("9308b778-a6c7-4716-9001-8b28e75e1686"),
-                            Name = "Photography",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("238a4219-cbb5-4742-b0e4-cdb88d3c62a9"),
-                            Name = "Chess",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("7a4a2fc7-9c50-4338-8821-8f1df687a5a8"),
-                            Name = "Taekwondo",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c030c512-38de-4db1-b6fa-9b8371993cfd"),
-                            Name = "Birdwatching",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("5fe08a51-c6c5-449f-974e-fa66fdce66c4"),
-                            Name = "DIY Crafts",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("6a1824e0-d1e4-4f6c-a75e-bccc92f8b7b9"),
-                            Name = "Games",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("f52fc708-09a0-4091-8135-564fba86ea46"),
-                            Name = "Baking",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef003d04-2145-45ef-91b1-e31c96683a58"),
-                            Name = "Fishing",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("66a2c19c-ce19-489c-9a7f-476312065ed1"),
-                            Name = "Coding",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("5b77e7d5-35bd-45bb-87ff-30c890a96340"),
-                            Name = "Drawing",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("8436a55f-491e-43d9-b3ab-8d811b9b446b"),
-                            Name = "Playing an Instrument",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("d0bd66b0-200b-4680-a60b-2a285e848c29"),
-                            Name = "Painting",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("9ac80e0a-b4b3-4ba5-b338-8b4fab4cd11f"),
-                            Name = "Gardening",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("afeaa28e-50d9-4633-936c-8ca1ac04f064"),
-                            Name = "Hiking",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("11b17fd8-1649-4095-bfd7-e0a13185cc46"),
-                            Name = "Reading",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("14a1a41e-487c-4385-ae39-b76f7721cb76"),
-                            Name = "Dancing",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("10216efe-e74a-4f63-840e-40c53da22c93"),
-                            Name = "Home Improvement",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("f39aa8ce-ab90-4973-919c-c61016f140f3"),
-                            Name = "Surfing",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("03bb273f-b40b-4de6-baa9-e1c4afe9d910"),
-                            Name = "Traveling",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -480,50 +245,6 @@ namespace Persistence.SqlServer2016.Migrations
                         {
                             t.HasComment("Contain major record.");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("fc29c55b-0e13-4cf2-83bb-36b87f800aa2"),
-                            Name = "Software Engineering",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("77eb22b8-2ecc-458c-87e0-107ba2c12843"),
-                            Name = "Information Security",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("66a742b0-fe6c-43c6-b8c5-5e33af9804a4"),
-                            Name = "Digital Art Design",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("9a5dda0a-8bb9-46b2-a33b-50ee7a24d4f9"),
-                            Name = "Information System",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("589b9229-d544-49b5-923e-8085dc9c0ed0"),
-                            Name = "Artificial Intelligence",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Platform", b =>
@@ -548,57 +269,6 @@ namespace Persistence.SqlServer2016.Migrations
                         {
                             t.HasComment("Contain platform record.");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("95226acf-53f7-47ed-96ab-4cfbfa7995a8"),
-                            Name = "LinkedIn",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("f861a890-4c53-4705-9a24-45a3856b72ff"),
-                            Name = "GitHub",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("390989b1-630d-4aa2-8932-887e5b3109ba"),
-                            Name = "Facebook",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("68521e26-399c-4f17-8609-3e794861a1eb"),
-                            Name = "Youtube",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c6ff82a8-249e-41d7-a352-940b49e3a886"),
-                            Name = "Twitter",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("2fed0532-ac5d-4711-9838-786f14f0994e"),
-                            Name = "Instagram",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Position", b =>
@@ -622,92 +292,6 @@ namespace Persistence.SqlServer2016.Migrations
                     b.ToTable("Positions", null, t =>
                         {
                             t.HasComment("Contain position record.");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("39ac4b14-42fc-40d7-89b9-4b5b279448c8"),
-                            Name = "Club President",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("52c67c43-c548-4a18-bb2a-0eaa9ac37cba"),
-                            Name = "Vice Club President",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("02f79406-56cd-4919-9e8a-887f545f9bc0"),
-                            Name = "Member",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("501d886f-5e10-4577-87ee-3c85293886da"),
-                            Name = "Administrative Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("8acf5da9-95dd-44ec-a798-41c4c46fb205"),
-                            Name = "Vice Academic Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("14c75af2-39d8-4210-8240-82b6a154139c"),
-                            Name = "Secretary",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("459e268d-2e5c-4514-8da1-8a0afa345c27"),
-                            Name = "Media Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("3e23f191-d4ed-45c4-b012-04f649c107d2"),
-                            Name = "Vice Administrative Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("1af8680d-5c44-4cd2-99cf-99160f2db2ca"),
-                            Name = "Events Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("cab3820c-b1f8-47d1-ba50-79ae813a5101"),
-                            Name = "Vice Events Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("d73b17e1-df63-4c7b-b92d-0e51e5367e26"),
-                            Name = "Academic Department Head",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -832,24 +416,6 @@ namespace Persistence.SqlServer2016.Migrations
                         {
                             t.HasComment("Contain role record.");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2d30e5ff-214e-4a29-b396-c25fec7d6a18"),
-                            Name = "admin",
-                            NormalizedName = "ADMIN",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("80ca7b9b-0e7b-4a0a-bbba-7911b5ec34c1"),
-                            Name = "user",
-                            NormalizedName = "USER",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Skill", b =>
@@ -873,316 +439,6 @@ namespace Persistence.SqlServer2016.Migrations
                     b.ToTable("Skills", null, t =>
                         {
                             t.HasComment("Contain skill record.");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2741e17f-f3e6-4bbd-a7a8-2acbcc7ba047"),
-                            Name = "Vue.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("f9bb8c92-0bca-409f-bfe7-bbcd4f661de1"),
-                            Name = "Caching",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("9cb59ab8-3892-40e6-9a3e-8bd38bc6796f"),
-                            Name = "Flexbox",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("105a0e1a-9f78-4da8-93dd-f5788f6a28a6"),
-                            Name = "Docker",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("3475009c-0799-4b6a-9629-9a78cb280b68"),
-                            Name = "Next.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("8360d12c-0a66-4ee1-b9bb-07ad7125f8c8"),
-                            Name = "SQL Server",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("927c8d5c-3415-4978-bc57-04b359264186"),
-                            Name = "HTML/CSS",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("cc515467-70f0-468f-a880-7370f63028bc"),
-                            Name = "Github",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c210f92c-e6c1-4320-aff1-01b086f120f5"),
-                            Name = "Git",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("ef2f9f8b-ff5a-492f-b2af-412f950fd5e3"),
-                            Name = "Node.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("4882a134-dcbd-40a2-9075-18a01aca1059"),
-                            Name = "Dart",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("bc1ea72b-2b34-42e1-8dfc-4f60bb3a13af"),
-                            Name = "MySQL",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("6755dcda-b053-41c0-a62c-1abd7b26b72c"),
-                            Name = "Authorization",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("5d5bac2d-4a27-4308-bc31-4bb108a80656"),
-                            Name = "JavaScript",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("b4d26272-752e-4fe7-9693-fe1c7c041499"),
-                            Name = "Web Security",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("ec930d0b-e7d0-4578-8b4f-a9b03a111ad0"),
-                            Name = "ASP.NET Core",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("734ac6f5-14b5-4124-9e45-ab303acfdd14"),
-                            Name = "Devops",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("a63b19d5-3a19-44f6-9e19-738b6705b672"),
-                            Name = "Python",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("1c6d3cae-af5e-4cf5-bbd4-1e83302c26df"),
-                            Name = "Apache",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("12dbe1f8-b2e0-43eb-a938-ae029c203bf2"),
-                            Name = "PostgreSQL",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("3a9ef04c-e647-4381-a360-cf3b68d9d010"),
-                            Name = "RESTful API",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("57375c24-5316-452a-9e84-9cbf0f98c6f8"),
-                            Name = "Express.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("68c626e8-4f79-4a5f-a9c1-4d500efee42e"),
-                            Name = "Flask",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("6da0a77f-7019-4194-8fb3-303570d833ba"),
-                            Name = "Bootstrap",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("17588797-40d9-42f3-9a40-dcfdd28296fb"),
-                            Name = "Spring Boot",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c5b53581-648c-4cf8-98a9-6d5bd1de4543"),
-                            Name = "GraphQL",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("187742d7-e49c-4a30-9771-097404d9aba6"),
-                            Name = "MongoDB",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("cff3ba40-e78d-4f3b-9f20-4a01bd6d5eb3"),
-                            Name = "React.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("0390d6a7-4df3-443e-abbe-e1b5eb5fe06e"),
-                            Name = "C#",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c9ebe8a8-2bbd-4669-bf02-a34b4264c326"),
-                            Name = "Agile",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("c35ba97e-0de1-4865-8564-f9efbcb99d99"),
-                            Name = "Java",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("bd906ff9-730e-4822-9b59-7f8749da879c"),
-                            Name = "C++",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("371fb909-9f4b-40c4-ba76-d076d789e30d"),
-                            Name = "Authentication",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("08f873c2-9e5a-4997-a707-662347d28355"),
-                            Name = "Django",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("0c536cca-9889-4e89-a11d-8cf0ac9c5b7f"),
-                            Name = "Angular.js",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("64698363-90dc-4515-9e73-7bf44615944c"),
-                            Name = "Ruby",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("48418756-cca1-4238-b4c4-8d2776beb60f"),
-                            Name = "React Native",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("05ad780c-63c9-4ab0-a206-92ff9eb44237"),
-                            Name = "Typescript",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("e7f4e74b-f7ee-4fb4-86d4-c3df1aa01042"),
-                            Name = "C",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("0ea38c1b-2a03-4224-b7f8-594f20d48e00"),
-                            Name = "SQL",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("04a4c22d-1c76-4514-a0e7-a63aec9fff87"),
-                            Name = "Swift",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("05d6e638-6811-4353-9c88-b68fd582efc2"),
-                            Name = "Flutter",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("fc39079c-3512-4967-9794-615c1a7ce50a"),
-                            Name = "PHP",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            Name = "",
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 
@@ -1332,44 +588,6 @@ namespace Persistence.SqlServer2016.Migrations
                         {
                             t.HasComment("Contain user record.");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("495decca-121a-41c9-a067-622d227d5017"),
-                            AccessFailedCount = 0,
-                            ActivityPoints = (short)0,
-                            AvatarUrl = "https://firebasestorage.googleapis.com/v0/b/comic-image-storage.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=2309abba-282c-4f81-846e-6336235103dc",
-                            BirthDay = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Career = "",
-                            ConcurrencyStamp = "dea1fb0b-6f33-48f6-a73f-2c1973476593",
-                            CreatedAt = new DateTime(2024, 1, 16, 8, 5, 4, 152, DateTimeKind.Utc).AddTicks(9470),
-                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            DepartmentId = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            EducationPlaces = "",
-                            Email = "ledinhdangkhoa10a9@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "",
-                            HomeAddress = "",
-                            JoinDate = new DateTime(2024, 1, 16, 8, 5, 4, 152, DateTimeKind.Utc).AddTicks(9467),
-                            LastName = "",
-                            LockoutEnabled = false,
-                            MajorId = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            NormalizedEmail = "LEDINHDANGKHOA10A9@GMAIL.COM",
-                            NormalizedUserName = "LEDINHDANGKHOA10A9@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGD9QHVXd3PD1ei6rn9eZ7GAcKhCItbHzShc+K3bZnL4Se1bpolsfxTjkJ6PExNTlA==",
-                            PhoneNumberConfirmed = false,
-                            PositionId = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            SelfDescription = "",
-                            TwoFactorEnabled = false,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            UpdatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            UserJoiningStatusId = new Guid("52416e2b-47e2-4962-8274-6f411168df2e"),
-                            UserName = "ledinhdangkhoa10a9@gmail.com",
-                            Workplaces = ""
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.UserHobby", b =>
@@ -1404,50 +622,13 @@ namespace Persistence.SqlServer2016.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(50)");
+                        .HasColumnType("NVARCHAR(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("userJoiningStatuses", null, t =>
                         {
                             t.HasComment("Contain user joining status record.");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6f60c051-8648-4a0d-8cfb-579966571d70"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Type = "Pending"
-                        },
-                        new
-                        {
-                            Id = new Guid("1d918610-7094-4f8c-838e-94e9adec6c33"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Type = "Approved"
-                        },
-                        new
-                        {
-                            Id = new Guid("52416e2b-47e2-4962-8274-6f411168df2e"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Type = "Expired"
-                        },
-                        new
-                        {
-                            Id = new Guid("a79e7c37-cd5d-4845-b8be-d22768111e1f"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Type = "Rejected"
-                        },
-                        new
-                        {
-                            Id = new Guid("590e57ba-235f-4c24-be80-4720ee1771b8"),
-                            RemovedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            RemovedBy = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Type = ""
                         });
                 });
 
@@ -1685,13 +866,6 @@ namespace Persistence.SqlServer2016.Migrations
                         });
 
                     b.HasDiscriminator().HasValue("UserRole");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("495decca-121a-41c9-a067-622d227d5017"),
-                            RoleId = new Guid("2d30e5ff-214e-4a29-b396-c25fec7d6a18")
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.UserToken", b =>

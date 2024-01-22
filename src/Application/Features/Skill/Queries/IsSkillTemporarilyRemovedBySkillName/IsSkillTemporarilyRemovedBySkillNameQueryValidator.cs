@@ -5,17 +5,16 @@ namespace Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillNam
 /// <summary>
 ///     Is skill temporarily removed by skill name query modal validator.
 /// </summary>
-internal sealed class IsSkillTemporarilyRemovedBySkillNameQueryValidator : AbstractValidator<IsSkillTemporarilyRemovedBySkillNameQuery>
+public sealed class IsSkillTemporarilyRemovedBySkillNameQueryValidator : AbstractValidator<IsSkillTemporarilyRemovedBySkillNameQuery>
 {
-    private const int MaxSkillNameLength = 100;
-
-    internal IsSkillTemporarilyRemovedBySkillNameQueryValidator()
+    public IsSkillTemporarilyRemovedBySkillNameQueryValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 
         RuleFor(expression: command => command.SkillName)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .Must(predicate: skillName => !string.IsNullOrWhiteSpace(value: skillName))
-            .Must(predicate: skillName => skillName.Length <= MaxSkillNameLength);
+            .Must(predicate: skillName => skillName.Length <=
+                Domain.Entities.Skill.Metadata.Name.MaxLength);
     }
 }

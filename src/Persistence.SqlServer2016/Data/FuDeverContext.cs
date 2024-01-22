@@ -1,15 +1,14 @@
-using System;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Persistence.SqlServer2016.Data.EntityConfigurations;
+using System;
 
 namespace Persistence.SqlServer2016.Data;
 
 /// <summary>
 ///     Implementation of Fu dever context.
 /// </summary>
-internal sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
+public sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
 {
     public FuDeverContext(DbContextOptions<FuDeverContext> options) : base(options: options)
     {
@@ -25,40 +24,16 @@ internal sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
     {
         base.OnModelCreating(builder: builder);
 
-        builder.Seed();
-
-        builder
-            .ApplyConfiguration(new BlogCommentEntityConfiguration())
-            .ApplyConfiguration(new BlogEntityConfiguration())
-            .ApplyConfiguration(new BlogTagEntityConfiguration())
-            .ApplyConfiguration(new CvEntityConfiguration())
-            .ApplyConfiguration(new DepartmentEntityConfiguration())
-            .ApplyConfiguration(new HobbyEntityConfiguration())
-            .ApplyConfiguration(new MajorEntityConfiguration())
-            .ApplyConfiguration(new PlatformEntityConfiguration())
-            .ApplyConfiguration(new PositionEntityConfiguration())
-            .ApplyConfiguration(new ProjectEntityConfiguration())
-            .ApplyConfiguration(new RefreshTokenEntityConfiguration())
-            .ApplyConfiguration(new RoleClaimEntityConfiguration())
-            .ApplyConfiguration(new RoleEntityConfiguration())
-            .ApplyConfiguration(new SkillEntityConfiguration())
-            .ApplyConfiguration(new UserClaimEntityConfiguration())
-            .ApplyConfiguration(new UserEntityConfiguration())
-            .ApplyConfiguration(new UserHobbyEntityConfiguration())
-            .ApplyConfiguration(new UserJoiningStatusEntityConfiguration())
-            .ApplyConfiguration(new UserLoginEntityConfiguration())
-            .ApplyConfiguration(new UserPlatformEntityConfiguration())
-            .ApplyConfiguration(new UserRoleEntityConfiguration())
-            .ApplyConfiguration(new UserSkillEntityConfiguration())
-            .ApplyConfiguration(new UserTokenEntityConfiguration());
+        builder.ApplyConfigurationsFromAssembly(typeof(DependencyInjection).Assembly);
 
         RemoveAspNetPrefixInIdentityTable(builder: builder);
     }
 
     /// <summary>
-    ///
+    ///     Remove "AspNet" prefix in identity table name.
     /// </summary>
     /// <param name="builder">
+    ///     Model builder to access to the entity.
     /// </param>
     private static void RemoveAspNetPrefixInIdentityTable(ModelBuilder builder)
     {

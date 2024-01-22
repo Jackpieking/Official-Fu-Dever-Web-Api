@@ -28,7 +28,8 @@ internal sealed class PositionEntityConfiguration : IEntityTypeConfiguration<Pos
         // Name property configuration.
         builder
             .Property(propertyExpression: position => position.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_100)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: Position.Metadata.Name.MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

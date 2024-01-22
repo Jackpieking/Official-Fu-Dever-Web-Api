@@ -1,10 +1,10 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Commands.RemoveSkillTemporarily;
 
@@ -18,7 +18,7 @@ internal sealed class RemoveSkillTemporarilyCommandHandler : ICommandHandler<
     private readonly IUnitOfWork _unitOfWork;
     private readonly IValidator<RemoveSkillTemporarilyCommand> _validator;
 
-    internal RemoveSkillTemporarilyCommandHandler(
+    public RemoveSkillTemporarilyCommandHandler(
         IUnitOfWork unitOfWork,
         IValidator<RemoveSkillTemporarilyCommand> validator)
     {

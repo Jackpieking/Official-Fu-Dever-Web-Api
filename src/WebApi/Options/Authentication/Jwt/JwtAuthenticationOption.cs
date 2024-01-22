@@ -1,12 +1,12 @@
 namespace WebApi.Options.Authentication.Jwt;
 
-public sealed class JwtAuthenticationOption
+internal sealed class JwtAuthenticationOption
 {
     public CommonOption Common { get; set; } = new();
 
     public TypeOption Type { get; set; } = new();
 
-    public sealed class CommonOption
+    internal sealed class CommonOption
     {
         public string DefaultAuthenticateScheme { get; set; }
 
@@ -15,11 +15,11 @@ public sealed class JwtAuthenticationOption
         public string DefaultChallengeScheme { get; set; }
     }
 
-    public sealed class TypeOption
+    internal sealed class TypeOption
     {
         public JwtOption Jwt { get; set; } = new();
 
-        public sealed class JwtOption
+        internal sealed class JwtOption
         {
             public bool ValidateIssuer { get; set; }
 

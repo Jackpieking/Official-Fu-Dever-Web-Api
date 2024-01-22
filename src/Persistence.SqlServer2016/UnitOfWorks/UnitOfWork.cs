@@ -1,10 +1,10 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Domain.Repositories;
 using Domain.UnitOfWorks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Persistence.SqlServer2016.Data;
 using Persistence.SqlServer2016.Repositories;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Persistence.SqlServer2016.UnitOfWorks;
 
@@ -15,7 +15,7 @@ internal sealed class UnitOfWork : IUnitOfWork
 {
     //Backing fields.
     private readonly FuDeverContext _context;
-    private IDbContextTransaction _dbContextTransaction;
+    private IDbContextTransaction _dbTransaction;
     private IUserRepository _userRepository;
     private IRefreshTokenRepository _refreshTokenRepository;
     private IUserJoiningStatusRepository _userJoiningStatusRepository;
@@ -212,22 +212,22 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public async Task CreateTransactionAsync(CancellationToken cancellationToken)
     {
-        _dbContextTransaction = await _context.Database.BeginTransactionAsync(cancellationToken: cancellationToken);
+        _dbTransaction = await _context.Database.BeginTransactionAsync(cancellationToken: cancellationToken);
     }
 
     public Task CommitTransactionAsync(CancellationToken cancellationToken)
     {
-        return _dbContextTransaction.CommitAsync(cancellationToken: cancellationToken);
+        return _dbTransaction.CommitAsync(cancellationToken: cancellationToken);
     }
 
     public Task RollBackTransactionAsync(CancellationToken cancellationToken)
     {
-        return _dbContextTransaction.RollbackAsync(cancellationToken: cancellationToken);
+        return _dbTransaction.RollbackAsync(cancellationToken: cancellationToken);
     }
 
     public ValueTask DisposeTransactionAsync()
     {
-        return _dbContextTransaction.DisposeAsync();
+        return _dbTransaction.DisposeAsync();
     }
 
     public IExecutionStrategy CreateExecutionStrategy()

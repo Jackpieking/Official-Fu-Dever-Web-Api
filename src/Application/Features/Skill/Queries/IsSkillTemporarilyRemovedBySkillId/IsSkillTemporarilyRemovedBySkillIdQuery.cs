@@ -1,5 +1,5 @@
-using System;
 using Application.Interfaces.Messaging;
+using System;
 
 namespace Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillId;
 

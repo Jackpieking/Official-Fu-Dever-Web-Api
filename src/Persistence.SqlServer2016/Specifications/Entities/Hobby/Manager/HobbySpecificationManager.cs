@@ -1,6 +1,6 @@
-using System;
 using Domain.Specifications.Entities.Hobby;
 using Domain.Specifications.Entities.Hobby.Manager;
+using System;
 
 namespace Persistence.SqlServer2016.Specifications.Entities.Hobby.Manager;
 

@@ -23,9 +23,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        services.ConfigureMediatR();
-
         services.ConfigureFluentValidation();
+
+        services.ConfigureMediatR();
     }
 
     /// <summary>

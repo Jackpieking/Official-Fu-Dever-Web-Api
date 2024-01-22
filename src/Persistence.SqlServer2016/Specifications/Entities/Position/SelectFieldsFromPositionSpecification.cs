@@ -13,24 +13,20 @@ internal sealed class SelectFieldsFromPositionSpecification :
 {
     public ISelectFieldsFromPositionSpecification Ver1()
     {
-        SelectExpression = position => new()
-        {
-            Id = position.Id,
-            Name = position.Name
-        };
+        SelectExpression = position => Domain.Entities.Position.Init(
+            position.Id,
+            position.Name);
 
         return this;
     }
 
     public ISelectFieldsFromPositionSpecification Ver2()
     {
-        SelectExpression = position => new()
-        {
-            Id = position.Id,
-            Name = position.Name,
-            RemovedAt = position.RemovedAt,
-            RemovedBy = position.RemovedBy
-        };
+        SelectExpression = position => Domain.Entities.Position.Init(
+            position.Id,
+            position.Name,
+            position.RemovedAt,
+            position.RemovedBy);
 
         return this;
     }

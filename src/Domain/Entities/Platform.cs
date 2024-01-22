@@ -1,6 +1,6 @@
+using Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
-using Domain.Entities.Base;
 
 namespace Domain.Entities;
 
@@ -11,6 +11,10 @@ public sealed class Platform :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
+    private Platform()
+    {
+    }
+
     /// <summary>
     ///     Platform id.
     /// </summary>
@@ -27,4 +31,133 @@ public sealed class Platform :
 
     // Navigation collections.
     public IEnumerable<UserPlatform> UserPlatforms { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="platformId">
+    ///     Id of platform.
+    /// </param>
+    /// <param name="platformName">
+    ///     Platform name.
+    /// </param>
+    /// <param name="platformRemovedAt">
+    ///     Platform is removed by whom.
+    /// </param>
+    /// <param name="platformRemovedBy">
+    ///     When is platform removed.
+    /// </param>
+    /// <returns>
+    ///     A new platform object.
+    /// </returns>
+    public static Platform Init(
+        Guid platformId,
+        string platformName,
+        DateTime platformRemovedAt,
+        Guid platformRemovedBy)
+    {
+        // Validate platform name.
+        if (string.IsNullOrWhiteSpace(value: platformName) ||
+            platformName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate platform Id.
+        if (platformId == Guid.Empty)
+        {
+            return default;
+        }
+
+        // Validate platform removed by.
+        if (platformRemovedBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = platformId,
+            Name = platformName,
+            RemovedAt = platformRemovedAt,
+            RemovedBy = platformRemovedBy
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="platformId">
+    ///     Id of platform.
+    /// </param>
+    /// <param name="platformName">
+    ///     Platform name.
+    /// </param>
+    /// <returns>
+    ///     A new platform object.
+    /// </returns>
+    public static Platform Init(
+        Guid platformId,
+        string platformName)
+    {
+        // Validate platform name.
+        if (string.IsNullOrWhiteSpace(value: platformName) ||
+            platformName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate platform Id.
+        if (platformId == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = platformId,
+            Name = platformName
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="platformName">
+    ///     Platform name.
+    /// </param>
+    /// <returns>
+    ///     A new platform object.
+    /// </returns>
+    public static Platform Init(string platformName)
+    {
+        // Validate platform name.
+        if (string.IsNullOrWhiteSpace(value: platformName) ||
+            platformName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Name = platformName
+        };
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Name property.
+        /// </summary>
+        public static class Name
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
+        }
+    }
 }

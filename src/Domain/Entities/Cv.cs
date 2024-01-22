@@ -1,5 +1,5 @@
-using System;
 using Domain.Entities.Base;
+using System;
 
 namespace Domain.Entities;
 
@@ -11,6 +11,10 @@ public sealed class Cv :
     ICreatedEntity,
     ITemporarilyRemovedEntity
 {
+    private Cv()
+    {
+    }
+
     /// <summary>
     ///     Cv id.
     /// </summary>
@@ -19,12 +23,12 @@ public sealed class Cv :
     /// <summary>
     ///     Student full name.
     /// </summary>
-    public string FullName { get; set; }
+    public string StudentFullName { get; set; }
 
     /// <summary>
     ///     Student email.
     /// </summary>
-    public string Email { get; set; }
+    public string StudentEmail { get; set; }
 
     /// <summary>
     ///     Student id.
@@ -34,7 +38,7 @@ public sealed class Cv :
     /// <summary>
     ///     Student cv file id.
     /// </summary>
-    public string CvFileId { get; set; }
+    public string StudentCvFileId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
@@ -43,4 +47,102 @@ public sealed class Cv :
     public DateTime RemovedAt { get; set; }
 
     public Guid RemovedBy { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="cvId">
+    ///     Id of cv.
+    /// </param>
+    /// <param name="studentFullName">
+    ///     Student full name.
+    /// </param>
+    /// <param name="studentEmail">
+    ///     Student email.
+    /// </param>
+    /// <param name="studentId">
+    ///     Id of student.
+    /// </param>
+    /// <param name="studentCvFieldId">
+    ///     Id of cv file.
+    /// </param>
+    /// <returns>
+    ///     A new cv object.
+    /// </returns>
+    public static Cv Init(
+        Guid cvId,
+        string studentFullName,
+        string studentEmail,
+        string studentId,
+        string studentCvFieldId)
+    {
+        // Validate cv id.
+        if (cvId == Guid.Empty)
+        {
+            return default;
+        }
+
+        // Validate cv student full name name.
+        if (string.IsNullOrWhiteSpace(value: studentFullName) ||
+            studentFullName.Length > Metadata.StudentFullName.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate cv student email.
+        if (string.IsNullOrWhiteSpace(value: studentEmail))
+        {
+            return default;
+        }
+
+        // Validate cv student id.
+        if (string.IsNullOrWhiteSpace(value: studentId) ||
+            studentId.Length > Metadata.StudentId.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate cv file id.
+        if (string.IsNullOrWhiteSpace(value: studentCvFieldId))
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = cvId,
+            StudentFullName = studentFullName,
+            StudentEmail = studentEmail,
+            StudentId = studentId,
+            StudentCvFileId = studentCvFieldId
+        };
+    }
+
+    /// <summary>
+    ///     Represent requirement of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Student full name property.
+        /// </summary>
+        public static class StudentFullName
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 50;
+        }
+
+        /// <summary>
+        ///     Student id property.
+        /// </summary>
+        public static class StudentId
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 10;
+        }
+    }
 }

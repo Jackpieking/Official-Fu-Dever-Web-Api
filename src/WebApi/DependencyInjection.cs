@@ -1,28 +1,28 @@
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Options.Authorization;
-using WebApi.Authorization.Requires;
-using WebApi.ActionResults;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
-using System.IO;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.RateLimiting;
+using WebApi.ActionResults;
+using WebApi.ApiReturnCodes.Base;
+using WebApi.Authorization.Requires;
+using WebApi.Common;
+using WebApi.Middlewares;
 using WebApi.Options.ApiController;
 using WebApi.Options.Authentication.Jwt;
-using WebApi.Options.Swagger.Swashbuckle;
-using WebApi.Middlewares;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using System.Threading.RateLimiting;
-using WebApi.Common;
-using WebApi.ApiReturnCodes.Base;
-using System.Collections.Generic;
+using WebApi.Options.Authorization;
 using WebApi.Options.RateLimiter.FixedWindow;
+using WebApi.Options.Swagger.Swashbuckle;
 
 namespace WebApi;
 
@@ -48,8 +48,6 @@ internal static class DependencyInjection
         services.ConfigureAuthentication(configuration: configuration);
 
         services.ConfigureAuthorization(configuration: configuration);
-
-        services.ConfigureCore(configuration: configuration);
 
         services.ConfigureLogging();
 
@@ -174,22 +172,6 @@ internal static class DependencyInjection
                     policy.Requirements.Add(item: new AccessTokenExpiredTimeRequire());
                 });
         });
-    }
-
-    /// <summary>
-    ///     Configure the core services.
-    /// </summary>
-    /// <param name="services">
-    ///     Service container.
-    /// </param>
-    /// <param name="configuration">
-    ///     Load configuration for configuration
-    ///     file (appsetting).
-    /// </param>
-    private static void ConfigureCore(
-        this IServiceCollection services,
-        IConfigurationManager configuration)
-    {
     }
 
     /// <summary>
@@ -421,6 +403,8 @@ internal static class DependencyInjection
     /// </param>
     private static void ConfigureExceptionHandler(this IServiceCollection services)
     {
-        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services
+            .AddExceptionHandler<GlobalExceptionHandler>()
+            .AddProblemDetails();
     }
 }

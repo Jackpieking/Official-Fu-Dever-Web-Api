@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using Application.Interfaces.Data;
 using Domain.Entities;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
@@ -12,6 +11,8 @@ using Persistence.SqlServer2016.Options.AspNetCoreIdentity;
 using Persistence.SqlServer2016.Options.Database;
 using Persistence.SqlServer2016.Specifications.Others;
 using Persistence.SqlServer2016.UnitOfWorks;
+using System;
+using System.Reflection;
 
 namespace Persistence.SqlServer2016;
 
@@ -91,7 +92,8 @@ public static class DependencyInjection
     {
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<ISuperSpecificationManager, SuperSpecificationManager>();
+            .AddScoped<ISuperSpecificationManager, SuperSpecificationManager>()
+            .AddScoped<IDbMinTimeHandler, DbMinTimeHandler>();
     }
 
     /// <summary>

@@ -1,14 +1,14 @@
-using System;
 using FluentValidation;
+using System;
 
 namespace Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillId;
 
 /// <summary>
 ///     Is skill temporarily removed by skill id query modal validator.
 /// </summary>
-internal sealed class IsSkillTemporarilyRemovedBySkillIdQueryValidator : AbstractValidator<IsSkillTemporarilyRemovedBySkillIdQuery>
+public sealed class IsSkillTemporarilyRemovedBySkillIdQueryValidator : AbstractValidator<IsSkillTemporarilyRemovedBySkillIdQuery>
 {
-    internal IsSkillTemporarilyRemovedBySkillIdQueryValidator()
+    public IsSkillTemporarilyRemovedBySkillIdQueryValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 

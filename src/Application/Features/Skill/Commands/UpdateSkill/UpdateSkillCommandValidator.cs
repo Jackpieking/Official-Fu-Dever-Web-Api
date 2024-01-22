@@ -1,16 +1,14 @@
-using System;
 using FluentValidation;
+using System;
 
 namespace Application.Features.Skill.Commands.UpdateSkill;
 
 /// <summary>
 ///     Update skill command modal validator.
 /// </summary>
-internal sealed class UpdateSkillCommandValidator : AbstractValidator<UpdateSkillCommand>
+public sealed class UpdateSkillCommandValidator : AbstractValidator<UpdateSkillCommand>
 {
-    private const int MaxSkillNameLength = 100;
-
-    internal UpdateSkillCommandValidator()
+    public UpdateSkillCommandValidator()
     {
         ClassLevelCascadeMode = CascadeMode.Stop;
 
@@ -25,6 +23,7 @@ internal sealed class UpdateSkillCommandValidator : AbstractValidator<UpdateSkil
         RuleFor(expression: command => command.NewSkillName)
             .Cascade(cascadeMode: CascadeMode.Stop)
             .Must(predicate: newSkillName => !string.IsNullOrWhiteSpace(value: newSkillName))
-            .Must(predicate: newSkillName => newSkillName.Length <= MaxSkillNameLength);
+            .Must(predicate: newSkillName => newSkillName.Length <=
+                Domain.Entities.Skill.Metadata.Name.MaxLength);
     }
 }

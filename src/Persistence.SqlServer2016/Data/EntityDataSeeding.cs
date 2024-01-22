@@ -1,773 +1,664 @@
-using System;
-using System.Collections.Generic;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Persistence.SqlServer2016.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Persistence.SqlServer2016.Data;
 
 /// <summary>
 ///     Represent data seeding for database.
 /// </summary>
-internal static class EntityDataSeeding
+public static class EntityDataSeeding
 {
     /// <summary>
-    ///     Seed data
+    ///     Seed data.
     /// </summary>
-    /// <param name="builder">
-    ///     Database builder to apply seeding.
+    /// <param name="context">
+    ///     Database context for interacting with other table.
     /// </param>
-    internal static void Seed(this ModelBuilder builder)
+    /// <param name="userManager">
+    ///     Specific manager for interacting with user table.
+    /// </param>
+    /// <param name="roleManager">
+    ///     Specific manager for interacting with role table.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     True if seeding is success. Otherwise, false.
+    /// </returns>
+    public static async Task<bool> SeedAsync(
+        FuDeverContext context,
+        UserManager<User> userManager,
+        RoleManager<Role> roleManager,
+        CancellationToken cancellationToken)
     {
-        #region Departments
-        List<Department> newDepartments =
-        [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Board of Directors",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Academic Board",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Administrative Board",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Events Board",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Media Board",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
-        ];
+        var departments = context.Set<Department>();
+        var hobbies = context.Set<Hobby>();
+        var majors = context.Set<Major>();
+        var platforms = context.Set<Platform>();
+        var positions = context.Set<Position>();
+        var skills = context.Set<Skill>();
+        var userJoiningStatuses = context.Set<UserJoiningStatus>();
 
-        builder.Entity<Department>().HasData(data: newDepartments);
+        // Is departments table empty.
+        var isTableEmpty = await IsTableEmptyAsync(
+            departments: departments,
+            hobbies: hobbies,
+            majors: majors,
+            platforms: platforms,
+            positions: positions,
+            skills: skills,
+            userJoiningStatuses: userJoiningStatuses,
+            userManager: userManager,
+            roleManager: roleManager,
+            cancellationToken: cancellationToken);
+
+        if (!isTableEmpty)
+        {
+            return true;
+        }
+
+        // Init list of new department.
+        var newDepartments = InitNewDepartments();
+
+        // Init list of new hobby.
+        var newHobbies = InitNewHobbies();
+
+        // Init list of new major.
+        var newMajors = InitNewMajors();
+
+        // Init list of new platform.
+        var newPlatforms = InitNewPlatforms();
+
+        // Init list of new position.
+        var newPositions = InitNewPositions();
+
+        // Init list of new skill.
+        var newSkills = InitNewSkills();
+
+        // Init list of new user joining status.
+        var newUserJoiningStatuses = InitNewUserJoiningStatuses();
+
+        // Init list of role.
+        var newRoles = InitNewRoles();
+
+        // Init admin.
+        var admin = InitAdmin(userJoiningStatus: newUserJoiningStatuses.First(
+            predicate: newUserJoiningStatus => newUserJoiningStatus.Type.Equals(
+                value: "Approved")));
+
+        #region Transaction
+        var executedTransactionResult = false;
+
+        await context.Database
+            .CreateExecutionStrategy()
+            .ExecuteAsync(operation: async () =>
+            {
+                await using var dbTransaction = await context.Database.BeginTransactionAsync(
+                    cancellationToken: cancellationToken);
+
+                try
+                {
+                    await departments.AddRangeAsync(
+                        entities: newDepartments,
+                        cancellationToken: cancellationToken);
+
+                    await hobbies.AddRangeAsync(
+                        entities: newHobbies,
+                        cancellationToken: cancellationToken);
+
+                    await majors.AddRangeAsync(
+                        entities: newMajors,
+                        cancellationToken: cancellationToken);
+
+                    await platforms.AddRangeAsync(
+                        entities: newPlatforms,
+                        cancellationToken: cancellationToken);
+
+                    await positions.AddRangeAsync(
+                        entities: newPositions,
+                        cancellationToken: cancellationToken);
+
+                    await skills.AddRangeAsync(
+                        entities: newSkills,
+                        cancellationToken: cancellationToken);
+
+                    await userJoiningStatuses.AddRangeAsync(
+                        entities: newUserJoiningStatuses,
+                        cancellationToken: cancellationToken);
+
+                    foreach (var newRole in newRoles)
+                    {
+                        await roleManager.CreateAsync(role: newRole);
+                    }
+
+                    await userManager.CreateAsync(
+                        user: admin,
+                        password: "Admin123@");
+
+                    await userManager.AddToRoleAsync(
+                        user: admin,
+                        role: "admin");
+
+                    var emailConfirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(user: admin);
+
+                    await userManager.ConfirmEmailAsync(
+                        user: admin,
+                        token: emailConfirmationToken);
+
+                    await context.SaveChangesAsync(cancellationToken: cancellationToken);
+
+                    await dbTransaction.CommitAsync(cancellationToken: cancellationToken);
+
+                    executedTransactionResult = true;
+                }
+                catch
+                {
+                    await dbTransaction.RollbackAsync(cancellationToken: cancellationToken);
+                }
+            });
         #endregion
 
-        #region Hobbies
-        List<Hobby> newHobbies =
+        return executedTransactionResult;
+    }
+
+    /// <summary>
+    ///    Are tables of database empty.
+    /// </summary>
+    /// <param name="departments">
+    ///     Department dbset for interacting with table.
+    /// </param>
+    /// <param name="hobbies">
+    ///     Hobby dbset for interacting with table.
+    /// </param>
+    /// <param name="majors">
+    ///     Major dbset for interacting with table.
+    /// </param>
+    /// <param name="platforms">
+    ///     Platform dbset for interacting with table.
+    /// </param>
+    /// <param name="positions">
+    ///     Position dbset for interacting with table.
+    /// </param>
+    /// <param name="skills">
+    ///     Skill dbset for interacting with table.
+    /// </param>
+    /// <param name="userJoiningStatuses">
+    ///     User joining status dbset for interacting with table.
+    /// </param>
+    /// <param name="userManager">
+    ///     User manager for interacting with table.
+    /// </param>
+    /// <param name="roleManager">
+    ///     Role manager for interacting with table.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     True if table is empty. Otherwise, false.
+    /// </returns>
+    private static async Task<bool> IsTableEmptyAsync(
+        DbSet<Department> departments,
+        DbSet<Hobby> hobbies,
+        DbSet<Major> majors,
+        DbSet<Platform> platforms,
+        DbSet<Position> positions,
+        DbSet<Skill> skills,
+        DbSet<UserJoiningStatus> userJoiningStatuses,
+        UserManager<User> userManager,
+        RoleManager<Role> roleManager,
+        CancellationToken cancellationToken)
+    {
+        // Is departments table empty.
+        var isTableNotEmpty = await departments.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is hobbies table empty.
+        isTableNotEmpty = await hobbies.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is majors table empty.
+        isTableNotEmpty = await majors.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is platforms table empty.
+        isTableNotEmpty = await platforms.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is positions table empty.
+        isTableNotEmpty = await positions.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is skills table empty.
+        isTableNotEmpty = await skills.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is user joining statuses table empty.
+        isTableNotEmpty = await userJoiningStatuses.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is users table empty.
+        isTableNotEmpty = await userManager.Users.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        // Is roles table empty.
+        isTableNotEmpty = await roleManager.Roles.AnyAsync(cancellationToken: cancellationToken);
+
+        if (isTableNotEmpty)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Init a list of new department.
+    /// </summary>
+    /// <returns>
+    ///     List of department.
+    /// </returns>
+    private static IEnumerable<Department> InitNewDepartments()
+    {
+        List<string> newDepartmentNames =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Volunteering",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Cooking",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Collecting",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Writing",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Camping",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Sports",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Yoga",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Photography",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Chess",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Taekwondo",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Birdwatching",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "DIY Crafts",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Games",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Baking",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Fishing",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Coding",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Drawing",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Playing an Instrument",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Painting",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Gardening",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Hiking",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Reading",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Dancing",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Home Improvement",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Surfing",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Traveling",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
+            "EMPTY",
+            "Board of Directors",
+            "Academic Board",
+            "Administrative Board",
+            "Events Board",
+            "Media Board"
         ];
 
-        builder.Entity<Hobby>().HasData(data: newHobbies);
-        #endregion
+        List<Department> newDepartments = [];
 
-        #region Majors
-        List<Major> newMajors =
+        foreach (var newDepartmentName in newDepartmentNames)
+        {
+            newDepartments.Add(item: Department.Init(
+                departmentId: Guid.NewGuid(),
+                departmentName: newDepartmentName,
+                departmentRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                departmentRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        newDepartments
+            .Find(match: newDepartment => newDepartment.Name.Equals(value: newDepartmentNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newDepartments;
+    }
+
+    /// <summary>
+    ///     Init a list of new hobby.
+    /// </summary>
+    /// <returns>
+    ///     List of hobby.
+    /// </returns>
+    private static IEnumerable<Hobby> InitNewHobbies()
+    {
+        List<string> newHobbyNames =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Software Engineering",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Information Security",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Digital Art Design",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Information System",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Artificial Intelligence",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
+            "EMPTY",
+            "Volunteering",
+            "Cooking",
+            "Collecting",
+            "Writing",
+            "Camping",
+            "Sports",
+            "Yoga",
+            "Photography",
+            "Chess",
+            "Taekwondo",
+            "Birdwatching",
+            "DIY Crafts",
+            "Games",
+            "Baking",
+            "Fishing",
+            "Coding",
+            "Drawing",
+            "Playing an Instrument",
+            "Painting",
+            "Gardening",
+            "Hiking",
+            "Reading",
+            "Dancing",
+            "Home Improvement",
+            "Surfing",
+            "Traveling",
+            "Software Engineering"
         ];
 
-        builder.Entity<Major>().HasData(data: newMajors);
-        #endregion
+        List<Hobby> newHobbies = [];
 
-        #region Platforms
-        List<Platform> newPlatforms =
+        foreach (var newHobbyName in newHobbyNames)
+        {
+            newHobbies.Add(item: Hobby.Init(
+                hobbyId: Guid.NewGuid(),
+                hobbyName: newHobbyName,
+                hobbyRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                hobbyRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID
+            ));
+        }
+
+        newHobbies
+            .Find(match: newHobby => newHobby.Name.Equals(value: newHobbyNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newHobbies;
+    }
+
+    /// <summary>
+    ///     Init a list of new major.
+    /// </summary>
+    /// <returns>
+    ///     List of major.
+    /// </returns>
+    private static IEnumerable<Major> InitNewMajors()
+    {
+        List<string> newMajorNames =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "LinkedIn",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "GitHub",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Facebook",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Youtube",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Twitter",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Instagram",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
+            "EMPTY",
+            "Software Engineering",
+            "Information Security",
+            "Digital Art Design",
+            "Information System",
+            "Artificial Intelligence"
         ];
 
-        builder.Entity<Platform>().HasData(data: newPlatforms);
-        #endregion
+        List<Major> newMajors = [];
 
-        #region Positions
-        List<Position> newPositions =
+        foreach (var newMajorName in newMajorNames)
+        {
+            newMajors.Add(item: Major.Init(
+                majorId: Guid.NewGuid(),
+                majorName: newMajorName,
+                majorRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                majorRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        newMajors
+            .Find(match: newMajor => newMajor.Name.Equals(value: newMajorNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newMajors;
+    }
+
+    /// <summary>
+    ///     Init a list of new platform.
+    /// </summary>
+    /// <returns>
+    ///     List of platform.
+    /// </returns>
+    private static IEnumerable<Platform> InitNewPlatforms()
+    {
+        List<string> newPlatformNames =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Club President",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Vice Club President",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Member",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Administrative Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Vice Academic Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Secretary",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Media Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Vice Administrative Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Events Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Vice Events Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Academic Department Head",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Name = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
+            "EMPTY",
+            "LinkedIn",
+            "GitHub",
+            "Facebook",
+            "Youtube",
+            "Twitter",
+            "Instagram"
         ];
 
-        builder.Entity<Position>().HasData(data: newPositions);
-        #endregion
+        List<Platform> newPlatforms = [];
 
-        #region Skills
-        List<Skill> newSkills =
+        foreach (var newPlatformName in newPlatformNames)
+        {
+            newPlatforms.Add(item: Platform.Init(
+                platformId: Guid.NewGuid(),
+                platformName: newPlatformName,
+                platformRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                platformRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        newPlatforms
+            .Find(match: newPlatform => newPlatform.Name.Equals(value: newPlatformNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newPlatforms;
+    }
+
+    /// <summary>
+    ///     Init a list of new position.
+    /// </summary>
+    /// <returns>
+    ///     List of position.
+    /// </returns>
+    private static IEnumerable<Position> InitNewPositions()
+    {
+        List<string> newPositionNames =
         [
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Vue.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Caching",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Flexbox",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Docker",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Next.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "SQL Server",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "HTML/CSS",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Github",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Git",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Node.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Dart",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "MySQL",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Authorization",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "JavaScript",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Web Security",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "ASP.NET Core",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Devops",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Python",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Apache",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "PostgreSQL",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "RESTful API",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Express.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Flask",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Bootstrap",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Spring Boot",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "GraphQL",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "MongoDB",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "React.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "C#",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Agile",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Java",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "C++",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Authentication",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Django",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Angular.js",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Ruby",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "React Native",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Typescript",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "C",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "SQL",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Swift",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "Flutter",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Guid.NewGuid(),
-                skillName: "PHP",
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
-            Skill.Init(
-                skillId: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                skillName: string.Empty,
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Guid.Empty),
+            "EMPTY",
+            "Club President",
+            "Vice Club President",
+            "Member",
+            "Administrative Department Head",
+            "Vice Academic Department Head",
+            "Secretary",
+            "Media Department Head",
+            "Vice Administrative Department Head",
+            "Events Department Head",
+            "Vice Events Department Head",
+            "Academic Department Head"
         ];
 
-        builder.Entity<Skill>().HasData(data: newSkills);
-        #endregion
+        List<Position> newPositions = [];
 
-        #region UserJoiningStatuses
-        List<UserJoiningStatus> newUserJoiningStatuses =
+        foreach (var newPositionName in newPositionNames)
+        {
+            newPositions.Add(item: Position.Init(
+                positionId: Guid.NewGuid(),
+                positionName: newPositionName,
+                positionRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                positionRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        newPositions
+            .Find(match: newPosition => newPosition.Name.Equals(value: newPositionNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newPositions;
+    }
+
+    /// <summary>
+    ///     Init a list of new skill.
+    /// </summary>
+    /// <returns>
+    ///     List of skill.
+    /// </returns>
+    private static IEnumerable<Skill> InitNewSkills()
+    {
+        List<string> newSkillNames =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Type = "Pending",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Type = "Approved",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Type = "Expired",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Type = "Rejected",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                Type = string.Empty,
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
+            "EMPTY",
+            "Vue.js",
+            "Caching",
+            "Flexbox",
+            "Docker",
+            "Next.js",
+            "SQL Server",
+            "HTML/CSS",
+            "Github",
+            "Git",
+            "Node.js",
+            "Dart",
+            "MySQL",
+            "Authorization",
+            "JavaScript",
+            "Web Security",
+            "ASP.NET Core",
+            "Devops",
+            "Python",
+            "Apache",
+            "PostgreSQL",
+            "RESTful API",
+            "Express.js",
+            "Flask",
+            "Bootstrap",
+            "Spring Boot",
+            "GraphQL",
+            "MongoDB",
+            "React.js",
+            "C#",
+            "Agile",
+            "Java",
+            "C++",
+            "Authentication",
+            "Django",
+            "Angular.js",
+            "Ruby",
+            "React Native",
+            "Typescript",
+            "C",
+            "SQL",
+            "Swift",
+            "Flutter",
+            "PHP"
         ];
 
-        builder.Entity<UserJoiningStatus>().HasData(data: newUserJoiningStatuses);
-        #endregion
+        List<Skill> newSkills = [];
 
-        #region Roles
-        List<Role> newRoles =
+        foreach (var newSkillName in newSkillNames)
+        {
+            newSkills.Add(item: Skill.Init(
+                skillId: Guid.NewGuid(),
+                skillName: newSkillName,
+                skillRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                skillRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        newSkills
+            .Find(match: newSkill => newSkill.Name.Equals(value: newSkillNames[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newSkills;
+    }
+
+    /// <summary>
+    ///     Init a list of new user joining status.
+    /// </summary>
+    /// <returns>
+    ///     List of user joining status.
+    /// </returns>
+    private static IEnumerable<UserJoiningStatus> InitNewUserJoiningStatuses()
+    {
+        List<string> newUserJoiningStatusTypes =
         [
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "admin",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Name = "user",
-                RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                RemovedBy = Guid.Empty
-            }
+            "EMPTY",
+            "Pending",
+            "Approved",
+            "Expired",
+            "Rejected"
         ];
 
-        newRoles[0].NormalizedName = newRoles[0].Name.ToUpper();
-        newRoles[1].NormalizedName = newRoles[1].Name.ToUpper();
+        List<UserJoiningStatus> newUserJoiningStatuses = [];
 
-        builder.Entity<Role>().HasData(data: newRoles);
-        #endregion
+        foreach (var newUserJoiningStatusType in newUserJoiningStatusTypes)
+        {
+            newUserJoiningStatuses.Add(item: UserJoiningStatus.Init(
+                userJoiningStatusId: Guid.NewGuid(),
+                userJoiningStatusType: newUserJoiningStatusType,
+                userJoiningStatusRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                userJoiningStatusRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
 
-        #region Users
+        newUserJoiningStatuses
+            .Find(match: newUserJoiningStatus => newUserJoiningStatus.Type.Equals(value: newUserJoiningStatusTypes[0]))
+            .Id = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID;
+
+        return newUserJoiningStatuses;
+    }
+
+    /// <summary>
+    ///     Init a list of new role.
+    /// </summary>
+    /// <returns>
+    ///     List of role.
+    /// </returns>
+    private static IEnumerable<Role> InitNewRoles()
+    {
+        List<string> newRoleNames =
+        [
+            "admin",
+            "user"
+        ];
+
+        List<Role> newRoles = [];
+
+        foreach (var newRoleName in newRoleNames)
+        {
+            newRoles.Add(item: Role.Init(
+                roleId: Guid.NewGuid(),
+                roleName: newRoleName,
+                roleRemovedAt: Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+                roleRemovedBy: Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+        }
+
+        return newRoles;
+    }
+
+    /// <summary>
+    ///     Init a list of admin.
+    /// </summary>
+    /// <param name="userJoiningStatus">
+    ///     User joining status for admin.
+    /// </param>
+    /// <returns>
+    ///     List of role.
+    /// </returns>
+    private static User InitAdmin(UserJoiningStatus userJoiningStatus)
+    {
         User admin = new()
         {
             Id = Guid.NewGuid(),
             UserName = "ledinhdangkhoa10a9@gmail.com",
-            UserJoiningStatusId = newUserJoiningStatuses[2].Id,
+            Email = "ledinhdangkhoa10a9@gmail.com",
+            UserJoiningStatusId = userJoiningStatus.Id,
             PositionId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
             MajorId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
             DepartmentId = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
@@ -776,40 +667,18 @@ internal static class EntityDataSeeding
             Career = string.Empty,
             Workplaces = string.Empty,
             EducationPlaces = string.Empty,
-            BirthDay = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            BirthDay = Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
             HomeAddress = string.Empty,
             SelfDescription = string.Empty,
             JoinDate = DateTime.UtcNow,
             AvatarUrl = "https://firebasestorage.googleapis.com/v0/b/comic-image-storage.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=2309abba-282c-4f81-846e-6336235103dc",
             CreatedAt = DateTime.UtcNow,
-            RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-            RemovedBy = Guid.Empty,
-            UpdatedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-            UpdatedBy = Guid.Empty,
+            RemovedAt = Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            RemovedBy = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+            UpdatedAt = Common.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
+            UpdatedBy = Application.Common.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
         };
 
-        admin.Email = admin.UserName;
-        admin.NormalizedUserName = admin.UserName.ToUpper();
-        admin.NormalizedEmail = admin.Email.ToUpper();
-        admin.EmailConfirmed = true;
-
-        PasswordHasher<User> passwordHasher = new();
-
-        admin.PasswordHash = passwordHasher.HashPassword(
-            user: admin,
-            password: "Fudeveradmin123@");
-
-        builder.Entity<User>().HasData(data: admin);
-        #endregion
-
-        #region UserRoles
-        UserRole userRole = new()
-        {
-            UserId = admin.Id,
-            RoleId = newRoles[0].Id
-        };
-
-        builder.Entity<UserRole>().HasData(data: userRole);
-        #endregion
+        return admin;
     }
 }

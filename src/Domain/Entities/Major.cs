@@ -1,6 +1,6 @@
+using Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
-using Domain.Entities.Base;
 
 namespace Domain.Entities;
 
@@ -11,6 +11,10 @@ public sealed class Major :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
+    private Major()
+    {
+    }
+
     /// <summary>
     ///     Major id.
     /// </summary>
@@ -27,4 +31,109 @@ public sealed class Major :
 
     // Navigation collections.
     public IEnumerable<User> Users { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="majorId">
+    ///     Id of major.
+    /// </param>
+    /// <param name="majorName">
+    ///     Major name.
+    /// </param>
+    /// <param name="majorRemovedAt">
+    ///     Major is removed by whom.
+    /// </param>
+    /// <param name="majorRemovedBy">
+    ///     When is major removed.
+    /// </param>
+    /// <returns>
+    ///     A new major object.
+    /// </returns>
+    public static Major Init(
+        Guid majorId,
+        string majorName,
+        DateTime majorRemovedAt,
+        Guid majorRemovedBy)
+    {
+        // Validate major name.
+        if (string.IsNullOrWhiteSpace(value: majorName) ||
+            majorName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate major Id.
+        if (majorId == Guid.Empty)
+        {
+            return default;
+        }
+
+        // Validate major removed by.
+        if (majorRemovedBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = majorId,
+            Name = majorName,
+            RemovedAt = majorRemovedAt,
+            RemovedBy = majorRemovedBy
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="majorId">
+    ///     Id of major.
+    /// </param>
+    /// <param name="majorName">
+    ///     Major name.
+    /// </param>
+    /// <returns>
+    ///     A new major object.
+    /// </returns>
+    public static Major Init(
+        Guid majorId,
+        string majorName)
+    {
+        // Validate major name.
+        if (string.IsNullOrWhiteSpace(value: majorName) ||
+            majorName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate major Id.
+        if (majorId == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = majorId,
+            Name = majorName
+        };
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Name property.
+        /// </summary>
+        public static class Name
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
+        }
+    }
 }

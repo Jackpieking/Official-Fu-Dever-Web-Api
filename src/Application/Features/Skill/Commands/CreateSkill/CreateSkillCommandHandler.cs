@@ -1,12 +1,12 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Common;
 using Application.Interfaces.Data;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Commands.CreateSkill;
 
@@ -19,7 +19,7 @@ internal sealed class CreateSkillCommandHandler : ICommandHandler<CreateSkillCom
     private readonly IDbMinTimeHandler _dbMinTimeHandler;
     private readonly IValidator<CreateSkillCommand> _validator;
 
-    internal CreateSkillCommandHandler(
+    public CreateSkillCommandHandler(
         IUnitOfWork unitOfWork,
         IDbMinTimeHandler dbMinTimeHandler,
         IValidator<CreateSkillCommand> validator)
@@ -54,7 +54,7 @@ internal sealed class CreateSkillCommandHandler : ICommandHandler<CreateSkillCom
         if (!inputValidationResult.IsValid)
         {
             return false;
-        }   
+        }
 
         var executedTransactionResult = false;
 

@@ -5,7 +5,7 @@ namespace WebApi.ApiReturnCodes;
 /// <summary>
 ///     Represent skill entity api return code.
 /// </summary>
-internal abstract class SkillApiCustomStatusCode : BaseApiReturnCode
+internal abstract class SkillApiReturnCode : BaseApiReturnCode
 {
     internal const int SKILL_IS_NOT_FOUND = 3;
 

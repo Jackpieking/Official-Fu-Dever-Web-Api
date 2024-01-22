@@ -1,17 +1,17 @@
 namespace WebApi.Options.Authorization;
 
-public sealed class AuthorizationOption
+internal sealed class AuthorizationOption
 {
     public CommonOption Common { get; set; } = new();
 
     public PolicyOption Policy { get; set; } = new();
 
-    public sealed class CommonOption
+    internal sealed class CommonOption
     {
         public bool InvokeHandlersAfterFailure { get; set; }
     }
 
-    public sealed class PolicyOption
+    internal sealed class PolicyOption
     {
         public DefaultOption Default { get; set; } = new();
 
@@ -19,19 +19,19 @@ public sealed class AuthorizationOption
 
         public RefreshAccessTokenRequireOption RefreshAccessTokenRequire { get; set; } = new();
 
-        public sealed class DefaultOption
+        internal sealed class DefaultOption
         {
-            public string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; } = [];
         }
 
-        public sealed class AdminRoleRequireOption
+        internal sealed class AdminRoleRequireOption
         {
-            public string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; } = [];
         }
 
-        public sealed class RefreshAccessTokenRequireOption
+        internal sealed class RefreshAccessTokenRequireOption
         {
-            public string[] AuthenticationSchemes { get; set; }
+            public string[] AuthenticationSchemes { get; set; } = [];
         }
     }
 }

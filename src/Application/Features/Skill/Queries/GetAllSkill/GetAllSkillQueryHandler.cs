@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Queries.GetAllSkill;
 
@@ -17,7 +17,7 @@ internal sealed class GetAllSkillQueryHandler : IQueryHandler<
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
 
-    internal GetAllSkillQueryHandler(
+    public GetAllSkillQueryHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager)
     {

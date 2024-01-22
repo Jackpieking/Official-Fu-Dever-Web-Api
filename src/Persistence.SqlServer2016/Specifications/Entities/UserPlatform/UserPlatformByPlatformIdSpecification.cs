@@ -1,6 +1,6 @@
-using System;
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.UserPlatform;
+using System;
 
 namespace Persistence.SqlServer2016.Specifications.Entities.UserPlatform;
 

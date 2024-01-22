@@ -13,24 +13,20 @@ internal sealed class SelectFieldsFromHobbySpecification :
 {
     public ISelectFieldsFromHobbySpecification Ver1()
     {
-        SelectExpression = hobby => new()
-        {
-            Id = hobby.Id,
-            Name = hobby.Name
-        };
+        SelectExpression = hobby => Domain.Entities.Hobby.Init(
+            hobby.Id,
+            hobby.Name);
 
         return this;
     }
 
     public ISelectFieldsFromHobbySpecification Ver2()
     {
-        SelectExpression = hobby => new()
-        {
-            Id = hobby.Id,
-            Name = hobby.Name,
-            RemovedAt = hobby.RemovedAt,
-            RemovedBy = hobby.RemovedBy
-        };
+        SelectExpression = hobby => Domain.Entities.Hobby.Init(
+            hobby.Id,
+            hobby.Name,
+            hobby.RemovedAt,
+            hobby.RemovedBy);
 
         return this;
     }
@@ -38,10 +34,7 @@ internal sealed class SelectFieldsFromHobbySpecification :
 
     public ISelectFieldsFromHobbySpecification Ver3()
     {
-        SelectExpression = hobby => new()
-        {
-            Id = hobby.Id
-        };
+        SelectExpression = hobby => Domain.Entities.Hobby.Init(hobby.Id);
 
         return this;
     }

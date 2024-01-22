@@ -12,7 +12,116 @@ public sealed class Role :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
+    private Role()
+    {
+    }
+
     public DateTime RemovedAt { get; set; }
 
     public Guid RemovedBy { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="roleId">
+    ///     Id of role.
+    /// </param>
+    /// <param name="roleName">
+    ///     Role name.
+    /// </param>
+    /// <param name="roleRemovedAt">
+    ///     Role is removed by whom.
+    /// </param>
+    /// <param name="roleRemovedBy">
+    ///     When is role removed.
+    /// </param>
+    /// <returns>
+    ///     A new role object.
+    /// </returns>
+    public static Role Init(
+        Guid roleId,
+        string roleName,
+        DateTime roleRemovedAt,
+        Guid roleRemovedBy)
+    {
+        // Validate role type.
+        if (string.IsNullOrWhiteSpace(value: roleName) ||
+            roleName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate role Id.
+        if (roleId == Guid.Empty)
+        {
+            return default;
+        }
+
+        // Validate role removed by.
+        if (roleRemovedBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = roleId,
+            Name = roleName,
+            RemovedAt = roleRemovedAt,
+            RemovedBy = roleRemovedBy
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="roleId">
+    ///     Id of role.
+    /// </param>
+    /// <param name="roleName">
+    ///     Role name.
+    /// </param>
+    /// <returns>
+    ///     A new role object.
+    /// </returns>
+    public static Role Init(
+        Guid roleId,
+        string roleName)
+    {
+        // Validate role type.
+        if (string.IsNullOrWhiteSpace(value: roleName) ||
+            roleName.Length > Metadata.Name.MaxLength)
+        {
+            return default;
+        }
+
+        // Validate role Id.
+        if (roleId == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = roleId,
+            Name = roleName
+        };
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Name property.
+        /// </summary>
+        public static class Name
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 50;
+        }
+    }
 }

@@ -1,8 +1,8 @@
-using System;
-using System.Linq.Expressions;
 using Domain.Entities.Base;
 using Domain.Specifications.Base;
 using Microsoft.EntityFrameworkCore.Query;
+using System;
+using System.Linq.Expressions;
 
 namespace Domain.Specifications.Others;
 

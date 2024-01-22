@@ -1,7 +1,7 @@
-using System;
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Role;
 using Persistence.SqlServer2016.Common;
+using System;
 
 namespace Persistence.SqlServer2016.Specifications.Entities.Role;
 

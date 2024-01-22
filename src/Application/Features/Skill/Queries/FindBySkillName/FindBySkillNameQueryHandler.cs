@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using FluentValidation;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Queries.FindBySkillName;
 
@@ -19,7 +19,7 @@ internal sealed class FindBySkillNameQueryHandler : IQueryHandler<
     private readonly ISuperSpecificationManager _superSpecificationManager;
     private readonly IValidator<FindBySkillNameQuery> _validator;
 
-    internal FindBySkillNameQueryHandler(
+    public FindBySkillNameQueryHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager,
         IValidator<FindBySkillNameQuery> validator)

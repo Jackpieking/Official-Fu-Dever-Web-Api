@@ -1,11 +1,11 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Data;
 using Application.Interfaces.Messaging;
 using Domain.UnitOfWorks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Commands.RestoreSkill;
 
@@ -20,7 +20,7 @@ internal sealed class RestoreSkillCommandHandler : ICommandHandler<
     private readonly IDbMinTimeHandler _dbMinTimeHandler;
     private readonly IValidator<RestoreSkillCommand> _validator;
 
-    internal RestoreSkillCommandHandler(
+    public RestoreSkillCommandHandler(
         IUnitOfWork unitOfWork,
         IDbMinTimeHandler dbMinTimeHandler,
         IValidator<RestoreSkillCommand> validator)

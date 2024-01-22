@@ -1,6 +1,6 @@
 using WebApi.ApiReturnCodes.Base;
 
-namespace WebApi.ApiReturnCodes;    
+namespace WebApi.ApiReturnCodes;
 
 /// <summary>
 ///     Represent major entity api return code.

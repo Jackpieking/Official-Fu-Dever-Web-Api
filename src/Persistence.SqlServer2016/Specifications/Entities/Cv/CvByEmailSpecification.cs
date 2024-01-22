@@ -16,7 +16,7 @@ internal sealed class CvByEmailSpecification :
     {
         WhereExpression = cv => EF.Functions
             .Collate(
-                cv.Email,
+                cv.StudentEmail,
                 CommonConstant.DbCollation.SQL_LATIN1_GENERAL_CP1_CS_AS)
             .Equals(email);
     }

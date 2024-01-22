@@ -13,10 +13,7 @@ internal sealed class SelectFieldsFromUserPlatformSpecification :
 {
     public ISelectFieldsFromUserPlatformSpecification Ver1()
     {
-        SelectExpression = userPlatform => new()
-        {
-            UserId = userPlatform.UserId
-        };
+        SelectExpression = userPlatform => Domain.Entities.UserPlatform.Init(userPlatform.UserId);
 
         return this;
     }

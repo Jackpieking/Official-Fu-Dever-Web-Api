@@ -1,6 +1,6 @@
-using System;
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.RefreshToken;
+using System;
 
 namespace Persistence.SqlServer2016.Specifications.Entities.RefreshToken;
 

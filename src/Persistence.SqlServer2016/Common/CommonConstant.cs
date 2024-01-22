@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Persistence.SqlServer2016.Common;
 
@@ -13,13 +14,45 @@ internal static class CommonConstant
 
         internal const string NVARCHAR_MAX = "NVARCHAR(MAX)";
 
-        internal const string NVARCHAR_100 = "NVARCHAR(100)";
+        /// <summary>
+        ///     Nvarchar datatype resolver.
+        /// </summary>
+        internal static class NvarcharGenerator
+        {
+            private static readonly Dictionary<int, string> _storage = [];
+            private const string NvarcharDataTypeName = "NVARCHAR";
 
-        internal const string NVARCHAR_200 = "NVARCHAR(100)";
+            /// <summary>
+            ///     Generate nvarchar datatype with given length.
+            /// </summary>
+            /// <param name="length">
+            ///     Length of nvarchar.
+            /// </param>
+            /// <returns>
+            ///     The old instance if it is already existed
+            ///     or the new one.
+            /// </returns>
+            /// <remarks>
+            ///     The extension cannot generate max length.
+            /// </remarks>
+            internal static string Get(int length)
+            {
+                if (_storage.TryGetValue(
+                    key: length,
+                    value: out var value))
+                {
+                    return value;
+                }
 
-        internal const string NVARCHAR_50 = "NVARCHAR(50)";
+                var newValue = $"{NvarcharDataTypeName}({length})";
 
-        internal const string NVARCHAR_30 = "NVARCHAR(30)";
+                _storage.Add(
+                    key: length,
+                    value: newValue);
+
+                return newValue;
+            }
+        }
     }
 
     internal static class DbDefaultValue

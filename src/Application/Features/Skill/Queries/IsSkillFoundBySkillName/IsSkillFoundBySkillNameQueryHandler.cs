@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Queries.IsSkillFoundBySkillName;
 
@@ -18,7 +18,7 @@ internal sealed class IsSkillFoundBySkillNameQueryHandler : IQueryHandler<
     private readonly ISuperSpecificationManager _superSpecificationManager;
     private readonly IValidator<IsSkillFoundBySkillNameQuery> _validator;
 
-    internal IsSkillFoundBySkillNameQueryHandler(
+    public IsSkillFoundBySkillNameQueryHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager,
         IValidator<IsSkillFoundBySkillNameQuery> validator)

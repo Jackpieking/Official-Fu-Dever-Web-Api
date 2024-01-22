@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillName;
 
@@ -18,7 +18,7 @@ internal sealed class IsSkillTemporarilyRemovedBySkillNameQueryHandler : IQueryH
     private readonly ISuperSpecificationManager _superSpecificationManager;
     private readonly IValidator<IsSkillTemporarilyRemovedBySkillNameQuery> _validator;
 
-    internal IsSkillTemporarilyRemovedBySkillNameQueryHandler(
+    public IsSkillTemporarilyRemovedBySkillNameQueryHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager,
         IValidator<IsSkillTemporarilyRemovedBySkillNameQuery> validator)

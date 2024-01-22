@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Messaging;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.Queries.GetAllTemporarilyRemovedSkill;
 
@@ -17,7 +17,7 @@ internal sealed class GetAllTemporarilyRemovedSkillQueryHandler : IQueryHandler<
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
 
-    internal GetAllTemporarilyRemovedSkillQueryHandler(
+    public GetAllTemporarilyRemovedSkillQueryHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager)
     {
