@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -20,11 +20,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Cache.Redis\Cache.Redis.csproj" />
-    <ProjectReference Include="..\Image.Firebase\Image.Firebase.csproj" />
-    <ProjectReference Include="..\Mail.GoogleGmail\Mail.GoogleGmail.csproj" />
-    <ProjectReference Include="..\Persistence.SqlServer2016\Persistence.SqlServer2016.csproj" />
-    <ProjectReference Include="..\BackgroundJob.HangFire\BackgroundJob.HangFire.csproj" />
+    <ProjectReference Include="..\BackgroundJob\BackgroundJob.csproj" />
+    <ProjectReference Include="..\Cache\Cache.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Image\Image.csproj" />
+    <ProjectReference Include="..\Mail\Mail.csproj" />
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

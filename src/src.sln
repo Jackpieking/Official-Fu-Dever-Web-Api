@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{6D7DCF6C-FD32-4977-9F55-0C69FAF9BA4A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence.SqlServer2016", "Persistence.SqlServer2016\Persistence.SqlServer2016.csproj", "{16B77BD9-2B16-4BCF-B244-87C7AF51ED8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{16B77BD9-2B16-4BCF-B244-87C7AF51ED8A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{A2119AA3-4EA0-4A28-9BFF-CEEF83798DE4}"
 EndProject
@@ -19,13 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{A082B73D-7C77-46CD-A33E-1B5FCB2DEA26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundJob.HangFire", "BackgroundJob.HangFire\BackgroundJob.HangFire.csproj", "{C3CC547D-6C09-4975-88AA-EB28BF4ED1AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundJob", "BackgroundJob\BackgroundJob.csproj", "{C3CC547D-6C09-4975-88AA-EB28BF4ED1AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.Redis", "Cache.Redis\Cache.Redis.csproj", "{5CF6528F-4076-403C-8F7F-D88163472E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache", "Cache\Cache.csproj", "{5CF6528F-4076-403C-8F7F-D88163472E90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mail.GoogleGmail", "Mail.GoogleGmail\Mail.GoogleGmail.csproj", "{2BEA851B-E1A1-4E17-841A-85BCF1CD349B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mail", "Mail\Mail.csproj", "{2BEA851B-E1A1-4E17-841A-85BCF1CD349B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Image.Firebase", "Image.Firebase\Image.Firebase.csproj", "{4E0CAF51-92C9-4B68-8533-649175778CC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Image", "Image\Image.csproj", "{4E0CAF51-92C9-4B68-8533-649175778CC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
-using WebApi.Common;
+using WebApi.Commons;
 using WebApi.DTOs.Skill.Outgoings;
 
 namespace WebApi.Controllers;

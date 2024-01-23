@@ -1,11 +1,13 @@
 using Application;
+using Cache;
 using Domain.Entities;
+using Image;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Persistence.Database.SqlServer.Data;
 using Persistence.SqlServer2016;
-using Persistence.SqlServer2016.Data;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -23,8 +25,10 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 services.AddApplication(configuration: configuration);
-services.AddPersistenceSqlServer2016(configuration: configuration);
+services.AddPersistence(configuration: configuration);
 services.AddWebApi(configuration: configuration);
+services.AddImage(configuration: configuration);
+services.AddCache(configuration: configuration);
 
 var app = builder.Build();
 
