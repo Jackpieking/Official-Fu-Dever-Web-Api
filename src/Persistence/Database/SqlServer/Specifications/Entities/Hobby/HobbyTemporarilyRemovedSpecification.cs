@@ -1,7 +1,6 @@
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Hobby;
 using Persistence.Commons;
-using System;
 
 namespace Persistence.Database.SqlServer.Specifications.Entities.Hobby;
 
@@ -17,7 +16,7 @@ internal sealed class HobbyTemporarilyRemovedSpecification :
         var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = hobby =>
-            hobby.RemovedBy != Guid.Empty &&
+            hobby.RemovedBy != Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID &&
             hobby.RemovedAt != minDateTimeInDatabase;
     }
 }

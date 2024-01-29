@@ -1,7 +1,7 @@
 using Application;
 using Cache;
 using Domain.Entities;
-using Image;
+using ExternalFile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

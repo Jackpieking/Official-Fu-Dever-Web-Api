@@ -1,7 +1,6 @@
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Department;
 using Persistence.Commons;
-using System;
 
 namespace Persistence.Database.SqlServer.Specifications.Entities.Department;
 
@@ -17,7 +16,7 @@ internal sealed class DepartmentNotTemporarilyRemovedSpecification :
         var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = department =>
-            department.RemovedBy == Guid.Empty &&
+            department.RemovedBy == Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID &&
             department.RemovedAt == minDateTimeInDatabase;
     }
 }

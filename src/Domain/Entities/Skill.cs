@@ -89,6 +89,46 @@ public sealed class Skill :
     /// <summary>
     ///     Return an instance.
     /// </summary>
+    /// <param name="skillId">
+    ///     Id of skill.
+    /// </param>
+    /// <param name="skillRemovedAt">
+    ///     Skill is removed by whom.
+    /// </param>
+    /// <param name="skillRemovedBy">
+    ///     When is skill removed.
+    /// </param>
+    /// <returns>
+    ///     A new skill object.
+    /// </returns>
+    public static Skill Init(
+        Guid skillId,
+        Guid skillRemovedBy,
+        DateTime skillRemovedAt)
+    {
+        // Validate skill Id.
+        if (skillId == Guid.Empty)
+        {
+            return default;
+        }
+
+        // Validate skill removed by.
+        if (skillRemovedBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = skillId,
+            RemovedAt = skillRemovedAt,
+            RemovedBy = skillRemovedBy
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
     /// <param name="skillName">
     ///     Skill name.
     /// <returns>

@@ -1,6 +1,5 @@
 using Domain.Entities.Base;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Domain.Specifications.Base;
@@ -61,12 +60,6 @@ public interface IBaseSpecification<TEntity> where TEntity :
     ///     Expression that is used for "ThenByDescending" method.
     /// </summary>
     Expression<Func<TEntity, object>> ThenOrderByDescendingExpressions { get; set; }
-
-    /// <summary>
-    ///     Expressions that is used for constructing
-    ///     multiple "Include" methods follow the number of expressions.
-    /// </summary>
-    List<Expression<Func<TEntity, object>>> IncludeExpressions { get; }
 
     /// <summary>
     ///     Int value that is used for "Skip" method.

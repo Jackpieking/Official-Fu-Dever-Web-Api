@@ -22,14 +22,9 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\BackgroundJob\BackgroundJob.csproj" />
     <ProjectReference Include="..\Cache\Cache.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Image\Image.csproj" />
+    <ProjectReference Include="..\ExternalFile\ExternalFile.csproj" />
     <ProjectReference Include="..\Mail\Mail.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Options\" />
   </ItemGroup>
 
   <ItemGroup>

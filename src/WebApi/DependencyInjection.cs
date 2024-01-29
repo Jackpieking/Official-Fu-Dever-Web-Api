@@ -18,11 +18,11 @@ using WebApi.ApiReturnCodes.Base;
 using WebApi.Authorization.Requires;
 using WebApi.Commons;
 using WebApi.Middlewares;
-using WebApi.Options.ApiController;
-using WebApi.Options.Authentication.Jwt;
-using WebApi.Options.Authorization;
-using WebApi.Options.RateLimiter.FixedWindow;
-using WebApi.Options.Swagger.Swashbuckle;
+using Configuration.Presentation.WebApi.ApiController;
+using Configuration.Presentation.WebApi.Authentication.Jwt;
+using Configuration.Presentation.WebApi .Authorization;
+using Configuration.Presentation.WebApi.RateLimiter.FixedWindow;
+using Configuration.Presentation.WebApi.Swagger.Swashbuckle;
 
 namespace WebApi;
 

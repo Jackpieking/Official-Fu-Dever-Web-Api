@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RemoveSkillPermanently;
 
 /// <summary>
-///     Represent remove skill permanently command modal.
+///     Represent remove skill permanently command model.
 /// </summary>
 public sealed class RemoveSkillPermanentlyCommand : ICommand<bool>
 {

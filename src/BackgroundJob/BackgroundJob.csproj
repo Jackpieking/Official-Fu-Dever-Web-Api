@@ -2,12 +2,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Configuration\Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Handlers\HangFire\" />
     <Folder Include="Handlers\" />
-    <Folder Include="Options\" />
   </ItemGroup>
 
   <PropertyGroup>

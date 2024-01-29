@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Configuration\Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Handlers\GoogleGmail\" />
-    <Folder Include="Options\" />
   </ItemGroup>
 
 </Project>

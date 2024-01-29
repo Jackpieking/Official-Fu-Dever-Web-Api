@@ -4,11 +4,11 @@ namespace WebApi.DTOs.Skill.Outgoings;
 
 internal sealed class GetTemporarilyRemovedSkillDto
 {
-    internal Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-    internal string Name { get; set; }
+    public string Name { get; set; }
 
-    internal DateTime RemovedAt { get; set; }
+    public DateTime RemovedAt { get; set; }
 
-    internal Guid RemovedBy { get; set; }
+    public Guid RemovedBy { get; set; }
 }

@@ -1,7 +1,6 @@
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Role;
 using Persistence.Commons;
-using System;
 
 namespace Persistence.Database.SqlServer.Specifications.Entities.Role;
 
@@ -18,7 +17,7 @@ internal sealed class RoleTemporarilyRemovedSpecification :
         var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = role =>
-            role.RemovedBy != Guid.Empty &&
+            role.RemovedBy != Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID &&
             role.RemovedAt != minDateTimeInDatabase;
     }
 }

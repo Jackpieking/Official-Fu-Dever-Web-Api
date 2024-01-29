@@ -1,7 +1,6 @@
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Skill;
 using Persistence.Commons;
-using System;
 
 namespace Persistence.Database.SqlServer.Specifications.Entities.Skill;
 
@@ -18,7 +17,7 @@ internal sealed class SkillNotTemporarilyRemovedSpecification :
         var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = skill =>
-            skill.RemovedBy == Guid.Empty &&
+            skill.RemovedBy == Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID &&
             skill.RemovedAt == minDateTimeInDatabase;
     }
 }

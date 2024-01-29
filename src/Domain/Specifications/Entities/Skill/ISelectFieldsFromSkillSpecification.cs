@@ -12,4 +12,6 @@ public interface ISelectFieldsFromSkillSpecification : IBaseSpecification<Domain
     ISelectFieldsFromSkillSpecification Ver2();
 
     ISelectFieldsFromSkillSpecification Ver3();
+
+    ISelectFieldsFromSkillSpecification Ver4();
 }

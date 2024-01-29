@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.UpdateSkill;
 
 /// <summary>
-///     Update skill command modal validator.
+///     Update skill command model validator.
 /// </summary>
 public sealed class UpdateSkillCommandValidator : AbstractValidator<UpdateSkillCommand>
 {

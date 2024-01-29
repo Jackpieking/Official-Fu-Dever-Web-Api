@@ -37,4 +37,11 @@ internal sealed class SelectFieldsFromSkillSpecification :
 
         return this;
     }
+
+    public ISelectFieldsFromSkillSpecification Ver4()
+    {
+        SelectExpression = skill => Domain.Entities.Skill.Init(skill.Name);
+
+        return this;
+    }
 }

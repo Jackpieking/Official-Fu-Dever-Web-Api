@@ -1,7 +1,6 @@
 using Domain.Specifications.Base;
 using Domain.Specifications.Entities.Platform;
 using Persistence.Commons;
-using System;
 
 namespace Persistence.Database.SqlServer.Specifications.Entities.Platform;
 
@@ -17,7 +16,7 @@ internal sealed class PlatformNotTemporarilyRemovedSpecification :
         var minDateTimeInDatabase = CommonConstant.DbDefaultValue.MIN_DATE_TIME;
 
         WhereExpression = platform =>
-            platform.RemovedBy == Guid.Empty &&
+            platform.RemovedBy == Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID &&
             platform.RemovedAt == minDateTimeInDatabase;
     }
 }

@@ -58,9 +58,12 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     {
         IQueryable<TEntity> queryable = _dbSet;
 
-        ApplySpecificationToQueryable(
-            queryable: queryable,
-            specifications: specifications);
+        foreach (var specification in specifications)
+        {
+            queryable = SpecificationEvaluator.Apply(
+                queryable: queryable,
+                specification: specification);
+        }
 
         return queryable.AnyAsync(cancellationToken: cancellationToken);
     }
@@ -71,10 +74,12 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     {
         IQueryable<TEntity> queryable = _dbSet;
 
-        ApplySpecificationToQueryable(
-            queryable: queryable,
-            specifications: specifications);
-
+        foreach (var specification in specifications)
+        {
+            queryable = SpecificationEvaluator.Apply(
+                queryable: queryable,
+                specification: specification);
+        }
         return await queryable.ToListAsync(cancellationToken: cancellationToken);
     }
 
@@ -84,30 +89,13 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     {
         IQueryable<TEntity> queryable = _dbSet;
 
-        ApplySpecificationToQueryable(
-            queryable: queryable,
-            specifications: specifications);
-
-        return queryable.FirstOrDefaultAsync(cancellationToken: cancellationToken);
-    }
-
-    /// <summary>
-    ///     Applying the list of specifications to the given
-    ///     queryable.
-    /// </summary>
-    /// <param name="queryable">
-    ///     Queryable to apply specification to.
-    /// </param>
-    /// <param name="specifications">
-    ///     List of specifications.
-    /// </param>
-    private static void ApplySpecificationToQueryable(
-        IQueryable<TEntity> queryable,
-        IEnumerable<IBaseSpecification<TEntity>> specifications)
-    {
         foreach (var specification in specifications)
         {
-            queryable = queryable.Apply(specification: specification);
+            queryable = SpecificationEvaluator.Apply(
+                queryable: queryable,
+                specification: specification);
         }
+
+        return queryable.FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }
 }

@@ -27,7 +27,7 @@ public static class SpecificationEvaluator
     ///     The queryable with the appended formed linq.
     /// </returns>
     public static IQueryable<TEntity> Apply<TEntity>(
-        this IQueryable<TEntity> queryable,
+        IQueryable<TEntity> queryable,
         IBaseSpecification<TEntity> specification)
             where TEntity :
                 class,
@@ -76,15 +76,6 @@ public static class SpecificationEvaluator
         {
             queryable = queryable.AsSplitQuery();
         }
-
-        queryable = specification.IncludeExpressions.Aggregate(
-            seed: queryable,
-            func: (
-                current,
-                includeExpression) =>
-            {
-                return current.Include(navigationPropertyPath: includeExpression);
-            });
 
         if (specification.SkipNumberOfEntities > default(int))
         {

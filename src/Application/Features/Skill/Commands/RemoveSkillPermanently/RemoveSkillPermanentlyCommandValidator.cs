@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RemoveSkillPermanently;
 
 /// <summary>
-///     Remove skill permanently command modal validator.
+///     Remove skill permanently command model validator.
 /// </summary>
 public sealed class RemoveSkillPermanentlyCommandValidator : AbstractValidator<RemoveSkillPermanentlyCommand>
 {

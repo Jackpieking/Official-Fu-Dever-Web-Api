@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RestoreSkill;
 
 /// <summary>
-///     Restore skill command modal.
+///     Restore skill command model.
 /// </summary>
 public sealed class RestoreSkillCommand : ICommand<bool>
 {

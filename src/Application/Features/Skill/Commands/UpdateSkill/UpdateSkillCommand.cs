@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.UpdateSkill;
 
 /// <summary>
-///     Update skill command modal.
+///     Update skill command model.
 /// </summary>
 public sealed class UpdateSkillCommand : ICommand<bool>
 {

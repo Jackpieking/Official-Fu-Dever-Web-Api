@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RemoveSkillTemporarily;
 
 /// <summary>
-///     Remove skill temporarily command modal.
+///     Remove skill temporarily command model.
 /// </summary>
 public sealed class RemoveSkillTemporarilyCommand : ICommand<bool>
 {

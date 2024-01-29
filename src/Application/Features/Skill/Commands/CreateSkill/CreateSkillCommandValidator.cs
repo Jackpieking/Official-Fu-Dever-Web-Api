@@ -3,7 +3,7 @@ using FluentValidation;
 namespace Application.Features.Skill.Commands.CreateSkill;
 
 /// <summary>
-///     Create skill command modal validator.
+///     Create skill command model validator.
 /// </summary>
 public sealed class CreateSkillCommandValidator : AbstractValidator<CreateSkillCommand>
 {

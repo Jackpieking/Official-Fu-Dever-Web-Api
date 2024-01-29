@@ -1,3 +1,6 @@
+using Application.Interfaces.Caching;
+using Cache.Handlers.Redis;
+using Configuration.Infrastructure.Cache;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +26,8 @@ public static class DependencyInjection
         IConfigurationManager configuration)
     {
         services.ConfigureStackChangeRedis(configuration: configuration);
+
+        services.ConfigureCore();
     }
 
     /// <summary>
@@ -35,9 +40,28 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
+        const string CacheSection = "Cache";
+        const string RedisSection = "Redis";
+
+        var redisOption = configuration
+            .GetRequiredSection(key: CacheSection)
+            .GetRequiredSection(key: RedisSection)
+            .Get<RedisOption>();
+
         services.AddStackExchangeRedisCache(setupAction: config =>
         {
-            config.Configuration = "";
+            config.Configuration = redisOption.ConnectionString;
         });
+    }
+
+    /// <summary>
+    ///     Configure core services.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void ConfigureCore(this IServiceCollection services)
+    {
+        services.AddScoped<ICacheHandler, RedisCacheHandler>();
     }
 }

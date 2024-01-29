@@ -125,4 +125,32 @@ public sealed class User :
     public IEnumerable<UserPlatform> UserPlatforms { get; set; }
 
     public IEnumerable<RefreshToken> RefreshTokens { get; set; }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     UserName property.
+        /// </summary>
+        public static class UserName
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 256;
+        }
+
+        /// <summary>
+        ///     Password property.
+        /// </summary>
+        public static class Password
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 4;
+        }
+    }
 }

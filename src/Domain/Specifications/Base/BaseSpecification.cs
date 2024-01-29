@@ -1,6 +1,5 @@
 using Domain.Entities.Base;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Domain.Specifications.Base;
@@ -18,7 +17,6 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
         IBaseEntity
 {
     // Backing fields.
-    private List<Expression<Func<TEntity, object>>> _includeExpressions;
     private int _skipNumberOfEntities;
     private int _takeNumberOfEntities;
 
@@ -37,16 +35,6 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
     public bool IsAsSplitQuery { get; set; }
 
     public bool IsAsNoTracking { get; set; }
-
-    public List<Expression<Func<TEntity, object>>> IncludeExpressions
-    {
-        get
-        {
-            _includeExpressions ??= [];
-
-            return _includeExpressions;
-        }
-    }
 
     public int SkipNumberOfEntities
     {

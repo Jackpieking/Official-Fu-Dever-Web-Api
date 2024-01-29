@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RemoveSkillTemporarily;
 
 /// <summary>
-///     Remove skill temporarily command modal validator.
+///     Remove skill temporarily command model validator.
 /// </summary>
 public sealed class RemoveSkillTemporarilyCommandValidator : AbstractValidator<RemoveSkillTemporarilyCommand>
 {

@@ -1,5 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Models;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Interfaces.Caching;
 
@@ -9,7 +11,7 @@ namespace Application.Interfaces.Caching;
 public interface ICacheHandler
 {
     /// <summary>
-    ///     Get the value base on key.
+    ///     Get the value by key.
     /// </summary>
     /// <typeparam name="TSource">
     ///     Type of value.
@@ -18,17 +20,16 @@ public interface ICacheHandler
     ///     Key to find the value.
     /// </param>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
+    ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
     /// </param>
     /// <returns>
-    ///     The task containing value of given key or null.
+    ///     The task containing the cache model.
     /// </returns>
-    Task<TSource> GetAsync<TSource>(
+    Task<CacheModel<TSource>> GetAsync<TSource>(
         string key,
-        CancellationToken cancellationToken)
-            where TSource : class;
+        CancellationToken cancellationToken);
 
     /// <summary>
     ///     Set the new key-value pair.
@@ -42,19 +43,22 @@ public interface ICacheHandler
     /// <param name="value">
     ///     Value for the key.
     /// </param>
+    /// <param name="distributedCacheEntryOptions">
+    ///     Option for distributed cache.
+    /// </param>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
+    ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
     /// </param>
     /// <returns>
-    ///     The task containing empty result.
+    ///     True if success. Otherwise, false.
     /// </returns>
     Task SetAsync<TSource>(
         string key,
         TSource value,
-        CancellationToken cancellationToken)
-            where TSource : class;
+        DistributedCacheEntryOptions distributedCacheEntryOptions,
+        CancellationToken cancellationToken);
 
     /// <summary>
     ///     Remove the value by given key.
@@ -62,33 +66,15 @@ public interface ICacheHandler
     /// <param name="key">
     ///     Key to find the value.
     /// </param>
+    /// <returns>
+    ///     True if success. Otherwise, false.
+    /// </returns>
     /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
+    ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
     /// </param>
-    /// <returns>
-    ///     True if remove success. Otherwise, false.
-    /// </returns>
-    Task<bool> RemoveAsync(
+    Task RemoveAsync(
         string key,
-        CancellationToken cancellationToken);
-
-    /// <summary>
-    ///     Remove range of value by given prefix key.
-    /// </summary>
-    /// <param name="prefixKey">
-    ///     Prefix key to find value.
-    /// </param>
-    /// <param name="cancellationToken">
-    ///     A token that is used for notifying system
-    ///     to cancel the current operation when user stop
-    ///     the request.
-    /// </param>
-    /// <returns>
-    ///     True if remove success. Otherwise, false.
-    /// </returns>
-    Task<bool> RemoveByPrefixAsync(
-        string prefixKey,
         CancellationToken cancellationToken);
 }

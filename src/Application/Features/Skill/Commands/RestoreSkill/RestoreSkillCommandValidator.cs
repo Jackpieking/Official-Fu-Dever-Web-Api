@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.Commands.RestoreSkill;
 
 /// <summary>
-///     Restore skill command modal validator.
+///     Restore skill command model validator.
 /// </summary>
 public sealed class RestoreSkillCommandValidator : AbstractValidator<RestoreSkillCommand>
 {
