@@ -317,7 +317,7 @@ public static class EntityDataSeeding
 
         foreach (var newDepartmentName in newDepartmentNames)
         {
-            newDepartments.Add(item: Department.Init(
+            newDepartments.Add(item: Department.InitVer1(
                 departmentId: Guid.NewGuid(),
                 departmentName: newDepartmentName,
                 departmentRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -375,7 +375,7 @@ public static class EntityDataSeeding
 
         foreach (var newHobbyName in newHobbyNames)
         {
-            newHobbies.Add(item: Hobby.Init(
+            newHobbies.Add(item: Hobby.InitVer1(
                 hobbyId: Guid.NewGuid(),
                 hobbyName: newHobbyName,
                 hobbyRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -412,7 +412,7 @@ public static class EntityDataSeeding
 
         foreach (var newMajorName in newMajorNames)
         {
-            newMajors.Add(item: Major.Init(
+            newMajors.Add(item: Major.InitVer1(
                 majorId: Guid.NewGuid(),
                 majorName: newMajorName,
                 majorRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -449,7 +449,7 @@ public static class EntityDataSeeding
 
         foreach (var newPlatformName in newPlatformNames)
         {
-            newPlatforms.Add(item: Platform.Init(
+            newPlatforms.Add(item: Platform.InitVer1(
                 platformId: Guid.NewGuid(),
                 platformName: newPlatformName,
                 platformRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -491,7 +491,7 @@ public static class EntityDataSeeding
 
         foreach (var newPositionName in newPositionNames)
         {
-            newPositions.Add(item: Position.Init(
+            newPositions.Add(item: Position.InitVer1(
                 positionId: Guid.NewGuid(),
                 positionName: newPositionName,
                 positionRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -565,7 +565,7 @@ public static class EntityDataSeeding
 
         foreach (var newSkillName in newSkillNames)
         {
-            newSkills.Add(item: Skill.Init(
+            newSkills.Add(item: Skill.InitVer1(
                 skillId: Guid.NewGuid(),
                 skillName: newSkillName,
                 skillRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -600,7 +600,7 @@ public static class EntityDataSeeding
 
         foreach (var newUserJoiningStatusType in newUserJoiningStatusTypes)
         {
-            newUserJoiningStatuses.Add(item: UserJoiningStatus.Init(
+            newUserJoiningStatuses.Add(item: UserJoiningStatus.InitVer1(
                 userJoiningStatusId: Guid.NewGuid(),
                 userJoiningStatusType: newUserJoiningStatusType,
                 userJoiningStatusRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -632,7 +632,7 @@ public static class EntityDataSeeding
 
         foreach (var newRoleName in newRoleNames)
         {
-            newRoles.Add(item: Role.Init(
+            newRoles.Add(item: Role.InitVer1(
                 roleId: Guid.NewGuid(),
                 roleName: newRoleName,
                 roleRemovedAt: Commons.CommonConstant.DbDefaultValue.MIN_DATE_TIME,

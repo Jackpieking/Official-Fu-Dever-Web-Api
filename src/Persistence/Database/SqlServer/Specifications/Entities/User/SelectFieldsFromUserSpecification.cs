@@ -14,29 +14,26 @@ internal sealed class SelectFieldsFromUserSpecification :
 {
     public ISelectFieldsFromUserSpecification Ver1()
     {
-        SelectExpression = user => new()
-        {
-            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type)
-        };
+        SelectExpression = user => Domain.Entities.User.InitVer2(
+            Domain.Entities.UserJoiningStatus.InitVer3(
+                user.UserJoiningStatus.Type));
 
         return this;
     }
 
     public ISelectFieldsFromUserSpecification Ver2()
     {
-        SelectExpression = user => new()
-        {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            Position = Domain.Entities.Position.Init(user.Position.Name),
-            Department = Domain.Entities.Department.Init(user.Department.Name),
-            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type),
-            AvatarUrl = user.AvatarUrl,
-            RemovedAt = user.RemovedAt,
-            RemovedBy = user.RemovedBy
-        };
+        SelectExpression = user => Domain.Entities.User.InitVer3(
+            user.Id,
+            user.FirstName,
+            user.LastName,
+            user.Email,
+            Domain.Entities.Position.InitVer2(user.Position.Name),
+            Domain.Entities.Department.InitVer3(user.Department.Name),
+            Domain.Entities.UserJoiningStatus.InitVer3(user.UserJoiningStatus.Type),
+            user.AvatarUrl,
+            user.RemovedAt,
+            user.RemovedBy);
 
         return this;
     }
@@ -56,35 +53,40 @@ internal sealed class SelectFieldsFromUserSpecification :
             SelfDescription = user.SelfDescription,
             JoinDate = user.JoinDate,
             EducationPlaces = user.EducationPlaces,
-            Position = Domain.Entities.Position.Init(
+            Position = Domain.Entities.Position.InitVer3(
                 user.PositionId,
                 user.Position.Name),
-            Major = Domain.Entities.Major.Init(
+            Major = Domain.Entities.Major.InitVer2(
                 user.MajorId,
                 user.Major.Name),
-            Department = Domain.Entities.Department.Init(
+            Department = Domain.Entities.Department.InitVer2(
                 user.DepartmentId,
                 user.Department.Name),
             AvatarUrl = user.AvatarUrl,
-            UserPlatforms = user.UserPlatforms.Select(userPlatform => Domain.Entities.UserPlatform.Init(
-                userPlatform.PlatformId,
-                userPlatform.PlatformUrl,
-                Domain.Entities.Platform.Init(userPlatform.Platform.Name))),
+            UserPlatforms = user.UserPlatforms.Select(userPlatform =>
+                Domain.Entities.UserPlatform.InitVer1(
+                    userPlatform.PlatformId,
+                    userPlatform.PlatformUrl,
+                    Domain.Entities.Platform.InitVer3(
+                        userPlatform.Platform.Name))),
             Workplaces = user.Workplaces,
-            Projects = user.Projects.Select(project => Domain.Entities.Project.Init(
-                project.Id,
-                project.Title,
-                project.AuthorId,
-                project.Description,
-                project.SourceCodeUrl,
-                project.DemoUrl,
-                project.ThumbnailUrl,
-                project.CreatedAt,
-                project.UpdatedAt)),
-            UserSkills = user.UserSkills.Select(userSkill => Domain.Entities.UserSkill.Init(
-                Domain.Entities.Skill.Init(userSkill.Skill.Name))),
-            UserHobbies = user.UserHobbies.Select(userHobby => Domain.Entities.UserHobby.Init(
-                Domain.Entities.Hobby.Init(userHobby.Hobby.Name)))
+            Projects = user.Projects.Select(project =>
+                Domain.Entities.Project.InitVer2(
+                    project.Id,
+                    project.Title,
+                    project.AuthorId,
+                    project.Description,
+                    project.SourceCodeUrl,
+                    project.DemoUrl,
+                    project.ThumbnailUrl,
+                    project.CreatedAt,
+                    project.UpdatedAt)),
+            UserSkills = user.UserSkills.Select(userSkill =>
+                Domain.Entities.UserSkill.InitVer1(
+                    Domain.Entities.Skill.InitVer3(userSkill.Skill.Name))),
+            UserHobbies = user.UserHobbies.Select(userHobby =>
+                Domain.Entities.UserHobby.InitVer1(
+                    Domain.Entities.Hobby.InitVer4(userHobby.Hobby.Name)))
         };
 
         return this;
@@ -98,9 +100,9 @@ internal sealed class SelectFieldsFromUserSpecification :
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Position = Domain.Entities.Position.Init(user.Position.Name),
-            Department = Domain.Entities.Department.Init(user.Department.Name),
-            UserJoiningStatus = Domain.Entities.UserJoiningStatus.Init(user.UserJoiningStatus.Type),
+            Position = Domain.Entities.Position.InitVer2(user.Position.Name),
+            Department = Domain.Entities.Department.InitVer3(user.Department.Name),
+            UserJoiningStatus = Domain.Entities.UserJoiningStatus.InitVer3(user.UserJoiningStatus.Type),
             AvatarUrl = user.AvatarUrl
         };
 
@@ -112,6 +114,22 @@ internal sealed class SelectFieldsFromUserSpecification :
         SelectExpression = user => new()
         {
             Id = user.Id
+        };
+
+        return this;
+    }
+
+    public ISelectFieldsFromUserSpecification Ver6()
+    {
+        SelectExpression = user => new()
+        {
+            Id = user.Id,
+            PasswordHash = user.PasswordHash,
+            LockoutEnd = user.LockoutEnd,
+            AccessFailedCount = user.AccessFailedCount,
+            EmailConfirmed = user.EmailConfirmed,
+            Email = user.Email,
+            AvatarUrl = user.AvatarUrl
         };
 
         return this;

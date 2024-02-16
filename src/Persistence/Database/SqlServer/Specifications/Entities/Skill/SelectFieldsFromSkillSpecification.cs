@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromSkillSpecification :
 {
     public ISelectFieldsFromSkillSpecification Ver1()
     {
-        SelectExpression = skill => Domain.Entities.Skill.Init(
+        SelectExpression = skill => Domain.Entities.Skill.InitVer4(
             skill.Id,
             skill.Name);
 
@@ -22,7 +22,7 @@ internal sealed class SelectFieldsFromSkillSpecification :
 
     public ISelectFieldsFromSkillSpecification Ver2()
     {
-        SelectExpression = skill => Domain.Entities.Skill.Init(
+        SelectExpression = skill => Domain.Entities.Skill.InitVer1(
             skill.Id,
             skill.Name,
             skill.RemovedAt,
@@ -40,7 +40,7 @@ internal sealed class SelectFieldsFromSkillSpecification :
 
     public ISelectFieldsFromSkillSpecification Ver4()
     {
-        SelectExpression = skill => Domain.Entities.Skill.Init(skill.Name);
+        SelectExpression = skill => Domain.Entities.Skill.InitVer3(skill.Name);
 
         return this;
     }

@@ -13,16 +13,16 @@ internal sealed class SelectFieldsFromUserSkillSpecification :
 {
     public ISelectFieldsFromUserSkillSpecification Ver1()
     {
-        SelectExpression = userSkill => Domain.Entities.UserSkill.Init(
+        SelectExpression = userSkill => Domain.Entities.UserSkill.InitVer2(
             userSkill.SkillId,
-            Domain.Entities.Skill.Init(userSkill.Skill.Name));
+            Domain.Entities.Skill.InitVer3(userSkill.Skill.Name));
 
         return this;
     }
 
     public ISelectFieldsFromUserSkillSpecification Ver2()
     {
-        SelectExpression = userSkill => Domain.Entities.UserSkill.Init(userSkill.UserId);
+        SelectExpression = userSkill => Domain.Entities.UserSkill.InitVer3(userSkill.UserId);
 
         return this;
     }

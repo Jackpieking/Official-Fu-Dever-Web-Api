@@ -36,7 +36,7 @@ public sealed class UserSkill : IBaseEntity
     /// <returns>
     ///     A new user skill object.
     /// </returns>
-    public static UserSkill Init(Skill skill)
+    public static UserSkill InitVer1(Skill skill)
     {
         return new()
         {
@@ -56,7 +56,7 @@ public sealed class UserSkill : IBaseEntity
     /// <returns>
     ///     A new user skill object.
     /// </returns>
-    public static UserSkill Init(
+    public static UserSkill InitVer2(
         Guid skillId,
         Skill skill)
     {
@@ -76,7 +76,7 @@ public sealed class UserSkill : IBaseEntity
     /// <returns>
     ///     A new user skill object.
     /// </returns>
-    public static UserSkill Init(Guid userId)
+    public static UserSkill InitVer3(Guid userId)
     {
         return new()
         {

@@ -50,7 +50,7 @@ public sealed class Hobby :
     /// <returns>
     ///     A new hobby object.
     /// </returns>
-    public static Hobby Init(
+    public static Hobby InitVer1(
         Guid hobbyId,
         string hobbyName,
         DateTime hobbyRemovedAt,
@@ -96,7 +96,7 @@ public sealed class Hobby :
     /// <returns>
     ///     A new hobby object.
     /// </returns>
-    public static Hobby Init(
+    public static Hobby InitVer2(
         Guid hobbyId,
         string hobbyName)
     {
@@ -129,7 +129,7 @@ public sealed class Hobby :
     /// <returns>
     ///     A new hobby object.
     /// </returns>
-    public static Hobby Init(Guid hobbyId)
+    public static Hobby InitVer3(Guid hobbyId)
     {
         // Validate hobby Id.
         if (hobbyId == Guid.Empty)
@@ -152,7 +152,7 @@ public sealed class Hobby :
     /// <returns>
     ///     A new hobby object.
     /// </returns>
-    public static Hobby Init(string hobbyName)
+    public static Hobby InitVer4(string hobbyName)
     {
         // Validate hobby name.
         if (string.IsNullOrWhiteSpace(value: hobbyName) ||

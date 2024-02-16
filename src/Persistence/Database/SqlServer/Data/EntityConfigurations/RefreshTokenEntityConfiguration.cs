@@ -25,15 +25,14 @@ internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration
         // Primary key configuration.
         builder.HasKey(keyExpression: refreshToken => refreshToken.Id);
 
-        // UserId property configuration.
-        builder
-            .Property(propertyExpression: refreshToken => refreshToken.UserId)
-            .IsRequired();
-
         // Value property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.Value)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NVARCHAR_MAX)
+            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+                length: RefreshToken
+                    .Metadata
+                    .Value
+                    .MaxLength))
             .IsRequired();
 
         // AccessTokenId property configuration.

@@ -29,7 +29,10 @@ internal sealed class DepartmentEntityConfiguration : IEntityTypeConfiguration<D
         builder
             .Property(propertyExpression: department => department.Name)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Department.Metadata.Name.MaxLength))
+                length: Department
+                    .Metadata
+                    .Name
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

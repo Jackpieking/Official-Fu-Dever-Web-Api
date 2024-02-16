@@ -50,7 +50,7 @@ public sealed class Major :
     /// <returns>
     ///     A new major object.
     /// </returns>
-    public static Major Init(
+    public static Major InitVer1(
         Guid majorId,
         string majorName,
         DateTime majorRemovedAt,
@@ -96,7 +96,7 @@ public sealed class Major :
     /// <returns>
     ///     A new major object.
     /// </returns>
-    public static Major Init(
+    public static Major InitVer2(
         Guid majorId,
         string majorName)
     {

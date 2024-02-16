@@ -29,7 +29,10 @@ internal sealed class PlatformEntityConfiguration : IEntityTypeConfiguration<Pla
         builder
             .Property(propertyExpression: platform => platform.Name)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Platform.Metadata.Name.MaxLength))
+                length: Platform
+                    .Metadata
+                    .Name
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

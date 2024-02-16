@@ -1,7 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Interfaces.Caching;
 

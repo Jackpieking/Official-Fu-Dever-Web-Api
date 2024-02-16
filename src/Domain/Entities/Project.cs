@@ -91,7 +91,7 @@ public sealed class Project :
     /// <returns>
     ///     A new project object.
     /// </returns>
-    public static Project Init(
+    public static Project InitVer1(
         Guid projectId,
         string projectTitle,
         string projectDescription,
@@ -184,7 +184,7 @@ public sealed class Project :
     /// <returns>
     ///     A new project object.
     /// </returns>
-    public static Project Init(
+    public static Project InitVer2(
         Guid projectId,
         string projectTitle,
         Guid projectAuthorId,

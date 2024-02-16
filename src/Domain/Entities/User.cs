@@ -15,6 +15,10 @@ public sealed class User :
     IUpdatedEntity,
     ITemporarilyRemovedEntity
 {
+    public User()
+    {
+    }
+
     /// <summary>
     ///     User joining status id.
     /// </summary>
@@ -125,6 +129,196 @@ public sealed class User :
     public IEnumerable<UserPlatform> UserPlatforms { get; set; }
 
     public IEnumerable<RefreshToken> RefreshTokens { get; set; }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="username">
+    ///     Username of user account.
+    /// </param>
+    /// <returns>
+    ///     A new user object.
+    /// </returns>
+    public static User InitVer1(string username)
+    {
+        // Validate username.
+        if (string.IsNullOrWhiteSpace(value: username) ||
+            username.Length > Metadata.UserName.MaxLength)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            UserName = username
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="userJoiningStatus">
+    ///     User joining status of user.
+    /// </param>
+    /// <returns>
+    ///     A new user object.
+    /// </returns>
+    public static User InitVer2(UserJoiningStatus userJoiningStatus)
+    {
+        // Validate user joining status.
+        if (Equals(objA: userJoiningStatus, objB: null))
+        {
+            return default;
+        }
+
+        return new()
+        {
+            UserJoiningStatus = userJoiningStatus
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="userId">
+    ///     User id of user.
+    /// </param>
+    /// <param name="userFirstName">
+    ///     User first name of user.
+    /// </param>
+    /// <param name="userLastName">
+    ///     User last name of user.
+    /// </param>
+    /// <param name="userEmail">
+    ///     User email of user.
+    /// </param>
+    /// <param name="userPosition">
+    ///     User position of user.
+    /// </param>
+    /// <param name="userDepartment">
+    ///     User department of user.
+    /// </param>
+    /// <param name="userJoiningStatus">
+    ///     User joining status of user.
+    /// </param>
+    /// <param name="userAvatarUrl">
+    ///     User avatar url of user.
+    /// </param>
+    /// <param name="userRemovedAt">
+    ///     When is user removed.
+    /// </param>
+    /// <param name="userRemovedBy">
+    ///     Who removed user.
+    /// </param>
+    /// <returns>
+    ///     A new user object.
+    /// </returns>
+    public static User InitVer3(
+        Guid userId,
+        string userFirstName,
+        string userLastName,
+        string userEmail,
+        Position userPosition,
+        Department userDepartment,
+        UserJoiningStatus userJoiningStatus,
+        string userAvatarUrl,
+        DateTime userRemovedAt,
+        Guid userRemovedBy)
+    {
+        // Validate user id.
+        if (userId.Equals(g: Guid.Empty))
+        {
+            return default;
+        }
+
+        // Validate user first name.
+        if (string.IsNullOrWhiteSpace(value: userFirstName))
+        {
+            return default;
+        }
+
+        // Validate user last name.
+        if (string.IsNullOrWhiteSpace(value: userLastName))
+        {
+            return default;
+        }
+
+        // Validate user email.
+        if (string.IsNullOrWhiteSpace(value: userEmail))
+        {
+            return default;
+        }
+
+        // Validate user position.
+        if (Equals(objA: userPosition, objB: default))
+        {
+            return default;
+        }
+
+        // Validate user department.
+        if (Equals(objA: userDepartment, objB: default))
+        {
+            return default;
+        }
+
+        // Validate user joining status.
+        if (Equals(objA: userJoiningStatus, objB: default))
+        {
+            return default;
+        }
+
+        // Validate user avatar.
+        if (string.IsNullOrWhiteSpace(value: userAvatarUrl))
+        {
+            return default;
+        }
+
+        // Validate user removed by.
+        if (userRemovedBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            Id = userId,
+            FirstName = userFirstName,
+            LastName = userLastName,
+            Email = userEmail,
+            Position = userPosition,
+            Department = userDepartment,
+            UserJoiningStatus = userJoiningStatus,
+            AvatarUrl = userAvatarUrl,
+            RemovedAt = userRemovedAt,
+            RemovedBy = userRemovedBy
+        };
+    }
+
+    public static User InitVer4(
+        Guid userId,
+        string userFirstName,
+        string userLastName,
+        string userCareer,
+        DateTime userBirthday,
+        string userEmail,
+        string userHomeAddress,
+        string userPhoneNumber,
+        string userSelfDescription,
+        string userJoinDate,
+        string userEducationPlaces,
+        Position userPosition,
+        Major userMajor,
+        Department userDepartment,
+        string userAvatarUrl,
+        IEnumerable<UserPlatform> userPlatforms,
+        string userWorkplace,
+        IEnumerable<Project> userProjects,
+        IEnumerable<UserSkill> userSkills,
+        IEnumerable<UserHobby> userHobbies)
+    {
+        return default;
+    }
+
 
     /// <summary>
     ///     Represent metadata of property.

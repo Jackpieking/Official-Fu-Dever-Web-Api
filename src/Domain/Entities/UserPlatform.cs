@@ -47,7 +47,7 @@ public sealed class UserPlatform : IBaseEntity
     /// <returns>
     ///     A new user platform object.
     /// </returns>
-    public static UserPlatform Init(
+    public static UserPlatform InitVer1(
         Guid platformId,
         string platformUrl,
         Platform platform)
@@ -69,7 +69,7 @@ public sealed class UserPlatform : IBaseEntity
     /// <returns>
     ///     A new user platform object.
     /// </returns>
-    public static UserPlatform Init(Guid userId)
+    public static UserPlatform InitVer2(Guid userId)
     {
         return new()
         {

@@ -73,7 +73,7 @@ public sealed class Blog :
     /// <returns>
     ///     A new blog object.
     /// </returns>
-    public static Blog Init()
+    public static Blog InitVer1()
     {
         return new();
     }

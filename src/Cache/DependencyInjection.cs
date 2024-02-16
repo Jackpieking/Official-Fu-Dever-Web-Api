@@ -1,6 +1,6 @@
 using Application.Interfaces.Caching;
 using Cache.Handlers.Redis;
-using Configuration.Infrastructure.Cache;
+using Configuration.Infrastructure.Cache.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,12 +40,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        const string CacheSection = "Cache";
-        const string RedisSection = "Redis";
-
         var redisOption = configuration
-            .GetRequiredSection(key: CacheSection)
-            .GetRequiredSection(key: RedisSection)
+            .GetRequiredSection(key: "Cache")
+            .GetRequiredSection(key: "Redis")
             .Get<RedisOption>();
 
         services.AddStackExchangeRedisCache(setupAction: config =>

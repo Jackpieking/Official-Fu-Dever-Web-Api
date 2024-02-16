@@ -24,6 +24,11 @@ public interface IUserSkillSpecificationManager
     ISelectFieldsFromUserSkillSpecification SelectFieldsFromUserSkillSpecification { get; }
 
     /// <summary>
+    ///     User skill as no tracking specification.
+    /// </summary>
+    IUserSkillAsNoTrackingSpecification UserSkillAsNoTrackingSpecification { get; }
+
+    /// <summary>
     ///     User skill by skill id specification.
     /// </summary>
     /// <param name="skillId">

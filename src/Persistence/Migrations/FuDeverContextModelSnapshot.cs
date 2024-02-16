@@ -4,11 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Persistence.Database.SqlServer.Data;
 
-
-
 #nullable disable
 
-namespace Persistence.SqlServer2016.Migrations
+namespace Persistence.Migrations
 {
     [DbContext(typeof(FuDeverContext))]
     partial class FuDeverContextModelSnapshot : ModelSnapshot
@@ -366,16 +364,13 @@ namespace Persistence.SqlServer2016.Migrations
                     b.Property<DateTime>("ExpiredDate")
                         .HasColumnType("DATETIME2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .HasColumnType("NVARCHAR(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("RefreshTokens", null, t =>
                         {
@@ -946,7 +941,7 @@ namespace Persistence.SqlServer2016.Migrations
                 {
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

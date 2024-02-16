@@ -22,11 +22,6 @@ public sealed class RefreshToken :
     public Guid Id { get; set; }
 
     /// <summary>
-    ///     User id.
-    /// </summary>
-    public Guid UserId { get; set; }
-
-    /// <summary>
     ///     Refresh token value.
     /// </summary>
     public string Value { get; set; }
@@ -57,7 +52,7 @@ public sealed class RefreshToken :
     /// <returns>
     ///     A new refresh token object.
     /// </returns>
-    public static RefreshToken Init(Guid refreshTokenId)
+    public static RefreshToken InitVer1(Guid refreshTokenId)
     {
         // Validate refresh token Id.
         if (refreshTokenId == Guid.Empty)
@@ -74,13 +69,36 @@ public sealed class RefreshToken :
     /// <summary>
     ///     Return an instance.
     /// </summary>
+    /// <param name="createdBy">
+    ///     Id of refresh token creator.
+    /// </param>
+    /// <returns>
+    ///     A new refresh token object.
+    /// </returns>
+    public static RefreshToken InitVer2(Guid createdBy)
+    {
+        // Validate refresh token Id.
+        if (createdBy == Guid.Empty)
+        {
+            return default;
+        }
+
+        return new()
+        {
+            CreatedBy = createdBy
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
     /// <param name="refreshTokenValue">
     ///     Refresh token value.
     /// </param>
     /// <returns>
     ///     A new refresh token object.
     /// </returns>
-    public static RefreshToken Init(string refreshTokenValue)
+    public static RefreshToken InitVer3(string refreshTokenValue)
     {
         // Validate refresh token value.
         if (string.IsNullOrWhiteSpace(value: refreshTokenValue))
@@ -109,10 +127,11 @@ public sealed class RefreshToken :
     /// <returns>
     ///     A new refresh token object.
     /// </returns>
-    public static RefreshToken Init(
+    public static RefreshToken InitVer4(
         IEnumerable<Claim> claims,
+        string value,
         bool rememberMe,
-        int length)
+        DateTime createdAt)
     {
         // Validate claim list.
         if (Equals(objA: claims, objB: null) ||
@@ -121,8 +140,8 @@ public sealed class RefreshToken :
             return default;
         }
 
-        // Validate refresh token length.
-        if (length == default)
+        // Validate refresh token value.
+        if (string.IsNullOrWhiteSpace(value: value))
         {
             return default;
         }
@@ -130,39 +149,41 @@ public sealed class RefreshToken :
         return new()
         {
             Id = Guid.NewGuid(),
-            UserId = Guid.Parse(input: claims
-                .First(predicate: claim => claim.Type.Equals(value: JwtRegisteredClaimNames.Sub))
+            CreatedBy = Guid.Parse(input: claims
+                .First(predicate: claim => claim.Type.Equals(
+                    value: JwtRegisteredClaimNames.Sub))
                 .Value),
-            Value = RandomStringGenerator(length: length),
+            Value = value,
             AccessTokenId = new(g: claims
-                .First(predicate: claim => claim.Type.Equals(value: JwtRegisteredClaimNames.Jti))
+                .First(predicate: claim => claim.Type.Equals(
+                    value: JwtRegisteredClaimNames.Jti))
                 .Value),
             ExpiredDate = rememberMe ?
                 DateTime.UtcNow.AddDays(value: 7) :
-                DateTime.UtcNow.AddDays(value: 3)
+                DateTime.UtcNow.AddDays(value: 3),
+            CreatedAt = createdAt
         };
     }
 
     /// <summary>
-    ///     Generate the value for the refresh token.
+    ///     Represent metadata of property.
     /// </summary>
-    /// <param name="length">
-    ///     Length of the value.
-    /// </param>
-    /// <returns>
-    ///     A random string with given length.
-    /// </returns>
-    private static string RandomStringGenerator(int length)
+    public static class Metadata
     {
-        const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz_!@#$%^&*()_-+=";
+        /// <summary>
+        ///     Value property.
+        /// </summary>
+        public static class Value
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
 
-        Random random = new();
-
-        return new(
-            value: Enumerable
-                .Repeat(element: Chars, count: length)
-                .Select(selector: s => s[random.Next(maxValue: s.Length)])
-                .ToArray()
-        );
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
+        }
     }
 }

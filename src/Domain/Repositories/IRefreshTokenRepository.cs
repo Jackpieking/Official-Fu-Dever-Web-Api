@@ -19,7 +19,7 @@ public interface IRefreshTokenRepository : IBaseRepository<RefreshToken>
     /// <summary>
     ///     Remove refresh token asynchronously and directly to database.
     /// </summary>
-    /// <param name="userId">
+    /// <param name="createdBy">
     ///     User who will have refresh tokens removed.
     /// </param>
     /// <param name="cancellationToken">
@@ -40,6 +40,6 @@ public interface IRefreshTokenRepository : IBaseRepository<RefreshToken>
     ///     <seealso cref="UnitOfWorks"/> interface.
     /// </remarks>
     Task BulkRemoveByUserIdAsync(
-        Guid userId,
+        Guid createdBy,
         CancellationToken cancellationToken);
 }

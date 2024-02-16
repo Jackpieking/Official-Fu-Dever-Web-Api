@@ -22,16 +22,16 @@ internal sealed class RefreshTokenRepository :
     }
 
     public Task BulkRemoveByUserIdAsync(
-        Guid userId,
+        Guid createdBy,
         CancellationToken cancellationToken)
     {
-        if (userId == Guid.Empty)
+        if (createdBy == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
 
         return _dbSet
-            .Where(refreshToken => refreshToken.UserId == userId)
+            .Where(refreshToken => refreshToken.CreatedBy == createdBy)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 }

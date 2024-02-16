@@ -11,6 +11,7 @@ internal sealed class UserSkillSpecificationManager : IUserSkillSpecificationMan
 {
     // Backing fields.
     private ISelectFieldsFromUserSkillSpecification _selectFieldsFromUserSkillSpecification;
+    private IUserSkillAsNoTrackingSpecification _userSkillAsNoTrackingSpecification;
 
     public ISelectFieldsFromUserSkillSpecification SelectFieldsFromUserSkillSpecification
     {
@@ -21,6 +22,17 @@ internal sealed class UserSkillSpecificationManager : IUserSkillSpecificationMan
             return _selectFieldsFromUserSkillSpecification;
         }
     }
+
+    public IUserSkillAsNoTrackingSpecification UserSkillAsNoTrackingSpecification
+    {
+        get
+        {
+            _userSkillAsNoTrackingSpecification = new UserSkillAsNoTrackingSpecification();
+
+            return _userSkillAsNoTrackingSpecification;
+        }
+    }
+
 
     public IUserSkillBySkillIdSpecification UserSkillBySkillIdSpecification(Guid skillId)
     {

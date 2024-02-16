@@ -29,7 +29,10 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         builder
             .Property(propertyExpression: cv => cv.StudentFullName)
             .HasColumnType(CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Cv.Metadata.StudentFullName.MaxLength))
+                length: Cv
+                    .Metadata
+                    .StudentFullName
+                    .MaxLength))
             .IsRequired();
 
         // Email property configuration.
@@ -42,7 +45,10 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         builder
             .Property(propertyExpression: cv => cv.StudentId)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Cv.Metadata.StudentId.MaxLength))
+                length: Cv
+                    .Metadata
+                    .StudentId
+                    .MaxLength))
             .IsRequired();
 
         // CvFileId property configuration.

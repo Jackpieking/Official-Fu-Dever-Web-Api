@@ -50,7 +50,7 @@ public sealed class Position :
     /// <returns>
     ///     A new position object.
     /// </returns>
-    public static Position Init(
+    public static Position InitVer1(
         Guid positionId,
         string positionName,
         DateTime positionRemovedAt,
@@ -93,7 +93,7 @@ public sealed class Position :
     /// <returns>
     ///     A new position object.
     /// </returns>
-    public static Position Init(string positionName)
+    public static Position InitVer2(string positionName)
     {
         // Validate position name.
         if (string.IsNullOrWhiteSpace(value: positionName) ||
@@ -120,7 +120,7 @@ public sealed class Position :
     /// <returns>
     ///     A new position object.
     /// </returns>
-    public static Position Init(
+    public static Position InitVer3(
         Guid positionId,
         string positionName)
     {

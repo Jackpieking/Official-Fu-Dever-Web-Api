@@ -8,13 +8,10 @@ namespace Application.Models;
 /// </typeparam>
 public sealed class CacheModel<TSource>
 {
-    // Backing fields.
-    private TSource _value;
-
     /// <summary>
     ///     Value as TSource type.
     /// </summary>
-    internal TSource Value { get => _value; }
+    internal TSource Value { get; private set; }
 
     /// <summary>
     ///     Represent the state cannot found
@@ -36,7 +33,7 @@ public sealed class CacheModel<TSource>
     {
         return new()
         {
-            _value = value
+            Value = value
         };
     }
 }

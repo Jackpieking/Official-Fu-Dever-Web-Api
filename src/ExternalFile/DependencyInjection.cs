@@ -1,6 +1,5 @@
 using Application.Interfaces.ExternalFiles;
 using ExternalFile.Image.Firebase;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExternalFile;
@@ -16,13 +15,7 @@ public static class DependencyInjection
     /// <param name="services">
     ///     Service container.
     /// </param>
-    /// <param name="configuration">
-    ///     Load configuration for configuration
-    ///     file (appsetting).
-    /// </param>
-    public static void AddImage(
-        this IServiceCollection services,
-        IConfigurationManager configuration)
+    public static void AddImage(this IServiceCollection services)
     {
         services.ConfigureCore();
     }

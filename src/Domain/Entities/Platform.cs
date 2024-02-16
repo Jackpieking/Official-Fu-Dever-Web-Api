@@ -50,7 +50,7 @@ public sealed class Platform :
     /// <returns>
     ///     A new platform object.
     /// </returns>
-    public static Platform Init(
+    public static Platform InitVer1(
         Guid platformId,
         string platformName,
         DateTime platformRemovedAt,
@@ -96,7 +96,7 @@ public sealed class Platform :
     /// <returns>
     ///     A new platform object.
     /// </returns>
-    public static Platform Init(
+    public static Platform InitVer2(
         Guid platformId,
         string platformName)
     {
@@ -129,7 +129,7 @@ public sealed class Platform :
     /// <returns>
     ///     A new platform object.
     /// </returns>
-    public static Platform Init(string platformName)
+    public static Platform InitVer3(string platformName)
     {
         // Validate platform name.
         if (string.IsNullOrWhiteSpace(value: platformName) ||

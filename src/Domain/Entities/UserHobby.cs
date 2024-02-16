@@ -34,7 +34,7 @@ public sealed class UserHobby : IBaseEntity
     /// <returns>
     ///     A new user hobby object.
     /// </returns>
-    public static UserHobby Init(Hobby hobby)
+    public static UserHobby InitVer1(Hobby hobby)
     {
         return new()
         {
@@ -54,7 +54,7 @@ public sealed class UserHobby : IBaseEntity
     /// <returns>
     ///     A new user hobby object.
     /// </returns>
-    public static UserHobby Init(
+    public static UserHobby InitVer2(
         Guid hobbyId,
         Hobby hobby)
     {

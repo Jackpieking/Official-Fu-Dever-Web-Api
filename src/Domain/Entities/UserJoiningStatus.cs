@@ -48,7 +48,7 @@ public sealed class UserJoiningStatus : IBaseEntity
     /// <returns>
     ///     A new user joining status object.
     /// </returns>
-    public static UserJoiningStatus Init(
+    public static UserJoiningStatus InitVer1(
         Guid userJoiningStatusId,
         string userJoiningStatusType,
         DateTime userJoiningStatusRemovedAt,
@@ -91,7 +91,7 @@ public sealed class UserJoiningStatus : IBaseEntity
     /// <returns>
     ///     A new user joining status object.
     /// </returns>
-    public static UserJoiningStatus Init(Guid userJoiningStatusId)
+    public static UserJoiningStatus InitVer2(Guid userJoiningStatusId)
     {
         // Validate skill Id.
         if (userJoiningStatusId == Guid.Empty)
@@ -114,7 +114,7 @@ public sealed class UserJoiningStatus : IBaseEntity
     /// <returns>
     ///     A new user joining status object.
     /// </returns>
-    public static UserJoiningStatus Init(string userJoiningStatusType)
+    public static UserJoiningStatus InitVer3(string userJoiningStatusType)
     {
         // Validate user joining status type.
         if (string.IsNullOrWhiteSpace(value: userJoiningStatusType) ||

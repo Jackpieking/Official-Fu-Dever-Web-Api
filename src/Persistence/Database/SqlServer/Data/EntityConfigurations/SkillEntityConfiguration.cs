@@ -29,7 +29,10 @@ internal sealed class SkillEntityConfiguration : IEntityTypeConfiguration<Skill>
         builder
             .Property(propertyExpression: skill => skill.Name)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Skill.Metadata.Name.MaxLength))
+                length: Skill
+                    .Metadata
+                    .Name
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

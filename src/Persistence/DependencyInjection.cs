@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces.Data;
+using Configuration.Infrastructure.Persistence.AspNetCoreIdentity;
+using Configuration.Infrastructure.Persistence.Database;
 using Domain.Entities;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
@@ -8,8 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Database.SqlServer.Data;
 using Persistence.Database.SqlServer.Specifications.Others;
-using Configuration.Infrastructure.Persistence.AspNetCoreIdentity;
-using Configuration.Infrastructure.Persistence.Database;
 using Persistence.UnitOfWorks;
 using System;
 using System.Reflection;
@@ -58,12 +58,9 @@ public static class DependencyInjection
     {
         services.AddDbContextPool<FuDeverContext>(optionsAction: (provider, config) =>
         {
-            const string DatabaseSection = "Database";
-            const string FuDeverDbSection = "FuDever";
-
             var fuDeverDatabaseOption = configuration
-                .GetRequiredSection(key: DatabaseSection)
-                .GetRequiredSection(key: FuDeverDbSection)
+                .GetRequiredSection(key: "Database")
+                .GetRequiredSection(key: "FuDever")
                 .Get<FuDeverDatabaseOption>();
 
             config.UseSqlServer(
@@ -113,10 +110,8 @@ public static class DependencyInjection
         services
             .AddIdentity<User, Role>(setupAction: config =>
             {
-                const string AspNetCoreIdentitySection = "AspNetCoreIdentity";
-
                 var aspNetCoreIdentityOption = configuration
-                    .GetRequiredSection(key: AspNetCoreIdentitySection)
+                    .GetRequiredSection(key: "AspNetCoreIdentity")
                     .Get<AspNetCoreIdentityOption>();
 
                 config.Password.RequireDigit = aspNetCoreIdentityOption.Password.RequireDigit;

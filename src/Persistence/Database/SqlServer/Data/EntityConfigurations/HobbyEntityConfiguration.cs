@@ -29,7 +29,10 @@ internal sealed class HobbyEntityConfiguration : IEntityTypeConfiguration<Hobby>
         builder
             .Property(propertyExpression: hobby => hobby.Name)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Hobby.Metadata.Name.MaxLength))
+                length: Hobby
+                    .Metadata
+                    .Name
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

@@ -29,7 +29,10 @@ internal sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
         builder
             .Property(propertyExpression: major => major.Name)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Major.Metadata.Name.MaxLength))
+                length: Major
+                    .Metadata
+                    .Name
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

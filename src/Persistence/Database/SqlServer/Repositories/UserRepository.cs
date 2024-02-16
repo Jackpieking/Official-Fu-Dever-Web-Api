@@ -80,5 +80,53 @@ internal sealed class UserRepository :
                         positionId),
                 cancellationToken: cancellationToken);
     }
+
+    public Task<int> BulkUpdateByUserIdVer3Async(
+        Guid userId,
+        int accessFailedCount,
+        DateTime lockoutEnd,
+        CancellationToken cancellationToken)
+    {
+        if (userId == Guid.Empty ||
+            accessFailedCount < default(int) ||
+            lockoutEnd < DateTime.MinValue ||
+            lockoutEnd > DateTime.MaxValue)
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
+        return _dbSet
+            .Where(predicate: user => user.Id == userId)
+            .ExecuteUpdateAsync(
+                setPropertyCalls: setter => setter
+                    .SetProperty(
+                        user => user.AccessFailedCount,
+                        accessFailedCount)
+                    .SetProperty(
+                        user => user.LockoutEnd,
+                        lockoutEnd),
+                cancellationToken: cancellationToken);
+    }
+
+    public Task<int> BulkUpdateByUserIdVer4Async(
+        Guid userId,
+        int accessFailedCount,
+        CancellationToken cancellationToken)
+    {
+        if (userId == Guid.Empty ||
+            accessFailedCount < default(int))
+        {
+            return Task.FromResult<int>(result: default);
+        }
+
+        return _dbSet
+            .Where(predicate: user => user.Id == userId)
+            .ExecuteUpdateAsync(
+                setPropertyCalls: setter => setter
+                    .SetProperty(
+                        user => user.AccessFailedCount,
+                        accessFailedCount),
+                cancellationToken: cancellationToken);
+    }
 }
 

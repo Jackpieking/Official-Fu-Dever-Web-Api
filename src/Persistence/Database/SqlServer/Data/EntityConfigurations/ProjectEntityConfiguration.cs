@@ -34,7 +34,10 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         builder
             .Property(propertyExpression: project => project.Title)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: Project.Metadata.Title.MaxLength))
+                length: Project
+                    .Metadata
+                    .Title
+                    .MaxLength))
             .IsRequired();
 
         // Description property configuration.

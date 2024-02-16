@@ -191,7 +191,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         builder
             .HasMany(navigationExpression: user => user.RefreshTokens)
             .WithOne(navigationExpression: refreshToken => refreshToken.User)
-            .HasForeignKey(foreignKeyExpression: refreshToken => refreshToken.UserId)
+            .HasForeignKey(foreignKeyExpression: refreshToken => refreshToken.CreatedBy)
             .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
     }
 }

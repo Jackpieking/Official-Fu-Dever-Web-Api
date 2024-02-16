@@ -29,7 +29,10 @@ internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfigur
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.Type)
             .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
-                length: UserJoiningStatus.Metadata.Type.MaxLength))
+                length: UserJoiningStatus
+                    .Metadata
+                    .Type
+                    .MaxLength))
             .IsRequired();
 
         // RemovedAt property configuration.

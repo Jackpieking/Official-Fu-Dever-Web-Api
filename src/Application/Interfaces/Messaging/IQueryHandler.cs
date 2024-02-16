@@ -3,7 +3,7 @@
 namespace Application.Interfaces.Messaging;
 
 /// <summary>
-///     Represents the query interface.
+///     Represents the query handler interface.
 /// </summary>
 /// <typeparam name="TQuery">
 ///     The query type.

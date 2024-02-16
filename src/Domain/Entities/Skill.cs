@@ -52,7 +52,7 @@ public sealed class Skill :
     /// <returns>
     ///     A new skill object.
     /// </returns>
-    public static Skill Init(
+    public static Skill InitVer1(
         Guid skillId,
         string skillName,
         DateTime skillRemovedAt,
@@ -101,7 +101,7 @@ public sealed class Skill :
     /// <returns>
     ///     A new skill object.
     /// </returns>
-    public static Skill Init(
+    public static Skill InitVer2(
         Guid skillId,
         Guid skillRemovedBy,
         DateTime skillRemovedAt)
@@ -134,7 +134,7 @@ public sealed class Skill :
     /// <returns>
     ///     A new skill object.
     /// </returns>
-    public static Skill Init(string skillName)
+    public static Skill InitVer3(string skillName)
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
@@ -161,7 +161,7 @@ public sealed class Skill :
     /// <returns>
     ///     A new skill object.
     /// </returns>
-    public static Skill Init(
+    public static Skill InitVer4(
         Guid skillId,
         string skillName)
     {
@@ -222,6 +222,11 @@ public sealed class Skill :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 1;
         }
     }
 }

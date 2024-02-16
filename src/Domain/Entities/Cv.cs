@@ -69,7 +69,7 @@ public sealed class Cv :
     /// <returns>
     ///     A new cv object.
     /// </returns>
-    public static Cv Init(
+    public static Cv InitVer1(
         Guid cvId,
         string studentFullName,
         string studentEmail,

@@ -50,7 +50,7 @@ public sealed class Department :
     /// <returns>
     ///     A new department object.
     /// </returns>
-    public static Department Init(
+    public static Department InitVer1(
         Guid departmentId,
         string departmentName,
         DateTime departmentRemovedAt,
@@ -96,7 +96,7 @@ public sealed class Department :
     /// <returns>
     ///     A new department object.
     /// </returns>
-    public static Department Init(
+    public static Department InitVer2(
         Guid departmentId,
         string departmentName)
     {
@@ -129,7 +129,7 @@ public sealed class Department :
     /// <returns>
     ///     A new department object.
     /// </returns>
-    public static Department Init(string departmentName)
+    public static Department InitVer3(string departmentName)
     {
         // Validate department name.
         if (string.IsNullOrWhiteSpace(value: departmentName) ||

@@ -38,7 +38,7 @@ public sealed class Role :
     /// <returns>
     ///     A new role object.
     /// </returns>
-    public static Role Init(
+    public static Role InitVer1(
         Guid roleId,
         string roleName,
         DateTime roleRemovedAt,
@@ -84,7 +84,7 @@ public sealed class Role :
     /// <returns>
     ///     A new role object.
     /// </returns>
-    public static Role Init(
+    public static Role InitVer2(
         Guid roleId,
         string roleName)
     {

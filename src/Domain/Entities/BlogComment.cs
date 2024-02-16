@@ -59,7 +59,7 @@ public sealed class BlogComment :
     /// <returns>
     ///     A new blog comment object.
     /// </returns>
-    public static BlogComment Init()
+    public static BlogComment InitVer1()
     {
         return new();
     }

@@ -33,7 +33,7 @@ public sealed class BlogTag : IBaseEntity
     /// <returns>
     ///     A new blog tag object.
     /// </returns>
-    public static BlogTag Init()
+    public static BlogTag InitVer1()
     {
         return new();
     }

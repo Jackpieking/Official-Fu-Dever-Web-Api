@@ -13,9 +13,9 @@ internal sealed class SelectFieldsFromUserHobbySpecification :
 {
     public ISelectFieldsFromUserHobbySpecification Ver1()
     {
-        SelectExpression = userHobby => Domain.Entities.UserHobby.Init(
+        SelectExpression = userHobby => Domain.Entities.UserHobby.InitVer2(
             userHobby.HobbyId,
-            Domain.Entities.Hobby.Init(userHobby.Hobby.Name));
+            Domain.Entities.Hobby.InitVer4(userHobby.Hobby.Name));
 
         return this;
     }
