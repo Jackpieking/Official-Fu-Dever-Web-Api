@@ -8,17 +8,17 @@ public sealed class RegisterAsAdminDto : IDtoNormalization
 {
     [Required]
     [EmailAddress]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string Username { get; set; }
 
     [Required]
     [MinLength(length: 3)]
     [DataType(dataType: DataType.Password)]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string Password { get; set; }
 
     [Required]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string AdminConfirmedKey { get; set; }
 
     public void NormalizeAllProperties()

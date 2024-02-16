@@ -1,13 +1,12 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Attributes;
 
 /// <summary>
-///     Attribute to check if the input guid
-///     is not empty.
+///     Attribute to check if the input string
+///     is not null or white space.
 /// </summary>
-internal sealed class IsGuidNotEmptyAttribute : ValidationAttribute
+internal sealed class StringIsNotNullOrWhiteSpaceAttribute : ValidationAttribute
 {
     /// <summary>
     ///     Entry to validate.
@@ -20,17 +19,10 @@ internal sealed class IsGuidNotEmptyAttribute : ValidationAttribute
     /// </returns>
     public override bool IsValid(object value)
     {
-        if (Equals(objA: value, objB: null))
-        {
-            return false;
-        }
+        var valueAsString = value as string;
 
-        var canParsed = Guid.TryParse(
-            input: value.ToString(),
-            result: out var newGuid);
-
-        if (!canParsed ||
-            newGuid == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(value: valueAsString) ||
+            valueAsString.Equals(obj: "null"))
         {
             return false;
         }

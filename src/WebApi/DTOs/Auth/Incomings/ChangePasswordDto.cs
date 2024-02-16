@@ -8,19 +8,19 @@ public sealed class ChangePasswordInForgotPasswordSectionDto : IDtoNormalization
 {
     [Required]
     [EmailAddress]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string Username { get; set; }
 
     [Required]
     [MinLength(length: 3)]
     [DataType(dataType: DataType.Password)]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string CurrentPassword { get; set; }
 
     [Required]
     [MinLength(length: 3)]
     [DataType(dataType: DataType.Password)]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string NewPassword { get; set; }
 
     public void NormalizeAllProperties()

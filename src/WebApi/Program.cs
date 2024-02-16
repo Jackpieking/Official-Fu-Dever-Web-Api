@@ -1,7 +1,9 @@
 using Application;
+using AuthenticationHandler;
 using Cache;
 using Domain.Entities;
 using ExternalFile;
+using Mail;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,8 +29,10 @@ var configuration = builder.Configuration;
 services.AddApplication(configuration: configuration);
 services.AddPersistence(configuration: configuration);
 services.AddWebApi(configuration: configuration);
-services.AddImage(configuration: configuration);
+services.AddImage();
 services.AddCache(configuration: configuration);
+services.AddAuthenticationHandler();
+services.AddMail();
 
 var app = builder.Build();
 

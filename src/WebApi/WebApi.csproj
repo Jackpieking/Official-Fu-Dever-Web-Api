@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\AuthenticationHandler\AuthenticationHandler.csproj" />
     <ProjectReference Include="..\BackgroundJob\BackgroundJob.csproj" />
     <ProjectReference Include="..\Cache\Cache.csproj" />
     <ProjectReference Include="..\ExternalFile\ExternalFile.csproj" />

@@ -8,7 +8,7 @@ public sealed class ResendEmailDto : IDtoNormalization
 {
     [Required]
     [EmailAddress]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string Username { get; set; }
 
     public void NormalizeAllProperties()

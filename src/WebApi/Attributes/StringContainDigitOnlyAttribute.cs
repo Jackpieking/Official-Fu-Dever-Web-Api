@@ -7,7 +7,7 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input string
 ///     contains any digit.
 /// </summary>
-internal sealed class DoesStringContainDigitOnlyAttribute : ValidationAttribute
+internal sealed class StringContainDigitOnlyAttribute : ValidationAttribute
 {
     /// <summary>
     ///     Entry to validate.

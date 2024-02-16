@@ -6,17 +6,16 @@ namespace WebApi.DTOs.Auth.Incomings;
 
 public sealed class ChangePasswordInUserProfileSectionDto : IDtoNormalization
 {
-
     [Required]
     [MinLength(length: 3)]
     [DataType(dataType: DataType.Password)]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string CurrentPassword { get; set; }
 
     [Required]
     [MinLength(length: 3)]
     [DataType(dataType: DataType.Password)]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string NewPassword { get; set; }
 
     public void NormalizeAllProperties()

@@ -1,3 +1,8 @@
+using Configuration.Presentation.WebApi.ApiController;
+using Configuration.Presentation.WebApi.Authentication;
+using Configuration.Presentation.WebApi.Authorization;
+using Configuration.Presentation.WebApi.RateLimiter;
+using Configuration.Presentation.WebApi.Swagger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -18,11 +24,6 @@ using WebApi.ApiReturnCodes.Base;
 using WebApi.Authorization.Requires;
 using WebApi.Commons;
 using WebApi.Middlewares;
-using Configuration.Presentation.WebApi.ApiController;
-using Configuration.Presentation.WebApi.Authentication.Jwt;
-using Configuration.Presentation.WebApi .Authorization;
-using Configuration.Presentation.WebApi.RateLimiter.FixedWindow;
-using Configuration.Presentation.WebApi.Swagger.Swashbuckle;
 
 namespace WebApi;
 
@@ -60,6 +61,8 @@ internal static class DependencyInjection
         services.ConfigureRateLimiter(configuration: configuration);
 
         services.ConfigureExceptionHandler();
+
+        services.ConfigureCore(configuration: configuration);
     }
 
     /// <summary>
@@ -76,10 +79,8 @@ internal static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        const string AuthenticationSection = "Authentication";
-
         var jwtAuthenticationOption = configuration
-            .GetRequiredSection(key: AuthenticationSection)
+            .GetRequiredSection(key: "Authentication")
             .Get<JwtAuthenticationOption>();
 
         services
@@ -91,22 +92,7 @@ internal static class DependencyInjection
             })
             .AddJwtBearer(configureOptions: config =>
             {
-                config.TokenValidationParameters = new()
-                {
-                    ValidateIssuer = jwtAuthenticationOption.Type.Jwt.ValidateIssuer,
-                    ValidateAudience = jwtAuthenticationOption.Type.Jwt.ValidateAudience,
-                    ValidateLifetime = jwtAuthenticationOption.Type.Jwt.ValidateLifetime,
-                    ValidateIssuerSigningKey = jwtAuthenticationOption.Type.Jwt.ValidateIssuerSigningKey,
-                    RequireExpirationTime = jwtAuthenticationOption.Type.Jwt.RequireExpirationTime,
-                    ValidIssuer = jwtAuthenticationOption.Type.Jwt.ValidIssuer,
-                    ValidAudience = jwtAuthenticationOption.Type.Jwt.ValidAudience,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        key: new HMACSHA256(
-                            key: Encoding.UTF8
-                                .GetBytes(
-                                    s: jwtAuthenticationOption.Type.Jwt.IssuerSigningKey))
-                        .Key)
-                };
+                config.TokenValidationParameters = GetTokenValidationParameters(configuration: configuration);
             });
     }
 
@@ -124,10 +110,8 @@ internal static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        const string AuthorizationSection = "Authorization";
-
         var authorizationOption = configuration
-            .GetRequiredSection(key: AuthorizationSection)
+            .GetRequiredSection(key: "Authorization")
             .Get<AuthorizationOption>();
 
         services.AddAuthorization(configure: config =>
@@ -223,10 +207,8 @@ internal static class DependencyInjection
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
-        const string ApiControllerSection = "ApiController";
-
         var apiControllerOption = configuration
-            .GetRequiredSection(key: ApiControllerSection)
+            .GetRequiredSection(key: "ApiController")
             .Get<ApiControllerOption>();
 
         services
@@ -259,12 +241,9 @@ internal static class DependencyInjection
     {
         services.AddSwaggerGen(setupAction: config =>
         {
-            const string SwaggerSection = "Swagger";
-            const string SwashbuckleSection = "Swashbuckle";
-
             var swashbuckleOption = configuration
-                .GetRequiredSection(key: SwaggerSection)
-                .GetRequiredSection(key: SwashbuckleSection)
+                .GetRequiredSection(key: "Swagger")
+                .GetRequiredSection(key: "Swashbuckle")
                 .Get<SwashbuckleOption>();
 
             config.SwaggerDoc(
@@ -351,12 +330,9 @@ internal static class DependencyInjection
         {
             config.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
             {
-                const string ApiRateLimiterSection = "ApiRateLimiter";
-                const string FixedWindowSection = "FixedWindow";
-
                 var fixedWindowRateLimiterOption = configuration
-                    .GetRequiredSection(key: ApiRateLimiterSection)
-                    .GetRequiredSection(key: FixedWindowSection)
+                    .GetRequiredSection(key: "ApiRateLimiter")
+                    .GetRequiredSection(key: "FixedWindow")
                     .Get<FixedWindowRateLimiterOption>();
 
                 return RateLimitPartition.GetFixedWindowLimiter(
@@ -381,7 +357,7 @@ internal static class DependencyInjection
                 await option.HttpContext.Response.WriteAsJsonAsync(
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.FAILED,
+                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
                         ErrorMessages = new List<string>(capacity: 2)
                         {
                             "Two many request.",
@@ -406,5 +382,59 @@ internal static class DependencyInjection
         services
             .AddExceptionHandler<GlobalExceptionHandler>()
             .AddProblemDetails();
+    }
+
+    /// <summary>
+    ///     Configure core services.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    /// <param name="configuration">
+    ///     Load configuration for configuration
+    ///     file (appsetting).
+    /// </param>
+    private static void ConfigureCore(
+        this IServiceCollection services,
+        IConfigurationManager configuration)
+    {
+        services
+            .AddScoped(implementationFactory: provider =>
+                GetTokenValidationParameters(configuration: configuration))
+            .AddScoped<SecurityTokenHandler, JwtSecurityTokenHandler>();
+    }
+
+    /// <summary>
+    ///     Return pre=defined token validation parameter.
+    /// </summary>
+    /// <param name="configuration">
+    ///     Load configuration for configuration
+    ///     file (appsetting).
+    /// </param>
+    /// <returns>
+    ///     Token validation parameter.
+    /// </returns>
+    private static TokenValidationParameters GetTokenValidationParameters(IConfigurationManager configuration)
+    {
+        var jwtAuthenticationOption = configuration
+            .GetRequiredSection(key: "Authentication")
+            .GetRequiredSection(key: "Type")
+            .Get<JwtAuthenticationOption>();
+
+        return new()
+        {
+            ValidateIssuer = jwtAuthenticationOption.Jwt.ValidateIssuer,
+            ValidateAudience = jwtAuthenticationOption.Jwt.ValidateAudience,
+            ValidateLifetime = jwtAuthenticationOption.Jwt.ValidateLifetime,
+            ValidateIssuerSigningKey = jwtAuthenticationOption.Jwt.ValidateIssuerSigningKey,
+            RequireExpirationTime = jwtAuthenticationOption.Jwt.RequireExpirationTime,
+            ValidIssuer = jwtAuthenticationOption.Jwt.ValidIssuer,
+            ValidAudience = jwtAuthenticationOption.Jwt.ValidAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                key: new HMACSHA256(
+                    key: Encoding.UTF8.GetBytes(
+                        s: jwtAuthenticationOption.Jwt.IssuerSigningKey))
+                .Key)
+        };
     }
 }

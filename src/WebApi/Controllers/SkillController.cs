@@ -1,12 +1,13 @@
-using Application.Commons;
-using Application.Features.Skill.Commands.CreateSkill;
-using Application.Features.Skill.Commands.RemoveSkillTemporarily;
-using Application.Features.Skill.Queries.FindBySkillName;
-using Application.Features.Skill.Queries.GetAllSkill;
-using Application.Features.Skill.Queries.IsSkillFoundBySkillId;
-using Application.Features.Skill.Queries.IsSkillFoundBySkillName;
-using Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillId;
-using Application.Features.Skill.Queries.IsSkillTemporarilyRemovedBySkillName;
+using Application.Features.Skill.CreateSkill;
+using Application.Features.Skill.GetAllSkills;
+using Application.Features.Skill.GetAllSkillsByName;
+using Application.Features.Skill.GetAllSkillsBySkillName;
+using Application.Features.Skill.GetAllTemporarilyRemovedSkills;
+using Application.Features.Skill.RemoveSkillPermanentlyBySkillId;
+using Application.Features.Skill.RemoveSkillTemporarilyBySkillId;
+using Application.Features.Skill.RestoreSkillBySkillId;
+using Application.Features.Skill.UpdateSkillBySkillId;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,15 +15,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApi.ApiReturnCodes;
+using WebApi.ApiReturnCodes.Base;
 using WebApi.Attributes;
 using WebApi.Commons;
 using WebApi.DTOs.Skill.Incomings;
-using WebApi.DTOs.Skill.Outgoings;
 
 namespace WebApi.Controllers;
 
@@ -57,43 +57,41 @@ public sealed class SkillController : ControllerBase
     ///
     /// </remarks>
     /// <response code="200"></response>
+    /// <response code="500"></response>
     [AllowAnonymous]
     [HttpGet(template: "all")]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
-        GetAllSkillQuery getAllSkillQuery = new()
+        // Get all skills which are not temporarily removed.
+        GetAllSkillsRequest request = new()
         {
             CacheExpiredTime = 60
         };
 
-        // Get all skills which are not temporarily removed.
-        var foundSkills = await _sender.Send(
-            request: getAllSkillQuery,
+        var response = await _sender.Send(
+            request: request,
             cancellationToken: cancellationToken);
 
-        return Ok(value: new CommonResponse
+        return response.StatusCode switch
         {
-            Body = MapToDto()
-        });
-
-        // Map the result to dto.
-        List<GetSkillDto> MapToDto()
-        {
-            List<GetSkillDto> dtos = [];
-
-            foreach (var foundSkill in foundSkills)
-            {
-                dtos.Add(item: new()
+            // 500
+            GetAllSkillsStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
                 {
-                    Id = foundSkill.Id,
-                    Name = foundSkill.Name
-                });
-            }
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
 
-            dtos.TrimExcess();
-
-            return dtos;
-        }
+            // 200
+            _ => Ok(value: new CommonResponse
+            {
+                Body = response.FoundSkills
+            }),
+        };
     }
 
     /// <summary>
@@ -119,66 +117,56 @@ public sealed class SkillController : ControllerBase
     ///
     /// </remarks>
     /// <response code="400"></response>
-    /// <response code="404"></response>
+    /// <response code="500"></response>
     /// <response code="200"></response>
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAllByNameAsync(
         [FromQuery(Name = "name")]
         [Required]
-        [IsStringNotNull]
-            string skillName,
+        [StringIsNotNullOrWhiteSpace]
+        [MaxLength(
+            length: Skill.Metadata.Name.MaxLength,
+            ErrorMessage = "Too much chars on skill name !!")]
+        [MinLength(
+            length: Skill.Metadata.Name.MinLength,
+            ErrorMessage = $"Less than min length of skill name !!")]
+                string skillName,
         CancellationToken cancellationToken)
     {
         skillName = skillName.Trim();
 
         // Find skill by name.
-        FindBySkillNameQuery findBySkillNameQuery = new()
+        GetAllSkillsBySkillNameRequest request = new()
         {
             SkillName = skillName,
             CacheExpiredTime = 60
         };
 
-        var foundSkills = await _sender.Send(
-            request: findBySkillNameQuery,
+        var response = await _sender.Send(
+            request: request,
             cancellationToken: cancellationToken);
 
-        // Skills with name are not found or are already temporarily removed.
-        if (Equals(objA: foundSkills.FirstOrDefault(), objB: default))
+        return response.StatusCode switch
         {
-            return NotFound(value: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
-                ErrorMessages = new List<string>(capacity: 1)
+            // 500
+            GetAllSkillsBySkillNameStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
                 {
-                    $"No skills with name = {skillName} are found."
-                }
-            });
-        }
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
 
-        return Ok(value: new CommonResponse
-        {
-            Body = MapToDto()
-        });
-
-        // Map the result to dto.
-        List<GetSkillDto> MapToDto()
-        {
-            List<GetSkillDto> dtos = [];
-
-            foreach (var foundSkill in foundSkills)
+            // 200
+            _ => Ok(value: new CommonResponse
             {
-                dtos.Add(item: new()
-                {
-                    Id = foundSkill.Id,
-                    Name = foundSkill.Name
-                });
-            }
-
-            dtos.TrimExcess();
-
-            return dtos;
-        }
+                Body = response.FoundSkills
+            })
+        };
     }
 
     /// <summary>
@@ -207,7 +195,6 @@ public sealed class SkillController : ControllerBase
     /// <response code="500"></response>
     /// <response code="409"></response>
     /// <response code="201"></response>
-    /// <response code="403"></response>
     [HttpPost]
     public async Task<IActionResult> CreateAsync(
         [FromBody] CreateSkillDto dto,
@@ -215,85 +202,69 @@ public sealed class SkillController : ControllerBase
     {
         dto.NormalizeAllProperties();
 
-        // Is skill found by name.
-        IsSkillFoundBySkillNameQuery isSkillFoundBySkillNameQuery = new()
+        // Create skill
+        CreateSkillRequest request = new()
         {
-            SkillName = dto.SkillName,
-            CacheExpiredTime = 60
+            NewSkillName = dto.SkillName
         };
 
-        var isSKillFound = await _sender.Send(
-            request: isSkillFoundBySkillNameQuery,
+        var response = await _sender.Send(
+            request: request,
             cancellationToken: cancellationToken);
 
-        // Skills with name already exists.
-        if (isSKillFound)
+        return response.StatusCode switch
         {
-            // Is skill temporarily removed by name.
-            IsSkillTemporarilyRemovedBySkillNameQuery isSkillTemporarilyRemovedBySkillNameQuery = new()
-            {
-                SkillName = dto.SkillName,
-                CacheExpiredTime = 60
-            };
-
-            var isSkillTemporarilyRemoved = await _sender.Send(
-                request: isSkillTemporarilyRemovedBySkillNameQuery,
-                cancellationToken: cancellationToken);
-
-            // Skill with name is temporarily removed.
-            if (isSkillTemporarilyRemoved)
-            {
-                return BadRequest(error: new CommonResponse
+            // 500
+            CreateSkillStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
                     ErrorMessages = new List<string>(capacity: 1)
                     {
-                        $"Found skill with name = {dto.SkillName} in temporarily deleted storage."
+                        "Server error. Please try again later."
                     }
-                });
-            }
+                }),
 
-            return Conflict(error: new CommonResponse
+            // 400
+            CreateSkillStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        $"Found skill with name = {dto.SkillName} in temporarily removed storage."
+                    }
+            }),
+
+            // 409
+            CreateSkillStatusCode.SKILL_ALREADY_EXISTS => Conflict(error: new CommonResponse
             {
                 ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
                 ErrorMessages = new List<string>(capacity: 1)
                 {
                     $"Skill with name = {dto.SkillName} already exists."
                 }
-            });
-        }
+            }),
 
-        // Adding new skill.
-        CreateSkillCommand createSkillCommand = new()
-        {
-            NewSkillName = dto.SkillName
-        };
-
-        var dbResult = await _sender.Send(
-            request: createSkillCommand,
-            cancellationToken: cancellationToken);
-
-        // New skill cannot be added.
-        if (!dbResult)
-        {
-            return StatusCode(
+            // 500
+            CreateSkillStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
                 statusCode: StatusCodes.Status500InternalServerError,
                 value: new CommonResponse
                 {
-                    ApiReturnCode = ApiReturnCodes.Base.BaseApiReturnCode.FAILED,
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
                     ErrorMessages = new List<string>(capacity: 1)
                     {
                         "Database operations failed."
                     }
-                });
-        }
+                }),
 
-        return Created(
+            // 201
+            _ => Created(
             uri: $"{HttpContext.Request.Path}?name={dto.SkillName}",
             value: new CommonResponse
             {
-                ApiReturnCode = ApiReturnCodes.Base.BaseApiReturnCode.SUCCESS
-            });
+            })
+        };
     }
 
     /// <summary>
@@ -318,94 +289,420 @@ public sealed class SkillController : ControllerBase
     /// <response code="400"></response>
     /// <response code="404"></response>
     /// <response code="200"></response>
-    /// <response code="403"></response>
     [HttpDelete(template: "{skillId:guid}")]
     public async Task<IActionResult> RemoveTemporarilyByIdAsync(
         [FromRoute]
         [Required]
-        [IsGuidNotEmpty]
+        [GuidIsNotEmpty]
             Guid skillId,
         CancellationToken cancellationToken)
     {
-        // Is skill found by id.
-        IsSkillFoundBySkillIdQuery isSkillFoundBySkillIdQuery = new()
+        // Remove skill temporarily by skill id.
+        RemoveSkillTemporarilyBySkillIdRequest request = new()
         {
             SkillId = skillId,
-            CacheExpiredTime = 60
+            SkillRemovedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
         };
 
-        var isSKillFound = await _sender.Send(
-            request: isSkillFoundBySkillIdQuery,
+        var response = await _sender.Send(
+            request: request,
             cancellationToken: cancellationToken);
 
-        // Skill with id is not found.
-        if (!isSKillFound)
+        return response.StatusCode switch
         {
-            return NotFound(value: new CommonResponse
+            // 500
+            RemoveSkillTemporarilyBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
+
+            // 404
+            RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
             {
                 ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
                 ErrorMessages = new List<string>(capacity: 1)
                 {
                     $"Skill with Id = {skillId} is not found."
                 }
-            });
-        }
+            }),
 
-        // Is skill temporarily removed by id.
-        IsSkillTemporarilyRemovedBySkillIdQuery isSkillTemporarilyRemovedBySkillIdQuery = new()
-        {
-            SkillId = skillId,
-            CacheExpiredTime = 60
-        };
-
-        var isSkillTemporarilyRemoved = await _sender.Send(
-            request: isSkillTemporarilyRemovedBySkillIdQuery,
-            cancellationToken: cancellationToken);
-
-        // Skill with id is temporarily removed.
-        if (isSkillTemporarilyRemoved)
-        {
-            return BadRequest(error: new CommonResponse
+            // 400
+            RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
             {
                 ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
                 ErrorMessages = new List<string>(capacity: 1)
                 {
-                    $"Found skill with Id = {skillId} in temporarily deleted storage."
+                    $"Found skill with Id = {skillId} in temporarily removed storage."
                 }
-            });
-        }
+            }),
 
-        // Update found skill.
-        RemoveSkillTemporarilyCommand removeSkillTemporarilyCommand = new()
-        {
-            SkillId = skillId,
-            // SkillRemovedBy = Guid.Parse(
-            //     input: User.FindFirstValue(
-            //         claimType: JwtRegisteredClaimNames.Sub))
-            SkillRemovedBy = CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID
-        };
-
-        var dbResult = await _sender.Send(
-            request: removeSkillTemporarilyCommand,
-            cancellationToken: cancellationToken);
-
-        // Cannot update found skill.
-        if (!dbResult)
-        {
-            return StatusCode(
+            // 500
+            RemoveSkillTemporarilyBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
                 statusCode: StatusCodes.Status500InternalServerError,
                 value: new CommonResponse
                 {
-                    ApiReturnCode = ApiReturnCodes.Base.BaseApiReturnCode.FAILED,
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
                     ErrorMessages = new List<string>(capacity: 1)
                     {
                         "Database operations failed."
                     }
-                });
-        }
+                }),
 
-        return Ok(value: new CommonResponse
+            // 200
+            _ => Ok(value: new CommonResponse
+            {
+            })
+        };
+    }
+
+    /// <summary>
+    ///     Update an existed skill with credentials.
+    /// </summary>
+    /// <param name="skillId">
+    ///     Id of skill to search for.
+    /// </param>
+    /// <param name="dto">
+    ///     Containing credentials that are used to change the found skill.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     Automatic initialized token for aborting current operation.
+    /// </param>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PATCH api/Skill/{skillId:guid}
+    ///     {
+    ///         "newSkillName" : "string"
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="500"></response>
+    /// <response code="400"></response>
+    /// <response code="404"></response>
+    /// <response code="200"></response>
+    /// <response code="409"></response>
+    [HttpPatch(template: "{skillId:guid}")]
+    public async Task<IActionResult> UpdateByIdAsync(
+        [FromRoute]
+        [Required]
+        [GuidIsNotEmpty]
+            Guid skillId,
+        [FromBody]
+            UpdateSkillDto dto,
+        CancellationToken cancellationToken)
+    {
+        dto.NormalizeAllProperties();
+
+        // Update skill by skill id.
+        UpdateSkillBySkillIdRequest request = new()
         {
-        });
+            NewSkillName = dto.NewSkillName,
+            SkillId = skillId,
+            SkillUpdatedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
+        };
+
+        var response = await _sender.Send(
+            request: request,
+            cancellationToken: cancellationToken);
+
+        return response.StatusCode switch
+        {
+            // 500
+            UpdateSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
+
+            // 404
+            UpdateSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with Id = {skillId} is not found."
+                }
+            }),
+
+            // 400
+            UpdateSkillBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Found skill with Id = {skillId} in temporarily removed storage."
+                }
+            }),
+
+            // 409
+            UpdateSkillBySkillIdStatusCode.SKILL_ALREADY_EXISTS => Conflict(error: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with name = {dto.NewSkillName} already exists."
+                }
+            }),
+
+            // 500
+            UpdateSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Database operations failed."
+                    }
+                }),
+
+            // 200
+            _ => Ok(new CommonResponse
+            {
+            })
+        };
+    }
+
+    /// <summary>
+    ///     Get all skills that have been temporarily removed.
+    /// </summary>
+    /// <returns>
+    ///     A list of temporarily removed skills.
+    /// </returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     GET api/Skill/remove/all
+    ///
+    /// </remarks>
+    /// <response code="500"></response>
+    /// <response code="200"></response>
+    [HttpGet(template: "remove/all")]
+    public async Task<IActionResult> GetAllTemporarilyRemovedAsync(CancellationToken cancellationToken)
+    {
+        // Get all temporarily removed skill.
+        GetAllTemporarilyRemovedSkillsRequest request = new()
+        {
+            CacheExpiredTime = 60
+        };
+
+        var response = await _sender.Send(
+            request: request,
+            cancellationToken: cancellationToken);
+
+        return response.StatusCode switch
+        {
+            // 500
+            GetAllTemporarilyRemovedSkillsStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
+
+            // 200
+            _ => Ok(new CommonResponse
+            {
+                Body = response.FoundTemporarilyRemovedSkills
+            })
+        };
+    }
+
+    /// <summary>
+    ///     Permanently remove an existed temporarily removed skill.
+    ///     by input skill id.
+    /// </summary>
+    /// <param name="skillId">
+    ///     Id of skill to search for.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     Automatic initialized token for aborting current operation.
+    /// </param>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     DELETE api/Skill/remove/{skillId:guid}
+    ///
+    /// </remarks>
+    /// <response code="500"></response>
+    /// <response code="400"></response>
+    /// <response code="404"></response>
+    /// <response code="200"></response>
+    [HttpDelete(template: "remove/{skillId:guid}")]
+    public async Task<IActionResult> RemovePermanentlyByIdAsync(
+        [FromRoute]
+        [Required]
+        [GuidIsNotEmpty]
+            Guid skillId,
+        CancellationToken cancellationToken)
+    {
+        RemoveSkillPermanentlyBySkillIdRequest request = new()
+        {
+            SkillId = skillId,
+            SkillRemovedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
+        };
+
+        var response = await _sender.Send(
+            request: request,
+            cancellationToken: cancellationToken);
+
+        return response.StatusCode switch
+        {
+            // 500
+            RemoveSkillPermanentlyBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
+
+            // 404
+            RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with Id = {skillId} is not found."
+                }
+            }),
+
+            // 400
+            RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                }
+            }),
+
+            // 500
+            RemoveSkillPermanentlyBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Database operations failed."
+                    }
+                }),
+
+            // 200
+            _ => Ok(new CommonResponse
+            {
+            })
+        };
+    }
+
+    /// <summary>
+    ///     Restore a temporarily removed skill by input skill id.
+    /// </summary>
+    /// <param name="skillId">
+    ///     Id of skill to search for.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     Automatic initialized token for aborting current operation.
+    /// </param>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PATCH api/Skill/remove/{skillId:guid}
+    ///
+    /// </remarks>
+    ///
+    /// <response code="500"></response>
+    /// <response code="400"></response>
+    /// <response code="404"></response>
+    /// <response code="200"></response>
+    [HttpPatch(template: "remove/{skillId:guid}")]
+    public async Task<IActionResult> RestoreByIdAsync(
+        [FromRoute]
+        [Required]
+        [GuidIsNotEmpty]
+            Guid skillId,
+        CancellationToken cancellationToken)
+    {
+        // Restore skill by skill id.
+        RestoreSkillBySkillIdRequest request = new()
+        {
+            SkillId = skillId
+        };
+
+        var response = await _sender.Send(
+            request: request,
+            cancellationToken: cancellationToken);
+
+
+        return response.StatusCode switch
+        {
+            // 500
+            RestoreSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Server error. Please try again later."
+                    }
+                }),
+
+            // 404
+            RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with Id = {skillId} is not found."
+                }
+            }),
+
+            // 400
+            RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
+            {
+                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                ErrorMessages = new List<string>(capacity: 1)
+                {
+                    $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                }
+            }),
+
+            // 500
+            RestoreSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
+                statusCode: StatusCodes.Status500InternalServerError,
+                value: new CommonResponse
+                {
+                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                    ErrorMessages = new List<string>(capacity: 1)
+                    {
+                        "Database operations failed."
+                    }
+                }),
+
+            // 200
+            _ => Ok(new CommonResponse
+            {
+            })
+        };
     }
 }

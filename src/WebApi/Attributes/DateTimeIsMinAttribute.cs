@@ -1,8 +1,8 @@
+using Application.Interfaces.Data;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using Application.Interfaces.Data;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Attributes;
 
@@ -10,7 +10,7 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input string
 ///     is in date time format.
 /// </summary>
-internal sealed class IsDateTimeMinAttribute : ValidationAttribute
+internal sealed class DateTimeIsMinAttribute : ValidationAttribute
 {
     /// <summary>
     ///     Entry to validate.

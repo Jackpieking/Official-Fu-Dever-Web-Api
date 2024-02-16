@@ -7,7 +7,7 @@ namespace WebApi.DTOs.Auth.Incomings;
 public sealed class RefreshAccessTokenDto : IDtoNormalization
 {
     [Required]
-    [IsStringNotNull]
+    [StringIsNotNullOrWhiteSpace]
     public string RefreshToken { get; set; }
 
     public void NormalizeAllProperties()

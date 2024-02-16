@@ -1,6 +1,6 @@
 namespace WebApi.DTOs.Auth.Outgoings;
 
-public sealed class RefreshAccessTokenSuccessDto
+internal sealed class RefreshAccessTokenSuccessDto
 {
     public string AccessToken { get; set; }
 

@@ -25,7 +25,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         await httpContext.Response.WriteAsJsonAsync(
             value: new CommonResponse
             {
-                ApiReturnCode = BaseApiReturnCode.FAILED,
+                ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
                 ErrorMessages = new List<string>(capacity: 2)
                 {
                     "Server error.",

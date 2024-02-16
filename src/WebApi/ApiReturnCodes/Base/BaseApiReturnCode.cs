@@ -11,7 +11,7 @@ internal abstract class BaseApiReturnCode
 {
     internal const int SUCCESS = 0;
 
-    internal const int FAILED = 1;
+    internal const int SERVER_ERROR = 1;
 
     internal const int INVALID_INPUTS = 2;
 }
