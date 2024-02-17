@@ -1,7 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Caching;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.CreateSkill.Middlewares;
 
@@ -31,13 +31,16 @@ internal sealed class CreateSkillCachingMiddleware :
     {
         var response = await next();
 
-        await Task.WhenAll(
-            _cacheHandler.RemoveAsync(
-                key: $"{nameof(GetAllSkillsByName)}_param_{request.NewSkillName.ToLower()}",
-                cancellationToken: cancellationToken),
-            _cacheHandler.RemoveAsync(
-                key: nameof(GetAllSkills),
-                cancellationToken: cancellationToken));
+        if (response.StatusCode == CreateSkillStatusCode.OPERATION_SUCCESS)
+        {
+            await Task.WhenAll(
+                _cacheHandler.RemoveAsync(
+                    key: $"{nameof(GetAllSkillsByName)}_param_{request.NewSkillName.ToLower()}",
+                    cancellationToken: cancellationToken),
+                _cacheHandler.RemoveAsync(
+                    key: nameof(GetAllSkills),
+                    cancellationToken: cancellationToken));
+        }
 
         return response;
     }

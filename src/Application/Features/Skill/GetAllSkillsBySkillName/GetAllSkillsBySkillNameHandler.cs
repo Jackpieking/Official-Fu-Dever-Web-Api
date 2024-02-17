@@ -1,10 +1,10 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Features.Skill.GetAllSkillsBySkillName;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.GetAllSkillsByName;
 
@@ -49,11 +49,11 @@ internal sealed class GetAllSkillBySkillNameHandler : IRequestHandler<
             specifications:
             [
                 _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
-                    _superSpecificationManager.Skill.SkillByNameSpecification(
+                _superSpecificationManager.Skill.SkillByNameSpecification(
                         skillName: request.SkillName,
                         isCaseSensitive: false),
-                    _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
-                    _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
+                _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);
 

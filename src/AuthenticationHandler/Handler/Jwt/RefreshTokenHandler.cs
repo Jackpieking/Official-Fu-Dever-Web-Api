@@ -1,7 +1,7 @@
-using System;
-using System.Linq;
 using Application.Interfaces.Authentication.Jwt;
 using Domain.Entities;
+using System;
+using System.Linq;
 
 namespace Generator.Handler.Token;
 

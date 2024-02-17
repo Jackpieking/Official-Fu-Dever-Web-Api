@@ -1,7 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Caching;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.RestoreSkillBySkillId.Middlewares;
 
@@ -32,9 +32,12 @@ internal sealed class RestoreSkillBySkillIdCachingMiddleware :
     {
         var response = await next();
 
-        await _cacheHandler.RemoveAsync(
-            key: nameof(GetAllTemporarilyRemovedSkills),
-            cancellationToken: cancellationToken);
+        if (response.StatusCode == RestoreSkillBySkillIdStatusCode.OPERATION_SUCCESS)
+        {
+            await _cacheHandler.RemoveAsync(
+                key: nameof(GetAllTemporarilyRemovedSkills),
+                cancellationToken: cancellationToken);
+        }
 
         return response;
     }

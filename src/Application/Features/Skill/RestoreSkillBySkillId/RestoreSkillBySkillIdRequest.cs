@@ -1,6 +1,6 @@
-using System;
 using Application.Features.Skill.RestoreSkillBySkillId.Middlewares;
 using MediatR;
+using System;
 
 namespace Application.Features.Skill.RestoreSkillBySkillId;
 

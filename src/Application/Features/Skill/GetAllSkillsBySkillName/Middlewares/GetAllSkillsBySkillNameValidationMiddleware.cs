@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Features.Skill.GetAllSkillsByName;
 using Application.Features.Skill.GetAllSkillsByName.Middlewares;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.GetAllSkillsBySkillName.Middlewares;
 

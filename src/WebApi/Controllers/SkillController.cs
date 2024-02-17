@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -72,26 +73,32 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
-            // 500
-            GetAllSkillsStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            //500
+            case GetAllSkillsStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(value: new CommonResponse
-            {
-                Body = response.FoundSkills
-            }),
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse
+                    {
+                        Body = response.FoundSkills
+                    });
+                }
+        }
     }
 
     /// <summary>
@@ -147,26 +154,32 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            GetAllSkillsBySkillNameStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case GetAllSkillsBySkillNameStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(value: new CommonResponse
-            {
-                Body = response.FoundSkills
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse
+                    {
+                        Body = response.FoundSkills
+                    });
+                }
+        }
     }
 
     /// <summary>
@@ -212,59 +225,74 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            CreateSkillStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case CreateSkillStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 400
-            CreateSkillStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
-                ErrorMessages = new List<string>(capacity: 1)
+            case CreateSkillStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
+                {
+                    return BadRequest(error: new CommonResponse
                     {
-                        $"Found skill with name = {dto.SkillName} in temporarily removed storage."
-                    }
-            }),
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Found skill with name = {dto.SkillName} in temporarily removed storage."
+                        }
+                    });
+                }
 
             // 409
-            CreateSkillStatusCode.SKILL_ALREADY_EXISTS => Conflict(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
-                ErrorMessages = new List<string>(capacity: 1)
+            case CreateSkillStatusCode.SKILL_ALREADY_EXISTS:
                 {
-                    $"Skill with name = {dto.SkillName} already exists."
+                    return Conflict(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with name = {dto.SkillName} already exists."
+                        }
+                    });
                 }
-            }),
 
             // 500
-            CreateSkillStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case CreateSkillStatusCode.DATABASE_OPERATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Database operations failed."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Database operations failed."
+                            }
+                        });
+                }
 
             // 201
-            _ => Created(
-            uri: $"{HttpContext.Request.Path}?name={dto.SkillName}",
-            value: new CommonResponse
-            {
-            })
-        };
+            default:
+                {
+                    return Created(
+                        uri: $"{HttpContext.Request.Path}?name={dto.SkillName}",
+                        value: new CommonResponse
+                        {
+                        });
+                }
+        }
     }
 
     /// <summary>
@@ -308,57 +336,70 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            RemoveSkillTemporarilyBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RemoveSkillTemporarilyBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 404
-            RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
                 {
-                    $"Skill with Id = {skillId} is not found."
+                    return NotFound(value: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found."
+                        }
+                    });
                 }
-            }),
 
             // 400
-            RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
-                    $"Found skill with Id = {skillId} in temporarily removed storage."
+                    return BadRequest(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Found skill with Id = {skillId} in temporarily removed storage."
+                        }
+                    });
                 }
-            }),
 
             // 500
-            RemoveSkillTemporarilyBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RemoveSkillTemporarilyBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Database operations failed."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Database operations failed."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(value: new CommonResponse
-            {
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse { });
+                }
+        }
     }
 
     /// <summary>
@@ -411,67 +452,83 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            UpdateSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case UpdateSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 404
-            UpdateSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
-                ErrorMessages = new List<string>(capacity: 1)
+            case UpdateSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
                 {
-                    $"Skill with Id = {skillId} is not found."
+                    return NotFound(value: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found."
+                        }
+                    });
                 }
-            }),
 
             // 400
-            UpdateSkillBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
-                ErrorMessages = new List<string>(capacity: 1)
+            case UpdateSkillBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
-                    $"Found skill with Id = {skillId} in temporarily removed storage."
+                    return BadRequest(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Found skill with Id = {skillId} in temporarily removed storage."
+                        }
+                    });
                 }
-            }),
 
             // 409
-            UpdateSkillBySkillIdStatusCode.SKILL_ALREADY_EXISTS => Conflict(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
-                ErrorMessages = new List<string>(capacity: 1)
+            case UpdateSkillBySkillIdStatusCode.SKILL_ALREADY_EXISTS:
                 {
-                    $"Skill with name = {dto.NewSkillName} already exists."
+                    return Conflict(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with name = {dto.NewSkillName} already exists."
+                        }
+                    });
                 }
-            }),
 
             // 500
-            UpdateSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case UpdateSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Database operations failed."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Database operations failed."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(new CommonResponse
-            {
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse { });
+                }
+        }
     }
 
     /// <summary>
@@ -501,26 +558,42 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            GetAllTemporarilyRemovedSkillsStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case GetAllTemporarilyRemovedSkillsStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(new CommonResponse
-            {
-                Body = response.FoundTemporarilyRemovedSkills
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse
+                    {
+                        Body = response.FoundTemporarilyRemovedSkills.Select(skill =>
+                            new GetAllTemporarilyRemovedSkillsResponse.Skill
+                            {
+                                SkillId = skill.SkillId,
+                                SkillName = skill.SkillName,
+                                SkillRemovedAt = TimeZoneInfo.ConvertTimeFromUtc(
+                                    dateTime: skill.SkillRemovedAt,
+                                    destinationTimeZone: TimeZoneInfo.FindSystemTimeZoneById(
+                                        id: "SE Asia Standard Time")),
+                                SkillRemovedBy = skill.SkillRemovedBy
+                            })
+                    });
+                }
+        }
     }
 
     /// <summary>
@@ -561,57 +634,70 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            RemoveSkillPermanentlyBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RemoveSkillPermanentlyBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 404
-            RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
                 {
-                    $"Skill with Id = {skillId} is not found."
+                    return NotFound(value: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found."
+                        }
+                    });
                 }
-            }),
 
             // 400
-            RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
                 {
-                    $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                    return BadRequest(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                        }
+                    });
                 }
-            }),
 
             // 500
-            RemoveSkillPermanentlyBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RemoveSkillPermanentlyBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Database operations failed."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Database operations failed."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(new CommonResponse
-            {
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse { });
+                }
+        }
     }
 
     /// <summary>
@@ -652,57 +738,69 @@ public sealed class SkillController : ControllerBase
             request: request,
             cancellationToken: cancellationToken);
 
-
-        return response.StatusCode switch
+        switch (response.StatusCode)
         {
             // 500
-            RestoreSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RestoreSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Server error. Please try again later."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Server error. Please try again later."
+                            }
+                        });
+                }
 
             // 404
-            RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND => NotFound(value: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
                 {
-                    $"Skill with Id = {skillId} is not found."
+                    return NotFound(value: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found."
+                        }
+                    });
                 }
-            }),
 
             // 400
-            RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED => BadRequest(error: new CommonResponse
-            {
-                ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
-                ErrorMessages = new List<string>(capacity: 1)
+            case RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
                 {
-                    $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                    return BadRequest(error: new CommonResponse
+                    {
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ErrorMessages = new List<string>(capacity: 1)
+                        {
+                            $"Skill with Id = {skillId} is not found in temporarily removed storage."
+                        }
+                    });
                 }
-            }),
 
             // 500
-            RestoreSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL => StatusCode(
-                statusCode: StatusCodes.Status500InternalServerError,
-                value: new CommonResponse
+            case RestoreSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
                 {
-                    ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                    ErrorMessages = new List<string>(capacity: 1)
-                    {
-                        "Database operations failed."
-                    }
-                }),
+                    return StatusCode(
+                        statusCode: StatusCodes.Status500InternalServerError,
+                        value: new CommonResponse
+                        {
+                            ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                            ErrorMessages = new List<string>(capacity: 1)
+                            {
+                                "Database operations failed."
+                            }
+                        });
+                }
 
             // 200
-            _ => Ok(new CommonResponse
-            {
-            })
-        };
+            default:
+                {
+                    return Ok(value: new CommonResponse { });
+                }
+        }
     }
 }

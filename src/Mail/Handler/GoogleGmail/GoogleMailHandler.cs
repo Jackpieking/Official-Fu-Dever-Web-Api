@@ -1,9 +1,3 @@
-using System;
-using System.IO;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Mail;
 using Application.Models;
 using Configuration.Infrastructure.Mail.GoogleGmail;
@@ -12,6 +6,12 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using System;
+using System.IO;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mail.Handler.GoogleGmail;
 

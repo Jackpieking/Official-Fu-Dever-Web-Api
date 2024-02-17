@@ -1,6 +1,6 @@
-using System;
 using Application.Features.Skill.UpdateSkillBySkillId.Middlewares;
 using MediatR;
+using System;
 
 namespace Application.Features.Skill.UpdateSkillBySkillId;
 

@@ -1,9 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Caching;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Skill.RemoveSkillTemporarilyBySkillId.Middlewares;
 
@@ -46,7 +46,7 @@ internal sealed class RemoveSkillTemporarilyBySkillIdCachingMiddleware :
                 specifications:
                 [
                     _superSpecificationManager.Skill.SkillByIdSpecification(skillId: request.SkillId),
-                            _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver4()
+                    _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver4()
                 ],
                 cancellationToken: cancellationToken);
 
