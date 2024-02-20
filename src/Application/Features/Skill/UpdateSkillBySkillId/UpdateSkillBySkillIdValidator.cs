@@ -22,7 +22,8 @@ public sealed class UpdateSkillBySkillIdValidator : AbstractValidator<UpdateSkil
 
         RuleFor(expression: request => request.NewSkillName)
             .Cascade(cascadeMode: CascadeMode.Stop)
-            .Must(predicate: newSkillName => !string.IsNullOrWhiteSpace(value: newSkillName))
+            .Must(predicate: newSkillName =>
+                !string.IsNullOrWhiteSpace(value: newSkillName))
             .Must(predicate: newSKillName => newSKillName.Length <=
                 Domain.Entities.Skill.Metadata.Name.MaxLength)
             .Must(predicate: newSkillName => newSkillName.Length >=

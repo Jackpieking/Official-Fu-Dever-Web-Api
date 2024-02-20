@@ -68,11 +68,9 @@ internal sealed class PositionRepository :
         string positionName,
         CancellationToken cancellationToken)
     {
-        const int MaxPositionNameLength = 100;
-
         if (positionId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > MaxPositionNameLength)
+            positionName.Length > Position.Metadata.Name.MaxLength)
         {
             return Task.FromResult<int>(result: default);
         }

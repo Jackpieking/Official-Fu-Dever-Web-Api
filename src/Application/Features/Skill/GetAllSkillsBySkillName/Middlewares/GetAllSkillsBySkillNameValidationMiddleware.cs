@@ -1,5 +1,3 @@
-using Application.Features.Skill.GetAllSkillsByName;
-using Application.Features.Skill.GetAllSkillsByName.Middlewares;
 using FluentValidation;
 using MediatR;
 using System.Threading;
@@ -27,6 +25,23 @@ internal sealed class GetAllSkillsBySkillNameValidationMiddleware :
         _validator = validator;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<GetAllSkillsBySkillNameResponse> Handle(
         GetAllSkillsBySkillNameRequest request,
         RequestHandlerDelegate<GetAllSkillsBySkillNameResponse> next,

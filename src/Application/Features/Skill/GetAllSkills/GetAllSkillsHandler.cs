@@ -1,6 +1,7 @@
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,15 +44,8 @@ internal sealed class GetAllSkillsHandler : IRequestHandler<
         GetAllSkillsRequest request,
         CancellationToken cancellationToken)
     {
-        // Get all skills.
-        var foundSkills = await _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
-            specifications:
-            [
-                _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
-                _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
-                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
-            ],
-            cancellationToken: cancellationToken);
+        // Get all non temporarily removed skills.
+        var foundSkills = await GetAllNonTemporarilyRemovedSkillsQueryAsync(cancellationToken: cancellationToken);
 
         // Project result to response.
         return new()
@@ -67,4 +61,29 @@ internal sealed class GetAllSkillsHandler : IRequestHandler<
             })
         };
     }
+
+    #region Queries
+    /// <summary>
+    ///     Get all skills which are not temporarily removed.
+    /// </summary>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     List of found skills.
+    /// </returns>
+    private Task<IEnumerable<Domain.Entities.Skill>> GetAllNonTemporarilyRemovedSkillsQueryAsync(CancellationToken cancellationToken)
+    {
+        return _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
+            specifications:
+            [
+                _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
+                _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
+            ],
+            cancellationToken: cancellationToken);
+    }
+    #endregion
 }

@@ -1,12 +1,12 @@
-using Application.Features.Skill.GetAllSkillsBySkillName;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Features.Skill.GetAllSkillsByName;
+namespace Application.Features.Skill.GetAllSkillsBySkillName;
 
 /// <summary>
 ///     Get all skills by name request handler.
@@ -45,16 +45,8 @@ internal sealed class GetAllSkillBySkillNameHandler : IRequestHandler<
         CancellationToken cancellationToken)
     {
         // Get all skills by name.
-        var foundSkills = await _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
-            specifications:
-            [
-                _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
-                _superSpecificationManager.Skill.SkillByNameSpecification(
-                        skillName: request.SkillName,
-                        isCaseSensitive: false),
-                _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
-                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
-            ],
+        var foundSkills = await GetAllSkillsBySkillNameQueryAsync(
+            skillName: request.SkillName,
             cancellationToken: cancellationToken);
 
         return new()
@@ -70,4 +62,37 @@ internal sealed class GetAllSkillBySkillNameHandler : IRequestHandler<
             }),
         };
     }
+
+    #region Queries
+    /// <summary>
+    ///     Get all skill by skill name
+    /// </summary>
+    /// <param name="skillName">
+    ///     Skill name to find.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     List of found skills.
+    /// </returns>
+    private Task<IEnumerable<Domain.Entities.Skill>> GetAllSkillsBySkillNameQueryAsync(
+        string skillName,
+        CancellationToken cancellationToken)
+    {
+        return _unitOfWork.SkillRepository.GetAllBySpecificationsAsync(
+            specifications:
+            [
+                _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
+                _superSpecificationManager.Skill.SkillByNameSpecification(
+                        skillName: skillName,
+                        isCaseSensitive: false),
+                _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
+            ],
+            cancellationToken: cancellationToken);
+    }
+    #endregion
 }

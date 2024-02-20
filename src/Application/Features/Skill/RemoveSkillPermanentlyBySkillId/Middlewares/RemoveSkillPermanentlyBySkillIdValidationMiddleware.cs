@@ -25,6 +25,23 @@ internal sealed class RemoveSkillPermanentlyBySkillIdValidationMiddleware :
         _validator = validator;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<RemoveSkillPermanentlyBySkillIdResponse> Handle(
         RemoveSkillPermanentlyBySkillIdRequest request,
         RequestHandlerDelegate<RemoveSkillPermanentlyBySkillIdResponse> next,

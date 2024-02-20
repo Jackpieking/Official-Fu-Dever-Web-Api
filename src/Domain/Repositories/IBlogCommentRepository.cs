@@ -37,7 +37,7 @@ public interface IBlogCommentRepository : IBaseRepository<BlogComment>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     public Task<int> BulkRemoveByAuthorIdAsync(
         Guid authorId,

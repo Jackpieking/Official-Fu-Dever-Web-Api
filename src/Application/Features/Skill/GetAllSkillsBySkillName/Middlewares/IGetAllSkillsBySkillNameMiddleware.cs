@@ -1,4 +1,4 @@
-namespace Application.Features.Skill.GetAllSkillsByName.Middlewares;
+namespace Application.Features.Skill.GetAllSkillsBySkillName.Middlewares;
 
 /// <summary>
 ///     Marker middleware interface for get

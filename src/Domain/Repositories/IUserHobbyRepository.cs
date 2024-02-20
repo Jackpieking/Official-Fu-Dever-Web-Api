@@ -37,7 +37,7 @@ public interface IUserHobbyRepository : IBaseRepository<UserHobby>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveByUserIdAsync(
         Guid userId,
@@ -64,7 +64,7 @@ public interface IUserHobbyRepository : IBaseRepository<UserHobby>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveByHobbyIdAsync(
         Guid hobbyId,

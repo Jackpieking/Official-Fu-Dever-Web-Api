@@ -43,7 +43,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateByPlatformIdVer1Async(
         Guid platformId,
@@ -75,7 +75,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateByPlatformIdVer2Async(
         Guid platformId,
@@ -103,7 +103,7 @@ public interface IPlatformRepository : IBaseRepository<Platform>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveByPlatformIdAsync(
         Guid platformId,

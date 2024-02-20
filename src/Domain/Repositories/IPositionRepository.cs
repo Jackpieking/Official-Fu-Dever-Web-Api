@@ -43,7 +43,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateByPositionIdVer1Async(
         Guid positionId,
@@ -75,7 +75,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateByPositionIdVer2Async(
         Guid positionId,
@@ -103,7 +103,7 @@ public interface IPositionRepository : IBaseRepository<Position>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveByPositionIdAsync(
         Guid positionId,

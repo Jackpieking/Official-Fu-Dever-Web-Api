@@ -1,4 +1,4 @@
-namespace Application.Features.Skill.GetAllSkillsByName;
+namespace Application.Features.Skill.GetAllSkillsBySkillName;
 
 /// <summary>
 ///     Get all skills by skill name response status code.

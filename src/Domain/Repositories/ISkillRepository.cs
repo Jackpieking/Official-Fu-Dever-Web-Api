@@ -43,7 +43,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateBySkillIdVer1Async(
         Guid skillId,
@@ -75,7 +75,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkUpdateBySkillIdVer2Async(
         Guid skillId,
@@ -103,7 +103,7 @@ public interface ISkillRepository : IBaseRepository<Skill>
     ///     to wrap this method in a database transaction.
     ///
     ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks"/> interface.
+    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveBySkillIdAsync(
         Guid skillId,

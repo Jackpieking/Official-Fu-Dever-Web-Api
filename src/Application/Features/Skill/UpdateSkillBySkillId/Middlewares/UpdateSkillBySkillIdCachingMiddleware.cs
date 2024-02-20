@@ -34,29 +34,52 @@ internal sealed class UpdateSkillBySkillIdCachingMiddleware :
         _superSpecificationManager = superSpecificationManager;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<UpdateSkillBySkillIdResponse> Handle(
         UpdateSkillBySkillIdRequest request,
         RequestHandlerDelegate<UpdateSkillBySkillIdResponse> next,
         CancellationToken cancellationToken)
     {
+        // finding current skill by skill id.
+        var foundSkill = await _unitOfWork.SkillRepository.FindBySpecificationsAsync(
+            specifications:
+            [
+                _superSpecificationManager.Skill.SkillByIdSpecification(skillId: request.SkillId),
+                _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver4()
+            ],
+            cancellationToken: cancellationToken);
+
+        // Skill is found by skill id.
+        if (!Equals(objA: foundSkill, objB: default))
+        {
+            await _cacheHandler.RemoveAsync(
+                key: $"{nameof(GetAllSkillsBySkillName)}_param_{foundSkill.Name.ToLower()}",
+                cancellationToken: cancellationToken);
+        }
+
         var response = await next();
 
         if (response.StatusCode == UpdateSkillBySkillIdStatusCode.OPERATION_SUCCESS)
         {
-            var foundSkill = await _unitOfWork.SkillRepository.FindBySpecificationsAsync(
-                specifications:
-                [
-                    _superSpecificationManager.Skill.SkillByIdSpecification(skillId: request.SkillId),
-                    _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver4()
-                ],
-                cancellationToken: cancellationToken);
-
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsByName)}_param_{foundSkill.Name.ToLower()}",
-                    cancellationToken: cancellationToken),
-                _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsByName)}_param_{request.NewSkillName.ToLower()}",
+                    key: $"{nameof(GetAllSkillsBySkillName)}_param_{request.NewSkillName.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
                     key: nameof(GetAllSkills),

@@ -34,6 +34,23 @@ internal sealed class RemoveSkillTemporarilyBySkillIdCachingMiddleware :
         _superSpecificationManager = superSpecificationManager;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<RemoveSkillTemporarilyBySkillIdResponse> Handle(
         RemoveSkillTemporarilyBySkillIdRequest request, RequestHandlerDelegate<RemoveSkillTemporarilyBySkillIdResponse> next,
         CancellationToken cancellationToken)
@@ -52,10 +69,13 @@ internal sealed class RemoveSkillTemporarilyBySkillIdCachingMiddleware :
 
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsByName)}_param_{foundSkill.Name.ToLower()}",
+                    key: $"{nameof(GetAllSkillsBySkillName)}_param_{foundSkill.Name.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
                     key: nameof(GetAllSkills),
+                    cancellationToken: cancellationToken),
+                _cacheHandler.RemoveAsync(
+                    key: nameof(GetAllTemporarilyRemovedSkills),
                     cancellationToken: cancellationToken));
         }
 

@@ -26,6 +26,20 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
         _superSpecificationManager = superSpecificationManager;
     }
 
+    /// <summary>
+    ///     Entry of new request handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Request model.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     A task containing the response.
+    /// </returns>
     public async Task<RemoveSkillPermanentlyBySkillIdResponse> Handle(
         RemoveSkillPermanentlyBySkillIdRequest request,
         CancellationToken cancellationToken)
@@ -60,8 +74,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
 
         // Remove skill permanently by skill id.
         var result = await RemoveSkillPermanentlyBySkillIdCommandAsync(
-            skillId: request.SkillId,
-            skillRemovedBy: request.SkillRemovedBy,
+            request: request,
             cancellationToken: cancellationToken);
 
         // Database transaction false.
@@ -79,8 +92,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
         };
     }
 
-    // === Queries ===
-
+    #region Queries
     /// <summary>
     ///     Is skill found by skill id.
     /// </summary>
@@ -135,17 +147,14 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
             ],
             cancellationToken: cancellationToken);
     }
+    #endregion
 
-    // === Commands ===
-
+    #region Commands
     /// <summary>
     ///     Attempt to removing skill permanently with new name.
     /// </summary>
-    /// <param name="skillId">
-    ///     Skill id.
-    /// </param>
-    /// <param name="skillRemovedBy">
-    ///     Who remove the skill permanently.
+    /// <param name="request">
+    ///     Containing skill information.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -157,8 +166,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
     ///     successful. Otherwise, false.
     /// </returns>
     private async Task<bool> RemoveSkillPermanentlyBySkillIdCommandAsync(
-        Guid skillId,
-        Guid skillRemovedBy,
+        RemoveSkillPermanentlyBySkillIdRequest request,
         CancellationToken cancellationToken)
     {
         var executedTransactionResult = false;
@@ -175,7 +183,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
                         specifications:
                         [
                             _superSpecificationManager.UserSkill.UserSkillAsNoTrackingSpecification,
-                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: skillId),
+                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: request.SkillId),
                             _superSpecificationManager.UserSkill.SelectFieldsFromUserSkillSpecification.Ver2()
                         ],
                         cancellationToken: cancellationToken);
@@ -185,16 +193,16 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
                         await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
                             userId: foundUserSkill.UserId,
                             userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: skillRemovedBy,
+                            userUpdatedBy: request.SkillRemovedBy,
                             cancellationToken: cancellationToken);
                     }
 
                     await _unitOfWork.UserSkillRepository.BulkRemoveBySkillIdAsync(
-                        skillId: skillId,
+                        skillId: request.SkillId,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SkillRepository.BulkRemoveBySkillIdAsync(
-                        skillId: skillId,
+                        skillId: request.SkillId,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
@@ -213,4 +221,5 @@ internal sealed class RemoveSkillPermanentlyBySkillIdHandler : IRequestHandler<
 
         return executedTransactionResult;
     }
+    #endregion
 }

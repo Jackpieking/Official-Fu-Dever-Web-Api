@@ -1,7 +1,6 @@
-using Application.Features.Skill.GetAllSkillsBySkillName;
 using FluentValidation;
 
-namespace Application.Features.Skill.GetAllSkillsByName;
+namespace Application.Features.Skill.GetAllSkillsBySkillName;
 
 /// <summary>
 ///     Get all skills by name request validator.
@@ -14,7 +13,8 @@ public sealed class GetAllSkillsBySkillNameValidator : AbstractValidator<GetAllS
 
         RuleFor(expression: request => request.SkillName)
             .Cascade(cascadeMode: CascadeMode.Stop)
-            .Must(predicate: skillName => !string.IsNullOrWhiteSpace(value: skillName))
+            .Must(predicate: skillName =>
+                !string.IsNullOrWhiteSpace(value: skillName))
             .Must(predicate: skillName => skillName.Length <=
                 Domain.Entities.Skill.Metadata.Name.MaxLength)
             .Must(predicate: skillName => skillName.Length >=

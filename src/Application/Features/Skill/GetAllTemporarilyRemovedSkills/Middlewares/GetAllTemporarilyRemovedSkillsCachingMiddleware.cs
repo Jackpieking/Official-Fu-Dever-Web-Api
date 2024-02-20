@@ -27,6 +27,23 @@ internal sealed class GetAllTemporarilyRemovedSkillsCachingMiddleware :
         _cacheHandler = cacheHandler;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<GetAllTemporarilyRemovedSkillsResponse> Handle(
         GetAllTemporarilyRemovedSkillsRequest request,
         RequestHandlerDelegate<GetAllTemporarilyRemovedSkillsResponse> next,

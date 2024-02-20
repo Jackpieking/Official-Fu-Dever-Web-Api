@@ -80,7 +80,7 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
 
         // Restore skill by skill id.
         var result = await RestoreSkillBySkillIdCommandAsync(
-            skillId: request.SkillId,
+            request: request,
             cancellationToken: cancellationToken);
 
         // Database transaction false.
@@ -98,8 +98,7 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
         };
     }
 
-    // === Queries ===
-
+    #region Queries
     /// <summary>
     ///     Is skill found by skill id.
     /// </summary>
@@ -154,14 +153,14 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
             ],
             cancellationToken: cancellationToken);
     }
+    #endregion
 
-    // === Commands ===
-
+    #region Commands
     /// <summary>
     ///     Attempt to restore skill by skill id.
     /// </summary>
-    /// <param name="skillId">
-    ///     Skill id.
+    /// <param name="request">
+    ///     Containing skill information.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -173,7 +172,7 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
     ///     successful. Otherwise, false.
     /// </returns>
     public async Task<bool> RestoreSkillBySkillIdCommandAsync(
-        Guid skillId,
+        RestoreSkillBySkillIdRequest request,
         CancellationToken cancellationToken)
     {
         var executedTransactionResult = false;
@@ -187,7 +186,7 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
-                        skillId: skillId,
+                        skillId: request.SkillId,
                         skillRemovedAt: _dbMinTimeHandler.Get(),
                         skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                         cancellationToken: cancellationToken);
@@ -208,4 +207,5 @@ internal sealed class RestoreSkillBySkillIdHandler : IRequestHandler<
 
         return executedTransactionResult;
     }
+    #endregion
 }

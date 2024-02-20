@@ -1,4 +1,3 @@
-using Application.Features.Skill.GetAllSkillsByName.Middlewares;
 using Application.Interfaces.Caching;
 using Application.Models;
 using MediatR;
@@ -28,6 +27,23 @@ internal sealed class GetAllSkillsBySkillNameCachingMiddleware :
         _cacheHandler = cacheHandler;
     }
 
+    /// <summary>
+    ///     Entry to middleware handler.
+    /// </summary>
+    /// <param name="request">
+    ///     Current request object.
+    /// </param>
+    /// <param name="next">
+    ///     Navigate to next middleware and get back response.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used for notifying system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     Response of use case.
+    /// </returns>
     public async Task<GetAllSkillsBySkillNameResponse> Handle(
         GetAllSkillsBySkillNameRequest request,
         RequestHandlerDelegate<GetAllSkillsBySkillNameResponse> next,
@@ -39,7 +55,7 @@ internal sealed class GetAllSkillsBySkillNameCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = $"{nameof(GetAllSkillsByName)}_param_{request.SkillName.ToLower()}";
+        var cachedKey = $"{nameof(GetAllSkillsBySkillName)}_param_{request.SkillName.ToLower()}";
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllSkillsBySkillNameResponse>(

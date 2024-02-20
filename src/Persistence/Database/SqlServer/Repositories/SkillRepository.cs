@@ -68,11 +68,9 @@ internal sealed class SkillRepository :
         string skillName,
         CancellationToken cancellationToken)
     {
-        const int MaxSkillNameLength = 100;
-
         if (skillId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > MaxSkillNameLength)
+            skillName.Length > Skill.Metadata.Name.MaxLength)
         {
             return Task.FromResult<int>(result: default);
         }

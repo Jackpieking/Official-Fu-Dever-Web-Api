@@ -10,4 +10,6 @@ public interface ISelectFieldsFromDepartmentSpecification : IBaseSpecification<D
     ISelectFieldsFromDepartmentSpecification Ver1();
 
     ISelectFieldsFromDepartmentSpecification Ver2();
+
+    ISelectFieldsFromDepartmentSpecification Ver3();
 }

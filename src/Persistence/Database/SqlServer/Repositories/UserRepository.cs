@@ -83,14 +83,16 @@ internal sealed class UserRepository :
 
     public Task<int> BulkUpdateByUserIdVer3Async(
         Guid userId,
-        int accessFailedCount,
-        DateTime lockoutEnd,
+        DateTime userUpdatedAt,
+        Guid userUpdatedBy,
+        Guid departmentId,
         CancellationToken cancellationToken)
     {
         if (userId == Guid.Empty ||
-            accessFailedCount < default(int) ||
-            lockoutEnd < DateTime.MinValue ||
-            lockoutEnd > DateTime.MaxValue)
+            userUpdatedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
+            userUpdatedAt > DateTime.UtcNow ||
+            userUpdatedBy == Guid.Empty ||
+            departmentId == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
@@ -100,32 +102,14 @@ internal sealed class UserRepository :
             .ExecuteUpdateAsync(
                 setPropertyCalls: setter => setter
                     .SetProperty(
-                        user => user.AccessFailedCount,
-                        accessFailedCount)
+                        user => user.UpdatedAt,
+                        userUpdatedAt)
                     .SetProperty(
-                        user => user.LockoutEnd,
-                        lockoutEnd),
-                cancellationToken: cancellationToken);
-    }
-
-    public Task<int> BulkUpdateByUserIdVer4Async(
-        Guid userId,
-        int accessFailedCount,
-        CancellationToken cancellationToken)
-    {
-        if (userId == Guid.Empty ||
-            accessFailedCount < default(int))
-        {
-            return Task.FromResult<int>(result: default);
-        }
-
-        return _dbSet
-            .Where(predicate: user => user.Id == userId)
-            .ExecuteUpdateAsync(
-                setPropertyCalls: setter => setter
+                        user => user.UpdatedBy,
+                        userUpdatedBy)
                     .SetProperty(
-                        user => user.AccessFailedCount,
-                        accessFailedCount),
+                        user => user.DepartmentId,
+                        departmentId),
                 cancellationToken: cancellationToken);
     }
 }

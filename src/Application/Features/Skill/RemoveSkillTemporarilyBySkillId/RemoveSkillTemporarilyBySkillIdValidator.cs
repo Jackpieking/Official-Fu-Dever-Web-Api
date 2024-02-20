@@ -6,7 +6,8 @@ namespace Application.Features.Skill.RemoveSkillTemporarilyBySkillId;
 /// <summary>
 ///     Remove skill temporarily by skill request validator.
 /// </summary>
-public sealed class RemoveSkillTemporarilyBySkillIdValidator : AbstractValidator<RemoveSkillTemporarilyBySkillIdRequest>
+public sealed class RemoveSkillTemporarilyBySkillIdValidator :
+    AbstractValidator<RemoveSkillTemporarilyBySkillIdRequest>
 {
     public RemoveSkillTemporarilyBySkillIdValidator()
     {

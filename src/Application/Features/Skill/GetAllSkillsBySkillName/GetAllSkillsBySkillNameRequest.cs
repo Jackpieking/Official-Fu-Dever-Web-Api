@@ -1,4 +1,4 @@
-using Application.Features.Skill.GetAllSkillsByName.Middlewares;
+using Application.Features.Skill.GetAllSkillsBySkillName.Middlewares;
 using MediatR;
 
 namespace Application.Features.Skill.GetAllSkillsBySkillName;

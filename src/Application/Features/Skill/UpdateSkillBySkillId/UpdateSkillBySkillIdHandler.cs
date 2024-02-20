@@ -88,9 +88,7 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
 
         // Update skill by skill id.
         var result = await UpdateSkillBySkillIdCommandAsync(
-            skillId: request.SkillId,
-            newSkillName: request.NewSkillName,
-            skillUpdatedBy: request.SkillUpdatedBy,
+            request: request,
             cancellationToken: cancellationToken);
 
         // Database transaction false.
@@ -108,8 +106,7 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
         };
     }
 
-    // === Queries ===
-
+    #region Queries
     /// <summary>
     ///     Is skill found by skill id.
     /// </summary>
@@ -193,20 +190,14 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
             ],
             cancellationToken: cancellationToken);
     }
+    #endregion
 
-    // === Commands ===
-
+    #region Commands
     /// <summary>
     ///     Attempt to update skill with new name by skill id.
     /// </summary>
-    /// <param name="skillId">
-    ///     Skill id.
-    /// </param>
-    /// <param name="newSkillName">
-    ///     New skill name.
-    /// </param>
-    /// <param name="skillUpdatedBy">
-    ///     Who update the skill.
+    /// <param name="request">
+    ///     Containing skill information.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -218,12 +209,9 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
     ///     Otherwise, false.
     /// </returns>
     private async Task<bool> UpdateSkillBySkillIdCommandAsync(
-        Guid skillId,
-        string newSkillName,
-        Guid skillUpdatedBy,
+        UpdateSkillBySkillIdRequest request,
         CancellationToken cancellationToken)
     {
-        // Start updating skill transaction.
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -238,7 +226,7 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
                         specifications:
                         [
                             _superSpecificationManager.UserSkill.UserSkillAsNoTrackingSpecification,
-                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: skillId),
+                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: request.SkillId),
                             _superSpecificationManager.UserSkill.SelectFieldsFromUserSkillSpecification.Ver2(),
                         ],
                         cancellationToken: cancellationToken);
@@ -248,13 +236,13 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
                         await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
                             userId: foundUserSkill.UserId,
                             userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: skillUpdatedBy,
+                            userUpdatedBy: request.SkillUpdatedBy,
                             cancellationToken: cancellationToken);
                     }
 
                     await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer2Async(
-                        skillId: skillId,
-                        skillName: newSkillName,
+                        skillId: request.SkillId,
+                        skillName: request.NewSkillName,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
@@ -273,4 +261,5 @@ internal sealed class UpdateSkillBySkillIdHandler : IRequestHandler<
 
         return executedTransactionResult;
     }
+    #endregion
 }

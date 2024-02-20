@@ -68,11 +68,9 @@ internal sealed class PlatformRepository :
         string platformName,
         CancellationToken cancellationToken)
     {
-        const int MaxPlatformNameLength = 100;
-
         if (platformId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > MaxPlatformNameLength)
+            platformName.Length > Platform.Metadata.Name.MaxLength)
         {
             return Task.FromResult<int>(result: default);
         }

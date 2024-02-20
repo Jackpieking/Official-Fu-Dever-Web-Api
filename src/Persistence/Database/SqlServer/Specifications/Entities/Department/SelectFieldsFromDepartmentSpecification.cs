@@ -30,4 +30,11 @@ internal sealed class SelectFieldsFromDepartmentSpecification :
 
         return this;
     }
+
+    public ISelectFieldsFromDepartmentSpecification Ver3()
+    {
+        SelectExpression = department => Domain.Entities.Department.InitVer3(department.Name);
+
+        return this;
+    }
 }

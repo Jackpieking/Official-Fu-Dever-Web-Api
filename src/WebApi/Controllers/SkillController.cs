@@ -1,6 +1,5 @@
 using Application.Features.Skill.CreateSkill;
 using Application.Features.Skill.GetAllSkills;
-using Application.Features.Skill.GetAllSkillsByName;
 using Application.Features.Skill.GetAllSkillsBySkillName;
 using Application.Features.Skill.GetAllTemporarilyRemovedSkills;
 using Application.Features.Skill.RemoveSkillPermanentlyBySkillId;
@@ -200,7 +199,7 @@ public sealed class SkillController : ControllerBase
     ///
     ///     POST api/Skill
     ///     {
-    ///         "SkillName": "string"
+    ///         "skillName": "string"
     ///     }
     ///
     /// </remarks>
@@ -288,9 +287,7 @@ public sealed class SkillController : ControllerBase
                 {
                     return Created(
                         uri: $"{HttpContext.Request.Path}?name={dto.SkillName}",
-                        value: new CommonResponse
-                        {
-                        });
+                        value: new CommonResponse { });
                 }
         }
     }
@@ -669,7 +666,7 @@ public sealed class SkillController : ControllerBase
                 {
                     return BadRequest(error: new CommonResponse
                     {
-                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
                         ErrorMessages = new List<string>(capacity: 1)
                         {
                             $"Skill with Id = {skillId} is not found in temporarily removed storage."
@@ -773,7 +770,7 @@ public sealed class SkillController : ControllerBase
                 {
                     return BadRequest(error: new CommonResponse
                     {
-                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                        ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
                         ErrorMessages = new List<string>(capacity: 1)
                         {
                             $"Skill with Id = {skillId} is not found in temporarily removed storage."

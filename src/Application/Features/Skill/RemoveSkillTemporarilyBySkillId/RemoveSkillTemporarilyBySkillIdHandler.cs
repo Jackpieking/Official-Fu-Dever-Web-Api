@@ -74,8 +74,7 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
 
         // Remove skill temporarily by skill id.
         var result = await RemoveSkillTemporarilyBySkillIdCommandAsync(
-            skillId: request.SkillId,
-            removedBy: request.SkillRemovedBy,
+            request: request,
             cancellationToken: cancellationToken);
 
         // Database transaction false.
@@ -93,8 +92,7 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
         };
     }
 
-    // === Queries ===
-
+    #region Queries
     /// <summary>
     ///     Is skill found by skill id.
     /// </summary>
@@ -149,29 +147,28 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
             ],
             cancellationToken: cancellationToken);
     }
+    #endregion
 
-    // === Commands ===
-
+    #region Commands
     /// <summary>
     ///     Attempt to remove this skill temporarily.
     /// </summary>
-    /// <param name="skillId">
-    ///     Skill id.
+    /// <param name="request">
+    ///     Containing skill information.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
     /// </param>
-    /// <param name="removedBy">
+    /// <param name="skillRemovedBy">
     ///     Who removed this skill.
     /// </param>
     /// <returns>
     ///     True if removed successfully. Otherwise, false.
     /// </returns>
     private async Task<bool> RemoveSkillTemporarilyBySkillIdCommandAsync(
-        Guid skillId,
-        Guid removedBy,
+        RemoveSkillTemporarilyBySkillIdRequest request,
         CancellationToken cancellationToken)
     {
         var executedTransactionResult = false;
@@ -185,9 +182,9 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
-                        skillId: skillId,
+                        skillId: request.SkillId,
                         skillRemovedAt: DateTime.UtcNow,
-                        skillRemovedBy: removedBy,
+                        skillRemovedBy: request.SkillRemovedBy,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
@@ -206,4 +203,5 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
 
         return executedTransactionResult;
     }
+    #endregion
 }

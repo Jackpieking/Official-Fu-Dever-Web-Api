@@ -79,7 +79,7 @@ internal sealed class CreateSkillHandler : IRequestHandler<
 
         // Create skill with new skill name.
         var result = await CreateSkillCommandAsync(
-            newSkillName: request.NewSkillName,
+            request: request,
             cancellationToken: cancellationToken);
 
         // Database transaction false.
@@ -97,8 +97,7 @@ internal sealed class CreateSkillHandler : IRequestHandler<
         };
     }
 
-    // === Queries ===
-
+    #region Queries
     /// <summary>
     ///     Is skill having the same name with
     ///     the new one found.
@@ -156,15 +155,15 @@ internal sealed class CreateSkillHandler : IRequestHandler<
             ],
             cancellationToken: cancellationToken);
     }
+    #endregion
 
-    // === Commands ===
-
+    #region Commands
     /// <summary>
     ///     Attempt to creating a new skill with the
     ///     given name and add to database.
     /// </summary>
-    /// <param name="newSkillName">
-    ///     New skill name.
+    /// <param name="request">
+    ///     Containing skill information.
     /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
@@ -176,10 +175,9 @@ internal sealed class CreateSkillHandler : IRequestHandler<
     ///     Otherwise, false.
     /// </returns>
     private async Task<bool> CreateSkillCommandAsync(
-        string newSkillName,
+        CreateSkillRequest request,
         CancellationToken cancellationToken)
     {
-        // Start adding entity transaction.
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -193,7 +191,7 @@ internal sealed class CreateSkillHandler : IRequestHandler<
                     await _unitOfWork.SkillRepository.AddAsync(
                         newEntity: Domain.Entities.Skill.InitVer1(
                             skillId: Guid.NewGuid(),
-                            skillName: newSkillName,
+                            skillName: request.NewSkillName,
                             skillRemovedAt: _dbMinTimeHandler.Get(),
                             skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
                         cancellationToken: cancellationToken);
@@ -216,4 +214,5 @@ internal sealed class CreateSkillHandler : IRequestHandler<
 
         return executedTransactionResult;
     }
+    #endregion
 }
