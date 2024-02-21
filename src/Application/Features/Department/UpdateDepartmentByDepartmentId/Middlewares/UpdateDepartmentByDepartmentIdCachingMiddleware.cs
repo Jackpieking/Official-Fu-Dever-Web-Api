@@ -1,9 +1,11 @@
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Features.Department.GetAllDepartments;
+using Application.Features.Department.GetAllDepartmentsByDepartmentName;
 using Application.Interfaces.Caching;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.UpdateDepartmentByDepartmentId.Middlewares;
 
@@ -69,7 +71,7 @@ internal sealed class UpdateDepartmentByDepartmentIdCachingMiddleware :
         if (!Equals(objA: foundDepartment, objB: default))
         {
             await _cacheHandler.RemoveAsync(
-                key: $"{nameof(GetAllDepartmentsByDepartmentName)}_param_{foundDepartment.Name.ToLower()}",
+                key: $"{nameof(GetAllDepartmentsByDepartmentNameRequest)}_param_{foundDepartment.Name.ToLower()}",
                 cancellationToken: cancellationToken);
         }
 
@@ -79,10 +81,10 @@ internal sealed class UpdateDepartmentByDepartmentIdCachingMiddleware :
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllDepartmentsByDepartmentName)}_param_{request.NewDepartmentName.ToLower()}",
+                    key: $"{nameof(GetAllDepartmentsByDepartmentNameRequest)}_param_{request.NewDepartmentName.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllDepartments),
+                    key: nameof(GetAllDepartmentsRequest),
                     cancellationToken: cancellationToken));
         }
 

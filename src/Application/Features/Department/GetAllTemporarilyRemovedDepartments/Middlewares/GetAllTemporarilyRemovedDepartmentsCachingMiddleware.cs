@@ -1,14 +1,14 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Caching;
 using Application.Models;
 using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.GetAllTemporarilyRemovedDepartments.Middlewares;
 
 /// <summary>
-///     Get all temporarily removed department
+///     Get all temporarily removed departments
 ///     request caching middleware.
 /// </summary>
 /// <remarks>
@@ -55,7 +55,7 @@ public class GetAllTemporarilyRemovedDepartmentsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllTemporarilyRemovedDepartments);
+        var cachedKey = nameof(GetAllTemporarilyRemovedDepartmentsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllTemporarilyRemovedDepartmentsResponse>(

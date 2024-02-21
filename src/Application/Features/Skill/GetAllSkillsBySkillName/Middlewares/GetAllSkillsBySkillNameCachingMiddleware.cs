@@ -55,7 +55,7 @@ internal sealed class GetAllSkillsBySkillNameCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = $"{nameof(GetAllSkillsBySkillName)}_param_{request.SkillName.ToLower()}";
+        var cachedKey = $"{nameof(GetAllSkillsBySkillNameRequest)}_param_{request.SkillName.ToLower()}";
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllSkillsBySkillNameResponse>(

@@ -1,10 +1,10 @@
+using Domain.Specifications.Others.Interfaces;
+using Domain.UnitOfWorks;
+using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Specifications.Others.Interfaces;
-using Domain.UnitOfWorks;
-using MediatR;
 
 namespace Application.Features.Department.GetAllDepartments;
 

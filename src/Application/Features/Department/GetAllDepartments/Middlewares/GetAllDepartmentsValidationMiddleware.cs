@@ -1,7 +1,7 @@
-using System.Threading;
-using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.GetAllDepartments.Middlewares;
 

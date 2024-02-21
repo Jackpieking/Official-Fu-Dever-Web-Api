@@ -1,6 +1,6 @@
-using System;
 using Application.Features.Department.UpdateDepartmentByDepartmentId.Middlewares;
 using MediatR;
+using System;
 
 namespace Application.Features.Department.UpdateDepartmentByDepartmentId;
 

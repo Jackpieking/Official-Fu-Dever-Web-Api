@@ -9,7 +9,7 @@ namespace Application.Features.Skill.CreateSkill.Middlewares;
 ///     Create skill request validation middleware.
 /// </summary>
 /// <remarks>
-///     Order: 2nd
+///     Order: 1st
 /// </remarks>
 internal sealed class CreateSkillValidationMiddleware :
     IPipelineBehavior<

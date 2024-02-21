@@ -55,7 +55,7 @@ internal sealed class GetAllTemporarilyRemovedSkillsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllTemporarilyRemovedSkills);
+        var cachedKey = nameof(GetAllTemporarilyRemovedSkillsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllTemporarilyRemovedSkillsResponse>(

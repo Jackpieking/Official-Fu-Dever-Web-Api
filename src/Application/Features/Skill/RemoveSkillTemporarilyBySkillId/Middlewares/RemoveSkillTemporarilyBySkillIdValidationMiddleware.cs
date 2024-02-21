@@ -20,7 +20,8 @@ internal sealed class RemoveSkillTemporarilyBySkillIdValidationMiddleware :
 {
     private readonly IValidator<RemoveSkillTemporarilyBySkillIdRequest> _validator;
 
-    public RemoveSkillTemporarilyBySkillIdValidationMiddleware(IValidator<RemoveSkillTemporarilyBySkillIdRequest> validator)
+    public RemoveSkillTemporarilyBySkillIdValidationMiddleware(
+        IValidator<RemoveSkillTemporarilyBySkillIdRequest> validator)
     {
         _validator = validator;
     }

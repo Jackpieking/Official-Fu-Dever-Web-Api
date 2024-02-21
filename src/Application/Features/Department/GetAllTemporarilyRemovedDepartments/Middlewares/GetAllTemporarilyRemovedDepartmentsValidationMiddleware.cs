@@ -1,12 +1,12 @@
-using System.Threading;
-using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.GetAllTemporarilyRemovedDepartments.Middlewares;
 
 /// <summary>
-///     Get all temporarily removed department
+///     Get all temporarily removed departments
 ///     request validation middleware.
 /// </summary>
 /// <remarks>

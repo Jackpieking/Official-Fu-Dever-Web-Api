@@ -161,9 +161,6 @@ internal sealed class RemoveSkillTemporarilyBySkillIdHandler : IRequestHandler<
     ///     to cancel the current operation when user stop
     ///     the request.
     /// </param>
-    /// <param name="skillRemovedBy">
-    ///     Who removed this skill.
-    /// </param>
     /// <returns>
     ///     True if removed successfully. Otherwise, false.
     /// </returns>

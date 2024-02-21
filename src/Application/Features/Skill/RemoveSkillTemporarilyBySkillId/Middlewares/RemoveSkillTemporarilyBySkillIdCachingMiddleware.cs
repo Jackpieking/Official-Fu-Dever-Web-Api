@@ -1,3 +1,6 @@
+using Application.Features.Skill.GetAllSkills;
+using Application.Features.Skill.GetAllSkillsBySkillName;
+using Application.Features.Skill.GetAllTemporarilyRemovedSkills;
 using Application.Interfaces.Caching;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
@@ -69,13 +72,13 @@ internal sealed class RemoveSkillTemporarilyBySkillIdCachingMiddleware :
 
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsBySkillName)}_param_{foundSkill.Name.ToLower()}",
+                    key: $"{nameof(GetAllSkillsBySkillNameRequest)}_param_{foundSkill.Name.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllSkills),
+                    key: nameof(GetAllSkillsRequest),
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllTemporarilyRemovedSkills),
+                    key: nameof(GetAllTemporarilyRemovedSkillsRequest),
                     cancellationToken: cancellationToken));
         }
 

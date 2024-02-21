@@ -14,6 +14,22 @@ using Application.Features.Department.RestoreDepartmentByDepartmentId;
 using Application.Features.Department.RestoreDepartmentByDepartmentId.Middlewares;
 using Application.Features.Department.UpdateDepartmentByDepartmentId;
 using Application.Features.Department.UpdateDepartmentByDepartmentId.Middlewares;
+using Application.Features.Position.CreatePosition;
+using Application.Features.Position.CreatePosition.Middlewares;
+using Application.Features.Position.GetAllPositions;
+using Application.Features.Position.GetAllPositions.Middlewares;
+using Application.Features.Position.GetAllPositionsByPositionName;
+using Application.Features.Position.GetAllPositionsByPositionName.Middlewares;
+using Application.Features.Position.GetAllTemporarilyRemovedPositions;
+using Application.Features.Position.GetAllTemporarilyRemovedPositions.Middlewares;
+using Application.Features.Position.RemovePositionPermanentlyByPositionId;
+using Application.Features.Position.RemovePositionPermanentlyByPositionId.Middlewares;
+using Application.Features.Position.RemovePositionTemporarilyByPositionId;
+using Application.Features.Position.RemovePositionTemporarilyByPositionId.Middlewares;
+using Application.Features.Position.RestorePositionByPositionId;
+using Application.Features.Position.RestorePositionByPositionId.Middlewares;
+using Application.Features.Position.UpdatePosition;
+using Application.Features.Position.UpdatePosition.Middlewares;
 using Application.Features.Skill.CreateSkill;
 using Application.Features.Skill.CreateSkill.Middlewares;
 using Application.Features.Skill.GetAllSkills;
@@ -96,8 +112,20 @@ public static class DependencyInjection
     /// </param>
     private static void ConfigureCore(this IServiceCollection services)
     {
-        #region SkillUseCaseMiddlewares
-        // Get all skills request middlewares.
+        services.SkillUseCaseMiddlewaresConfig();
+        services.DepartmentUseCaseMiddlewaresConfig();
+        services.PositionUseCaseMiddlewaresConfig();
+    }
+
+    /// <summary>
+    ///     Configuring skill use cases middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void SkillUseCaseMiddlewaresConfig(this IServiceCollection services)
+    {
+        // Get all skills request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -110,7 +138,7 @@ public static class DependencyInjection
                     GetAllSkillsResponse>),
                 typeof(GetAllSkillCachingMiddleware));
 
-        // Get all skills by name request middlewares.
+        // Get all skills by name request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -123,7 +151,7 @@ public static class DependencyInjection
                     GetAllSkillsBySkillNameResponse>),
                 typeof(GetAllSkillsBySkillNameCachingMiddleware));
 
-        // Create skill request middlewares.
+        // Create skill request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -136,7 +164,7 @@ public static class DependencyInjection
                     CreateSkillResponse>),
                 typeof(CreateSkillCachingMiddleware));
 
-        // Remove skill temporarily by skill id request middlewares.
+        // Remove skill temporarily by skill id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -149,7 +177,7 @@ public static class DependencyInjection
                     RemoveSkillTemporarilyBySkillIdResponse>),
                 typeof(RemoveSkillTemporarilyBySkillIdCachingMiddleware));
 
-        // Update skill by skill id request middlewares.
+        // Update skill by skill id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -162,7 +190,7 @@ public static class DependencyInjection
                     UpdateSkillBySkillIdResponse>),
                 typeof(UpdateSkillBySkillIdCachingMiddleware));
 
-        // Get all temporarily removed skills request middlewares.
+        // Get all temporarily removed skills request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -175,7 +203,7 @@ public static class DependencyInjection
                     GetAllTemporarilyRemovedSkillsResponse>),
                 typeof(GetAllTemporarilyRemovedSkillsCachingMiddleware));
 
-        // Remove skill permanently by skill id request middlewares.
+        // Remove skill permanently by skill id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -188,7 +216,7 @@ public static class DependencyInjection
                     RemoveSkillPermanentlyBySkillIdResponse>),
                 typeof(RemoveSkillPermanentlyBySkillIdCachingMiddleware));
 
-        // Restore skill by skill id request middlewares.
+        // Restore skill by skill id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -200,10 +228,17 @@ public static class DependencyInjection
                     RestoreSkillBySkillIdRequest,
                     RestoreSkillBySkillIdResponse>),
                 typeof(RestoreSkillBySkillIdCachingMiddleware));
-        #endregion
+    }
 
-        #region DepartmentUseCaseMiddlewares
-        // Get all departments request middlewares.
+    /// <summary>
+    ///     Configuring department use cases middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void DepartmentUseCaseMiddlewaresConfig(this IServiceCollection services)
+    {
+        // Get all departments request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -216,7 +251,7 @@ public static class DependencyInjection
                     GetAllDepartmentsResponse>),
                 typeof(GetAllDepartmentsCachingMiddleware));
 
-        // Get all departments by department name request middlewares.
+        // Get all departments by department name request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -229,7 +264,7 @@ public static class DependencyInjection
                     GetAllDepartmentsByDepartmentNameResponse>),
                 typeof(GetAllDepartmentsByDepartmentNameCachingMiddleware));
 
-        // Create department request middlewares.
+        // Create department request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -242,7 +277,7 @@ public static class DependencyInjection
                     CreateDepartmentResponse>),
                 typeof(CreateDepartmentCachingMiddleware));
 
-        // Remove department temporarily by department id request middlewares.
+        // Remove department temporarily by department id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -255,7 +290,7 @@ public static class DependencyInjection
                     RemoveDepartmentTemporarilyByDepartmentIdResponse>),
                 typeof(RemoveDepartmentTemporarilyByDepartmentIdCachingMiddleware));
 
-        // Update department by department id request middlewares.
+        // Update department by department id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -268,7 +303,7 @@ public static class DependencyInjection
                     UpdateDepartmentByDepartmentIdResponse>),
                 typeof(UpdateDepartmentByDepartmentIdCachingMiddleware));
 
-        // Get all temporarily removed departments request middlewares.
+        // Get all temporarily removed departments request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -281,7 +316,7 @@ public static class DependencyInjection
                     GetAllTemporarilyRemovedDepartmentsResponse>),
                 typeof(GetAllTemporarilyRemovedDepartmentsCachingMiddleware));
 
-        // Remove department permanently by department id request middlewares.
+        // Remove department permanently by department id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -294,7 +329,7 @@ public static class DependencyInjection
                     RemoveDepartmentPermanentlyByDepartmentIdResponse>),
                 typeof(RemoveDepartmentPermanentlyByDepartmentIdCachingMiddleware));
 
-        // Restore department by department id request middlewares.
+        // Restore department by department id request middleware.
         services
             .AddScoped(
                 typeof(IPipelineBehavior<
@@ -306,6 +341,118 @@ public static class DependencyInjection
                     RestoreDepartmentByDepartmentIdRequest,
                     RestoreDepartmentByDepartmentIdResponse>),
                 typeof(RestoreDepartmentByDepartmentIdCachingMiddleware));
-        #endregion
+    }
+
+    /// <summary>
+    ///     Configuring position use cases middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void PositionUseCaseMiddlewaresConfig(this IServiceCollection services)
+    {
+        // Get all positions request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPositionsRequest,
+                    GetAllPositionsResponse>),
+                typeof(GetAllPositionsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPositionsRequest,
+                    GetAllPositionsResponse>),
+                typeof(GetAllPositionsCachingMiddleware));
+
+        // Get all positions by position name request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPositionsByPositionNameRequest,
+                    GetAllPositionsByPositionNameResponse>),
+                typeof(GetAllPositionsByPositionNameValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPositionsByPositionNameRequest,
+                    GetAllPositionsByPositionNameResponse>),
+                typeof(GetAllPositionsByPositionNameCachingMiddleware));
+
+        // Create position request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreatePositionRequest,
+                    CreatePositionResponse>),
+                typeof(CreatePositionValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreatePositionRequest,
+                    CreatePositionResponse>),
+                typeof(CreatePositionCachingMiddleware));
+
+        // Remove position temporarily by position id request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePositionTemporarilyByPositionIdRequest,
+                    RemovePositionTemporarilyByPositionIdResponse>),
+                typeof(RemovePositionTemporarilyByPositionIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePositionTemporarilyByPositionIdRequest,
+                    RemovePositionTemporarilyByPositionIdResponse>),
+                typeof(RemovePositionTemporarilyByPositionIdCachingMiddleware));
+
+        // Update position by position id request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdatePositionByPositionIdRequest,
+                    UpdatePositionByPositionIdResponse>),
+                typeof(UpdatePositionByPositionIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdatePositionByPositionIdRequest,
+                    UpdatePositionByPositionIdResponse>),
+                typeof(UpdatePositionByPositionIdCachingMiddleware));
+
+        // Get all temporarily removed positions request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedPositionsRequest,
+                    GetAllTemporarilyRemovedPositionsResponse>),
+                typeof(GetAllTemporarilyRemovedPositionsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedPositionsRequest,
+                    GetAllTemporarilyRemovedPositionsResponse>),
+                typeof(GetAllTemporarilyRemovedPositionsCachingMiddleware));
+
+        // Remove position permanently by position id request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePositionPermanentlyByPositionIdRequest,
+                    RemovePositionPermanentlyByPositionIdResponse>),
+                typeof(RemovePositionPermanentlyByPositionIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePositionPermanentlyByPositionIdRequest,
+                    RemovePositionPermanentlyByPositionIdResponse>),
+                typeof(RemovePositionPermanentlyByPositionIdCachingMiddleware));
+
+        // Restore position by position id request middleware.
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestorePositionByPositionIdRequest,
+                    RestorePositionByPositionIdResponse>),
+                typeof(RestorePositionByPositionIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestorePositionByPositionIdRequest,
+                    RestorePositionByPositionIdResponse>),
+                typeof(RestorePositionByPositionIdCachingMiddleware));
     }
 }

@@ -1,3 +1,4 @@
+using Application.Features.Skill.GetAllTemporarilyRemovedSkills;
 using Application.Interfaces.Caching;
 using MediatR;
 using System.Threading;
@@ -52,7 +53,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdCachingMiddleware :
         if (response.StatusCode == RemoveSkillPermanentlyBySkillIdStatusCode.OPERATION_SUCCESS)
         {
             await _cacheHandler.RemoveAsync(
-                key: nameof(GetAllTemporarilyRemovedSkills),
+                key: nameof(GetAllTemporarilyRemovedSkillsRequest),
                 cancellationToken: cancellationToken);
         }
 

@@ -1,6 +1,6 @@
-using System;
 using Application.Features.Department.RestoreDepartmentByDepartmentId.Middlewares;
 using MediatR;
+using System;
 
 namespace Application.Features.Department.RestoreDepartmentByDepartmentId;
 

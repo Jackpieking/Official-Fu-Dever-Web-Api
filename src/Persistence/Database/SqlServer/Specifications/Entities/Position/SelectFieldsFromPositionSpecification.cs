@@ -30,4 +30,11 @@ internal sealed class SelectFieldsFromPositionSpecification :
 
         return this;
     }
+
+    public ISelectFieldsFromPositionSpecification Ver3()
+    {
+        SelectExpression = position => Domain.Entities.Position.InitVer2(position.Name);
+
+        return this;
+    }
 }

@@ -10,4 +10,6 @@ public interface ISelectFieldsFromPositionSpecification : IBaseSpecification<Dom
     ISelectFieldsFromPositionSpecification Ver1();
 
     ISelectFieldsFromPositionSpecification Ver2();
+
+    ISelectFieldsFromPositionSpecification Ver3();
 }

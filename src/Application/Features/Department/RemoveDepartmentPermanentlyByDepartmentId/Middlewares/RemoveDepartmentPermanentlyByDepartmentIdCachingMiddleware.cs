@@ -1,7 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Features.Department.GetAllTemporarilyRemovedDepartments;
 using Application.Interfaces.Caching;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.RemoveDepartmentPermanentlyByDepartmentId.Middlewares;
 
@@ -52,7 +53,7 @@ internal sealed class RemoveDepartmentPermanentlyByDepartmentIdCachingMiddleware
         if (response.StatusCode == RemoveDepartmentPermanentlyByDepartmentIdStatusCode.OPERATION_SUCCESS)
         {
             await _cacheHandler.RemoveAsync(
-                key: nameof(GetAllTemporarilyRemovedDepartments),
+                key: nameof(GetAllTemporarilyRemovedDepartmentsRequest),
                 cancellationToken: cancellationToken);
         }
 

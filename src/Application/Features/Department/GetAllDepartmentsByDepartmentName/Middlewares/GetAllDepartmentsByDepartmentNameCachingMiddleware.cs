@@ -1,9 +1,9 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Application.Interfaces.Caching;
 using Application.Models;
 using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.GetAllDepartmentsByDepartmentName.Middlewares;
 
@@ -55,7 +55,7 @@ internal sealed class GetAllDepartmentsByDepartmentNameCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = $"{nameof(GetAllDepartmentsByDepartmentName)}_param_{request.DepartmentName.ToLower()}";
+        var cachedKey = $"{nameof(GetAllDepartmentsByDepartmentNameRequest)}_param_{request.DepartmentName.ToLower()}";
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllDepartmentsByDepartmentNameResponse>(

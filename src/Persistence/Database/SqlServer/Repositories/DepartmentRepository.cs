@@ -1,13 +1,13 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Commons;
 using Persistence.Database.SqlServer.Data;
 using Persistence.Database.SqlServer.Repositories.Base;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Persistence.Database.SqlServer.Repositories;
 

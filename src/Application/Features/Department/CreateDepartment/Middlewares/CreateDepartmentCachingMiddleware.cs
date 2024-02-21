@@ -1,7 +1,9 @@
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Features.Department.GetAllDepartments;
+using Application.Features.Department.GetAllDepartmentsByDepartmentName;
 using Application.Interfaces.Caching;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.CreateDepartment.Middlewares;
 
@@ -52,10 +54,10 @@ internal sealed class CreateDepartmentCachingMiddleware :
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllDepartmentsByDepartmentName)}_param_{request.NewDepartmentName.ToLower()}",
+                    key: $"{nameof(GetAllDepartmentsByDepartmentNameRequest)}_param_{request.NewDepartmentName.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllDepartments),
+                    key: nameof(GetAllDepartmentsRequest),
                     cancellationToken: cancellationToken));
         }
 

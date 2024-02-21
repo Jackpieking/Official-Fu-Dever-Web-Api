@@ -1,3 +1,5 @@
+using Application.Features.Skill.GetAllSkills;
+using Application.Features.Skill.GetAllSkillsBySkillName;
 using Application.Interfaces.Caching;
 using MediatR;
 using System.Threading;
@@ -9,7 +11,7 @@ namespace Application.Features.Skill.CreateSkill.Middlewares;
 ///     Create skill request caching middleware.
 /// </summary>
 /// <remarks>
-///     Order: 2st
+///     Order: 2nd
 /// </remarks>
 internal sealed class CreateSkillCachingMiddleware :
     IPipelineBehavior<
@@ -52,10 +54,10 @@ internal sealed class CreateSkillCachingMiddleware :
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsBySkillName)}_param_{request.NewSkillName.ToLower()}",
+                    key: $"{nameof(GetAllSkillsBySkillNameRequest)}_param_{request.NewSkillName.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllSkills),
+                    key: nameof(GetAllSkillsRequest),
                     cancellationToken: cancellationToken));
         }
 

@@ -1,3 +1,5 @@
+using Application.Features.Skill.GetAllSkills;
+using Application.Features.Skill.GetAllSkillsBySkillName;
 using Application.Interfaces.Caching;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
@@ -69,7 +71,7 @@ internal sealed class UpdateSkillBySkillIdCachingMiddleware :
         if (!Equals(objA: foundSkill, objB: default))
         {
             await _cacheHandler.RemoveAsync(
-                key: $"{nameof(GetAllSkillsBySkillName)}_param_{foundSkill.Name.ToLower()}",
+                key: $"{nameof(GetAllSkillsBySkillNameRequest)}_param_{foundSkill.Name.ToLower()}",
                 cancellationToken: cancellationToken);
         }
 
@@ -79,10 +81,10 @@ internal sealed class UpdateSkillBySkillIdCachingMiddleware :
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllSkillsBySkillName)}_param_{request.NewSkillName.ToLower()}",
+                    key: $"{nameof(GetAllSkillsBySkillNameRequest)}_param_{request.NewSkillName.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllSkills),
+                    key: nameof(GetAllSkillsRequest),
                     cancellationToken: cancellationToken));
         }
 

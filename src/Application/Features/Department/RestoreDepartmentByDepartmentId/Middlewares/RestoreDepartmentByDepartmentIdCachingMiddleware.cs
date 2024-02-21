@@ -1,9 +1,12 @@
-using System.Threading;
-using System.Threading.Tasks;
+using Application.Features.Department.GetAllDepartments;
+using Application.Features.Department.GetAllDepartmentsByDepartmentName;
+using Application.Features.Department.GetAllTemporarilyRemovedDepartments;
 using Application.Interfaces.Caching;
 using Domain.Specifications.Others.Interfaces;
 using Domain.UnitOfWorks;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Department.RestoreDepartmentByDepartmentId.Middlewares;
 
@@ -70,13 +73,13 @@ internal sealed class RestoreDepartmentByDepartmentIdCachingMiddleware :
 
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(
-                    key: $"{nameof(GetAllDepartmentsByDepartmentName)}_param_{foundDepartment.Name.ToLower()}",
+                    key: $"{nameof(GetAllDepartmentsByDepartmentNameRequest)}_param_{foundDepartment.Name.ToLower()}",
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllDepartments),
+                    key: nameof(GetAllDepartmentsRequest),
                     cancellationToken: cancellationToken),
                 _cacheHandler.RemoveAsync(
-                    key: nameof(GetAllTemporarilyRemovedDepartments),
+                    key: nameof(GetAllTemporarilyRemovedDepartmentsRequest),
                     cancellationToken: cancellationToken));
         }
 
