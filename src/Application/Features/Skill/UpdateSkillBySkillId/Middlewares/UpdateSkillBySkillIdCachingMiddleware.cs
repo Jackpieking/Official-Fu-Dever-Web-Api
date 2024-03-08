@@ -58,7 +58,7 @@ internal sealed class UpdateSkillBySkillIdCachingMiddleware :
         RequestHandlerDelegate<UpdateSkillBySkillIdResponse> next,
         CancellationToken cancellationToken)
     {
-        // finding current skill by skill id.
+        // Finding current skill by skill id.
         var foundSkill = await _unitOfWork.SkillRepository.FindBySpecificationsAsync(
             specifications:
             [
@@ -77,7 +77,7 @@ internal sealed class UpdateSkillBySkillIdCachingMiddleware :
 
         var response = await next();
 
-        if (response.StatusCode == UpdateSkillBySkillIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == UpdateSkillBySkillIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

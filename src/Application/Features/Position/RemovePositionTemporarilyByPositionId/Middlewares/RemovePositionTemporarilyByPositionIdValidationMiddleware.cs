@@ -58,7 +58,7 @@ internal sealed class RemovePositionTemporarilyByPositionIdValidationMiddleware 
         {
             return new()
             {
-                StatusCode = RemovePositionTemporarilyByPositionIdStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = RemovePositionTemporarilyByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

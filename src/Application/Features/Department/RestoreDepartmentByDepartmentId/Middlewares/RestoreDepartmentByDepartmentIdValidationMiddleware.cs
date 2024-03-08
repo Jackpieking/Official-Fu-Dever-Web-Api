@@ -57,7 +57,7 @@ internal sealed class RestoreDepartmentByDepartmentIdValidationMiddleware :
         {
             return new()
             {
-                StatusCode = RestoreDepartmentByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = RestoreDepartmentByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

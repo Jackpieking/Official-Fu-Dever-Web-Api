@@ -92,11 +92,11 @@ public sealed class Skill :
     /// <param name="skillId">
     ///     Id of skill.
     /// </param>
-    /// <param name="skillRemovedAt">
-    ///     Skill is removed by whom.
-    /// </param>
     /// <param name="skillRemovedBy">
     ///     When is skill removed.
+    /// </param>
+    /// <param name="skillRemovedAt">
+    ///     Skill is removed by whom.
     /// </param>
     /// <returns>
     ///     A new skill object.
@@ -194,7 +194,7 @@ public sealed class Skill :
     /// <returns>
     ///     A new skill object.
     /// </returns>
-    public static Skill Init(Guid skillId)
+    public static Skill InitVer5(Guid skillId)
     {
         // Validate skill Id.
         if (skillId == Guid.Empty)

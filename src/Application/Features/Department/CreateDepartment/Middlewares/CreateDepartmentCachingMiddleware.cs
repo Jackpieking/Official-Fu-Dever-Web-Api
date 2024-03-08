@@ -50,7 +50,7 @@ internal sealed class CreateDepartmentCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == CreateDepartmentStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == CreateDepartmentResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

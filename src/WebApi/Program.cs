@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Persistence.Database.SqlServer.Data;
+using Persistence.RelationalDatabase.SqlServer.Data;
 using Persistence.SqlServer2016;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,7 +26,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 // Add services to the container.
-services.AddApplication(configuration: configuration);
+services.AddApplication();
 services.AddPersistence(configuration: configuration);
 services.AddWebApi(configuration: configuration);
 services.AddImage();

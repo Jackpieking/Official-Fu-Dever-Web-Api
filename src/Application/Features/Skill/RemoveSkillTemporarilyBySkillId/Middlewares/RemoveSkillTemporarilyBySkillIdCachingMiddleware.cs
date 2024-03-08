@@ -60,7 +60,7 @@ internal sealed class RemoveSkillTemporarilyBySkillIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RemoveSkillTemporarilyBySkillIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemoveSkillTemporarilyBySkillIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundSkill = await _unitOfWork.SkillRepository.FindBySpecificationsAsync(
                 specifications:

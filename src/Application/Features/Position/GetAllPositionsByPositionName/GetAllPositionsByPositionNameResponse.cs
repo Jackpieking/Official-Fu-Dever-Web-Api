@@ -8,7 +8,7 @@ namespace Application.Features.Position.GetAllPositionsByPositionName;
 /// </summary>
 public sealed class GetAllPositionsByPositionNameResponse
 {
-    public GetAllPositionsByPositionNameStatusCode StatusCode { get; init; }
+    public GetAllPositionsByPositionNameResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Position> FoundPositions { get; init; }
 

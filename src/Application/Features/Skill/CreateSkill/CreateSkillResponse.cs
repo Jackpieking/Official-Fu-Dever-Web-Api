@@ -5,5 +5,5 @@ namespace Application.Features.Skill.CreateSkill;
 /// </summary>
 public sealed class CreateSkillResponse
 {
-    public CreateSkillStatusCode StatusCode { get; init; }
+    public CreateSkillResponseStatusCode StatusCode { get; init; }
 }

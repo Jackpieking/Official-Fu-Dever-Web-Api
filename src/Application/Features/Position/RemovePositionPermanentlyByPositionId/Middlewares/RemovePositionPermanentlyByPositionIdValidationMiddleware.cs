@@ -59,7 +59,7 @@ internal sealed class RemovePositionPermanentlyByPositionIdValidationMiddleware 
         {
             return new()
             {
-                StatusCode = RemovePositionPermanentlyByPositionIdStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = RemovePositionPermanentlyByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL,
             };
         }
 

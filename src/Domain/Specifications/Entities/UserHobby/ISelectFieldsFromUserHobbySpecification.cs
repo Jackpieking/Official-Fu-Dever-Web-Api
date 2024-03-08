@@ -8,4 +8,6 @@ namespace Domain.Specifications.Entities.UserHobby;
 public interface ISelectFieldsFromUserHobbySpecification : IBaseSpecification<Domain.Entities.UserHobby>
 {
     ISelectFieldsFromUserHobbySpecification Ver1();
+
+    ISelectFieldsFromUserHobbySpecification Ver2();
 }

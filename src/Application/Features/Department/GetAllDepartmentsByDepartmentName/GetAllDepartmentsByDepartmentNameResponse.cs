@@ -8,7 +8,7 @@ namespace Application.Features.Department.GetAllDepartmentsByDepartmentName;
 /// </summary>
 public sealed class GetAllDepartmentsByDepartmentNameResponse
 {
-    public GetAllDepartmentsByDepartmentNameStatusCode StatusCode { get; init; }
+    public GetAllDepartmentsByDepartmentNameResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Department> FoundDepartments { get; init; }
 

@@ -7,5 +7,4 @@ namespace Domain.Specifications.Entities.Position;
 /// </summary>
 public interface IPositionByIdSpecification : IBaseSpecification<Domain.Entities.Position>
 {
-
 }

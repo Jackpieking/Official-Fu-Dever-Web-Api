@@ -62,7 +62,7 @@ internal sealed class RestorePositionByPositionIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RestorePositionByPositionIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RestorePositionByPositionIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundPosition = await _unitOfWork.PositionRepository.FindBySpecificationsAsync(
                 specifications:

@@ -37,13 +37,16 @@ public interface IDepartmentRepository : IBaseRepository<Department>
     ///     Number of rows that are effected by this query.
     /// </returns>
     /// <remarks>
-    ///     This method will alter directly to database.
-    ///     This mean calling "SaveChanges" or "SaveChangesAsync"
-    ///     from database context having no effect. So, make sure
-    ///     to wrap this method in a database transaction.
-    ///
-    ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     <para>
+    ///         This method will alter directly to database.
+    ///         This mean calling "SaveChanges" or "SaveChangesAsync"
+    ///         from database context having no effect. So, make sure
+    ///         to wrap this method in a database transaction.
+    ///     </para>
+    ///     <para>
+    ///         All transaction methods are situated in
+    ///         <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     </para>
     /// </remarks>
     Task<int> BulkUpdateByDepartmentIdVer1Async(
         Guid departmentId,
@@ -69,13 +72,16 @@ public interface IDepartmentRepository : IBaseRepository<Department>
     ///     Number of rows that are effected by this query.
     /// </returns>
     /// <remarks>
-    ///     This method will alter directly to database.
-    ///     This mean calling "SaveChanges" or "SaveChangesAsync"
-    ///     from database context having no effect. So, make sure
-    ///     to wrap this method in a database transaction.
-    ///
-    ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     <para>
+    ///         This method will alter directly to database.
+    ///         This mean calling "SaveChanges" or "SaveChangesAsync"
+    ///         from database context having no effect. So, make sure
+    ///         to wrap this method in a database transaction.
+    ///     </para>
+    ///     <para>
+    ///         All transaction methods are situated in
+    ///         <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     </para>
     /// </remarks>
     Task<int> BulkUpdateByDepartmentIdVer2Async(
         Guid departmentId,
@@ -97,13 +103,16 @@ public interface IDepartmentRepository : IBaseRepository<Department>
     ///     Number of rows that are effected by this query.
     /// </returns>
     /// <remarks>
-    ///     This method will alter directly to database.
-    ///     This mean calling "SaveChanges" or "SaveChangesAsync"
-    ///     from database context having no effect. So, make sure
-    ///     to wrap this method in a database transaction.
-    ///
-    ///     All transaction methods are situated in
-    ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     <para>
+    ///         This method will alter directly to database.
+    ///         This mean calling "SaveChanges" or "SaveChangesAsync"
+    ///         from database context having no effect. So, make sure
+    ///         to wrap this method in a database transaction.
+    ///     </para>
+    ///     <para>
+    ///         All transaction methods are situated in
+    ///         <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
+    ///     </para>
     /// </remarks>
     Task<int> BulkRemoveByDepartmentIdAsync(
         Guid departmentId,

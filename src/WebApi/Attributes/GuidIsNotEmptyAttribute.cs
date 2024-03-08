@@ -7,6 +7,9 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input guid
 ///     is not empty.
 /// </summary>
+[AttributeUsage(
+    validOn: AttributeTargets.All,
+    AllowMultiple = false)]
 internal sealed class GuidIsNotEmptyAttribute : ValidationAttribute
 {
     /// <summary>

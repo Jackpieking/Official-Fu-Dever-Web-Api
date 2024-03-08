@@ -13,5 +13,4 @@ namespace Domain.Repositories;
 /// </remarks>
 public interface IBlogRepository : IBaseRepository<Blog>
 {
-
 }

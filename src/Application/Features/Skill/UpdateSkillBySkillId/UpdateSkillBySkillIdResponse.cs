@@ -5,5 +5,5 @@ namespace Application.Features.Skill.UpdateSkillBySkillId;
 /// </summary>
 public sealed class UpdateSkillBySkillIdResponse
 {
-    public UpdateSkillBySkillIdStatusCode StatusCode { get; init; }
+    public UpdateSkillBySkillIdResponseStatusCode StatusCode { get; init; }
 }

@@ -19,7 +19,7 @@ public interface IUserPlatformRepository : IBaseRepository<UserPlatform>
     /// <summary>
     ///     Remove user platform asynchronously and directly to database.
     /// </summary>
-    /// <param name="userId">
+    /// <param name="platformId">
     ///     User platform with platform id to be removed.
     /// </param>
     /// <param name="cancellationToken">

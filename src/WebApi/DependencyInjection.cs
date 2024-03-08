@@ -213,16 +213,11 @@ internal static class DependencyInjection
 
         services
             .AddControllers(configure: config =>
-            {
-                config.SuppressAsyncSuffixInActionNames = apiControllerOption.SuppressAsyncSuffixInActionNames;
-            })
+                config.SuppressAsyncSuffixInActionNames =
+                    apiControllerOption.SuppressAsyncSuffixInActionNames)
             .ConfigureApiBehaviorOptions(setupAction: config =>
-            {
-                config.InvalidModelStateResponseFactory = actionContext =>
-                {
-                    return new CustomGlobalBadRequestResult();
-                };
-            });
+                config.InvalidModelStateResponseFactory = _ =>
+                    new CustomGlobalBadRequestResult());
     }
 
     /// <summary>
@@ -337,7 +332,7 @@ internal static class DependencyInjection
 
                 return RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: context.Connection.RemoteIpAddress.ToString(),
-                    factory: option => new()
+                    factory: _ => new()
                     {
                         PermitLimit = fixedWindowRateLimiterOption.RemoteIpAddress.PermitLimit,
                         QueueProcessingOrder = (QueueProcessingOrder)Enum.ToObject(
@@ -399,7 +394,7 @@ internal static class DependencyInjection
         IConfigurationManager configuration)
     {
         services
-            .AddScoped(implementationFactory: provider =>
+            .AddScoped(implementationFactory: _ =>
                 GetTokenValidationParameters(configuration: configuration))
             .AddScoped<SecurityTokenHandler, JwtSecurityTokenHandler>();
     }

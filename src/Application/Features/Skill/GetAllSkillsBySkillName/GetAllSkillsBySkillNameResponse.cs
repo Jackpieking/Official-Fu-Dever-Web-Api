@@ -8,7 +8,7 @@ namespace Application.Features.Skill.GetAllSkillsBySkillName;
 /// </summary>
 public sealed class GetAllSkillsBySkillNameResponse
 {
-    public GetAllSkillsBySkillNameStatusCode StatusCode { get; init; }
+    public GetAllSkillsBySkillNameResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Skill> FoundSkills { get; init; }
 

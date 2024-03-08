@@ -5,5 +5,5 @@ namespace Application.Features.Skill.RemoveSkillPermanentlyBySkillId;
 /// </summary>
 public sealed class RemoveSkillPermanentlyBySkillIdResponse
 {
-    public RemoveSkillPermanentlyBySkillIdStatusCode StatusCode { get; init; }
+    public RemoveSkillPermanentlyBySkillIdResponseStatusCode StatusCode { get; init; }
 }

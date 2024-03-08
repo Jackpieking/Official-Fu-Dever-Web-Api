@@ -61,7 +61,7 @@ internal sealed class RemoveDepartmentTemporarilyByDepartmentIdCachingMiddleware
     {
         var response = await next();
 
-        if (response.StatusCode == RemoveDepartmentTemporarilyByDepartmentIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundDepartment = await _unitOfWork.DepartmentRepository.FindBySpecificationsAsync(
                 specifications:

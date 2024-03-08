@@ -13,7 +13,7 @@ public sealed class CreatePositionDto : IDtoNormalization
         ErrorMessage = "Too much chars on position name !!")]
     [MinLength(
         length: Domain.Entities.Position.Metadata.Name.MinLength,
-        ErrorMessage = $"Less than min length of position name !!")]
+        ErrorMessage = "Less than min length of position name !!")]
     public string PositionName { get; set; }
 
     public void NormalizeAllProperties()

@@ -57,7 +57,7 @@ internal sealed class RemoveSkillTemporarilyBySkillIdValidationMiddleware :
         {
             return new()
             {
-                StatusCode = RemoveSkillTemporarilyBySkillIdStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = RemoveSkillTemporarilyBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

@@ -5,5 +5,5 @@ namespace Application.Features.Skill.RestoreSkillBySkillId;
 /// </summary>
 public sealed class RestoreSkillBySkillIdResponse
 {
-    public RestoreSkillBySkillIdStatusCode StatusCode { get; init; }
+    public RestoreSkillBySkillIdResponseStatusCode StatusCode { get; init; }
 }

@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.Database.SqlServer.Data;
-using Persistence.Database.SqlServer.Specifications.Others;
-using Persistence.UnitOfWorks;
+using Persistence.RelationalDatabase.SqlServer.Data;
+using Persistence.RelationalDatabase.SqlServer.Specifications.Others;
+using Persistence.RelationalDatabase.UnitOfWorks;
 using System;
 using System.Reflection;
 

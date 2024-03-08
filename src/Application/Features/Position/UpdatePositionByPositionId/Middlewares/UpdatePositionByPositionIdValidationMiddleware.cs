@@ -58,7 +58,7 @@ internal sealed class UpdatePositionByPositionIdValidationMiddleware :
         {
             return new()
             {
-                StatusCode = UpdatePositionByPositionIdStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = UpdatePositionByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL,
             };
         }
 

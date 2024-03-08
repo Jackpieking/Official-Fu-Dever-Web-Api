@@ -13,7 +13,7 @@ public sealed class UpdateDepartmentDto : IDtoNormalization
         ErrorMessage = "Too much chars on department name !!")]
     [MinLength(
         length: Domain.Entities.Department.Metadata.Name.MinLength,
-        ErrorMessage = $"Less than min length of department name !!")]
+        ErrorMessage = "Less than min length of department name !!")]
     public string NewDepartmentName { get; set; }
 
     public void NormalizeAllProperties()

@@ -49,7 +49,7 @@ internal sealed class CreatePositionCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == CreatePositionStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == CreatePositionResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

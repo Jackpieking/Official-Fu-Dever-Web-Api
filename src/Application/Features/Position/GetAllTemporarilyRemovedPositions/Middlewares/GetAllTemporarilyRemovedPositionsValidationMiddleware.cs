@@ -58,7 +58,7 @@ internal sealed class GetAllTemporarilyRemovedPositionsValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllTemporarilyRemovedPositionsStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllTemporarilyRemovedPositionsResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundTemporarilyRemovedPositions = default
             };
         }

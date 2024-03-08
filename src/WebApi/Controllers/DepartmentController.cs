@@ -75,7 +75,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             //500
-            case GetAllDepartmentsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -156,7 +156,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllDepartmentsByDepartmentNameStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllDepartmentsByDepartmentNameResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -227,7 +227,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case CreateDepartmentStatusCode.INPUT_VALIDATION_FAIL:
+            case CreateDepartmentResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -242,7 +242,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 400
-            case CreateDepartmentStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
+            case CreateDepartmentResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -255,7 +255,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 409
-            case CreateDepartmentStatusCode.DEPARTMENT_ALREADY_EXISTS:
+            case CreateDepartmentResponseStatusCode.DEPARTMENT_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -268,7 +268,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 500
-            case CreateDepartmentStatusCode.DATABASE_OPERATION_FAIL:
+            case CreateDepartmentResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -336,7 +336,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemoveDepartmentTemporarilyByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -351,7 +351,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 404
-            case RemoveDepartmentTemporarilyByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_FOUND:
+            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -364,7 +364,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 400
-            case RemoveDepartmentTemporarilyByDepartmentIdStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
+            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -377,7 +377,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 500
-            case RemoveDepartmentTemporarilyByDepartmentIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -452,7 +452,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case UpdateDepartmentByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL:
+            case UpdateDepartmentByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -467,7 +467,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 404
-            case UpdateDepartmentByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_FOUND:
+            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -480,7 +480,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 400
-            case UpdateDepartmentByDepartmentIdStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
+            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -493,7 +493,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 409
-            case UpdateDepartmentByDepartmentIdStatusCode.DEPARTMENT_ALREADY_EXISTS:
+            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -506,7 +506,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 500
-            case UpdateDepartmentByDepartmentIdStatusCode.DATABASE_OPERATION_FAIL:
+            case UpdateDepartmentByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -558,7 +558,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllTemporarilyRemovedDepartmentsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllTemporarilyRemovedDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -634,7 +634,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemoveDepartmentPermanentlyByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -649,7 +649,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 404
-            case RemoveDepartmentPermanentlyByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_FOUND:
+            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -662,7 +662,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 400
-            case RemoveDepartmentPermanentlyByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
+            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -675,7 +675,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 500
-            case RemoveDepartmentPermanentlyByDepartmentIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -738,7 +738,7 @@ public sealed class DepartmentController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RestoreDepartmentByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RestoreDepartmentByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -753,7 +753,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 404
-            case RestoreDepartmentByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_FOUND:
+            case RestoreDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -766,7 +766,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 400
-            case RestoreDepartmentByDepartmentIdStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
+            case RestoreDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -779,7 +779,7 @@ public sealed class DepartmentController : ControllerBase
                 }
 
             // 500
-            case RestoreDepartmentByDepartmentIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RestoreDepartmentByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,

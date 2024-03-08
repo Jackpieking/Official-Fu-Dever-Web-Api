@@ -55,7 +55,7 @@ internal sealed class RedisCacheHandler : ICacheHandler
             value: JsonConvert.SerializeObject(
                 value: value,
                 formatting: Formatting.None,
-                settings: new JsonSerializerSettings()
+                settings: new()
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 }),

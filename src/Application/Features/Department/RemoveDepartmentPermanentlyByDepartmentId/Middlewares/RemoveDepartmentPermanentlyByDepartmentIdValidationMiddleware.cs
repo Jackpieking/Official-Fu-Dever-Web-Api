@@ -57,7 +57,7 @@ internal sealed class RemoveDepartmentPermanentlyByDepartmentIdValidationMiddlew
         {
             return new()
             {
-                StatusCode = RemoveDepartmentPermanentlyByDepartmentIdStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL,
             };
         }
 

@@ -56,7 +56,7 @@ internal sealed class CreateSkillValidationMiddleware :
         {
             return new()
             {
-                StatusCode = CreateSkillStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = CreateSkillResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

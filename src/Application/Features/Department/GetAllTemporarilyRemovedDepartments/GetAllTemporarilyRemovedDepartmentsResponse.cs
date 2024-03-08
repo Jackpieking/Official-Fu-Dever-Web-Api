@@ -8,7 +8,7 @@ namespace Application.Features.Department.GetAllTemporarilyRemovedDepartments;
 /// </summary>
 public sealed class GetAllTemporarilyRemovedDepartmentsResponse
 {
-    public GetAllTemporarilyRemovedDepartmentsStatusCode StatusCode { get; init; }
+    public GetAllTemporarilyRemovedDepartmentsResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Department> FoundTemporarilyRemovedDepartments { get; init; }
 

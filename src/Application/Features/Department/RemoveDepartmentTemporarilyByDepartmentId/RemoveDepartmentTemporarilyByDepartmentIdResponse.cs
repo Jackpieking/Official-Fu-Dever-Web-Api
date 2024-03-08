@@ -5,5 +5,5 @@ namespace Application.Features.Department.RemoveDepartmentTemporarilyByDepartmen
 /// </summary>
 public sealed class RemoveDepartmentTemporarilyByDepartmentIdResponse
 {
-    public RemoveDepartmentTemporarilyByDepartmentIdStatusCode StatusCode { get; init; }
+    public RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode StatusCode { get; init; }
 }

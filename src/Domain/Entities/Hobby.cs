@@ -181,6 +181,11 @@ public sealed class Hobby :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 1;
         }
     }
 }

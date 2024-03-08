@@ -57,7 +57,7 @@ internal sealed class GetAllTemporarilyRemovedDepartmentsValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllTemporarilyRemovedDepartmentsStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllTemporarilyRemovedDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundTemporarilyRemovedDepartments = default
             };
         }

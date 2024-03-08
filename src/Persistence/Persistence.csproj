@@ -15,4 +15,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CacheDatabase\" />
+    <Folder Include="RelationalDatabase\PostgresSql\Data\" />
+    <Folder Include="RelationalDatabase\PostgresSql\Commons\" />
+    <Folder Include="RelationalDatabase\PostgresSql\Specifications\" />
+    <Folder Include="RelationalDatabase\PostgresSql\Repositories\" />
+  </ItemGroup>
+
 </Project>

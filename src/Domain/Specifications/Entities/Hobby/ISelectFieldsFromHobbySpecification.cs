@@ -12,4 +12,6 @@ public interface ISelectFieldsFromHobbySpecification : IBaseSpecification<Domain
     ISelectFieldsFromHobbySpecification Ver2();
 
     ISelectFieldsFromHobbySpecification Ver3();
+
+    ISelectFieldsFromHobbySpecification Ver4();
 }

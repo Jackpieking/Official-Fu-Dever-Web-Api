@@ -5,5 +5,5 @@ namespace Application.Features.Department.CreateDepartment;
 /// </summary>
 public sealed class CreateDepartmentResponse
 {
-    public CreateDepartmentStatusCode StatusCode { get; init; }
+    public CreateDepartmentResponseStatusCode StatusCode { get; init; }
 }

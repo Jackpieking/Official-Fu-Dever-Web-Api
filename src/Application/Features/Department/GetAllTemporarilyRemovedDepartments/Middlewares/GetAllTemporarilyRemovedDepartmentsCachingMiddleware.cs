@@ -55,7 +55,7 @@ public class GetAllTemporarilyRemovedDepartmentsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllTemporarilyRemovedDepartmentsRequest);
+        const string cachedKey = nameof(GetAllTemporarilyRemovedDepartmentsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllTemporarilyRemovedDepartmentsResponse>(

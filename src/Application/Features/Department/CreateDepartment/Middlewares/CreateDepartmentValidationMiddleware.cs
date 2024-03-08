@@ -56,7 +56,7 @@ internal sealed class CreateDepartmentValidationMiddleware :
         {
             return new()
             {
-                StatusCode = CreateDepartmentStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = CreateDepartmentResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

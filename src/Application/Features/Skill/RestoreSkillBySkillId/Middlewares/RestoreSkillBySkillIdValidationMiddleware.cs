@@ -57,7 +57,7 @@ internal sealed class RestoreSkillBySkillIdValidationMiddleware :
         {
             return new()
             {
-                StatusCode = RestoreSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = RestoreSkillBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

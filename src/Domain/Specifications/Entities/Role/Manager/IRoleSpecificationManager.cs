@@ -25,7 +25,7 @@ public interface IRoleSpecificationManager
     /// <summary>
     ///     Role by role id specification.
     /// </summary>
-    /// <param name="positionId">
+    /// <param name="roleId">
     ///     Role id for finding role.
     /// </param>
     /// <returns>

@@ -5,5 +5,5 @@ namespace Application.Features.Department.RestoreDepartmentByDepartmentId;
 /// </summary>
 public sealed class RestoreDepartmentByDepartmentIdResponse
 {
-    public RestoreDepartmentByDepartmentIdStatusCode StatusCode { get; init; }
+    public RestoreDepartmentByDepartmentIdResponseStatusCode StatusCode { get; init; }
 }

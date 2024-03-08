@@ -5,5 +5,5 @@ namespace Application.Features.Position.CreatePosition;
 /// </summary>
 public sealed class CreatePositionResponse
 {
-    public CreatePositionStatusCode StatusCode { get; init; }
+    public CreatePositionResponseStatusCode StatusCode { get; init; }
 }

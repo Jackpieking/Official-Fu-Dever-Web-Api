@@ -32,7 +32,7 @@ public interface IMailHandler
     /// <param name="mainVerifyLink">
     ///     Main mail verification link.
     /// </param>
-    /// <param name="verifyLink2">
+    /// <param name="alternativeVerifyLink">
     ///     Alternative mail verification link.
     /// </param
     /// <param name="cancellationToken">

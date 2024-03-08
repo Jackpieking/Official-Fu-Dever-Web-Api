@@ -56,7 +56,7 @@ internal sealed class CreatePositionValidationMiddleware :
         {
             return new()
             {
-                StatusCode = CreatePositionStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = CreatePositionResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

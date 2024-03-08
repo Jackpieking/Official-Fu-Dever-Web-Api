@@ -54,7 +54,7 @@ internal sealed class GetAllDepartmentsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllDepartmentsRequest);
+        const string cachedKey = nameof(GetAllDepartmentsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllDepartmentsResponse>(

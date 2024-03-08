@@ -56,7 +56,7 @@ internal sealed class GetAllDepartmentsValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllDepartmentsStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundDepartments = default
             };
         }

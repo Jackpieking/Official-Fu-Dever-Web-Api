@@ -79,7 +79,7 @@ internal sealed class UpdatePositionByPositionIdCachingMiddleware :
 
         var response = await next();
 
-        if (response.StatusCode == UpdatePositionByPositionIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == UpdatePositionByPositionIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

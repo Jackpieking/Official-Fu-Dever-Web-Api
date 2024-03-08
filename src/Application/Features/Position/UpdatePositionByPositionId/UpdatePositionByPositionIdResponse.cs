@@ -5,5 +5,5 @@ namespace Application.Features.Position.UpdatePosition;
 /// </summary>
 public sealed class UpdatePositionByPositionIdResponse
 {
-    public UpdatePositionByPositionIdStatusCode StatusCode { get; init; }
+    public UpdatePositionByPositionIdResponseStatusCode StatusCode { get; init; }
 }

@@ -61,7 +61,7 @@ internal sealed class RestoreDepartmentByDepartmentIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RestoreDepartmentByDepartmentIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RestoreDepartmentByDepartmentIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundDepartment = await _unitOfWork.DepartmentRepository.FindBySpecificationsAsync(
                 specifications:

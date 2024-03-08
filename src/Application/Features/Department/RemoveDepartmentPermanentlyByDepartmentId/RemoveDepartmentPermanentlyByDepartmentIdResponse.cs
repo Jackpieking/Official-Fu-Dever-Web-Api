@@ -5,5 +5,5 @@ namespace Application.Features.Department.RemoveDepartmentPermanentlyByDepartmen
 /// </summary>
 public sealed class RemoveDepartmentPermanentlyByDepartmentIdResponse
 {
-    public RemoveDepartmentPermanentlyByDepartmentIdStatusCode StatusCode { get; init; }
+    public RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode StatusCode { get; init; }
 }

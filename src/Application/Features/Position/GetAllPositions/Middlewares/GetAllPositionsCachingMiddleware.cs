@@ -42,7 +42,6 @@ internal sealed class GetAllPositionsCachingMiddleware :
     /// <returns>
     ///     Response of use case.
     /// </returns>
-
     public async Task<GetAllPositionsResponse> Handle(
         GetAllPositionsRequest request,
         RequestHandlerDelegate<GetAllPositionsResponse> next,
@@ -54,7 +53,7 @@ internal sealed class GetAllPositionsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllPositionsRequest);
+        const string cachedKey = nameof(GetAllPositionsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllPositionsResponse>(

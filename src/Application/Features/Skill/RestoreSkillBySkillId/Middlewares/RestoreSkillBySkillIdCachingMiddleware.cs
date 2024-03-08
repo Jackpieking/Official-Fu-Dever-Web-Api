@@ -61,7 +61,7 @@ internal sealed class RestoreSkillBySkillIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RestoreSkillBySkillIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RestoreSkillBySkillIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundSkill = await _unitOfWork.SkillRepository.FindBySpecificationsAsync(
                 specifications:

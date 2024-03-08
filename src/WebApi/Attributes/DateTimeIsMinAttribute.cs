@@ -10,6 +10,9 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input string
 ///     is in date time format.
 /// </summary>
+[AttributeUsage(
+    validOn: AttributeTargets.All,
+    AllowMultiple = false)]
 internal sealed class DateTimeIsMinAttribute : ValidationAttribute
 {
     /// <summary>

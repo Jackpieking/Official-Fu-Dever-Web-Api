@@ -65,14 +65,14 @@ public interface IBaseRepository<TEntity> where TEntity :
     /// <summary>
     ///     Asynchronously check the existence of the entity.
     /// </summary>
+    /// <param name="specifications">
+    ///     List of specifications that are used for
+    ///     constructing a complete query.
+    /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
-    /// </param>
-    /// <param name="specifications">
-    ///     List of specifications that are used for
-    ///     constructing a complete query.
     /// </param>
     /// <returns>
     ///     A task containing a boolean result of operation.
@@ -105,14 +105,14 @@ public interface IBaseRepository<TEntity> where TEntity :
     ///     Asynchronously find the entity which satisfies
     ///     the specifications.
     /// </summary>
+    /// <param name="specifications">
+    ///     List of specifications that are used for
+    ///     constructing a complete query.
+    /// </param>
     /// <param name="cancellationToken">
     ///     A token that is used to notify the system
     ///     to cancel the current operation when user stop
     ///     the request.
-    /// </param>
-    /// <param name="specifications">
-    ///     List of specifications that are used for
-    ///     constructing a complete query.
     /// </param>
     /// <returns>
     ///     A task containing the found entity.

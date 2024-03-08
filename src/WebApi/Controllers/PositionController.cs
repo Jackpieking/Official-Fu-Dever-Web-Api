@@ -75,7 +75,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             //500
-            case GetAllPositionsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllPositionsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -156,7 +156,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllPositionsByPositionNameStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllPositionsByPositionNameResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -227,7 +227,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case CreatePositionStatusCode.INPUT_VALIDATION_FAIL:
+            case CreatePositionResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -242,7 +242,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 400
-            case CreatePositionStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
+            case CreatePositionResponseStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -255,7 +255,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 409
-            case CreatePositionStatusCode.POSITION_ALREADY_EXISTS:
+            case CreatePositionResponseStatusCode.POSITION_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -268,7 +268,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 500
-            case CreatePositionStatusCode.DATABASE_OPERATION_FAIL:
+            case CreatePositionResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -287,7 +287,7 @@ public sealed class PositionController : ControllerBase
                 {
                     return Created(
                         uri: $"{HttpContext.Request.Path}?name={dto.PositionName}",
-                        value: new CommonResponse { });
+                        value: new CommonResponse());
                 }
         }
     }
@@ -336,7 +336,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemovePositionTemporarilyByPositionIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemovePositionTemporarilyByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -351,7 +351,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 404
-            case RemovePositionTemporarilyByPositionIdStatusCode.POSITION_IS_NOT_FOUND:
+            case RemovePositionTemporarilyByPositionIdResponseStatusCode.POSITION_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -364,7 +364,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 400
-            case RemovePositionTemporarilyByPositionIdStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
+            case RemovePositionTemporarilyByPositionIdResponseStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -377,7 +377,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 500
-            case RemovePositionTemporarilyByPositionIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemovePositionTemporarilyByPositionIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -394,7 +394,7 @@ public sealed class PositionController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -452,7 +452,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case UpdatePositionByPositionIdStatusCode.INPUT_VALIDATION_FAIL:
+            case UpdatePositionByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -467,7 +467,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 404
-            case UpdatePositionByPositionIdStatusCode.POSITION_IS_NOT_FOUND:
+            case UpdatePositionByPositionIdResponseStatusCode.POSITION_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -480,7 +480,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 400
-            case UpdatePositionByPositionIdStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
+            case UpdatePositionByPositionIdResponseStatusCode.POSITION_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -493,7 +493,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 409
-            case UpdatePositionByPositionIdStatusCode.POSITION_ALREADY_EXISTS:
+            case UpdatePositionByPositionIdResponseStatusCode.POSITION_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -506,7 +506,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 500
-            case UpdatePositionByPositionIdStatusCode.DATABASE_OPERATION_FAIL:
+            case UpdatePositionByPositionIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -523,7 +523,7 @@ public sealed class PositionController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -558,7 +558,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllTemporarilyRemovedPositionsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllTemporarilyRemovedPositionsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -634,7 +634,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemovePositionPermanentlyByPositionIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemovePositionPermanentlyByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -649,7 +649,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 404
-            case RemovePositionPermanentlyByPositionIdStatusCode.POSITION_IS_NOT_FOUND:
+            case RemovePositionPermanentlyByPositionIdResponseStatusCode.POSITION_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -662,7 +662,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 400
-            case RemovePositionPermanentlyByPositionIdStatusCode.POSITION_IS_NOT_TEMPORARILY_REMOVED:
+            case RemovePositionPermanentlyByPositionIdResponseStatusCode.POSITION_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -675,7 +675,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 500
-            case RemovePositionPermanentlyByPositionIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemovePositionPermanentlyByPositionIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -692,7 +692,7 @@ public sealed class PositionController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -738,7 +738,7 @@ public sealed class PositionController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RestorePositionByPositionIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RestorePositionByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -753,7 +753,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 404
-            case RestorePositionByPositionIdStatusCode.POSITION_IS_NOT_FOUND:
+            case RestorePositionByPositionIdResponseStatusCode.POSITION_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -766,7 +766,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 400
-            case RestorePositionByPositionIdStatusCode.POSITION_IS_NOT_TEMPORARILY_REMOVED:
+            case RestorePositionByPositionIdResponseStatusCode.POSITION_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -779,7 +779,7 @@ public sealed class PositionController : ControllerBase
                 }
 
             // 500
-            case RestorePositionByPositionIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RestorePositionByPositionIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -796,7 +796,7 @@ public sealed class PositionController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }

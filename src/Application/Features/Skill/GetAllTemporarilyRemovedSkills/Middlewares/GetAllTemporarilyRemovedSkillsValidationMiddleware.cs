@@ -57,7 +57,7 @@ internal sealed class GetAllTemporarilyRemovedSkillsValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllTemporarilyRemovedSkillsStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllTemporarilyRemovedSkillsResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundTemporarilyRemovedSkills = default
             };
         }

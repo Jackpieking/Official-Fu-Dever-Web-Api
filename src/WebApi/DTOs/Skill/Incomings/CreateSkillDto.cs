@@ -13,7 +13,7 @@ public sealed class CreateSkillDto : IDtoNormalization
         ErrorMessage = "Too much chars on skill name !!")]
     [MinLength(
         length: Domain.Entities.Skill.Metadata.Name.MinLength,
-        ErrorMessage = $"Less than min length of skill name !!")]
+        ErrorMessage = "Less than min length of skill name !!")]
     public string SkillName { get; set; }
 
     public void NormalizeAllProperties()

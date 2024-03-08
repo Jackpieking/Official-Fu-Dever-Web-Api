@@ -50,7 +50,7 @@ internal sealed class RemoveDepartmentPermanentlyByDepartmentIdCachingMiddleware
     {
         var response = await next();
 
-        if (response.StatusCode == RemoveDepartmentPermanentlyByDepartmentIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await _cacheHandler.RemoveAsync(
                 key: nameof(GetAllTemporarilyRemovedDepartmentsRequest),

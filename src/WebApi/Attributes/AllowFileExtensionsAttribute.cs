@@ -7,6 +7,9 @@ namespace WebApi.Attributes;
 /// <summary>
 ///     Attribute to validate the extension of file.
 /// </summary>
+[AttributeUsage(
+    validOn: AttributeTargets.All,
+    AllowMultiple = false)]
 internal sealed class AllowFileExtensionsAttribute : ValidationAttribute
 {
     /// <summary>

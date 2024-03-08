@@ -58,7 +58,7 @@ internal sealed class UpdateDepartmentByDepartmentIdCachingMiddleware :
         RequestHandlerDelegate<UpdateDepartmentByDepartmentIdResponse> next,
         CancellationToken cancellationToken)
     {
-        // finding current department by department id.
+        // Finding current department by department id.
         var foundDepartment = await _unitOfWork.DepartmentRepository.FindBySpecificationsAsync(
             specifications:
             [
@@ -77,7 +77,7 @@ internal sealed class UpdateDepartmentByDepartmentIdCachingMiddleware :
 
         var response = await next();
 
-        if (response.StatusCode == UpdateDepartmentByDepartmentIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == UpdateDepartmentByDepartmentIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

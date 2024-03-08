@@ -17,4 +17,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Hobby\GetAllTemporarilyRemovedHobbies\" />
+    <Folder Include="Features\Hobby\RestoreHobbyByHobbyId\" />
+    <Folder Include="Features\Hobby\RemoveHobbyTemporarilyByHobbyId\" />
+    <Folder Include="Features\Hobby\RemoveHobbyPermanentlyByHobbyId\" />
+  </ItemGroup>
+
 </Project>

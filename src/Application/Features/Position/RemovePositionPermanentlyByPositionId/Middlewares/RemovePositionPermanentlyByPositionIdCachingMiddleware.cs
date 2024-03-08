@@ -50,7 +50,7 @@ internal sealed class RemovePositionPermanentlyByPositionIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RemovePositionPermanentlyByPositionIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemovePositionPermanentlyByPositionIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await _cacheHandler.RemoveAsync(
                 key: nameof(GetAllTemporarilyRemovedPositionsRequest),

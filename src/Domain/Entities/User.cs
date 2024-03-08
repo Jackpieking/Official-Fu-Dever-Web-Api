@@ -294,32 +294,6 @@ public sealed class User :
         };
     }
 
-    public static User InitVer4(
-        Guid userId,
-        string userFirstName,
-        string userLastName,
-        string userCareer,
-        DateTime userBirthday,
-        string userEmail,
-        string userHomeAddress,
-        string userPhoneNumber,
-        string userSelfDescription,
-        string userJoinDate,
-        string userEducationPlaces,
-        Position userPosition,
-        Major userMajor,
-        Department userDepartment,
-        string userAvatarUrl,
-        IEnumerable<UserPlatform> userPlatforms,
-        string userWorkplace,
-        IEnumerable<Project> userProjects,
-        IEnumerable<UserSkill> userSkills,
-        IEnumerable<UserHobby> userHobbies)
-    {
-        return default;
-    }
-
-
     /// <summary>
     ///     Represent metadata of property.
     /// </summary>

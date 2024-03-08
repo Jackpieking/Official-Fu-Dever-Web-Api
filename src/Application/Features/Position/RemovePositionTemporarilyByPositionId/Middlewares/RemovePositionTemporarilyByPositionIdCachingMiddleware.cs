@@ -61,7 +61,7 @@ internal sealed class RemovePositionTemporarilyByPositionIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RemovePositionTemporarilyByPositionIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemovePositionTemporarilyByPositionIdResponseStatusCode.OPERATION_SUCCESS)
         {
             var foundPosition = await _unitOfWork.PositionRepository.FindBySpecificationsAsync(
                 specifications:

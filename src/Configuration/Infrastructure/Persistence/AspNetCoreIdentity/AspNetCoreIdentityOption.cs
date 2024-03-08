@@ -1,6 +1,5 @@
 namespace Configuration.Infrastructure.Persistence.AspNetCoreIdentity;
 
-
 public sealed class AspNetCoreIdentityOption
 {
     public PasswordOption Password { get; set; } = new();

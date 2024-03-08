@@ -50,7 +50,7 @@ internal sealed class CreateSkillCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == CreateSkillStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == CreateSkillResponseStatusCode.OPERATION_SUCCESS)
         {
             await Task.WhenAll(
                 _cacheHandler.RemoveAsync(

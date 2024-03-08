@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Attributes;
@@ -6,6 +7,9 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input string
 ///     is not null or white space.
 /// </summary>
+[AttributeUsage(
+    validOn: AttributeTargets.All,
+    AllowMultiple = false)]
 internal sealed class StringIsNotNullOrWhiteSpaceAttribute : ValidationAttribute
 {
     /// <summary>

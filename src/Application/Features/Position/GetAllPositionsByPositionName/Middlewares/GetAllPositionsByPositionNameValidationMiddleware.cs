@@ -57,7 +57,7 @@ internal sealed class GetAllPositionsByPositionNameValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllPositionsByPositionNameStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllPositionsByPositionNameResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundPositions = default
             };
         }

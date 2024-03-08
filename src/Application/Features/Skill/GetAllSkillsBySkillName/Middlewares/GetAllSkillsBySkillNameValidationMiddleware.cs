@@ -57,7 +57,7 @@ internal sealed class GetAllSkillsBySkillNameValidationMiddleware :
         {
             return new()
             {
-                StatusCode = GetAllSkillsBySkillNameStatusCode.INPUT_VALIDATION_FAIL,
+                StatusCode = GetAllSkillsBySkillNameResponseStatusCode.INPUT_VALIDATION_FAIL,
                 FoundSkills = default
             };
         }

@@ -8,7 +8,7 @@ namespace Application.Features.Skill.GetAllTemporarilyRemovedSkills;
 /// </summary>
 public sealed class GetAllTemporarilyRemovedSkillsResponse
 {
-    public GetAllTemporarilyRemovedSkillsStatusCode StatusCode { get; init; }
+    public GetAllTemporarilyRemovedSkillsResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Skill> FoundTemporarilyRemovedSkills { get; init; }
 

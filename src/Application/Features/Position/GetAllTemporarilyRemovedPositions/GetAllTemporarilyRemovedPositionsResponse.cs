@@ -8,7 +8,7 @@ namespace Application.Features.Position.GetAllTemporarilyRemovedPositions;
 /// </summary>
 public sealed class GetAllTemporarilyRemovedPositionsResponse
 {
-    public GetAllTemporarilyRemovedPositionsStatusCode StatusCode { get; init; }
+    public GetAllTemporarilyRemovedPositionsResponseStatusCode StatusCode { get; init; }
 
     public IEnumerable<Position> FoundTemporarilyRemovedPositions { get; init; }
 

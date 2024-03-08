@@ -54,7 +54,7 @@ internal sealed class GetAllSkillCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllSkillsRequest);
+        const string cachedKey = nameof(GetAllSkillsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllSkillsResponse>(

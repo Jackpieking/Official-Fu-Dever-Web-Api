@@ -58,7 +58,7 @@ internal sealed class RestorePositionByPositionIdValidationMiddleware :
         {
             return new()
             {
-                StatusCode = RestorePositionByPositionIdStatusCode.INPUT_VALIDATION_FAIL
+                StatusCode = RestorePositionByPositionIdResponseStatusCode.INPUT_VALIDATION_FAIL
             };
         }
 

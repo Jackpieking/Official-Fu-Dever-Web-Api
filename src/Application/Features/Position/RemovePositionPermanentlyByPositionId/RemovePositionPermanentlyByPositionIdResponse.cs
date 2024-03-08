@@ -5,5 +5,5 @@ namespace Application.Features.Position.RemovePositionPermanentlyByPositionId;
 /// </summary>
 public sealed class RemovePositionPermanentlyByPositionIdResponse
 {
-    public RemovePositionPermanentlyByPositionIdStatusCode StatusCode { get; init; }
+    public RemovePositionPermanentlyByPositionIdResponseStatusCode StatusCode { get; init; }
 }

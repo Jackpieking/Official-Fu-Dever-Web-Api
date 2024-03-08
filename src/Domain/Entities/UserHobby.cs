@@ -45,11 +45,11 @@ public sealed class UserHobby : IBaseEntity
     /// <summary>
     ///     Return an instance.
     /// </summary>
-    /// <param name="hobby">
-    ///     Hobby of user hobby.
-    /// </param>
     /// <param name="hobbyId">
     ///     Hobby id of user hobby.
+    /// </param>
+    /// <param name="hobby">
+    ///     Hobby of user hobby.
     /// </param>
     /// <returns>
     ///     A new user hobby object.
@@ -62,6 +62,23 @@ public sealed class UserHobby : IBaseEntity
         {
             HobbyId = hobbyId,
             Hobby = hobby
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="userId">
+    ///     User id of user hobby.
+    /// </param>
+    /// <returns>
+    ///     A new user hobby object.
+    /// </returns>
+    public static UserHobby InitVer3(Guid userId)
+    {
+        return new()
+        {
+            UserId = userId
         };
     }
 }

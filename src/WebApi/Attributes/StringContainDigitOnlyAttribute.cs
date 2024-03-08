@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -7,6 +8,9 @@ namespace WebApi.Attributes;
 ///     Attribute to check if the input string
 ///     contains any digit.
 /// </summary>
+[AttributeUsage(
+    validOn: AttributeTargets.All,
+    AllowMultiple = false)]
 internal sealed class StringContainDigitOnlyAttribute : ValidationAttribute
 {
     /// <summary>
@@ -27,12 +31,6 @@ internal sealed class StringContainDigitOnlyAttribute : ValidationAttribute
 
         var valueAsString = value as string;
 
-        if (!valueAsString.All(predicate: char.IsDigit))
-        {
-            return false;
-        }
-
-        return true;
+        return valueAsString.All(predicate: char.IsDigit);
     }
 }
-

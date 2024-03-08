@@ -5,5 +5,5 @@ namespace Application.Features.Position.RestorePositionByPositionId;
 /// </summary>
 public sealed class RestorePositionByPositionIdResponse
 {
-    public RestorePositionByPositionIdStatusCode StatusCode { get; init; }
+    public RestorePositionByPositionIdResponseStatusCode StatusCode { get; init; }
 }

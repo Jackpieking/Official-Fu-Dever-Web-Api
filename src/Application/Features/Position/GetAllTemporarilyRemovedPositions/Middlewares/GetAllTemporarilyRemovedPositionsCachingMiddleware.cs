@@ -56,7 +56,7 @@ internal sealed class GetAllTemporarilyRemovedPositionsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllTemporarilyRemovedPositionsRequest);
+        const string cachedKey = nameof(GetAllTemporarilyRemovedPositionsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllTemporarilyRemovedPositionsResponse>(

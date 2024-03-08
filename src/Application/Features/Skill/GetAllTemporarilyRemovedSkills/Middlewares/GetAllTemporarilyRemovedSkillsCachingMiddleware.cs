@@ -29,6 +29,11 @@ internal sealed class GetAllTemporarilyRemovedSkillsCachingMiddleware :
 
     /// <summary>
     ///     Entry to middleware handler.
+    ///     Caching the return value.
+    ///         If cache expired time is not set, it will not be cached.
+    ///         If cache expired time is set or cache does not exist,
+    ///             it will be cached.
+    ///         If cache exists, it will be returned.
     /// </summary>
     /// <param name="request">
     ///     Current request object.
@@ -55,7 +60,7 @@ internal sealed class GetAllTemporarilyRemovedSkillsCachingMiddleware :
             return await next();
         }
 
-        var cachedKey = nameof(GetAllTemporarilyRemovedSkillsRequest);
+        const string cachedKey = nameof(GetAllTemporarilyRemovedSkillsRequest);
 
         // Retrieve from cache.
         var cacheModel = await _cacheHandler.GetAsync<GetAllTemporarilyRemovedSkillsResponse>(

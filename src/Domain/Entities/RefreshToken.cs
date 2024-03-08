@@ -121,9 +121,6 @@ public sealed class RefreshToken :
     /// <param name="rememberMe">
     ///     Do user want to remember him/herself.
     /// </param>
-    /// <param name="length">
-    ///     Length of refresh token.
-    /// </param>
     /// <returns>
     ///     A new refresh token object.
     /// </returns>

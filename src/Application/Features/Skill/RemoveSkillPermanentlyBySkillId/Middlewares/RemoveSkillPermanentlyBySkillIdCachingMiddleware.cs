@@ -50,7 +50,7 @@ internal sealed class RemoveSkillPermanentlyBySkillIdCachingMiddleware :
     {
         var response = await next();
 
-        if (response.StatusCode == RemoveSkillPermanentlyBySkillIdStatusCode.OPERATION_SUCCESS)
+        if (response.StatusCode == RemoveSkillPermanentlyBySkillIdResponseStatusCode.OPERATION_SUCCESS)
         {
             await _cacheHandler.RemoveAsync(
                 key: nameof(GetAllTemporarilyRemovedSkillsRequest),

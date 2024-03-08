@@ -75,7 +75,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             //500
-            case GetAllSkillsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllSkillsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -156,7 +156,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllSkillsBySkillNameStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllSkillsBySkillNameResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -227,7 +227,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case CreateSkillStatusCode.INPUT_VALIDATION_FAIL:
+            case CreateSkillResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -242,7 +242,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 400
-            case CreateSkillStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
+            case CreateSkillResponseStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -255,7 +255,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 409
-            case CreateSkillStatusCode.SKILL_ALREADY_EXISTS:
+            case CreateSkillResponseStatusCode.SKILL_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -268,7 +268,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 500
-            case CreateSkillStatusCode.DATABASE_OPERATION_FAIL:
+            case CreateSkillResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -287,7 +287,7 @@ public sealed class SkillController : ControllerBase
                 {
                     return Created(
                         uri: $"{HttpContext.Request.Path}?name={dto.SkillName}",
-                        value: new CommonResponse { });
+                        value: new CommonResponse());
                 }
         }
     }
@@ -336,7 +336,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemoveSkillTemporarilyBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemoveSkillTemporarilyBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -351,7 +351,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 404
-            case RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
+            case RemoveSkillTemporarilyBySkillIdResponseStatusCode.SKILL_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -364,7 +364,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 400
-            case RemoveSkillTemporarilyBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
+            case RemoveSkillTemporarilyBySkillIdResponseStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -377,7 +377,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 500
-            case RemoveSkillTemporarilyBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemoveSkillTemporarilyBySkillIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -394,7 +394,7 @@ public sealed class SkillController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -452,7 +452,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case UpdateSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
+            case UpdateSkillBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -467,7 +467,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 404
-            case UpdateSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
+            case UpdateSkillBySkillIdResponseStatusCode.SKILL_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -480,7 +480,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 400
-            case UpdateSkillBySkillIdStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
+            case UpdateSkillBySkillIdResponseStatusCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -493,7 +493,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 409
-            case UpdateSkillBySkillIdStatusCode.SKILL_ALREADY_EXISTS:
+            case UpdateSkillBySkillIdResponseStatusCode.SKILL_ALREADY_EXISTS:
                 {
                     return Conflict(error: new CommonResponse
                     {
@@ -506,7 +506,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 500
-            case UpdateSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
+            case UpdateSkillBySkillIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -523,7 +523,7 @@ public sealed class SkillController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -558,7 +558,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case GetAllTemporarilyRemovedSkillsStatusCode.INPUT_VALIDATION_FAIL:
+            case GetAllTemporarilyRemovedSkillsResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -634,7 +634,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RemoveSkillPermanentlyBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RemoveSkillPermanentlyBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -649,7 +649,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 404
-            case RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
+            case RemoveSkillPermanentlyBySkillIdResponseStatusCode.SKILL_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -662,7 +662,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 400
-            case RemoveSkillPermanentlyBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
+            case RemoveSkillPermanentlyBySkillIdResponseStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -675,7 +675,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 500
-            case RemoveSkillPermanentlyBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RemoveSkillPermanentlyBySkillIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -692,7 +692,7 @@ public sealed class SkillController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
@@ -738,7 +738,7 @@ public sealed class SkillController : ControllerBase
         switch (response.StatusCode)
         {
             // 500
-            case RestoreSkillBySkillIdStatusCode.INPUT_VALIDATION_FAIL:
+            case RestoreSkillBySkillIdResponseStatusCode.INPUT_VALIDATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -753,7 +753,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 404
-            case RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_FOUND:
+            case RestoreSkillBySkillIdResponseStatusCode.SKILL_IS_NOT_FOUND:
                 {
                     return NotFound(value: new CommonResponse
                     {
@@ -766,7 +766,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 400
-            case RestoreSkillBySkillIdStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
+            case RestoreSkillBySkillIdResponseStatusCode.SKILL_IS_NOT_TEMPORARILY_REMOVED:
                 {
                     return BadRequest(error: new CommonResponse
                     {
@@ -779,7 +779,7 @@ public sealed class SkillController : ControllerBase
                 }
 
             // 500
-            case RestoreSkillBySkillIdStatusCode.DATABASE_OPERATION_FAIL:
+            case RestoreSkillBySkillIdResponseStatusCode.DATABASE_OPERATION_FAIL:
                 {
                     return StatusCode(
                         statusCode: StatusCodes.Status500InternalServerError,
@@ -796,7 +796,7 @@ public sealed class SkillController : ControllerBase
             // 200
             default:
                 {
-                    return Ok(value: new CommonResponse { });
+                    return Ok(value: new CommonResponse());
                 }
         }
     }
