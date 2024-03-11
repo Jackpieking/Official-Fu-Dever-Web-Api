@@ -33,4 +33,9 @@ public interface IUserPlatformSpecificationManager
     ///     Select field from "UserPlatforms" table specification.
     /// </summary>
     ISelectFieldsFromUserPlatformSpecification SelectFieldsFromUserPlatformSpecification { get; }
+
+    /// <summary>
+    ///     User platform as no tracking specification.
+    /// </summary>
+    IUserPlatformAsNoTrackingSpecification UserPlatformAsNoTrackingSpecification { get; }
 }

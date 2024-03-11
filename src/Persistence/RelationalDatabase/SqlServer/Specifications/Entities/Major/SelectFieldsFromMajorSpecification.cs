@@ -30,4 +30,11 @@ internal sealed class SelectFieldsFromMajorSpecification :
 
         return this;
     }
+
+    public ISelectFieldsFromMajorSpecification Ver3()
+    {
+        SelectExpression = major => Domain.Entities.Major.InitVer3(major.Name);
+
+        return this;
+    }
 }

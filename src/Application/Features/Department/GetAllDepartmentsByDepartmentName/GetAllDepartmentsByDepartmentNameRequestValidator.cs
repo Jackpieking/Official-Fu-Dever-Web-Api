@@ -15,9 +15,9 @@ public sealed class GetAllDepartmentsByDepartmentNameRequestValidator : Abstract
             .Cascade(cascadeMode: CascadeMode.Stop)
             .Must(predicate: departmentName =>
                 !string.IsNullOrWhiteSpace(value: departmentName))
-            .Must(predicate: departmentNam => departmentNam.Length <=
+            .Must(predicate: departmentName => departmentName.Length <=
                 Domain.Entities.Department.Metadata.Name.MaxLength)
-            .Must(predicate: departmentNam => departmentNam.Length >=
+            .Must(predicate: departmentName => departmentName.Length >=
                 Domain.Entities.Department.Metadata.Name.MinLength);
 
         RuleFor(expression: request => request.CacheExpiredTime)

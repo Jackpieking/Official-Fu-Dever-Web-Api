@@ -1,4 +1,4 @@
-    using Domain.Specifications.Base;
+using Domain.Specifications.Base;
 using Domain.Specifications.Entities.UserSkill;
 
 namespace Persistence.RelationalDatabase.SqlServer.Specifications.Entities.UserSkill;

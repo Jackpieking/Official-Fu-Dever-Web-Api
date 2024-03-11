@@ -58,7 +58,8 @@ public sealed class Position :
     {
         // Validate position name.
         if (string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > Metadata.Name.MaxLength)
+            positionName.Length > Metadata.Name.MaxLength ||
+            positionName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -97,7 +98,8 @@ public sealed class Position :
     {
         // Validate position name.
         if (string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > Metadata.Name.MaxLength)
+            positionName.Length > Metadata.Name.MaxLength ||
+            positionName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -126,7 +128,8 @@ public sealed class Position :
     {
         // Validate position name.
         if (string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > Metadata.Name.MaxLength)
+            positionName.Length > Metadata.Name.MaxLength ||
+            positionName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -162,7 +165,7 @@ public sealed class Position :
             /// <summary>
             ///     Min value length.
             /// </summary>
-            public const int MinLength = 1;
+            public const int MinLength = 2;
         }
     }
 }

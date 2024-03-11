@@ -58,7 +58,8 @@ public sealed class Major :
     {
         // Validate major name.
         if (string.IsNullOrWhiteSpace(value: majorName) ||
-            majorName.Length > Metadata.Name.MaxLength)
+            majorName.Length > Metadata.Name.MaxLength ||
+            majorName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -102,7 +103,8 @@ public sealed class Major :
     {
         // Validate major name.
         if (string.IsNullOrWhiteSpace(value: majorName) ||
-            majorName.Length > Metadata.Name.MaxLength)
+            majorName.Length > Metadata.Name.MaxLength ||
+            majorName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -116,6 +118,31 @@ public sealed class Major :
         return new()
         {
             Id = majorId,
+            Name = majorName
+        };
+    }
+
+    /// <summary>
+    ///     Return an instance.
+    /// </summary>
+    /// <param name="majorName">
+    ///     Major name.
+    /// </param>
+    /// <returns>
+    ///     A new major object.
+    /// </returns>
+    public static Major InitVer3(string majorName)
+    {
+        // Validate major name.
+        if (string.IsNullOrWhiteSpace(value: majorName) ||
+            majorName.Length > Metadata.Name.MaxLength ||
+            majorName.Length < Metadata.Name.MinLength)
+        {
+            return default;
+        }
+
+        return new()
+        {
             Name = majorName
         };
     }
@@ -138,7 +165,7 @@ public sealed class Major :
             /// <summary>
             ///     Min value length.
             /// </summary>
-            public const int MinLength = 1;
+            public const int MinLength = 2;
         }
     }
 }

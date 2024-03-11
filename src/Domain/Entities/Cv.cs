@@ -84,7 +84,8 @@ public sealed class Cv :
 
         // Validate cv student full name name.
         if (string.IsNullOrWhiteSpace(value: studentFullName) ||
-            studentFullName.Length > Metadata.StudentFullName.MaxLength)
+            studentFullName.Length > Metadata.StudentFullName.MaxLength ||
+            studentFullName.Length < Metadata.StudentFullName.MinLength)
         {
             return default;
         }
@@ -97,7 +98,8 @@ public sealed class Cv :
 
         // Validate cv student id.
         if (string.IsNullOrWhiteSpace(value: studentId) ||
-            studentId.Length > Metadata.StudentId.MaxLength)
+            studentId.Length > Metadata.StudentId.MaxLength ||
+            studentId.Length < Metadata.StudentId.MinLength)
         {
             return default;
         }
@@ -132,6 +134,11 @@ public sealed class Cv :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 50;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
 
         /// <summary>
@@ -143,6 +150,11 @@ public sealed class Cv :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 10;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

@@ -70,7 +70,8 @@ internal sealed class PositionRepository :
     {
         if (positionId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > Position.Metadata.Name.MaxLength)
+            positionName.Length > Position.Metadata.Name.MaxLength ||
+            positionName.Length < Position.Metadata.Name.MinLength)
         {
             return Task.FromResult<int>(result: default);
         }

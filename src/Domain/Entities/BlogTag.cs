@@ -26,15 +26,4 @@ public sealed class BlogTag : IBaseEntity
     public Skill Skill { get; set; }
 
     public Blog Blog { get; set; }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <returns>
-    ///     A new blog tag object.
-    /// </returns>
-    public static BlogTag InitVer1()
-    {
-        return new();
-    }
 }

@@ -56,7 +56,8 @@ public sealed class UserJoiningStatus : IBaseEntity
     {
         // Validate user joining status type.
         if (string.IsNullOrWhiteSpace(value: userJoiningStatusType) ||
-            userJoiningStatusType.Length > Metadata.Type.MaxLength)
+            userJoiningStatusType.Length > Metadata.Type.MaxLength ||
+            userJoiningStatusType.Length < Metadata.Type.MinLength)
         {
             return default;
         }
@@ -118,7 +119,8 @@ public sealed class UserJoiningStatus : IBaseEntity
     {
         // Validate user joining status type.
         if (string.IsNullOrWhiteSpace(value: userJoiningStatusType) ||
-            userJoiningStatusType.Length > Metadata.Type.MaxLength)
+            userJoiningStatusType.Length > Metadata.Type.MaxLength ||
+            userJoiningStatusType.Length < Metadata.Type.MinLength)
         {
             return default;
         }
@@ -143,6 +145,11 @@ public sealed class UserJoiningStatus : IBaseEntity
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

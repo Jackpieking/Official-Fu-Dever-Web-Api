@@ -58,7 +58,8 @@ public sealed class Hobby :
     {
         // Validate hobby name.
         if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Metadata.Name.MaxLength)
+            hobbyName.Length > Metadata.Name.MaxLength ||
+            hobbyName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -102,7 +103,8 @@ public sealed class Hobby :
     {
         // Validate hobby name.
         if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Metadata.Name.MaxLength)
+            hobbyName.Length > Metadata.Name.MaxLength ||
+            hobbyName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -156,7 +158,8 @@ public sealed class Hobby :
     {
         // Validate hobby name.
         if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Metadata.Name.MaxLength)
+            hobbyName.Length > Metadata.Name.MaxLength ||
+            hobbyName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -185,7 +188,7 @@ public sealed class Hobby :
             /// <summary>
             ///     Min value length.
             /// </summary>
-            public const int MinLength = 1;
+            public const int MinLength = 2;
         }
     }
 }

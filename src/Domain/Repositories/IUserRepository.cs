@@ -63,7 +63,7 @@ public interface IUserRepository : IBaseRepository<User>
     /// <param name="userUpdatedBy">
     ///     User is updated by whom.
     /// </param>
-    /// <param name="positionId">
+    /// <param name="userPositionId">
     ///     Position id of user.
     /// </param>
     /// <param name="cancellationToken">
@@ -87,7 +87,7 @@ public interface IUserRepository : IBaseRepository<User>
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
-        Guid positionId,
+        Guid userPositionId,
         CancellationToken cancellationToken);
 
     /// <summary>
@@ -102,7 +102,7 @@ public interface IUserRepository : IBaseRepository<User>
     /// <param name="userUpdatedBy">
     ///     User is updated by whom.
     /// </param>
-    /// <param name="departmentId">
+    /// <param name="userDepartmentId">
     ///     Department id of user.
     /// </param>
     /// <param name="cancellationToken">
@@ -126,6 +126,6 @@ public interface IUserRepository : IBaseRepository<User>
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
-        Guid departmentId,
+        Guid userDepartmentId,
         CancellationToken cancellationToken);
 }

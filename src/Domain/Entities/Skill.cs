@@ -60,7 +60,8 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > Metadata.Name.MaxLength)
+            skillName.Length > Metadata.Name.MaxLength ||
+            skillName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -138,7 +139,8 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > Metadata.Name.MaxLength)
+            skillName.Length > Metadata.Name.MaxLength ||
+            skillName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -167,7 +169,8 @@ public sealed class Skill :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > Metadata.Name.MaxLength)
+            skillName.Length > Metadata.Name.MaxLength ||
+            skillName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -226,7 +229,7 @@ public sealed class Skill :
             /// <summary>
             ///     Min value length.
             /// </summary>
-            public const int MinLength = 1;
+            public const int MinLength = 2;
         }
     }
 }

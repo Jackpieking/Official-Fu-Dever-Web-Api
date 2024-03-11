@@ -29,7 +29,8 @@ internal sealed class HobbyRepository :
     {
         if (hobbyId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Skill.Metadata.Name.MaxLength)
+            hobbyName.Length > Hobby.Metadata.Name.MaxLength ||
+            hobbyName.Length < Hobby.Metadata.Name.MinLength)
         {
             return Task.FromResult<int>(result: default);
         }

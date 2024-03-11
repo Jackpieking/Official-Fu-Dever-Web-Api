@@ -70,7 +70,8 @@ internal sealed class SkillRepository :
     {
         if (skillId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > Skill.Metadata.Name.MaxLength)
+            skillName.Length > Skill.Metadata.Name.MaxLength ||
+            skillName.Length < Skill.Metadata.Name.MinLength)
         {
             return Task.FromResult<int>(result: default);
         }

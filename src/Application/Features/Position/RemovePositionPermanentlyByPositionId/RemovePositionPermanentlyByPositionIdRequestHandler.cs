@@ -195,7 +195,7 @@ internal sealed class RemovePositionPermanentlyByPositionIdRequestHandler : IReq
                             userId: foundUser.Id,
                             userUpdatedAt: DateTime.UtcNow,
                             userUpdatedBy: request.PositionRemovedBy,
-                            positionId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                            userPositionId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                             cancellationToken: cancellationToken);
                     }
 

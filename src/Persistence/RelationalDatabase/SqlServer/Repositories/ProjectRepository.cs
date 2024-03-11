@@ -22,16 +22,16 @@ internal sealed class ProjectRepository :
     }
 
     public Task<int> BulkRemoveByAuthorIdAsync(
-        Guid authorId,
+        Guid projectAuthorId,
         CancellationToken cancellationToken)
     {
-        if (authorId == Guid.Empty)
+        if (projectAuthorId == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
 
         return _dbSet
-            .Where(predicate: project => project.AuthorId == authorId)
+            .Where(predicate: project => project.AuthorId == projectAuthorId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 }

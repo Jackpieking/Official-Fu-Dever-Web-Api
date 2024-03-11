@@ -19,7 +19,7 @@ public interface IBlogCommentRepository : IBaseRepository<BlogComment>
     /// <summary>
     ///     Remove blog comment asynchronously and directly to database.
     /// </summary>
-    /// <param name="authorId">
+    /// <param name="blogCommentAuthorId">
     ///     Author who will have blog comments removed.
     /// </param>
     /// <param name="cancellationToken">
@@ -43,6 +43,6 @@ public interface IBlogCommentRepository : IBaseRepository<BlogComment>
     ///     </para>
     /// </remarks>
     public Task<int> BulkRemoveByAuthorIdAsync(
-        Guid authorId,
+        Guid blogCommentAuthorId,
         CancellationToken cancellationToken);
 }

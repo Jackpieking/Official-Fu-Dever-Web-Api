@@ -196,7 +196,7 @@ internal sealed class RemoveDepartmentPermanentlyByDepartmentIdRequestHandler : 
                             userId: foundUser.Id,
                             userUpdatedAt: DateTime.UtcNow,
                             userUpdatedBy: request.DepartmentRemovedBy,
-                            departmentId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                            userDepartmentId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
                             cancellationToken: cancellationToken);
                     }
 

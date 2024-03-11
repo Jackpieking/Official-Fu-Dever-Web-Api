@@ -52,6 +52,14 @@ public sealed class UserPlatform : IBaseEntity
         string platformUrl,
         Platform platform)
     {
+        // Validate platform url.
+        if (string.IsNullOrWhiteSpace(value: platformUrl) ||
+            platformUrl.Length > Metadata.PlatformUrl.MaxLength ||
+            platformUrl.Length < Metadata.PlatformUrl.MinLength)
+        {
+            return default;
+        }
+
         return new()
         {
             PlatformId = platformId,
@@ -75,5 +83,27 @@ public sealed class UserPlatform : IBaseEntity
         {
             UserId = userId
         };
+    }
+
+    /// <summary>
+    ///     Represent metadata of property.
+    /// </summary>
+    public static class Metadata
+    {
+        /// <summary>
+        ///     Name property.
+        /// </summary>
+        public static class PlatformUrl
+        {
+            /// <summary>
+            ///     Max value length.
+            /// </summary>
+            public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
+        }
     }
 }

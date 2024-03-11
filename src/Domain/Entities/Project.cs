@@ -109,7 +109,8 @@ public sealed class Project :
 
         // Validate project title.
         if (string.IsNullOrWhiteSpace(value: projectTitle) ||
-            projectTitle.Length > Metadata.Title.MaxLength)
+            projectTitle.Length > Metadata.Title.MaxLength ||
+            projectTitle.Length < Metadata.Title.MinLength)
         {
             return default;
         }
@@ -203,7 +204,8 @@ public sealed class Project :
 
         // Validate project title.
         if (string.IsNullOrWhiteSpace(value: projectTitle) ||
-            projectTitle.Length > Metadata.Title.MaxLength)
+            projectTitle.Length > Metadata.Title.MaxLength ||
+            projectTitle.Length < Metadata.Title.MinLength)
         {
             return default;
         }
@@ -266,6 +268,11 @@ public sealed class Project :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

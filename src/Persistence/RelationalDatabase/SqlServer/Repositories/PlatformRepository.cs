@@ -70,7 +70,8 @@ internal sealed class PlatformRepository :
     {
         if (platformId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Platform.Metadata.Name.MaxLength)
+            platformName.Length > Platform.Metadata.Name.MaxLength ||
+            platformName.Length < Platform.Metadata.Name.MinLength)
         {
             return Task.FromResult<int>(result: default);
         }

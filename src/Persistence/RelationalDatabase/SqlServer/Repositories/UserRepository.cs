@@ -53,14 +53,14 @@ internal sealed class UserRepository :
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
-        Guid positionId,
+        Guid userPositionId,
         CancellationToken cancellationToken)
     {
         if (userId == Guid.Empty ||
             userUpdatedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
             userUpdatedAt > DateTime.UtcNow ||
             userUpdatedBy == Guid.Empty ||
-            positionId == Guid.Empty)
+            userPositionId == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
@@ -77,7 +77,7 @@ internal sealed class UserRepository :
                         userUpdatedBy)
                     .SetProperty(
                         user => user.PositionId,
-                        positionId),
+                        userPositionId),
                 cancellationToken: cancellationToken);
     }
 
@@ -85,14 +85,14 @@ internal sealed class UserRepository :
         Guid userId,
         DateTime userUpdatedAt,
         Guid userUpdatedBy,
-        Guid departmentId,
+        Guid userDepartmentId,
         CancellationToken cancellationToken)
     {
         if (userId == Guid.Empty ||
             userUpdatedAt < CommonConstant.DbDefaultValue.MIN_DATE_TIME ||
             userUpdatedAt > DateTime.UtcNow ||
             userUpdatedBy == Guid.Empty ||
-            departmentId == Guid.Empty)
+            userDepartmentId == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
@@ -109,7 +109,7 @@ internal sealed class UserRepository :
                         userUpdatedBy)
                     .SetProperty(
                         user => user.DepartmentId,
-                        departmentId),
+                        userDepartmentId),
                 cancellationToken: cancellationToken);
     }
 }

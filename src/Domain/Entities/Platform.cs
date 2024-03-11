@@ -58,7 +58,8 @@ public sealed class Platform :
     {
         // Validate platform name.
         if (string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Metadata.Name.MaxLength)
+            platformName.Length > Metadata.Name.MaxLength ||
+            platformName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -102,7 +103,8 @@ public sealed class Platform :
     {
         // Validate platform name.
         if (string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Metadata.Name.MaxLength)
+            platformName.Length > Metadata.Name.MaxLength ||
+            platformName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -133,7 +135,8 @@ public sealed class Platform :
     {
         // Validate platform name.
         if (string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Metadata.Name.MaxLength)
+            platformName.Length > Metadata.Name.MaxLength ||
+            platformName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -158,6 +161,11 @@ public sealed class Platform :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

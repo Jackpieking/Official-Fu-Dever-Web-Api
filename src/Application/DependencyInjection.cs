@@ -22,10 +22,46 @@ using Application.Features.Hobby.GetAllHobbiesByHobbyName;
 using Application.Features.Hobby.GetAllHobbiesByHobbyName.Middlewares;
 using Application.Features.Hobby.GetAllTemporarilyRemovedHobbies;
 using Application.Features.Hobby.GetAllTemporarilyRemovedHobbies.Middlewares;
+using Application.Features.Hobby.RemoveHobbyPermanentlyByHobbyId;
+using Application.Features.Hobby.RemoveHobbyPermanentlyByHobbyId.Middlewares;
 using Application.Features.Hobby.RemoveHobbyTemporarilyByHobbyId;
 using Application.Features.Hobby.RemoveHobbyTemporarilyByHobbyId.Middlewares;
+using Application.Features.Hobby.RestoreHobbyByHobbyId;
+using Application.Features.Hobby.RestoreHobbyByHobbyId.Middlewares;
 using Application.Features.Hobby.UpdateHobbyByHobbyId;
 using Application.Features.Hobby.UpdateHobbyByHobbyId.Middlewares;
+using Application.Features.Major.CreateMajor;
+using Application.Features.Major.CreateMajor.Middlewares;
+using Application.Features.Major.GetAllMajors;
+using Application.Features.Major.GetAllMajors.Middlewares;
+using Application.Features.Major.GetAllMajorsByMajorName;
+using Application.Features.Major.GetAllMajorsByMajorName.Middlewares;
+using Application.Features.Major.GetAllTemporarilyRemovedMajors;
+using Application.Features.Major.GetAllTemporarilyRemovedMajors.Middlewares;
+using Application.Features.Major.RemoveMajorPermanentlyByMajorId;
+using Application.Features.Major.RemoveMajorPermanentlyByMajorId.Middlewares;
+using Application.Features.Major.RemoveMajorTemporarilyByMajorId;
+using Application.Features.Major.RemoveMajorTemporarilyByMajorId.Middlewares;
+using Application.Features.Major.RestoreMajorByMajorId;
+using Application.Features.Major.RestoreMajorByMajorId.Middlewares;
+using Application.Features.Major.UpdateMajorByMajorId;
+using Application.Features.Major.UpdateMajorByMajorId.Middlewares;
+using Application.Features.Platform.CreatePlatform;
+using Application.Features.Platform.CreatePlatform.Middlewares;
+using Application.Features.Platform.GetAllPlatforms;
+using Application.Features.Platform.GetAllPlatforms.Middlewares;
+using Application.Features.Platform.GetAllPlatformsByPlatformName;
+using Application.Features.Platform.GetAllPlatformsByPlatformName.Middlewares;
+using Application.Features.Platform.GetAllTemporarilyRemovedPlatforms;
+using Application.Features.Platform.GetAllTemporarilyRemovedPlatforms.Middlewares;
+using Application.Features.Platform.RemovePlatformPermanentlyByPlatformId;
+using Application.Features.Platform.RemovePlatformPermanentlyByPlatformId.Middlewares;
+using Application.Features.Platform.RemovePlatformTemporarilyByPlatformId;
+using Application.Features.Platform.RemovePlatformTemporarilyByPlatformId.Middlewares;
+using Application.Features.Platform.RestorePlatformByPlatformId;
+using Application.Features.Platform.RestorePlatformByPlatformId.Middlewares;
+using Application.Features.Platform.UpdatePlatformByPlatformId;
+using Application.Features.Platform.UpdatePlatformByPlatformId.Middlewares;
 using Application.Features.Position.CreatePosition;
 using Application.Features.Position.CreatePosition.Middlewares;
 using Application.Features.Position.GetAllPositions;
@@ -93,7 +129,8 @@ public static class DependencyInjection
     private static void ConfigureMediatR(this IServiceCollection services)
     {
         services.AddMediatR(configuration: config =>
-            config.RegisterServicesFromAssemblyContaining(type: typeof(DependencyInjection)));
+            config.RegisterServicesFromAssemblyContaining(
+                type: typeof(DependencyInjection)));
     }
 
     /// <summary>
@@ -115,19 +152,21 @@ public static class DependencyInjection
     /// </param>
     private static void ConfigureCore(this IServiceCollection services)
     {
-        services.SkillUseCaseMiddlewaresConfig();
-        services.DepartmentUseCaseMiddlewaresConfig();
-        services.PositionUseCaseMiddlewaresConfig();
-        services.HobbyUseCaseMiddlewaresConfig();
+        services.SkillFeatureMiddlewaresConfig();
+        services.DepartmentFeatureMiddlewaresConfig();
+        services.PositionFeatureMiddlewaresConfig();
+        services.HobbyFeatureMiddlewaresConfig();
+        services.PlatformFeatureMiddlewaresConfig();
+        services.MajorFeatureMiddlewaresConfig();
     }
 
     /// <summary>
-    ///     Configuring skill use cases middlewares.
+    ///     Configuring skill features middlewares.
     /// </summary>
     /// <param name="services">
     ///     Service container.
     /// </param>
-    private static void SkillUseCaseMiddlewaresConfig(this IServiceCollection services)
+    private static void SkillFeatureMiddlewaresConfig(this IServiceCollection services)
     {
         #region GetAllSkills
         services
@@ -243,12 +282,12 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Configuring department use cases middlewares.
+    ///     Configuring department features middlewares.
     /// </summary>
     /// <param name="services">
     ///     Service container.
     /// </param>
-    private static void DepartmentUseCaseMiddlewaresConfig(this IServiceCollection services)
+    private static void DepartmentFeatureMiddlewaresConfig(this IServiceCollection services)
     {
         #region GetAllDepartments
         services
@@ -364,12 +403,12 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Configuring position use cases middlewares.
+    ///     Configuring position features middlewares.
     /// </summary>
     /// <param name="services">
     ///     Service container.
     /// </param>
-    private static void PositionUseCaseMiddlewaresConfig(this IServiceCollection services)
+    private static void PositionFeatureMiddlewaresConfig(this IServiceCollection services)
     {
         #region GetAllPositions
         services
@@ -485,12 +524,12 @@ public static class DependencyInjection
     }
 
     /// <summary>
-    ///     Configuring position use cases middlewares.
+    ///     Configuring position features middlewares.
     /// </summary>
     /// <param name="services">
     ///     Service container.
     /// </param>
-    private static void HobbyUseCaseMiddlewaresConfig(this IServiceCollection services)
+    private static void HobbyFeatureMiddlewaresConfig(this IServiceCollection services)
     {
         #region GetAllHobbies
         services
@@ -574,6 +613,276 @@ public static class DependencyInjection
                     GetAllTemporarilyRemovedHobbiesRequest,
                     GetAllTemporarilyRemovedHobbiesResponse>),
                 typeof(GetAllTemporarilyRemovedHobbiesCachingMiddleware));
+        #endregion
+
+        #region RemoveHobbyPermanentlyByHobbyId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveHobbyPermanentlyByHobbyIdRequest,
+                    RemoveHobbyPermanentlyByHobbyIdResponse>),
+                typeof(RemoveHobbyPermanentlyByHobbyIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveHobbyPermanentlyByHobbyIdRequest,
+                    RemoveHobbyPermanentlyByHobbyIdResponse>),
+                typeof(RemoveHobbyPermanentlyByHobbyIdCachingMiddleware));
+        #endregion
+
+        #region RestoreHobbyByHobbyId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestoreHobbyByHobbyIdRequest,
+                    RestoreHobbyByHobbyIdResponse>),
+                typeof(RestoreHobbyByHobbyIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestoreHobbyByHobbyIdRequest,
+                    RestoreHobbyByHobbyIdResponse>),
+                typeof(RestoreHobbyByHobbyIdCachingMiddleware));
+        #endregion
+    }
+
+    /// <summary>
+    ///     Configuring platform features middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void PlatformFeatureMiddlewaresConfig(this IServiceCollection services)
+    {
+        #region GetAllPlatforms
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPlatformsRequest,
+                    GetAllPlatformsResponse>),
+                typeof(GetAllPlatformsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPlatformsRequest,
+                    GetAllPlatformsResponse>),
+                typeof(GetAllPlatformsCachingMiddleware));
+        #endregion
+
+        #region GetAllPlatformsByPlatformName
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPlatformsByPlatformNameRequest,
+                    GetAllPlatformsByPlatformNameResponse>),
+                typeof(GetAllPlatformsByPlatformNameValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllPlatformsByPlatformNameRequest,
+                    GetAllPlatformsByPlatformNameResponse>),
+                typeof(GetAllPlatformsByPlatformNameCachingMiddleware));
+        #endregion
+
+        #region CreatePlatform
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreatePlatformRequest,
+                    CreatePlatformResponse>),
+                typeof(CreatePlatformValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreatePlatformRequest,
+                    CreatePlatformResponse>),
+                typeof(CreatePlatformCachingMiddleware));
+        #endregion
+
+        #region UpdatePlatformByPlatformId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdatePlatformByPlatformIdRequest,
+                    UpdatePlatformByPlatformIdResponse>),
+                typeof(UpdatePlatformByPlatformIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdatePlatformByPlatformIdRequest,
+                    UpdatePlatformByPlatformIdResponse>),
+                typeof(UpdatePlatformByPlatformIdCachingMiddleware));
+        #endregion
+
+        #region RemovePlatformTemporarilyByPlatformId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePlatformTemporarilyByPlatformIdRequest,
+                    RemovePlatformTemporarilyByPlatformIdResponse>),
+                typeof(RemovePlatformTemporarilyByPlatformIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePlatformTemporarilyByPlatformIdRequest,
+                    RemovePlatformTemporarilyByPlatformIdResponse>),
+                typeof(RemovePlatformTemporarilyByPlatformIdCachingMiddleware));
+        #endregion
+
+        #region GetAllTemporarilyRemovedPlatforms
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedPlatformsRequest,
+                    GetAllTemporarilyRemovedPlatformsResponse>),
+                typeof(GetAllTemporarilyRemovedPlatformsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedPlatformsRequest,
+                    GetAllTemporarilyRemovedPlatformsResponse>),
+                typeof(GetAllTemporarilyRemovedPlatformsCachingMiddleware));
+        #endregion
+
+        #region RemovePlatformPermanentlyByPlatformId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePlatformPermanentlyByPlatformIdRequest,
+                    RemovePlatformPermanentlyByPlatformIdResponse>),
+                typeof(RemovePlatformPermanentlyByPlatformIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemovePlatformPermanentlyByPlatformIdRequest,
+                    RemovePlatformPermanentlyByPlatformIdResponse>),
+                typeof(RemovePlatformPermanentlyByPlatformIdCachingMiddleware));
+        #endregion
+
+        #region RestorePlatformByPlatformId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestorePlatformByPlatformIdRequest,
+                    RestorePlatformByPlatformIdResponse>),
+                typeof(RestorePlatformByPlatformIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestorePlatformByPlatformIdRequest,
+                    RestorePlatformByPlatformIdResponse>),
+                typeof(RestorePlatformByPlatformIdCachingMiddleware));
+        #endregion
+    }
+
+    /// <summary>
+    ///     Configuring major features middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void MajorFeatureMiddlewaresConfig(this IServiceCollection services)
+    {
+        #region GetAllMajors
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllMajorsRequest,
+                    GetAllMajorsResponse>),
+                typeof(GetAllMajorsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllMajorsRequest,
+                    GetAllMajorsResponse>),
+                typeof(GetAllMajorsCachingMiddleware));
+        #endregion
+
+        #region GetAllMajorsByMajorName
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllMajorsByMajorNameRequest,
+                    GetAllMajorsByMajorNameResponse>),
+                typeof(GetAllMajorsByMajorNameValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllMajorsByMajorNameRequest,
+                    GetAllMajorsByMajorNameResponse>),
+                typeof(GetAllMajorsByMajorNameCachingMiddleware));
+        #endregion
+
+        #region CreateMajor
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreateMajorRequest,
+                    CreateMajorResponse>),
+                typeof(CreateMajorValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    CreateMajorRequest,
+                    CreateMajorResponse>),
+                typeof(CreateMajorCachingMiddleware));
+        #endregion
+
+        #region UpdateMajorByMajorId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdateMajorByMajorIdRequest,
+                    UpdateMajorByMajorIdResponse>),
+                typeof(UpdateMajorByMajorIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    UpdateMajorByMajorIdRequest,
+                    UpdateMajorByMajorIdResponse>),
+                typeof(UpdateMajorByMajorIdCachingMiddleware));
+        #endregion
+
+        #region RemoveMajorPermanentlyByMajorId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveMajorPermanentlyByMajorIdRequest,
+                    RemoveMajorPermanentlyByMajorIdResponse>),
+                typeof(RemoveMajorPermanentlyByMajorIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveMajorPermanentlyByMajorIdRequest,
+                    RemoveMajorPermanentlyByMajorIdResponse>),
+                typeof(RemoveMajorPermanentlyByMajorIdCachingMiddleware));
+        #endregion
+
+        #region RemoveMajorTemporarilyByMajorId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveMajorTemporarilyByMajorIdRequest,
+                    RemoveMajorTemporarilyByMajorIdResponse>),
+                typeof(RemoveMajorTemporarilyByMajorIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RemoveMajorTemporarilyByMajorIdRequest,
+                    RemoveMajorTemporarilyByMajorIdResponse>),
+                typeof(RemoveMajorTemporarilyByMajorIdCachingMiddleware));
+        #endregion
+
+        #region RestoreMajorByMajorId
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestoreMajorByMajorIdRequest,
+                    RestoreMajorByMajorIdResponse>),
+                typeof(RestoreMajorByMajorIdValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    RestoreMajorByMajorIdRequest,
+                    RestoreMajorByMajorIdResponse>),
+                typeof(RestoreMajorByMajorIdCachingMiddleware));
+        #endregion
+
+        #region GetAllTemporarilyRemovedMajors
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedMajorsRequest,
+                    GetAllTemporarilyRemovedMajorsResponse>),
+                typeof(GetAllTemporarilyRemovedMajorsValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    GetAllTemporarilyRemovedMajorsRequest,
+                    GetAllTemporarilyRemovedMajorsResponse>),
+                typeof(GetAllTemporarilyRemovedMajorsCachingMiddleware));
         #endregion
     }
 }

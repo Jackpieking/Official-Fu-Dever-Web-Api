@@ -22,16 +22,16 @@ internal sealed class BlogCommentRepository :
     }
 
     public Task<int> BulkRemoveByAuthorIdAsync(
-        Guid authorId,
+        Guid blogCommentAuthorId,
         CancellationToken cancellationToken)
     {
-        if (authorId == Guid.Empty)
+        if (blogCommentAuthorId == Guid.Empty)
         {
             return Task.FromResult<int>(result: default);
         }
 
         return _dbSet
-            .Where(predicate: blogComment => blogComment.AuthorId == authorId)
+            .Where(predicate: blogComment => blogComment.AuthorId == blogCommentAuthorId)
             .ExecuteDeleteAsync(cancellationToken: cancellationToken);
     }
 }

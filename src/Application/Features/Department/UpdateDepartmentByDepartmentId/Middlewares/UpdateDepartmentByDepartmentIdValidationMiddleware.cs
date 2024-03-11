@@ -42,7 +42,6 @@ internal sealed class UpdateDepartmentByDepartmentIdValidationMiddleware :
     /// <returns>
     ///     Response of use case.
     /// </returns>
-
     public async Task<UpdateDepartmentByDepartmentIdResponse> Handle(
         UpdateDepartmentByDepartmentIdRequest request,
         RequestHandlerDelegate<UpdateDepartmentByDepartmentIdResponse> next,

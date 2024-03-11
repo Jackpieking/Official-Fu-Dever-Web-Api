@@ -19,5 +19,5 @@ public sealed class GetAllDepartmentsByDepartmentNameRequest :
     ///     Don't give this property a value when don't
     ///     want the result to be cached.
     /// </remarks>
-    public int CacheExpiredTime { get; init; } = default;
+    public int CacheExpiredTime { get; init; }
 }

@@ -19,7 +19,7 @@ public interface IProjectRepository : IBaseRepository<Project>
     /// <summary>
     ///     Remove project asynchronously and directly to database.
     /// </summary>
-    /// <param name="authorId">
+    /// <param name="projectAuthorId">
     ///     Author who will have projects removed.
     /// </param>
     /// <param name="cancellationToken">
@@ -40,6 +40,6 @@ public interface IProjectRepository : IBaseRepository<Project>
     ///     <seealso cref="UnitOfWorks.IUnitOfWork"/> interface.
     /// </remarks>
     Task<int> BulkRemoveByAuthorIdAsync(
-        Guid authorId,
+        Guid projectAuthorId,
         CancellationToken cancellationToken);
 }

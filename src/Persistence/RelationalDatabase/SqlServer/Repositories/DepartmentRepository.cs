@@ -56,7 +56,8 @@ internal sealed class DepartmentRepository :
     {
         if (departmentId == Guid.Empty ||
             string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Department.Metadata.Name.MaxLength)
+            departmentName.Length > Department.Metadata.Name.MaxLength ||
+            departmentName.Length < Department.Metadata.Name.MinLength)
         {
             return Task.FromResult<int>(result: default);
         }

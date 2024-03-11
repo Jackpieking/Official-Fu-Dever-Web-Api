@@ -4,7 +4,7 @@ using System;
 namespace Application.Features.Skill.RemoveSkillTemporarilyBySkillId;
 
 /// <summary>
-///     Remove skill temporarily by skill request validator.
+///     Remove skill temporarily by skill id request validator.
 /// </summary>
 public sealed class RemoveSkillTemporarilyBySkillIdRequestValidator :
     AbstractValidator<RemoveSkillTemporarilyBySkillIdRequest>

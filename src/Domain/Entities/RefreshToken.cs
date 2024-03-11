@@ -69,23 +69,23 @@ public sealed class RefreshToken :
     /// <summary>
     ///     Return an instance.
     /// </summary>
-    /// <param name="createdBy">
+    /// <param name="refreshTokenCreatedBy">
     ///     Id of refresh token creator.
     /// </param>
     /// <returns>
     ///     A new refresh token object.
     /// </returns>
-    public static RefreshToken InitVer2(Guid createdBy)
+    public static RefreshToken InitVer2(Guid refreshTokenCreatedBy)
     {
         // Validate refresh token Id.
-        if (createdBy == Guid.Empty)
+        if (refreshTokenCreatedBy == Guid.Empty)
         {
             return default;
         }
 
         return new()
         {
-            CreatedBy = createdBy
+            CreatedBy = refreshTokenCreatedBy
         };
     }
 
@@ -101,7 +101,9 @@ public sealed class RefreshToken :
     public static RefreshToken InitVer3(string refreshTokenValue)
     {
         // Validate refresh token value.
-        if (string.IsNullOrWhiteSpace(value: refreshTokenValue))
+        if (string.IsNullOrWhiteSpace(value: refreshTokenValue) ||
+            refreshTokenValue.Length > Metadata.Value.MaxLength ||
+            refreshTokenValue.Length < Metadata.Value.MinLength)
         {
             return default;
         }
@@ -115,30 +117,38 @@ public sealed class RefreshToken :
     /// <summary>
     ///     Return an instance.
     /// </summary>
-    /// <param name="claims">
+    /// <param name="refreshTokenClaims">
     ///     List of user claims.
     /// </param>
-    /// <param name="rememberMe">
+    /// <param name="refreshTokenValue">
+    ///     Refresh token value.
+    /// </param>
+    /// <param name="refreshTokenRememberMe">
     ///     Do user want to remember him/herself.
+    /// </param>
+    /// <param name="refreshTokenCreatedAt">
+    ///     When is refresh token created.
     /// </param>
     /// <returns>
     ///     A new refresh token object.
     /// </returns>
     public static RefreshToken InitVer4(
-        IEnumerable<Claim> claims,
-        string value,
-        bool rememberMe,
-        DateTime createdAt)
+        IEnumerable<Claim> refreshTokenClaims,
+        string refreshTokenValue,
+        bool refreshTokenRememberMe,
+        DateTime refreshTokenCreatedAt)
     {
         // Validate claim list.
-        if (Equals(objA: claims, objB: null) ||
-            claims.Equals(obj: Enumerable.Empty<Claim>()))
+        if (Equals(objA: refreshTokenClaims, objB: null) ||
+            refreshTokenClaims.Equals(obj: Enumerable.Empty<Claim>()))
         {
             return default;
         }
 
         // Validate refresh token value.
-        if (string.IsNullOrWhiteSpace(value: value))
+        if (string.IsNullOrWhiteSpace(value: refreshTokenValue) ||
+            refreshTokenValue.Length > Metadata.Value.MaxLength ||
+            refreshTokenValue.Length < Metadata.Value.MinLength)
         {
             return default;
         }
@@ -146,19 +156,19 @@ public sealed class RefreshToken :
         return new()
         {
             Id = Guid.NewGuid(),
-            CreatedBy = Guid.Parse(input: claims
+            CreatedBy = Guid.Parse(input: refreshTokenClaims
                 .First(predicate: claim => claim.Type.Equals(
                     value: JwtRegisteredClaimNames.Sub))
                 .Value),
-            Value = value,
-            AccessTokenId = new(g: claims
+            Value = refreshTokenValue,
+            AccessTokenId = new(g: refreshTokenClaims
                 .First(predicate: claim => claim.Type.Equals(
                     value: JwtRegisteredClaimNames.Jti))
                 .Value),
-            ExpiredDate = rememberMe ?
+            ExpiredDate = refreshTokenRememberMe ?
                 DateTime.UtcNow.AddDays(value: 7) :
                 DateTime.UtcNow.AddDays(value: 3),
-            CreatedAt = createdAt
+            CreatedAt = refreshTokenCreatedAt
         };
     }
 

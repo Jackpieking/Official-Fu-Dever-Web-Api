@@ -58,7 +58,8 @@ public sealed class Department :
     {
         // Validate department name.
         if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Metadata.Name.MaxLength)
+            departmentName.Length > Metadata.Name.MaxLength ||
+            departmentName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -102,7 +103,8 @@ public sealed class Department :
     {
         // Validate department name.
         if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Metadata.Name.MaxLength)
+            departmentName.Length > Metadata.Name.MaxLength ||
+            departmentName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -133,7 +135,8 @@ public sealed class Department :
     {
         // Validate department name.
         if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Metadata.Name.MaxLength)
+            departmentName.Length > Metadata.Name.MaxLength ||
+            departmentName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -162,7 +165,7 @@ public sealed class Department :
             /// <summary>
             ///     Min value length.
             /// </summary>
-            public const int MinLength = 1;
+            public const int MinLength = 2;
         }
     }
 }

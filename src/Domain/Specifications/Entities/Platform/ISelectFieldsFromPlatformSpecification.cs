@@ -10,4 +10,6 @@ public interface ISelectFieldsFromPlatformSpecification : IBaseSpecification<Dom
     ISelectFieldsFromPlatformSpecification Ver1();
 
     ISelectFieldsFromPlatformSpecification Ver2();
+
+    ISelectFieldsFromPlatformSpecification Ver3();
 }

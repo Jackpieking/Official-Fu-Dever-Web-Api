@@ -46,7 +46,8 @@ public sealed class Role :
     {
         // Validate role type.
         if (string.IsNullOrWhiteSpace(value: roleName) ||
-            roleName.Length > Metadata.Name.MaxLength)
+            roleName.Length > Metadata.Name.MaxLength ||
+            roleName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -90,7 +91,8 @@ public sealed class Role :
     {
         // Validate role type.
         if (string.IsNullOrWhiteSpace(value: roleName) ||
-            roleName.Length > Metadata.Name.MaxLength)
+            roleName.Length > Metadata.Name.MaxLength ||
+            roleName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -122,6 +124,11 @@ public sealed class Role :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 50;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

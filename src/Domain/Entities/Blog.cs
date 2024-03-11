@@ -68,17 +68,6 @@ public sealed class Blog :
     public IEnumerable<BlogComment> BlogComments { get; set; }
 
     /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <returns>
-    ///     A new blog object.
-    /// </returns>
-    public static Blog InitVer1()
-    {
-        return new();
-    }
-
-    /// <summary>
     ///     Represent metadata of property.
     /// </summary>
     public static class Metadata
@@ -92,6 +81,11 @@ public sealed class Blog :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 100;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
 
         /// <summary>
@@ -103,6 +97,11 @@ public sealed class Blog :
             ///     Max value length.
             /// </summary>
             public const int MaxLength = 200;
+
+            /// <summary>
+            ///     Min value length.
+            /// </summary>
+            public const int MinLength = 2;
         }
     }
 }

@@ -52,15 +52,4 @@ public sealed class BlogComment :
     public Blog Blog { get; set; }
 
     public User User { get; set; }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <returns>
-    ///     A new blog comment object.
-    /// </returns>
-    public static BlogComment InitVer1()
-    {
-        return new();
-    }
 }

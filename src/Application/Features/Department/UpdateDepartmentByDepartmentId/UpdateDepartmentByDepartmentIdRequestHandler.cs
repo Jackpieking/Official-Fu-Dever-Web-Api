@@ -40,7 +40,6 @@ internal sealed class UpdateDepartmentByDepartmentIdRequestHandler : IRequestHan
     /// <returns>
     ///     A task containing the response.
     /// </returns>
-
     public async Task<UpdateDepartmentByDepartmentIdResponse> Handle(
         UpdateDepartmentByDepartmentIdRequest request,
         CancellationToken cancellationToken)

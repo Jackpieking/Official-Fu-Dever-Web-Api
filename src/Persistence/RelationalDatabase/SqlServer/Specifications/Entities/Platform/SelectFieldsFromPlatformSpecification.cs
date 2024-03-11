@@ -30,4 +30,11 @@ internal sealed class SelectFieldsFromPlatformSpecification :
 
         return this;
     }
+
+    public ISelectFieldsFromPlatformSpecification Ver3()
+    {
+        SelectExpression = platfrom => Domain.Entities.Platform.InitVer3(platfrom.Name);
+
+        return this;
+    }
 }

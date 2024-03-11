@@ -10,4 +10,6 @@ public interface ISelectFieldsFromMajorSpecification : IBaseSpecification<Domain
     ISelectFieldsFromMajorSpecification Ver1();
 
     ISelectFieldsFromMajorSpecification Ver2();
+
+    ISelectFieldsFromMajorSpecification Ver3();
 }
