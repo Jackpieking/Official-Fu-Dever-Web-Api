@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FuDever.Core.Domain\FuDever.Domain.csproj" />
+    <ProjectReference Include="..\FuDever.Domain\FuDever.Domain.csproj" />
   </ItemGroup>
 
 </Project>
