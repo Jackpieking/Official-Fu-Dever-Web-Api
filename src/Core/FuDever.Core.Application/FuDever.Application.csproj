@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Hobby\GetAllTemporarilyRemovedHobbies\" />
+    <Folder Include="Features\Hobby\RestoreHobbyByHobbyId\" />
+    <Folder Include="Features\Hobby\RemoveHobbyTemporarilyByHobbyId\" />
+    <Folder Include="Features\Hobby\RemoveHobbyPermanentlyByHobbyId\" />
+    <Folder Include="Features\Cv\" />
+    <Folder Include="Features\Auth\" />
+    <Folder Include="Features\Blog\" />
+    <Folder Include="Features\Role\GetAllRoles\" />
+    <Folder Include="Features\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FuDever.Core.Domain\FuDever.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
