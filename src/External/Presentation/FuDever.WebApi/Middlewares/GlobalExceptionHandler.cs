@@ -1,4 +1,4 @@
-using FuDever.WebApi.ApiReturnCodes.Base;
+using FuDever.WebApi.AppCodes.Base;
 using FuDever.WebApi.Commons;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +24,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         await httpContext.Response.WriteAsJsonAsync(
             value: new CommonResponse
             {
-                ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                AppCode = BaseAppCode.SERVER_ERROR,
                 ErrorMessages =
                 [
                     "Server error.",

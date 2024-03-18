@@ -54,7 +54,7 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
         {
             return new()
             {
-                StatusCode = UpdateRoleByRoleIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND
+                StatusCode = UpdateRoleByRoleIdResponseStatusCode.ROLE_IS_NOT_FOUND
             };
         }
 
@@ -68,7 +68,7 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
         {
             return new()
             {
-                StatusCode = UpdateRoleByRoleIdResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED
+                StatusCode = UpdateRoleByRoleIdResponseStatusCode.ROLE_IS_ALREADY_TEMPORARILY_REMOVED
             };
         }
 
@@ -82,7 +82,7 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
         {
             return new()
             {
-                StatusCode = UpdateRoleByRoleIdResponseStatusCode.DEPARTMENT_ALREADY_EXISTS
+                StatusCode = UpdateRoleByRoleIdResponseStatusCode.ROLE_ALREADY_EXISTS
             };
         }
 
@@ -222,24 +222,23 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    /*var foundUsers = await _unitOfWork.UserRepository.GetAllBySpecificationsAsync(
+                    var foundUserRoles = await _unitOfWork.UserRoleRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.User.UserAsNoTrackingSpecification,
-                            _superSpecificationManager.User.UserByRoleIdSpecification(
-                                roleId: request.RoleId),
-                            _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5(),
+                            _superSpecificationManager.UserRole.UserRoleAsNoTrackingSpecification,
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(roleId: request.RoleId),
+                            _superSpecificationManager.UserRole.SelectFieldsFromUserRoleSpecification.Ver1(),
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUser in foundUsers)
+                    foreach (var foundUserRole in foundUserRoles)
                     {
                         await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUser.Id,
+                            userId: foundUserRole.UserId,
                             userUpdatedAt: DateTime.UtcNow,
                             userUpdatedBy: request.RoleUpdatedBy,
                             cancellationToken: cancellationToken);
-                    }*/
+                    }
 
                     await _unitOfWork.RoleRepository.BulkUpdateByRoleIdVer2Async(
                         roleId: request.RoleId,

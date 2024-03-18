@@ -81,6 +81,7 @@ internal sealed class GetAllDepartmentsRequestHandler : IRequestHandler<
             [
                 _superSpecificationManager.Department.DepartmentAsNoTrackingSpecification,
                 _superSpecificationManager.Department.DepartmentNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Department.DepartmentNameIsNotDefaultSpecification,
                 _superSpecificationManager.Department.SelectFieldsFromDepartmentSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

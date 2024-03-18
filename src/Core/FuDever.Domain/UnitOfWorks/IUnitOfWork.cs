@@ -96,6 +96,11 @@ public interface IUnitOfWork
     IUserSkillRepository UserSkillRepository { get; }
 
     /// <summary>
+    ///     User role repository.
+    /// </summary>
+    IUserRoleRepository UserRoleRepository { get; }
+
+    /// <summary>
     ///     Create an execution strategy for managing the
     ///     db transaction which is initialized inside.
     /// </summary>

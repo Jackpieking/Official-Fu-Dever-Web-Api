@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromRoleSpecification :
 {
     public ISelectFieldsFromRoleSpecification Ver1()
     {
-        SelectExpression = role => Domain.Entities.Role.InitVer2(
+        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer1(
             role.Id,
             role.Name);
 
@@ -22,11 +22,18 @@ internal sealed class SelectFieldsFromRoleSpecification :
 
     public ISelectFieldsFromRoleSpecification Ver2()
     {
-        SelectExpression = role => Domain.Entities.Role.InitVer1(
+        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer3(
             role.Id,
             role.Name,
             role.RemovedAt,
             role.RemovedBy);
+
+        return this;
+    }
+
+    public ISelectFieldsFromRoleSpecification Ver3()
+    {
+        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer2(role.Name);
 
         return this;
     }

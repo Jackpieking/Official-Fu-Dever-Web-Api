@@ -31,7 +31,7 @@ public static class DependencyInjection
     ///     Load configuration for configuration
     ///     file (appsetting).
     /// </param>
-    public static void AddPersistence(
+    public static void AddRelationalDatabase(
         this IServiceCollection services,
         IConfigurationManager configuration)
     {
@@ -66,12 +66,12 @@ public static class DependencyInjection
             config.UseSqlServer(
                     connectionString: fuDeverDatabaseOption.ConnectionString,
                     sqlServerOptionsAction: databaseOptionsAction =>
-                {
-                    databaseOptionsAction
-                        .CommandTimeout(commandTimeout: fuDeverDatabaseOption.CommandTimeOut)
-                        .EnableRetryOnFailure(maxRetryCount: fuDeverDatabaseOption.EnableRetryOnFailure)
-                        .MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().GetName().Name);
-                })
+                    {
+                        databaseOptionsAction
+                            .CommandTimeout(commandTimeout: fuDeverDatabaseOption.CommandTimeOut)
+                            .EnableRetryOnFailure(maxRetryCount: fuDeverDatabaseOption.EnableRetryOnFailure)
+                            .MigrationsAssembly(assemblyName: Assembly.GetExecutingAssembly().GetName().Name);
+                    })
                 .EnableSensitiveDataLogging(sensitiveDataLoggingEnabled: fuDeverDatabaseOption.EnableSensitiveDataLogging)
                 .EnableDetailedErrors(detailedErrorsEnabled: fuDeverDatabaseOption.EnableDetailedErrors)
                 .EnableThreadSafetyChecks(enableChecks: fuDeverDatabaseOption.EnableThreadSafetyChecks)
@@ -89,7 +89,7 @@ public static class DependencyInjection
     {
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<ISuperSpecificationManager, SuperSpecificationManager>()
+            .AddSingleton<ISuperSpecificationManager, SuperSpecificationManager>()
             .AddScoped<IDbMinTimeHandler, DbMinTimeHandler>();
     }
 

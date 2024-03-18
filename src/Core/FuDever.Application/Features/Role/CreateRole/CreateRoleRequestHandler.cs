@@ -67,13 +67,13 @@ internal sealed class CreateRoleRequestHandler : IRequestHandler<
             {
                 return new()
                 {
-                    StatusCode = CreateRoleResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED
+                    StatusCode = CreateRoleResponseStatusCode.ROLE_IS_ALREADY_TEMPORARILY_REMOVED
                 };
             }
 
             return new()
             {
-                StatusCode = CreateRoleResponseStatusCode.DEPARTMENT_ALREADY_EXISTS
+                StatusCode = CreateRoleResponseStatusCode.ROLE_ALREADY_EXISTS
             };
         }
 

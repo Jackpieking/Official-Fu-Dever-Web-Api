@@ -12,14 +12,8 @@ public sealed class BlogTag : IBaseEntity
     {
     }
 
-    /// <summary>
-    ///     Blog id.
-    /// </summary>
     public Guid BlogId { get; set; }
 
-    /// <summary>
-    ///     Skill id.
-    /// </summary>
     public Guid SkillId { get; set; }
 
     // Navigation properties.

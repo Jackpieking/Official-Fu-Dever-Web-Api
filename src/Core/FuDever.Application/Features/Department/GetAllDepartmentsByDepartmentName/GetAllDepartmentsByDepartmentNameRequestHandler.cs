@@ -91,6 +91,7 @@ internal sealed class GetAllDepartmentsByDepartmentNameRequestHandler : IRequest
                     departmentName: departmentName,
                     isCaseSensitive: false),
                 _superSpecificationManager.Department.DepartmentNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Department.DepartmentNameIsNotDefaultSpecification,
                 _superSpecificationManager.Department.SelectFieldsFromDepartmentSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

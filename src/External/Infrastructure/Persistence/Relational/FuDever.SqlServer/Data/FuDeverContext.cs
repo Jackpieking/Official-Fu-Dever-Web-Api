@@ -18,7 +18,7 @@ public sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
     ///     Configure tables and seed initial data here.
     /// </summary>
     /// <param name="builder">
-    ///     Builder to config the tables and seed data.
+    ///     Model builder access the database.
     /// </param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,7 +33,7 @@ public sealed class FuDeverContext : IdentityDbContext<User, Role, Guid>
     ///     Remove "AspNet" prefix in identity table name.
     /// </summary>
     /// <param name="builder">
-    ///     Model builder to access to the entity.
+    ///     Model builder access the database.
     /// </param>
     private static void RemoveAspNetPrefixInIdentityTable(ModelBuilder builder)
     {

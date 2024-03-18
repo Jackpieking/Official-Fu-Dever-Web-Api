@@ -15,14 +15,8 @@ public sealed class Department :
     {
     }
 
-    /// <summary>
-    ///     Department id.
-    /// </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    ///     Department name.
-    /// </summary>
     public string Name { get; set; }
 
     public DateTime RemovedAt { get; set; }
@@ -32,24 +26,55 @@ public sealed class Department :
     // Navigation collections.
     public IEnumerable<User> Users { get; set; }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="departmentId">
-    ///     Id of department.
-    /// </param>
-    /// <param name="departmentName">
-    ///     Department name.
-    /// </param>
-    /// <param name="departmentRemovedAt">
-    ///     Department is removed by whom.
-    /// </param>
-    /// <param name="departmentRemovedBy">
-    ///     When is department removed.
-    /// </param>
-    /// <returns>
-    ///     A new department object.
-    /// </returns>
+    public static Department InitForSeeding(
+        Guid departmentId,
+        string departmentName,
+        DateTime departmentRemovedAt,
+        Guid departmentRemovedBy)
+    {
+        return new()
+        {
+            Id = departmentId,
+            Name = departmentName,
+            RemovedAt = departmentRemovedAt,
+            RemovedBy = departmentRemovedBy
+        };
+    }
+
+    public static Department InitFromDatabaseVer1(
+        Guid departmentId,
+        string departmentName)
+    {
+        return new()
+        {
+            Id = departmentId,
+            Name = departmentName
+        };
+    }
+
+    public static Department InitFromDatabaseVer2(
+        Guid departmentId,
+        string departmentName,
+        DateTime departmentRemovedAt,
+        Guid departmentRemovedBy)
+    {
+        return new()
+        {
+            Id = departmentId,
+            Name = departmentName,
+            RemovedAt = departmentRemovedAt,
+            RemovedBy = departmentRemovedBy
+        };
+    }
+
+    public static Department InitFromDatabaseVer3(string departmentName)
+    {
+        return new()
+        {
+            Name = departmentName
+        };
+    }
+
     public static Department InitVer1(
         Guid departmentId,
         string departmentName,
@@ -85,86 +110,12 @@ public sealed class Department :
         };
     }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="departmentId">
-    ///     Id of department.
-    /// </param>
-    /// <param name="departmentName">
-    ///     Department name.
-    /// </param>
-    /// <returns>
-    ///     A new department object.
-    /// </returns>
-    public static Department InitVer2(
-        Guid departmentId,
-        string departmentName)
-    {
-        // Validate department name.
-        if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Metadata.Name.MaxLength ||
-            departmentName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        // Validate department Id.
-        if (departmentId == Guid.Empty)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Id = departmentId,
-            Name = departmentName
-        };
-    }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="departmentName">
-    ///     Department name.
-    /// </param>
-    /// <returns>
-    ///     A new department object.
-    /// </returns>
-    public static Department InitVer3(string departmentName)
-    {
-        // Validate department name.
-        if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Metadata.Name.MaxLength ||
-            departmentName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Name = departmentName
-        };
-    }
-
-    /// <summary>
-    ///     Represent metadata of property.
-    /// </summary>
     public static class Metadata
     {
-        /// <summary>
-        ///     Name property.
-        /// </summary>
         public static class Name
         {
-            /// <summary>
-            ///     Max value length.
-            /// </summary>
             public const int MaxLength = 100;
 
-            /// <summary>
-            ///     Min value length.
-            /// </summary>
             public const int MinLength = 2;
         }
     }

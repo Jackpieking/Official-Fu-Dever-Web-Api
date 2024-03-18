@@ -15,14 +15,8 @@ public sealed class Hobby :
     {
     }
 
-    /// <summary>
-    ///     Hobby id.
-    /// </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    ///     Hobby name.
-    /// </summary>
     public string Name { get; set; }
 
     public DateTime RemovedAt { get; set; }
@@ -32,24 +26,63 @@ public sealed class Hobby :
     // Navigation collections.
     public IEnumerable<UserHobby> UserHobbies { get; set; }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobbyId">
-    ///     Id of hobby.
-    /// </param>
-    /// <param name="hobbyName">
-    ///     Hobby name.
-    /// </param>
-    /// <param name="hobbyRemovedAt">
-    ///     Hobby is removed by whom.
-    /// </param>
-    /// <param name="hobbyRemovedBy">
-    ///     When is hobby removed.
-    /// </param>
-    /// <returns>
-    ///     A new hobby object.
-    /// </returns>
+    public static Hobby InitForSeeding(
+        Guid hobbyId,
+        string hobbyName,
+        DateTime hobbyRemovedAt,
+        Guid hobbyRemovedBy)
+    {
+        return new()
+        {
+            Id = hobbyId,
+            Name = hobbyName,
+            RemovedAt = hobbyRemovedAt,
+            RemovedBy = hobbyRemovedBy
+        };
+    }
+
+    public static Hobby InitFromDatabaseVer1(
+        Guid hobbyId,
+        string hobbyName)
+    {
+        return new()
+        {
+            Id = hobbyId,
+            Name = hobbyName
+        };
+    }
+
+    public static Hobby InitFromDatabaseVer2(
+        Guid hobbyId,
+        string hobbyName,
+        DateTime hobbyRemovedAt,
+        Guid hobbyRemovedBy)
+    {
+        return new()
+        {
+            Id = hobbyId,
+            Name = hobbyName,
+            RemovedAt = hobbyRemovedAt,
+            RemovedBy = hobbyRemovedBy
+        };
+    }
+
+    public static Hobby InitFromDatabaseVer3(Guid hobbyId)
+    {
+        return new()
+        {
+            Id = hobbyId
+        };
+    }
+
+    public static Hobby InitFromDatabaseVer4(string hobbyName)
+    {
+        return new()
+        {
+            Name = hobbyName
+        };
+    }
+
     public static Hobby InitVer1(
         Guid hobbyId,
         string hobbyName,
@@ -86,108 +119,14 @@ public sealed class Hobby :
     }
 
     /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobbyId">
-    ///     Id of hobby.
-    /// </param>
-    /// <param name="hobbyName">
-    ///     Hobby name.
-    /// </param>
-    /// <returns>
-    ///     A new hobby object.
-    /// </returns>
-    public static Hobby InitVer2(
-        Guid hobbyId,
-        string hobbyName)
-    {
-        // Validate hobby name.
-        if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Metadata.Name.MaxLength ||
-            hobbyName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        // Validate hobby Id.
-        if (hobbyId == Guid.Empty)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Id = hobbyId,
-            Name = hobbyName
-        };
-    }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobbyId">
-    ///     Id of hobby.
-    /// </param>
-    /// <returns>
-    ///     A new hobby object.
-    /// </returns>
-    public static Hobby InitVer3(Guid hobbyId)
-    {
-        // Validate hobby Id.
-        if (hobbyId == Guid.Empty)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Id = hobbyId
-        };
-    }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobbyName">
-    ///     Hobby name.
-    /// </param>
-    /// <returns>
-    ///     A new hobby object.
-    /// </returns>
-    public static Hobby InitVer4(string hobbyName)
-    {
-        // Validate hobby name.
-        if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Metadata.Name.MaxLength ||
-            hobbyName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Name = hobbyName
-        };
-    }
-
-    /// <summary>
     ///     Represent metadata of property.
     /// </summary>
     public static class Metadata
     {
-        /// <summary>
-        ///     Name property.
-        /// </summary>
         public static class Name
         {
-            /// <summary>
-            ///     Max value length.
-            /// </summary>
             public const int MaxLength = 100;
 
-            /// <summary>
-            ///     Min value length.
-            /// </summary>
             public const int MinLength = 2;
         }
     }

@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromMajorSpecification :
 {
     public ISelectFieldsFromMajorSpecification Ver1()
     {
-        SelectExpression = major => Domain.Entities.Major.InitVer2(
+        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer1(
             major.Id,
             major.Name);
 
@@ -22,7 +22,7 @@ internal sealed class SelectFieldsFromMajorSpecification :
 
     public ISelectFieldsFromMajorSpecification Ver2()
     {
-        SelectExpression = major => Domain.Entities.Major.InitVer1(
+        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer3(
             major.Id,
             major.Name,
             major.RemovedAt,
@@ -33,7 +33,7 @@ internal sealed class SelectFieldsFromMajorSpecification :
 
     public ISelectFieldsFromMajorSpecification Ver3()
     {
-        SelectExpression = major => Domain.Entities.Major.InitVer3(major.Name);
+        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer2(major.Name);
 
         return this;
     }

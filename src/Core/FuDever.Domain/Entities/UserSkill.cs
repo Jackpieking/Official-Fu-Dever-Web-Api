@@ -12,14 +12,8 @@ public sealed class UserSkill : IBaseEntity
     {
     }
 
-    /// <summary>
-    ///     User id.
-    /// </summary>
     public Guid UserId { get; set; }
 
-    /// <summary>
-    ///     Skill id.
-    /// </summary>
     public Guid SkillId { get; set; }
 
     // Navigation properties.
@@ -27,16 +21,7 @@ public sealed class UserSkill : IBaseEntity
 
     public Skill Skill { get; set; }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="skill">
-    ///     Skill of user skill.
-    /// </param>
-    /// <returns>
-    ///     A new user skill object.
-    /// </returns>
-    public static UserSkill InitVer1(Skill skill)
+    public static UserSkill InitFromDatabaseVer1(Skill skill)
     {
         return new()
         {
@@ -44,19 +29,7 @@ public sealed class UserSkill : IBaseEntity
         };
     }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="skillId">
-    ///     Skill id of user skill.
-    /// </param>
-    /// <param name="skill">
-    ///     Skill of user skill.
-    /// </param>
-    /// <returns>
-    ///     A new user skill object.
-    /// </returns>
-    public static UserSkill InitVer2(
+    public static UserSkill InitFromDatabaseVer2(
         Guid skillId,
         Skill skill)
     {
@@ -67,16 +40,7 @@ public sealed class UserSkill : IBaseEntity
         };
     }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="userId">
-    ///     User id of user skill.
-    /// </param>
-    /// <returns>
-    ///     A new user skill object.
-    /// </returns>
-    public static UserSkill InitVer3(Guid userId)
+    public static UserSkill InitFromDatabaseVer3(Guid userId)
     {
         return new()
         {

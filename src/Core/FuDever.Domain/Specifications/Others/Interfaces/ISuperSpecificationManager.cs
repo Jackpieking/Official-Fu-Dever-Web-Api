@@ -13,6 +13,7 @@ using FuDever.Domain.Specifications.Entities.User.Manager;
 using FuDever.Domain.Specifications.Entities.UserHobby.Manager;
 using FuDever.Domain.Specifications.Entities.UserJoiningStatus.Manager;
 using FuDever.Domain.Specifications.Entities.UserPlatform.Manager;
+using FuDever.Domain.Specifications.Entities.UserRole.Manager;
 using FuDever.Domain.Specifications.Entities.UserSkill.Manager;
 
 namespace FuDever.Domain.Specifications.Others.Interfaces;
@@ -102,4 +103,9 @@ public interface ISuperSpecificationManager
     ///     Refresh token specification manager.
     /// </summary>
     IRefreshTokenSpecificationManager RefreshToken { get; }
+
+    /// <summary>
+    ///     User role specification manager.
+    /// </summary>
+    IUserRoleSpecificationManager UserRole { get; }
 }

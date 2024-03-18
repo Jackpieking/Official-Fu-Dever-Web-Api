@@ -11,6 +11,7 @@ internal sealed class DepartmentSpecificationManager : IDepartmentSpecificationM
     private IDepartmentNotTemporarilyRemovedSpecification _departmentNotTemporarilyRemovedSpecification;
     private IDepartmentTemporarilyRemovedSpecification _departmentTemporarilyRemovedSpecification;
     private ISelectFieldsFromDepartmentSpecification _selectFieldsFromDepartmentSpecification;
+    private IDepartmentNameIsNotDefaultSpecification _departmentNameIsNotDefaultSpecification;
 
     public IDepartmentAsNoTrackingSpecification DepartmentAsNoTrackingSpecification
     {
@@ -49,6 +50,16 @@ internal sealed class DepartmentSpecificationManager : IDepartmentSpecificationM
             _selectFieldsFromDepartmentSpecification ??= new SelectFieldsFromDepartmentSpecification();
 
             return _selectFieldsFromDepartmentSpecification;
+        }
+    }
+
+    public IDepartmentNameIsNotDefaultSpecification DepartmentNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _departmentNameIsNotDefaultSpecification ??= new DepartmentNameIsNotDefaultSpecification();
+
+            return _departmentNameIsNotDefaultSpecification;
         }
     }
 

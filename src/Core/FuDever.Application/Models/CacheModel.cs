@@ -17,7 +17,7 @@ public sealed class CacheModel<TSource>
     ///     Represent the state cannot found
     ///     the cached value by key.
     /// </summary>
-    public static readonly CacheModel<TSource> NotFound = default;
+    public static readonly CacheModel<TSource> NotFound;
 
     private CacheModel()
     {

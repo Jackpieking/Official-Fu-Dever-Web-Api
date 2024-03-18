@@ -28,6 +28,11 @@ public interface IDepartmentSpecificationManager
     ISelectFieldsFromDepartmentSpecification SelectFieldsFromDepartmentSpecification { get; }
 
     /// <summary>
+    ///     Department name is not default specification.
+    /// </summary>
+    IDepartmentNameIsNotDefaultSpecification DepartmentNameIsNotDefaultSpecification { get; }
+
+    /// <summary>
     ///     Department by department id specification
     /// </summary>
     /// <param name="departmentId">

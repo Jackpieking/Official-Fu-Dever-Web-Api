@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromProjectSpecification :
 {
     public ISelectFieldsFromProjectSpecification Ver1()
     {
-        SelectExpression = project => Domain.Entities.Project.InitVer1(
+        SelectExpression = project => Domain.Entities.Project.InitFromDatabaseVer1(
             project.Id,
             project.Title,
             project.Description,

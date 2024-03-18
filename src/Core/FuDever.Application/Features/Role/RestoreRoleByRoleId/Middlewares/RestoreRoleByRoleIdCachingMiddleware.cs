@@ -67,7 +67,7 @@ internal sealed class RestoreRoleByRoleIdCachingMiddleware :
                 specifications:
                 [
                     _superSpecificationManager.Role.RoleByIdSpecification(roleId: request.RoleId),
-                    //_superSpecificationManager.Role.SelectFieldsFromRoleSpecification.Ver3()
+                    _superSpecificationManager.Role.SelectFieldsFromRoleSpecification.Ver3()
                 ],
                 cancellationToken: cancellationToken);
 

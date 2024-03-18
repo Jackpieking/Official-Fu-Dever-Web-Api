@@ -4,9 +4,10 @@ using FuDever.Configuration.Presentation.WebApi.Authorization;
 using FuDever.Configuration.Presentation.WebApi.RateLimiter;
 using FuDever.Configuration.Presentation.WebApi.Swagger;
 using FuDever.WebApi.ActionResults;
-using FuDever.WebApi.ApiReturnCodes.Base;
+using FuDever.WebApi.AppCodes.Base;
 using FuDever.WebApi.Authorization.Requires;
 using FuDever.WebApi.Commons;
+using FuDever.WebApi.HttpResponse.Others;
 using FuDever.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -89,10 +90,8 @@ internal static class DependencyInjection
                 config.DefaultScheme = jwtAuthenticationOption.Common.DefaultScheme;
                 config.DefaultChallengeScheme = jwtAuthenticationOption.Common.DefaultChallengeScheme;
             })
-            .AddJwtBearer(configureOptions: config =>
-            {
-                config.TokenValidationParameters = GetTokenValidationParameters(configuration: configuration);
-            });
+            .AddJwtBearer(configureOptions: config => config.TokenValidationParameters =
+                GetTokenValidationParameters(configuration: configuration));
     }
 
     /// <summary>
@@ -216,7 +215,7 @@ internal static class DependencyInjection
                     apiControllerOption.SuppressAsyncSuffixInActionNames)
             .ConfigureApiBehaviorOptions(setupAction: config =>
                 config.InvalidModelStateResponseFactory = _ =>
-                    new CustomGlobalBadRequestResult());
+                    new CustomBadRequestResult());
     }
 
     /// <summary>
@@ -351,7 +350,7 @@ internal static class DependencyInjection
                 await option.HttpContext.Response.WriteAsJsonAsync(
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Two many request.",
@@ -395,7 +394,8 @@ internal static class DependencyInjection
         services
             .AddScoped(implementationFactory: _ =>
                 GetTokenValidationParameters(configuration: configuration))
-            .AddScoped<SecurityTokenHandler, JwtSecurityTokenHandler>();
+            .AddScoped<SecurityTokenHandler, JwtSecurityTokenHandler>()
+            .AddScoped<EntityHttpResponseManager>();
     }
 
     /// <summary>

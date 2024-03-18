@@ -59,7 +59,7 @@ internal sealed class RestoreRoleByRoleIdRequestHandler : IRequestHandler<
         {
             return new()
             {
-                StatusCode = RestoreRoleByRoleIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND
+                StatusCode = RestoreRoleByRoleIdResponseStatusCode.ROLE_IS_NOT_FOUND
             };
         }
 
@@ -73,7 +73,7 @@ internal sealed class RestoreRoleByRoleIdRequestHandler : IRequestHandler<
         {
             return new()
             {
-                StatusCode = RestoreRoleByRoleIdResponseStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED
+                StatusCode = RestoreRoleByRoleIdResponseStatusCode.ROLE_IS_NOT_TEMPORARILY_REMOVED
             };
         }
 

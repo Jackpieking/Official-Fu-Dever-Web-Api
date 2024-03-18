@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromCvSpecification :
 {
     public ISelectFieldsFromCvSpecification Ver1()
     {
-        SelectExpression = cv => Domain.Entities.Cv.InitVer1(
+        SelectExpression = cv => Domain.Entities.Cv.InitFromDatabaseVer1(
             cv.Id,
             cv.StudentFullName,
             cv.StudentEmail,

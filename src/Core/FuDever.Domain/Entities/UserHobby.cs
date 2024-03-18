@@ -10,14 +10,8 @@ public sealed class UserHobby : IBaseEntity
 {
     private UserHobby() { }
 
-    /// <summary>
-    ///     User id.
-    /// </summary>
     public Guid UserId { get; set; }
 
-    /// <summary>
-    ///     Hobby id.
-    /// </summary>
     public Guid HobbyId { get; set; }
 
     // Navigation properties.
@@ -25,16 +19,7 @@ public sealed class UserHobby : IBaseEntity
 
     public Hobby Hobby { get; set; }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobby">
-    ///     Hobby of user hobby.
-    /// </param>
-    /// <returns>
-    ///     A new user hobby object.
-    /// </returns>
-    public static UserHobby InitVer1(Hobby hobby)
+    public static UserHobby InitFromDatabaseVer3(Hobby hobby)
     {
         return new()
         {
@@ -42,19 +27,7 @@ public sealed class UserHobby : IBaseEntity
         };
     }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="hobbyId">
-    ///     Hobby id of user hobby.
-    /// </param>
-    /// <param name="hobby">
-    ///     Hobby of user hobby.
-    /// </param>
-    /// <returns>
-    ///     A new user hobby object.
-    /// </returns>
-    public static UserHobby InitVer2(
+    public static UserHobby InitFromDatabaseVer1(
         Guid hobbyId,
         Hobby hobby)
     {
@@ -65,16 +38,7 @@ public sealed class UserHobby : IBaseEntity
         };
     }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="userId">
-    ///     User id of user hobby.
-    /// </param>
-    /// <returns>
-    ///     A new user hobby object.
-    /// </returns>
-    public static UserHobby InitVer3(Guid userId)
+    public static UserHobby InitFromDatabaseVer2(Guid userId)
     {
         return new()
         {

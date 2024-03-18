@@ -13,6 +13,7 @@ using FuDever.Domain.Specifications.Entities.User.Manager;
 using FuDever.Domain.Specifications.Entities.UserHobby.Manager;
 using FuDever.Domain.Specifications.Entities.UserJoiningStatus.Manager;
 using FuDever.Domain.Specifications.Entities.UserPlatform.Manager;
+using FuDever.Domain.Specifications.Entities.UserRole.Manager;
 using FuDever.Domain.Specifications.Entities.UserSkill.Manager;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.SqlServer.Specifications.Entities.Blog.Manager;
@@ -30,6 +31,7 @@ using FuDever.SqlServer.Specifications.Entities.User.Manager;
 using FuDever.SqlServer.Specifications.Entities.UserHobby.Manager;
 using FuDever.SqlServer.Specifications.Entities.UserJoiningStatus.Manager;
 using FuDever.SqlServer.Specifications.Entities.UserPlatform.Manager;
+using FuDever.SqlServer.Specifications.Entities.UserRole.Manager;
 using FuDever.SqlServer.Specifications.Entities.UserSkill.Manager;
 
 namespace FuDever.SqlServer.Specifications.Others;
@@ -53,6 +55,7 @@ internal sealed class SuperSpecificationManager : ISuperSpecificationManager
     private IUserSkillSpecificationManager _userSkillSpecificationManager;
     private IUserHobbySpecificationManager _userHobbySpecificationManager;
     private IRefreshTokenSpecificationManager _refreshTokenSpecificationManager;
+    private IUserRoleSpecificationManager _userRoleSpecificationManager;
 
     public ISkillSpecificationManager Skill
     {
@@ -211,6 +214,16 @@ internal sealed class SuperSpecificationManager : ISuperSpecificationManager
             _refreshTokenSpecificationManager ??= new RefreshTokenSpecificationManager();
 
             return _refreshTokenSpecificationManager;
+        }
+    }
+
+    public IUserRoleSpecificationManager UserRole
+    {
+        get
+        {
+            _userRoleSpecificationManager ??= new UserRoleSpecificationManager();
+
+            return _userRoleSpecificationManager;
         }
     }
 }

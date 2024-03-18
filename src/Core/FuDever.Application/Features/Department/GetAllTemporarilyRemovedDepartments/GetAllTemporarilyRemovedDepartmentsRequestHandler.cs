@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedDepartmentsRequestHandler : IReque
             [
                 _superSpecificationManager.Department.DepartmentAsNoTrackingSpecification,
                 _superSpecificationManager.Department.DepartmentTemporarilyRemovedSpecification,
+                _superSpecificationManager.Department.DepartmentNameIsNotDefaultSpecification,
                 _superSpecificationManager.Department.SelectFieldsFromDepartmentSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

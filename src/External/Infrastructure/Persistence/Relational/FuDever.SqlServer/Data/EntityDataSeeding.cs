@@ -301,7 +301,7 @@ public static class EntityDataSeeding
     {
         List<string> newDepartmentNames =
         [
-            "EMPTY",
+            string.Empty,
             "Board of Directors",
             "Academic Board",
             "Administrative Board",
@@ -313,7 +313,7 @@ public static class EntityDataSeeding
 
         foreach (var newDepartmentName in newDepartmentNames)
         {
-            newDepartments.Add(item: Department.InitVer1(
+            newDepartments.Add(item: Department.InitForSeeding(
                 departmentId: Guid.NewGuid(),
                 departmentName: newDepartmentName,
                 departmentRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -337,7 +337,7 @@ public static class EntityDataSeeding
     {
         List<string> newHobbyNames =
         [
-            "EMPTY",
+            string.Empty,
             "Volunteering",
             "Cooking",
             "Collecting",
@@ -371,7 +371,7 @@ public static class EntityDataSeeding
 
         foreach (var newHobbyName in newHobbyNames)
         {
-            newHobbies.Add(item: Hobby.InitVer1(
+            newHobbies.Add(item: Hobby.InitForSeeding(
                 hobbyId: Guid.NewGuid(),
                 hobbyName: newHobbyName,
                 hobbyRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -396,7 +396,7 @@ public static class EntityDataSeeding
     {
         List<string> newMajorNames =
         [
-            "EMPTY",
+            string.Empty,
             "Software Engineering",
             "Information Security",
             "Digital Art Design",
@@ -408,7 +408,7 @@ public static class EntityDataSeeding
 
         foreach (var newMajorName in newMajorNames)
         {
-            newMajors.Add(item: Major.InitVer1(
+            newMajors.Add(item: Major.InitForSeeding(
                 majorId: Guid.NewGuid(),
                 majorName: newMajorName,
                 majorRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -432,7 +432,7 @@ public static class EntityDataSeeding
     {
         List<string> newPlatformNames =
         [
-            "EMPTY",
+            string.Empty,
             "LinkedIn",
             "GitHub",
             "Facebook",
@@ -445,7 +445,7 @@ public static class EntityDataSeeding
 
         foreach (var newPlatformName in newPlatformNames)
         {
-            newPlatforms.Add(item: Platform.InitVer1(
+            newPlatforms.Add(item: Platform.InitForSeeding(
                 platformId: Guid.NewGuid(),
                 platformName: newPlatformName,
                 platformRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -487,7 +487,7 @@ public static class EntityDataSeeding
 
         foreach (var newPositionName in newPositionNames)
         {
-            newPositions.Add(item: Position.InitVer1(
+            newPositions.Add(item: Position.InitForSeeding(
                 positionId: Guid.NewGuid(),
                 positionName: newPositionName,
                 positionRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -511,7 +511,7 @@ public static class EntityDataSeeding
     {
         List<string> newSkillNames =
         [
-            "EMPTY",
+            string.Empty,
             "Vue.js",
             "Caching",
             "Flexbox",
@@ -561,7 +561,7 @@ public static class EntityDataSeeding
 
         foreach (var newSkillName in newSkillNames)
         {
-            newSkills.Add(item: Skill.InitVer1(
+            newSkills.Add(item: Skill.InitForSeeding(
                 skillId: Guid.NewGuid(),
                 skillName: newSkillName,
                 skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
@@ -585,7 +585,7 @@ public static class EntityDataSeeding
     {
         List<string> newUserJoiningStatusTypes =
         [
-            "EMPTY",
+            string.Empty,
             "Pending",
             "Approved",
             "Expired",
@@ -596,7 +596,7 @@ public static class EntityDataSeeding
 
         foreach (var newUserJoiningStatusType in newUserJoiningStatusTypes)
         {
-            newUserJoiningStatuses.Add(item: UserJoiningStatus.InitVer1(
+            newUserJoiningStatuses.Add(item: UserJoiningStatus.InitForSeeding(
                 userJoiningStatusId: Guid.NewGuid(),
                 userJoiningStatusType: newUserJoiningStatusType,
                 userJoiningStatusRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,

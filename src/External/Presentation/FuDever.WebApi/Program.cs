@@ -3,8 +3,9 @@ using FuDever.Application;
 using FuDever.Domain.Entities;
 using FuDever.Firebase;
 using FuDever.GoogleSmtp;
-using FuDever.SqlServer;
-using FuDever.SqlServer.Data;
+using FuDever.PostgresSql;
+using FuDever.PostgresSql.Data;
+using FuDever.Redis;
 using FuDever.WebApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,9 @@ using System.Text;
 using System.Threading;
 
 // Custom settings.
+AppContext.SetSwitch(
+    switchName: "Npgsql.DisableDateTimeInfinityConversions",
+    isEnabled: true);
 Console.OutputEncoding = Encoding.UTF8;
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -26,11 +30,12 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 services.AddApplication();
-services.AddPersistence(configuration: configuration);
+services.AddRelationalDatabase(configuration: configuration);
 services.AddWebApi(configuration: configuration);
 services.AddFileObjectStorage();
 services.AddIdentityService();
 services.AddNotification();
+services.AddCachingDatabase(configuration: configuration);
 
 var app = builder.Build();
 

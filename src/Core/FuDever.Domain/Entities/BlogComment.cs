@@ -15,29 +15,14 @@ public sealed class BlogComment :
     {
     }
 
-    /// <summary>
-    ///     Comment id.
-    /// </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    ///     Blog id.
-    /// </summary>
     public Guid BlogId { get; set; }
 
-    /// <summary>
-    ///     Comment author id.
-    /// </summary>
     public Guid AuthorId { get; set; }
 
-    /// <summary>
-    ///     Comment upload date.
-    /// </summary>
     public DateTime UploadDate { get; set; }
 
-    /// <summary>
-    ///     Comment content.
-    /// </summary>
     public string Content { get; set; }
 
     public DateTime CreatedAt { get; set; }

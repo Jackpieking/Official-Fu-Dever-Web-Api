@@ -21,7 +21,7 @@ public static class DependencyInjection
     ///     Load configuration for configuration
     ///     file (appsetting).
     /// </param>
-    public static void AddCaching(
+    public static void AddCachingDatabase(
         this IServiceCollection services,
         IConfigurationManager configuration)
     {

@@ -13,16 +13,17 @@ internal sealed class SelectFieldsFromUserHobbySpecification :
 {
     public ISelectFieldsFromUserHobbySpecification Ver1()
     {
-        SelectExpression = userHobby => Domain.Entities.UserHobby.InitVer2(
+        SelectExpression = userHobby => Domain.Entities.UserHobby.InitFromDatabaseVer1(
             userHobby.HobbyId,
-            Domain.Entities.Hobby.InitVer4(userHobby.Hobby.Name));
+            Domain.Entities.Hobby.InitFromDatabaseVer4(userHobby.Hobby.Name));
 
         return this;
     }
 
     public ISelectFieldsFromUserHobbySpecification Ver2()
     {
-        SelectExpression = userHobby => Domain.Entities.UserHobby.InitVer3(userHobby.UserId);
+        SelectExpression = userHobby => Domain.Entities.UserHobby.InitFromDatabaseVer2(
+            userHobby.UserId);
 
         return this;
     }

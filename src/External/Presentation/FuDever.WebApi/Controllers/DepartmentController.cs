@@ -7,18 +7,15 @@ using FuDever.Application.Features.Department.RemoveDepartmentTemporarilyByDepar
 using FuDever.Application.Features.Department.RestoreDepartmentByDepartmentId;
 using FuDever.Application.Features.Department.UpdateDepartmentByDepartmentId;
 using FuDever.Domain.Entities;
-using FuDever.WebApi.ApiReturnCodes;
-using FuDever.WebApi.ApiReturnCodes.Base;
 using FuDever.WebApi.Attributes;
-using FuDever.WebApi.Commons;
 using FuDever.WebApi.DTOs.Department.Incomings;
+using FuDever.WebApi.HttpResponse.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,10 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class DepartmentController : ControllerBase
 {
     private readonly ISender _sender;
+    private readonly EntityHttpResponseManager _entityHttpResponseManager;
 
-    public DepartmentController(ISender sender)
+    public DepartmentController(
+        ISender sender,
+        EntityHttpResponseManager entityHttpResponseManager)
     {
         _sender = sender;
+        _entityHttpResponseManager = entityHttpResponseManager;
     }
 
     /// <summary>
@@ -62,41 +63,22 @@ public sealed class DepartmentController : ControllerBase
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         // Get all departments which are not temporarily removed.
-        GetAllDepartmentsRequest request = new()
+        GetAllDepartmentsRequest featureRequest = new()
         {
             CacheExpiredTime = 60
         };
 
         var featureResponse = await _sender.Send(
-            request: request,
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (featureResponse.StatusCode)
-        {
-            //500
-            case GetAllDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                                "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.GetAllDepartments
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse
-                {
-                    Body = featureResponse.FoundDepartments
-                });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -135,49 +117,30 @@ public sealed class DepartmentController : ControllerBase
             ErrorMessage = "Too much chars on department name !!")]
         [MinLength(
             length: Department.Metadata.Name.MinLength,
-            ErrorMessage = $"Less than min length of department name !!")]
+            ErrorMessage = "Less than min length of department name !!")]
                 string departmentName,
         CancellationToken cancellationToken)
     {
         departmentName = departmentName.Trim();
 
         // Find department by name.
-        GetAllDepartmentsByDepartmentNameRequest request = new()
+        GetAllDepartmentsByDepartmentNameRequest featureRequest = new()
         {
             DepartmentName = departmentName,
             CacheExpiredTime = 60
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case GetAllDepartmentsByDepartmentNameResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.GetAllDepartmentsByDepartmentName
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse
-                {
-                    Body = response.FoundDepartments
-                });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -214,81 +177,29 @@ public sealed class DepartmentController : ControllerBase
         dto.NormalizeAllProperties();
 
         // Create department
-        CreateDepartmentRequest request = new()
+        CreateDepartmentRequest featureRequest = new()
         {
             NewDepartmentName = dto.DepartmentName
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
+        var apiResponse = _entityHttpResponseManager.Department.CreateDepartment
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
+
+        if (apiResponse.HttpCode == StatusCodes.Status201Created)
         {
-            // 500
-            case CreateDepartmentResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
-
-            // 400
-            case CreateDepartmentResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
-            {
-                return BadRequest(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED,
-                    ErrorMessages =
-                    [
-                        $"Found department with name = {dto.DepartmentName} in temporarily removed storage."
-                    ]
-                });
-            }
-
-            // 409
-            case CreateDepartmentResponseStatusCode.DEPARTMENT_ALREADY_EXISTS:
-            {
-                return Conflict(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_ALREADY_EXISTS,
-                    ErrorMessages =
-                    [
-                        $"Department with name = {dto.DepartmentName} already exists."
-                    ]
-                });
-            }
-
-            // 500
-            case CreateDepartmentResponseStatusCode.DATABASE_OPERATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Database operations failed."
-                        ]
-                    });
-            }
-
-            // 201
-            default:
-            {
-                return Created(
-                    uri: $"{HttpContext.Request.Path}?name={dto.DepartmentName}",
-                    value: new CommonResponse { });
-            }
+            return Created(
+                uri: $"{HttpContext.Request.Path}?name={dto.DepartmentName}",
+                value: apiResponse);
         }
+
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -322,80 +233,23 @@ public sealed class DepartmentController : ControllerBase
         CancellationToken cancellationToken)
     {
         // Remove department temporarily by department id.
-        RemoveDepartmentTemporarilyByDepartmentIdRequest request = new()
+        RemoveDepartmentTemporarilyByDepartmentIdRequest featureRequest = new()
         {
             DepartmentId = departmentId,
             DepartmentRemovedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.RemoveDepartmentTemporarilyByDepartmentId
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 404
-            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
-            {
-                return NotFound(value: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_FOUND,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found."
-                    ]
-                });
-            }
-
-            // 400
-            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
-            {
-                return BadRequest(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED,
-                    ErrorMessages =
-                    [
-                        $"Found department with Id = {departmentId} in temporarily removed storage."
-                    ]
-                });
-            }
-
-            // 500
-            case RemoveDepartmentTemporarilyByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Database operations failed."
-                        ]
-                    });
-            }
-
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse { });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -437,94 +291,24 @@ public sealed class DepartmentController : ControllerBase
         dto.NormalizeAllProperties();
 
         // Update department by department id.
-        UpdateDepartmentByDepartmentIdRequest request = new()
+        UpdateDepartmentByDepartmentIdRequest featureRequest = new()
         {
             NewDepartmentName = dto.NewDepartmentName,
             DepartmentId = departmentId,
             DepartmentUpdatedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case UpdateDepartmentByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.UpdateDepartmentByDepartmentId
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 404
-            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
-            {
-                return NotFound(value: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_FOUND,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found."
-                    ]
-                });
-            }
-
-            // 400
-            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED:
-            {
-                return BadRequest(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_ALREADY_TEMPORARILY_REMOVED,
-                    ErrorMessages =
-                    [
-                        $"Found department with Id = {departmentId} in temporarily removed storage."
-                    ]
-                });
-            }
-
-            // 409
-            case UpdateDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_ALREADY_EXISTS:
-            {
-                return Conflict(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_ALREADY_EXISTS,
-                    ErrorMessages =
-                    [
-                        $"Department with name = {dto.NewDepartmentName} already exists."
-                    ]
-                });
-            }
-
-            // 500
-            case UpdateDepartmentByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Database operations failed."
-                        ]
-                    });
-            }
-
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse { });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -545,51 +329,22 @@ public sealed class DepartmentController : ControllerBase
     public async Task<IActionResult> GetAllTemporarilyRemovedAsync(CancellationToken cancellationToken)
     {
         // Get all temporarily removed department.
-        GetAllTemporarilyRemovedDepartmentsRequest request = new()
+        GetAllTemporarilyRemovedDepartmentsRequest featureRequest = new()
         {
             CacheExpiredTime = 60
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case GetAllTemporarilyRemovedDepartmentsResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.GetAllTemporarilyRemovedDepartments
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse
-                {
-                    Body = response.FoundTemporarilyRemovedDepartments.Select(department =>
-                        new GetAllTemporarilyRemovedDepartmentsResponse.Department
-                        {
-                            DepartmentId = department.DepartmentId,
-                            DepartmentName = department.DepartmentName,
-                            DepartmentRemovedAt = TimeZoneInfo.ConvertTimeFromUtc(
-                                dateTime: department.DepartmentRemovedAt,
-                                destinationTimeZone: TimeZoneInfo.FindSystemTimeZoneById(
-                                    id: "SE Asia Standard Time")),
-                            DepartmentRemovedBy = department.DepartmentRemovedBy
-                        })
-                });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -620,80 +375,23 @@ public sealed class DepartmentController : ControllerBase
             Guid departmentId,
         CancellationToken cancellationToken)
     {
-        RemoveDepartmentPermanentlyByDepartmentIdRequest request = new()
+        RemoveDepartmentPermanentlyByDepartmentIdRequest featureRequest = new()
         {
             DepartmentId = departmentId,
             DepartmentRemovedBy = Guid.Parse("a2646515-306a-4667-9e41-2230391f61cd")
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.RemoveDepartmentPermanentlyByDepartmentId
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 404
-            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
-            {
-                return NotFound(value: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_FOUND,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found."
-                    ]
-                });
-            }
-
-            // 400
-            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
-            {
-                return BadRequest(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found in temporarily removed storage."
-                    ]
-                });
-            }
-
-            // 500
-            case RemoveDepartmentPermanentlyByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Database operations failed."
-                        ]
-                    });
-            }
-
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse { });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 
     /// <summary>
@@ -725,78 +423,21 @@ public sealed class DepartmentController : ControllerBase
         CancellationToken cancellationToken)
     {
         // Restore department by department id.
-        RestoreDepartmentByDepartmentIdRequest request = new()
+        RestoreDepartmentByDepartmentIdRequest featureRequest = new()
         {
             DepartmentId = departmentId
         };
 
-        var response = await _sender.Send(
-            request: request,
+        var featureResponse = await _sender.Send(
+            request: featureRequest,
             cancellationToken: cancellationToken);
 
-        switch (response.StatusCode)
-        {
-            // 500
-            case RestoreDepartmentByDepartmentIdResponseStatusCode.INPUT_VALIDATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Server error. Please try again later."
-                        ]
-                    });
-            }
+        var apiResponse = _entityHttpResponseManager.Department.RestoreDepartmentByDepartmentId
+            .Resolve(statusCode: featureResponse.StatusCode)
+            .Invoke(arg1: featureRequest, arg2: featureResponse);
 
-            // 404
-            case RestoreDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_FOUND:
-            {
-                return NotFound(value: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_FOUND,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found."
-                    ]
-                });
-            }
-
-            // 400
-            case RestoreDepartmentByDepartmentIdResponseStatusCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED:
-            {
-                return BadRequest(error: new CommonResponse
-                {
-                    ApiReturnCode = DepartmentApiReturnCode.DEPARTMENT_IS_NOT_TEMPORARILY_REMOVED,
-                    ErrorMessages =
-                    [
-                        $"Department with Id = {departmentId} is not found in temporarily removed storage."
-                    ]
-                });
-            }
-
-            // 500
-            case RestoreDepartmentByDepartmentIdResponseStatusCode.DATABASE_OPERATION_FAIL:
-            {
-                return StatusCode(
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    value: new CommonResponse
-                    {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
-                        ErrorMessages =
-                        [
-                            "Database operations failed."
-                        ]
-                    });
-            }
-
-            // 200
-            default:
-            {
-                return Ok(value: new CommonResponse { });
-            }
-        }
+        return StatusCode(
+            statusCode: apiResponse.HttpCode,
+            value: apiResponse);
     }
 }

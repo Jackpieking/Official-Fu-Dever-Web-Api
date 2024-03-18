@@ -13,7 +13,7 @@ internal sealed class SelectFieldsFromPlatformSpecification :
 {
     public ISelectFieldsFromPlatformSpecification Ver1()
     {
-        SelectExpression = platform => Domain.Entities.Platform.InitVer2(
+        SelectExpression = platform => Domain.Entities.Platform.InitFromDatabaseVer1(
             platform.Id,
             platform.Name);
 
@@ -22,7 +22,7 @@ internal sealed class SelectFieldsFromPlatformSpecification :
 
     public ISelectFieldsFromPlatformSpecification Ver2()
     {
-        SelectExpression = platform => Domain.Entities.Platform.InitVer1(
+        SelectExpression = platform => Domain.Entities.Platform.InitFromDatabaseVer3(
             platform.Id,
             platform.Name,
             platform.RemovedAt,
@@ -33,7 +33,7 @@ internal sealed class SelectFieldsFromPlatformSpecification :
 
     public ISelectFieldsFromPlatformSpecification Ver3()
     {
-        SelectExpression = platfrom => Domain.Entities.Platform.InitVer3(platfrom.Name);
+        SelectExpression = platfrom => Domain.Entities.Platform.InitFromDatabaseVer2(platfrom.Name);
 
         return this;
     }

@@ -8,7 +8,7 @@ using FuDever.Application.Features.Skill.RestoreSkillBySkillId;
 using FuDever.Application.Features.Skill.UpdateSkillBySkillId;
 using FuDever.Domain.Entities;
 using FuDever.WebApi.ApiReturnCodes;
-using FuDever.WebApi.ApiReturnCodes.Base;
+using FuDever.WebApi.AppCodes.Base;
 using FuDever.WebApi.Attributes;
 using FuDever.WebApi.Commons;
 using FuDever.WebApi.DTOs.Skill.Incomings;
@@ -80,7 +80,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -161,7 +161,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -232,7 +232,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -245,7 +245,7 @@ public sealed class SkillController : ControllerBase
             {
                 return BadRequest(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                    AppCode = SkillAppCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
                     ErrorMessages =
                     [
                         $"Found skill with name = {dto.SkillName} in temporarily removed storage."
@@ -258,7 +258,7 @@ public sealed class SkillController : ControllerBase
             {
                 return Conflict(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
+                    AppCode = SkillAppCode.SKILL_ALREADY_EXISTS,
                     ErrorMessages =
                     [
                         $"Skill with name = {dto.SkillName} already exists."
@@ -273,7 +273,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Database operations failed."
@@ -341,7 +341,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -354,7 +354,7 @@ public sealed class SkillController : ControllerBase
             {
                 return NotFound(value: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_FOUND,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found."
@@ -367,7 +367,7 @@ public sealed class SkillController : ControllerBase
             {
                 return BadRequest(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                    AppCode = SkillAppCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
                     ErrorMessages =
                     [
                         $"Found skill with Id = {skillId} in temporarily removed storage."
@@ -382,7 +382,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Database operations failed."
@@ -457,7 +457,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -470,7 +470,7 @@ public sealed class SkillController : ControllerBase
             {
                 return NotFound(value: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_FOUND,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found."
@@ -483,7 +483,7 @@ public sealed class SkillController : ControllerBase
             {
                 return BadRequest(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
+                    AppCode = SkillAppCode.SKILL_IS_ALREADY_TEMPORARILY_REMOVED,
                     ErrorMessages =
                     [
                         $"Found skill with Id = {skillId} in temporarily removed storage."
@@ -496,7 +496,7 @@ public sealed class SkillController : ControllerBase
             {
                 return Conflict(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_ALREADY_EXISTS,
+                    AppCode = SkillAppCode.SKILL_ALREADY_EXISTS,
                     ErrorMessages =
                     [
                         $"Skill with name = {dto.NewSkillName} already exists."
@@ -511,7 +511,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Database operations failed."
@@ -563,7 +563,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -639,7 +639,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -652,7 +652,7 @@ public sealed class SkillController : ControllerBase
             {
                 return NotFound(value: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_FOUND,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found."
@@ -665,7 +665,7 @@ public sealed class SkillController : ControllerBase
             {
                 return BadRequest(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found in temporarily removed storage."
@@ -680,7 +680,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Database operations failed."
@@ -743,7 +743,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Server error. Please try again later."
@@ -756,7 +756,7 @@ public sealed class SkillController : ControllerBase
             {
                 return NotFound(value: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_FOUND,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_FOUND,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found."
@@ -769,7 +769,7 @@ public sealed class SkillController : ControllerBase
             {
                 return BadRequest(error: new CommonResponse
                 {
-                    ApiReturnCode = SkillApiReturnCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
+                    AppCode = SkillAppCode.SKILL_IS_NOT_TEMPORARILY_REMOVED,
                     ErrorMessages =
                     [
                         $"Skill with Id = {skillId} is not found in temporarily removed storage."
@@ -784,7 +784,7 @@ public sealed class SkillController : ControllerBase
                     statusCode: StatusCodes.Status500InternalServerError,
                     value: new CommonResponse
                     {
-                        ApiReturnCode = BaseApiReturnCode.SERVER_ERROR,
+                        AppCode = BaseAppCode.SERVER_ERROR,
                         ErrorMessages =
                         [
                             "Database operations failed."

@@ -19,6 +19,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ResponseMapper\**" />
+    <Content Remove="ResponseMapper\**" />
+    <EmbeddedResource Remove="ResponseMapper\**" />
+    <None Remove="ResponseMapper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,16 +35,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authorization\RequireHandlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\BackgroundJob\FuDever.HangFire\FuDever.HangFire.csproj" />
     <ProjectReference Include="..\..\Infrastructure\FileObjectStorage\Image\FuDever.Firebase\FuDever.Firebase.csproj" />
     <ProjectReference Include="..\..\Infrastructure\IdentityService\JsonWebToken\FuDever.App\FuDever.App.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Notification\Mail\FuDever.GoogleSmtp\FuDever.GoogleSmtp.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Persistence\Caching\FuDever.Redis\FuDever.Redis.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\Persistence\Relational\FuDever.SqlServer\FuDever.SqlServer.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Persistence\Relational\FuDever.PostgresSql\FuDever.PostgresSql.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Authorization\RequireHandlers\" />
   </ItemGroup>
 
 </Project>

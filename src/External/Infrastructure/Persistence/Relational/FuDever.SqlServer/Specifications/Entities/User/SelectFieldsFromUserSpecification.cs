@@ -15,7 +15,7 @@ internal sealed class SelectFieldsFromUserSpecification :
     public ISelectFieldsFromUserSpecification Ver1()
     {
         SelectExpression = user => Domain.Entities.User.InitVer2(
-            Domain.Entities.UserJoiningStatus.InitVer3(
+            Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(
                 user.UserJoiningStatus.Type));
 
         return this;
@@ -28,9 +28,9 @@ internal sealed class SelectFieldsFromUserSpecification :
             user.FirstName,
             user.LastName,
             user.Email,
-            Domain.Entities.Position.InitVer2(user.Position.Name),
-            Domain.Entities.Department.InitVer3(user.Department.Name),
-            Domain.Entities.UserJoiningStatus.InitVer3(user.UserJoiningStatus.Type),
+            Domain.Entities.Position.InitFromDatabaseVer1(user.Position.Name),
+            Domain.Entities.Department.InitFromDatabaseVer3(user.Department.Name),
+            Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(user.UserJoiningStatus.Type),
             user.AvatarUrl,
             user.RemovedAt,
             user.RemovedBy);
@@ -53,25 +53,25 @@ internal sealed class SelectFieldsFromUserSpecification :
             SelfDescription = user.SelfDescription,
             JoinDate = user.JoinDate,
             EducationPlaces = user.EducationPlaces,
-            Position = Domain.Entities.Position.InitVer3(
+            Position = Domain.Entities.Position.InitFromDatabaseVer2(
                 user.PositionId,
                 user.Position.Name),
-            Major = Domain.Entities.Major.InitVer2(
+            Major = Domain.Entities.Major.InitFromDatabaseVer1(
                 user.MajorId,
                 user.Major.Name),
-            Department = Domain.Entities.Department.InitVer2(
+            Department = Domain.Entities.Department.InitFromDatabaseVer1(
                 user.DepartmentId,
                 user.Department.Name),
             AvatarUrl = user.AvatarUrl,
             UserPlatforms = user.UserPlatforms.Select(userPlatform =>
-                Domain.Entities.UserPlatform.InitVer1(
+                Domain.Entities.UserPlatform.InitFromDatabaseVer1(
                     userPlatform.PlatformId,
                     userPlatform.PlatformUrl,
-                    Domain.Entities.Platform.InitVer3(
+                    Domain.Entities.Platform.InitFromDatabaseVer2(
                         userPlatform.Platform.Name))),
             Workplaces = user.Workplaces,
             Projects = user.Projects.Select(project =>
-                Domain.Entities.Project.InitVer2(
+                Domain.Entities.Project.InitFromDatabaseVer2(
                     project.Id,
                     project.Title,
                     project.AuthorId,
@@ -82,11 +82,11 @@ internal sealed class SelectFieldsFromUserSpecification :
                     project.CreatedAt,
                     project.UpdatedAt)),
             UserSkills = user.UserSkills.Select(userSkill =>
-                Domain.Entities.UserSkill.InitVer1(
-                    Domain.Entities.Skill.InitVer3(userSkill.Skill.Name))),
+                Domain.Entities.UserSkill.InitFromDatabaseVer1(
+                    Domain.Entities.Skill.InitFromDatabaseVer3(userSkill.Skill.Name))),
             UserHobbies = user.UserHobbies.Select(userHobby =>
-                Domain.Entities.UserHobby.InitVer1(
-                    Domain.Entities.Hobby.InitVer4(userHobby.Hobby.Name)))
+                Domain.Entities.UserHobby.InitFromDatabaseVer3(
+                    Domain.Entities.Hobby.InitFromDatabaseVer4(userHobby.Hobby.Name)))
         };
 
         return this;
@@ -100,9 +100,9 @@ internal sealed class SelectFieldsFromUserSpecification :
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Position = Domain.Entities.Position.InitVer2(user.Position.Name),
-            Department = Domain.Entities.Department.InitVer3(user.Department.Name),
-            UserJoiningStatus = Domain.Entities.UserJoiningStatus.InitVer3(user.UserJoiningStatus.Type),
+            Position = Domain.Entities.Position.InitFromDatabaseVer1(user.Position.Name),
+            Department = Domain.Entities.Department.InitFromDatabaseVer3(user.Department.Name),
+            UserJoiningStatus = Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(user.UserJoiningStatus.Type),
             AvatarUrl = user.AvatarUrl
         };
 

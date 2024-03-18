@@ -10,4 +10,6 @@ public interface ISelectFieldsFromRoleSpecification : IBaseSpecification<Domain.
     ISelectFieldsFromRoleSpecification Ver1();
 
     ISelectFieldsFromRoleSpecification Ver2();
+
+    ISelectFieldsFromRoleSpecification Ver3();
 }

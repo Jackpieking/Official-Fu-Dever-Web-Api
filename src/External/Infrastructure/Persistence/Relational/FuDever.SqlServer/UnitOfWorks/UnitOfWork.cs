@@ -31,6 +31,7 @@ internal sealed class UnitOfWork : IUnitOfWork
     private IBlogRepository _blogRepository;
     private IProjectRepository _projectRepository;
     private ICvRepository _cvRepository;
+    private IUserRoleRepository _userRoleRepository;
     private readonly FuDeverContext _context;
 
     public UnitOfWork(FuDeverContext context)
@@ -205,6 +206,16 @@ internal sealed class UnitOfWork : IUnitOfWork
             _cvRepository ??= new CvRepository(context: _context);
 
             return _cvRepository;
+        }
+    }
+
+    public IUserRoleRepository UserRoleRepository
+    {
+        get
+        {
+            _userRoleRepository ??= new UserRoleRepository(context: _context);
+
+            return _userRoleRepository;
         }
     }
 

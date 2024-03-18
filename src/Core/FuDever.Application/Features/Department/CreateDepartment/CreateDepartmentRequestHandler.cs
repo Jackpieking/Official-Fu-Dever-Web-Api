@@ -186,11 +186,6 @@ internal sealed class CreateDepartmentRequestHandler : IRequestHandler<
             {
                 try
                 {
-                    // This line initiates a new database
-                    // transaction using the _unitOfWork
-                    // instance. It prepares the database
-                    // for a series of operations that should
-                    // be treated as a single unit of work.
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     // This block of code adds a new department entity to the department repository

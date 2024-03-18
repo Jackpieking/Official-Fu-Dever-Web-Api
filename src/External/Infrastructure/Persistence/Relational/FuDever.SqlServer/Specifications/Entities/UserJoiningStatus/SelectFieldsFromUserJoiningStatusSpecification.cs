@@ -9,7 +9,8 @@ internal sealed class SelectFieldsFromUserJoiningStatusSpecification :
 {
     public ISelectFieldsFromUserJoiningStatusSpecification Ver1()
     {
-        SelectExpression = userJoiningStatus => Domain.Entities.UserJoiningStatus.InitVer2(userJoiningStatus.Id);
+        SelectExpression = userJoiningStatus => Domain.Entities.UserJoiningStatus.InitFromDatabaseVer1(
+            userJoiningStatus.Id);
 
         return this;
     }

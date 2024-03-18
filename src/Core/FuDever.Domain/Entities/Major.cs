@@ -15,14 +15,8 @@ public sealed class Major :
     {
     }
 
-    /// <summary>
-    ///     Major id.
-    /// </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    ///     Major name.
-    /// </summary>
     public string Name { get; set; }
 
     public DateTime RemovedAt { get; set; }
@@ -32,24 +26,55 @@ public sealed class Major :
     // Navigation collections.
     public IEnumerable<User> Users { get; set; }
 
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="majorId">
-    ///     Id of major.
-    /// </param>
-    /// <param name="majorName">
-    ///     Major name.
-    /// </param>
-    /// <param name="majorRemovedAt">
-    ///     Major is removed by whom.
-    /// </param>
-    /// <param name="majorRemovedBy">
-    ///     When is major removed.
-    /// </param>
-    /// <returns>
-    ///     A new major object.
-    /// </returns>
+    public static Major InitForSeeding(
+        Guid majorId,
+        string majorName,
+        DateTime majorRemovedAt,
+        Guid majorRemovedBy)
+    {
+        return new()
+        {
+            Id = majorId,
+            Name = majorName,
+            RemovedAt = majorRemovedAt,
+            RemovedBy = majorRemovedBy
+        };
+    }
+
+    public static Major InitFromDatabaseVer1(
+        Guid majorId,
+        string majorName)
+    {
+        return new()
+        {
+            Id = majorId,
+            Name = majorName
+        };
+    }
+
+    public static Major InitFromDatabaseVer2(string majorName)
+    {
+        return new()
+        {
+            Name = majorName
+        };
+    }
+
+    public static Major InitFromDatabaseVer3(
+        Guid majorId,
+        string majorName,
+        DateTime majorRemovedAt,
+        Guid majorRemovedBy)
+    {
+        return new()
+        {
+            Id = majorId,
+            Name = majorName,
+            RemovedAt = majorRemovedAt,
+            RemovedBy = majorRemovedBy
+        };
+    }
+
     public static Major InitVer1(
         Guid majorId,
         string majorName,
@@ -86,85 +111,14 @@ public sealed class Major :
     }
 
     /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="majorId">
-    ///     Id of major.
-    /// </param>
-    /// <param name="majorName">
-    ///     Major name.
-    /// </param>
-    /// <returns>
-    ///     A new major object.
-    /// </returns>
-    public static Major InitVer2(
-        Guid majorId,
-        string majorName)
-    {
-        // Validate major name.
-        if (string.IsNullOrWhiteSpace(value: majorName) ||
-            majorName.Length > Metadata.Name.MaxLength ||
-            majorName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        // Validate major Id.
-        if (majorId == Guid.Empty)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Id = majorId,
-            Name = majorName
-        };
-    }
-
-    /// <summary>
-    ///     Return an instance.
-    /// </summary>
-    /// <param name="majorName">
-    ///     Major name.
-    /// </param>
-    /// <returns>
-    ///     A new major object.
-    /// </returns>
-    public static Major InitVer3(string majorName)
-    {
-        // Validate major name.
-        if (string.IsNullOrWhiteSpace(value: majorName) ||
-            majorName.Length > Metadata.Name.MaxLength ||
-            majorName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Name = majorName
-        };
-    }
-
-    /// <summary>
     ///     Represent metadata of property.
     /// </summary>
     public static class Metadata
     {
-        /// <summary>
-        ///     Name property.
-        /// </summary>
         public static class Name
         {
-            /// <summary>
-            ///     Max value length.
-            /// </summary>
             public const int MaxLength = 100;
 
-            /// <summary>
-            ///     Min value length.
-            /// </summary>
             public const int MinLength = 2;
         }
     }

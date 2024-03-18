@@ -17,34 +17,16 @@ public sealed class Blog :
     {
     }
 
-    /// <summary>
-    ///     Blog id.
-    /// </summary>
     public Guid Id { get; set; }
 
-    /// <summary>
-    ///     Blog author id.
-    /// </summary>
     public Guid AuthorId { get; set; }
 
-    /// <summary>
-    ///     Blog title.
-    /// </summary>
     public string Title { get; set; }
 
-    /// <summary>
-    ///     Blog thumbnail.
-    /// </summary>
     public string Thumbnail { get; set; }
 
-    /// <summary>
-    ///     Blog upload date.
-    /// </summary>
     public DateTime UploadDate { get; set; }
 
-    /// <summary>
-    ///     Blog content.
-    /// </summary>
     public string Content { get; set; }
 
     public DateTime CreatedAt { get; set; }
@@ -72,35 +54,17 @@ public sealed class Blog :
     /// </summary>
     public static class Metadata
     {
-        /// <summary>
-        ///     Title property.
-        /// </summary>
         public static class Title
         {
-            /// <summary>
-            ///     Max value length.
-            /// </summary>
             public const int MaxLength = 100;
 
-            /// <summary>
-            ///     Min value length.
-            /// </summary>
             public const int MinLength = 2;
         }
 
-        /// <summary>
-        ///     Thumbnail property.
-        /// </summary>
         public static class Thumbnail
         {
-            /// <summary>
-            ///     Max value length.
-            /// </summary>
             public const int MaxLength = 200;
 
-            /// <summary>
-            ///     Min value length.
-            /// </summary>
             public const int MinLength = 2;
         }
     }

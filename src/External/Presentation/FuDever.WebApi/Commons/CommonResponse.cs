@@ -1,4 +1,4 @@
-using FuDever.WebApi.ApiReturnCodes.Base;
+using FuDever.WebApi.AppCodes.Base;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ internal sealed class CommonResponse
     /// <summary>
     ///     Response status code.
     /// </summary>
-    public int ApiReturnCode { get; init; } = BaseApiReturnCode.SUCCESS;
+    public int AppCode { get; init; } = BaseAppCode.SUCCESS;
 
     /// <summary>
     ///     Response errors messages.
