@@ -222,27 +222,25 @@ internal sealed class UpdateHobbyByHobbyIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserHobbies = await _unitOfWork.UserHobbyRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserHobbyRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserHobby.UserHobbyAsNoTrackingSpecification,
-                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(hobbyId: request.HobbyId),
-                            _superSpecificationManager.UserHobby.SelectFieldsFromUserHobbySpecification.Ver2(),
+                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(
+                                hobbyId: request.HobbyId),
+                            _superSpecificationManager.UserHobby.UpdateFieldOfUserHobbySpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.HobbyUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserHobby in foundUserHobbies)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserHobby.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.HobbyUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.HobbyRepository.BulkUpdateByHobbyIdVer1Async(
-                        hobbyId: request.HobbyId,
-                        hobbyName: request.NewHobbyName,
+                    await _unitOfWork.HobbyRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Hobby.HobbyByIdSpecification(
+                                hobbyId: request.HobbyId),
+                            _superSpecificationManager.Hobby.UpdateFieldOfHobbySpecification.Ver2(
+                                hobbyName: request.NewHobbyName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

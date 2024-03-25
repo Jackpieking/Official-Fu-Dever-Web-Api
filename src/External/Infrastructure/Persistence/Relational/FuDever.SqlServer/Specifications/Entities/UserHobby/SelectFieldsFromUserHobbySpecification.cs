@@ -1,3 +1,5 @@
+using FuDever.Domain.EntityBuilders.Hobby;
+using FuDever.Domain.EntityBuilders.UserHobby;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.UserHobby;
 
@@ -13,17 +15,26 @@ internal sealed class SelectFieldsFromUserHobbySpecification :
 {
     public ISelectFieldsFromUserHobbySpecification Ver1()
     {
-        SelectExpression = userHobby => Domain.Entities.UserHobby.InitFromDatabaseVer1(
-            userHobby.HobbyId,
-            Domain.Entities.Hobby.InitFromDatabaseVer4(userHobby.Hobby.Name));
+        UserHobbyForDatabaseRetrievingBuilder userHobbyBuilder = new();
+        HobbyForDatabaseRetrievingBuilder hobbyBuilder = new();
+
+        SelectExpression = userHobby => userHobbyBuilder
+            .WithHobbyId(userHobby.HobbyId)
+            .WithHobby(hobbyBuilder
+                .WithName(userHobby.Hobby.Name)
+                .Complete())
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserHobbySpecification Ver2()
     {
-        SelectExpression = userHobby => Domain.Entities.UserHobby.InitFromDatabaseVer2(
-            userHobby.UserId);
+        UserHobbyForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = userHobby => builder
+            .WithUserId(userHobby.UserId)
+            .Complete();
 
         return this;
     }

@@ -6,9 +6,9 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "BlogTags" table.
 /// </summary>
-public sealed class BlogTag : IBaseEntity
+public class BlogTag : IBaseEntity
 {
-    private BlogTag()
+    internal BlogTag()
     {
     }
 

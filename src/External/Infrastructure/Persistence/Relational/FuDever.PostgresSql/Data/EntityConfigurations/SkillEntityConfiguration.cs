@@ -25,7 +25,7 @@ internal sealed class SkillEntityConfiguration : IEntityTypeConfiguration<Skill>
         // Name property configuration.
         builder
             .Property(propertyExpression: skill => skill.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Skill
                     .Metadata
                     .Name

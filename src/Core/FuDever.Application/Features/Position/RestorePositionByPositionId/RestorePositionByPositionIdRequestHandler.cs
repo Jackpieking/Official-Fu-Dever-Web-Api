@@ -183,10 +183,15 @@ internal sealed class RestorePositionByPositionIdRequestHandler : IRequestHandle
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.PositionRepository.BulkUpdateByPositionIdVer1Async(
-                        positionId: request.PositionId,
-                        positionRemovedAt: _dbMinTimeHandler.Get(),
-                        positionRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.PositionRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Position.PositionByIdSpecification(
+                                positionId: request.PositionId),
+                            _superSpecificationManager.Position.UpdateFieldOfPositionSpecification.Ver1(
+                                positionRemovedAt: _dbMinTimeHandler.Get(),
+                                positionRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

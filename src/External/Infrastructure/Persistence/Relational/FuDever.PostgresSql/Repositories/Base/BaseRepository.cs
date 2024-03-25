@@ -4,6 +4,7 @@ using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Others;
 using FuDever.PostgresSql.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -29,7 +30,7 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 {
     protected readonly DbSet<TEntity> _dbSet;
 
-    protected BaseRepository(FuDeverContext context)
+    private protected BaseRepository(FuDeverContext context)
     {
         _dbSet = context.Set<TEntity>();
     }
@@ -38,6 +39,12 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         TEntity newEntity,
         CancellationToken cancellationToken)
     {
+        // Validate new entity.
+        if (Equals(objA: newEntity, objB: default))
+        {
+            throw new InvalidOperationException();
+        }
+
         await _dbSet.AddAsync(
             entity: newEntity,
             cancellationToken: cancellationToken);
@@ -47,6 +54,13 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         IEnumerable<TEntity> newEntities,
         CancellationToken cancellationToken)
     {
+        // Validate new entity list.
+        if (Equals(objA: newEntities, objB: default) ||
+            !newEntities.Any())
+        {
+            throw new InvalidOperationException();
+        }
+
         return _dbSet.AddRangeAsync(
             entities: newEntities,
             cancellationToken: cancellationToken);
@@ -56,6 +70,16 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken)
     {
+        // Validate specification list.
+        if (Equals(objA: specifications, objB: default) ||
+            !specifications.Any() ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.WhereExpression,
+                objB: default)))
+        {
+            throw new InvalidOperationException();
+        }
+
         IQueryable<TEntity> queryable = _dbSet;
 
         foreach (var specification in specifications)
@@ -72,6 +96,19 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken)
     {
+        // Validate specification list.
+        if (Equals(objA: specifications, objB: default) ||
+            !specifications.Any() ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.WhereExpression,
+                objB: default)) ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.SelectExpression,
+                objB: default)))
+        {
+            throw new InvalidOperationException();
+        }
+
         IQueryable<TEntity> queryable = _dbSet;
 
         foreach (var specification in specifications)
@@ -88,6 +125,19 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken)
     {
+        // Validate specification list.
+        if (Equals(objA: specifications, objB: default) ||
+            !specifications.Any() ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.WhereExpression,
+                    objB: default)) ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.SelectExpression,
+                objB: default)))
+        {
+            throw new InvalidOperationException();
+        }
+
         IQueryable<TEntity> queryable = _dbSet;
 
         foreach (var specification in specifications)
@@ -98,5 +148,67 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         }
 
         return queryable.FirstOrDefaultAsync(cancellationToken: cancellationToken);
+    }
+
+    public Task<int> BulkUpdateAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken)
+    {
+        // Validate specification list.
+        if (Equals(objA: specifications, objB: default) ||
+            !specifications.Any() ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.WhereExpression,
+                objB: default)) ||
+            !specifications.Any(predicate: specification => !Equals(
+                objA: specification.UpdateExpression,
+                objB: default)))
+        {
+            throw new InvalidOperationException();
+        }
+
+        IQueryable<TEntity> queryable = _dbSet;
+
+        foreach (var specification in specifications)
+        {
+            queryable = SpecificationEvaluator.Apply(
+                queryable: queryable,
+                specification: specification);
+        }
+
+        return queryable.ExecuteUpdateAsync(
+            specifications
+                .First(specification => !Equals(
+                    objA: specification.UpdateExpression,
+                    objB: default))
+                .UpdateExpression,
+            cancellationToken: cancellationToken);
+    }
+
+    public Task<int> BulkDeleteAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken)
+    {
+        // Validate specification list.
+        if (Equals(objA: specifications,objB: default) ||
+            !specifications.Any() ||
+            !specifications.Any(predicate: specification =>!Equals(
+                objA: specification.WhereExpression,
+                objB: default)))
+        {
+            throw new InvalidOperationException();
+        }
+
+        IQueryable<TEntity> queryable = _dbSet;
+
+        foreach (var specification in specifications)
+        {
+            queryable = SpecificationEvaluator.Apply(
+                queryable: queryable,
+                specification: specification);
+        }
+
+        return queryable.ExecuteDeleteAsync(
+            cancellationToken: cancellationToken);
     }
 }

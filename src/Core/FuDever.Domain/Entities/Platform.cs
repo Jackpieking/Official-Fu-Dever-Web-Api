@@ -7,11 +7,11 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "Platforms" table.
 /// </summary>
-public sealed class Platform :
+public class Platform :
     IBaseEntity,
     ITemporarilyRemovedEntity
 {
-    private Platform()
+    internal Platform()
     {
     }
 
@@ -25,90 +25,6 @@ public sealed class Platform :
 
     // Navigation collections.
     public IEnumerable<UserPlatform> UserPlatforms { get; set; }
-
-    public static Platform InitForSeeding(
-        Guid platformId,
-        string platformName,
-        DateTime platformRemovedAt,
-        Guid platformRemovedBy)
-    {
-        return new()
-        {
-            Id = platformId,
-            Name = platformName,
-            RemovedAt = platformRemovedAt,
-            RemovedBy = platformRemovedBy
-        };
-    }
-
-    public static Platform InitFromDatabaseVer1(
-        Guid platformId,
-        string platformName)
-    {
-        return new()
-        {
-            Id = platformId,
-            Name = platformName
-        };
-    }
-
-    public static Platform InitFromDatabaseVer2(string platformName)
-    {
-        return new()
-        {
-            Name = platformName
-        };
-    }
-
-    public static Platform InitFromDatabaseVer3(
-        Guid platformId,
-        string platformName,
-        DateTime platformRemovedAt,
-        Guid platformRemovedBy)
-    {
-        return new()
-        {
-            Id = platformId,
-            Name = platformName,
-            RemovedAt = platformRemovedAt,
-            RemovedBy = platformRemovedBy
-        };
-    }
-
-    public static Platform InitVer1(
-        Guid platformId,
-        string platformName,
-        DateTime platformRemovedAt,
-        Guid platformRemovedBy)
-    {
-        // Validate platform name.
-        if (string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Metadata.Name.MaxLength ||
-            platformName.Length < Metadata.Name.MinLength)
-        {
-            return default;
-        }
-
-        // Validate platform Id.
-        if (platformId == Guid.Empty)
-        {
-            return default;
-        }
-
-        // Validate platform removed by.
-        if (platformRemovedBy == Guid.Empty)
-        {
-            return default;
-        }
-
-        return new()
-        {
-            Id = platformId,
-            Name = platformName,
-            RemovedAt = platformRemovedAt,
-            RemovedBy = platformRemovedBy
-        };
-    }
 
     public static class Metadata
     {

@@ -75,21 +75,21 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // FirstName property configuration.
         builder
             .Property(propertyExpression: user => user.FirstName)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: 30))
             .IsRequired();
 
         // LastName property configuration.
         builder
             .Property(propertyExpression: user => user.LastName)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: 30))
             .IsRequired();
 
         // Career property configuration.
         builder
             .Property(propertyExpression: user => user.Career)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: 30))
             .IsRequired();
 
@@ -114,7 +114,7 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         // HomeAddress property configuration.
         builder
             .Property(propertyExpression: user => user.HomeAddress)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: 50))
             .IsRequired();
 
@@ -190,5 +190,33 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
             .WithOne(navigationExpression: refreshToken => refreshToken.User)
             .HasForeignKey(foreignKeyExpression: refreshToken => refreshToken.CreatedBy)
             .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+
+        // [Users] - [UserRoles] (1 - N).
+        builder
+            .HasMany(navigationExpression: user => user.UserRoles)
+            .WithOne(navigationExpression: userRole => userRole.User)
+            .HasForeignKey(foreignKeyExpression: userRole => userRole.UserId)
+            .IsRequired();
+
+        // [Users] - [UserClaims] (1 - N).
+        builder
+            .HasMany(navigationExpression: user => user.UserClaims)
+            .WithOne(navigationExpression: userClaim => userClaim.User)
+            .HasForeignKey(foreignKeyExpression: userClaim => userClaim.UserId)
+            .IsRequired();
+
+        // [Users] - [UserLogins] (1 - N).
+        builder
+            .HasMany(navigationExpression: user => user.UserLogins)
+            .WithOne(navigationExpression: userLogin => userLogin.User)
+            .HasForeignKey(foreignKeyExpression: userLogin => userLogin.UserId)
+            .IsRequired();
+
+        // [Users] - [UserTokens] (1 - N).
+        builder
+            .HasMany(navigationExpression: user => user.UserTokens)
+            .WithOne(navigationExpression: userToken => userToken.User)
+            .HasForeignKey(foreignKeyExpression: userToken => userToken.UserId)
+            .IsRequired();
     }
 }

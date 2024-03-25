@@ -14,6 +14,8 @@ internal sealed class PositionSpecificationManager : IPositionSpecificationManag
     private IPositionTemporarilyRemovedSpecification _positionTemporarilyRemovedSpecification;
     private IPositionAsNoTrackingSpecification _positionAsNoTrackingSpecification;
     private ISelectFieldsFromPositionSpecification _selectFieldsFromPositionSpecification;
+    private IUpdateFieldOfPositionSpecification _updateFieldOfPositionSpecification;
+    private IPositionNameIsNotDefaultSpecification _positionNameIsNotDefaultSpecification;
 
     public IPositionNotTemporarilyRemovedSpecification PositionNotTemporarilyRemovedSpecification
     {
@@ -52,6 +54,26 @@ internal sealed class PositionSpecificationManager : IPositionSpecificationManag
             _selectFieldsFromPositionSpecification ??= new SelectFieldsFromPositionSpecification();
 
             return _selectFieldsFromPositionSpecification;
+        }
+    }
+
+    public IUpdateFieldOfPositionSpecification UpdateFieldOfPositionSpecification
+    {
+        get
+        {
+            _updateFieldOfPositionSpecification ??= new UpdateFieldOfPositionSpecification();
+
+            return _updateFieldOfPositionSpecification;
+        }
+    }
+
+    public IPositionNameIsNotDefaultSpecification PositionNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _positionNameIsNotDefaultSpecification ??= new PositionNameIsNotDefaultSpecification();
+
+            return _positionNameIsNotDefaultSpecification;
         }
     }
 

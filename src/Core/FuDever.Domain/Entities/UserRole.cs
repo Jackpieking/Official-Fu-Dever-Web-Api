@@ -7,15 +7,12 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "UserRoles" table.
 /// </summary>
-public sealed class UserRole :
+public class UserRole :
     IdentityUserRole<Guid>,
     IBaseEntity
 {
-    public static UserRole InitFromDatabaseVer1(Guid userId)
-    {
-        return new()
-        {
-            UserId = userId
-        };
-    }
+    // Navigation properties.
+    public User User { get; set; }
+
+    public Role Role { get; set; }
 }

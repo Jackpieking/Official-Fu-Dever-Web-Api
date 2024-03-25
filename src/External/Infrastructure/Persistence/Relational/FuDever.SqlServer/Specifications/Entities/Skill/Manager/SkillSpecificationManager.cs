@@ -14,6 +14,8 @@ internal sealed class SkillSpecificationManager : ISkillSpecificationManager
     private ISkillTemporarilyRemovedSpecification _skillTemporarilyRemovedSpecification;
     private ISkillAsNoTrackingSpecification _skillAsNoTrackingSpecification;
     private ISelectFieldsFromSkillSpecification _selectFieldsFromSkillSpecification;
+    private IUpdateFieldOfSkillSpecification _updateFieldOfSkillSpecification;
+    private ISkillNameIsNotDefaultSpecification _skillNameIsNotDefaultSpecification;
 
     public ISkillNotTemporarilyRemovedSpecification SkillNotTemporarilyRemovedSpecification
     {
@@ -52,6 +54,26 @@ internal sealed class SkillSpecificationManager : ISkillSpecificationManager
             _selectFieldsFromSkillSpecification ??= new SelectFieldsFromSkillSpecification();
 
             return _selectFieldsFromSkillSpecification;
+        }
+    }
+
+    public IUpdateFieldOfSkillSpecification UpdateFieldOfSkillSpecification
+    {
+        get
+        {
+            _updateFieldOfSkillSpecification ??= new UpdateFieldOfSkillSpecification();
+
+            return _updateFieldOfSkillSpecification;
+        }
+    }
+
+    public ISkillNameIsNotDefaultSpecification SkillNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _skillNameIsNotDefaultSpecification ??= new SkillNameIsNotDefaultSpecification();
+
+            return _skillNameIsNotDefaultSpecification;
         }
     }
 

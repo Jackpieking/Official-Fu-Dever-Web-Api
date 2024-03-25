@@ -7,8 +7,10 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "UserLogins" table.
 /// </summary>
-public sealed class UserLogin :
+public class UserLogin :
     IdentityUserLogin<Guid>,
     IBaseEntity
 {
+    // Navigation properties.
+    public User User { get; set; }
 }

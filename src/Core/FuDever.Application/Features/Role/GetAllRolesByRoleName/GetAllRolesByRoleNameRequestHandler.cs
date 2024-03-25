@@ -91,6 +91,7 @@ internal sealed class GetAllRolesByRoleNameRequestHandler : IRequestHandler<
                     roleName: roleName,
                     isCaseSensitive: false),
                 _superSpecificationManager.Role.RoleNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Role.RoleNameIsNotDefaultSpecification,
                 _superSpecificationManager.Role.SelectFieldsFromRoleSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

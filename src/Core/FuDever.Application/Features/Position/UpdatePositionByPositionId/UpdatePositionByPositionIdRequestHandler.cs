@@ -223,28 +223,25 @@ internal sealed class UpdatePositionByPositionIdRequestHandler : IRequestHandler
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUsers = await _unitOfWork.UserRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.User.UserAsNoTrackingSpecification,
                             _superSpecificationManager.User.UserByPositionIdSpecification(
                                 positionId: request.PositionId),
-                            _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5(),
+                            _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.PositionUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUser in foundUsers)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUser.Id,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.PositionUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.PositionRepository.BulkUpdateByPositionIdVer2Async(
-                        positionId: request.PositionId,
-                        positionName: request.NewPositionName,
+                    await _unitOfWork.PositionRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Position.PositionByIdSpecification(
+                                positionId: request.PositionId),
+                            _superSpecificationManager.Position.UpdateFieldOfPositionSpecification.Ver2(
+                                positionName: request.NewPositionName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

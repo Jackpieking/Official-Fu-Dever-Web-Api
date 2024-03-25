@@ -1,5 +1,6 @@
 using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Skill;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreateSkillRequestHandler : IRequestHandler<
         CreateSkillRequest request,
         CancellationToken cancellationToken)
     {
+        SkillForNewRecordBuilder builder = new();
+
+        var newSkill = builder
+            .WithId(skillId: Guid.NewGuid())
+            .WithName(skillName: request.NewSkillName)
+            .WithRemovedAt(skillRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newSkill, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -189,11 +204,7 @@ internal sealed class CreateSkillRequestHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.SkillRepository.AddAsync(
-                        newEntity: Domain.Entities.Skill.InitVer1(
-                            skillId: Guid.NewGuid(),
-                            skillName: request.NewSkillName,
-                            skillRemovedAt: _dbMinTimeHandler.Get(),
-                            skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newSkill,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

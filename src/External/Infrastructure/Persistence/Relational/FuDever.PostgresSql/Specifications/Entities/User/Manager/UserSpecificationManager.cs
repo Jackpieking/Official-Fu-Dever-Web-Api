@@ -15,6 +15,7 @@ internal sealed class UserSpecificationManager : IUserSpecificationManager
     private IUserAsSplitQuerySpecification _userAsSplitQuerySpecification;
     private IUserAsNoTrackingSpecification _userAsNoTrackingSpecification;
     private ISelectFieldsFromUserSpecification _selectFieldsFromUserSpecification;
+    private IUpdateFieldOfUserSpecification _updateFieldOfUserSpecification;
 
     public IUserNotTemporarilyRemovedSpecification UserNotTemporarilyRemovedSpecification
     {
@@ -63,6 +64,16 @@ internal sealed class UserSpecificationManager : IUserSpecificationManager
             _userTemporarilyRemovedSpecification ??= new UserTemporarilyRemovedSpecification();
 
             return _userTemporarilyRemovedSpecification;
+        }
+    }
+
+    public IUpdateFieldOfUserSpecification UpdateFieldOfUserSpecification
+    {
+        get
+        {
+            _updateFieldOfUserSpecification ??= new UpdateFieldOfUserSpecification();
+
+            return _updateFieldOfUserSpecification;
         }
     }
 

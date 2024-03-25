@@ -11,6 +11,8 @@ internal sealed class HobbySpecificationManager : IHobbySpecificationManager
     private IHobbyNotTemporarilyRemovedSpecification _hobbyNotTemporarilyRemovedSpecification;
     private HobbyTemporarilyRemovedSpecification _hobbyTemporarilyRemovedSpecification;
     private ISelectFieldsFromHobbySpecification _selectFieldsFromHobbySpecification;
+    private IUpdateFieldOfHobbySpecification _updateFieldOfHobbySpecification;
+    private IHobbyNameIsNotDefaultSpecification _hobbyNameIsNotDefaultSpecification;
 
     public IHobbyAsNoTrackingSpecification HobbyAsNoTrackingSpecification
     {
@@ -49,6 +51,26 @@ internal sealed class HobbySpecificationManager : IHobbySpecificationManager
             _selectFieldsFromHobbySpecification ??= new SelectFieldsFromHobbySpecification();
 
             return _selectFieldsFromHobbySpecification;
+        }
+    }
+
+    public IUpdateFieldOfHobbySpecification UpdateFieldOfHobbySpecification
+    {
+        get
+        {
+            _updateFieldOfHobbySpecification ??= new UpdateFieldOfHobbySpecification();
+
+            return _updateFieldOfHobbySpecification;
+        }
+    }
+
+    public IHobbyNameIsNotDefaultSpecification HobbyNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _hobbyNameIsNotDefaultSpecification ??= new HobbyNameIsNotDefaultSpecification();
+
+            return _hobbyNameIsNotDefaultSpecification;
         }
     }
 

@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedMajorsRequestHandler : IRequestHan
             [
                 _superSpecificationManager.Major.MajorAsNoTrackingSpecification,
                 _superSpecificationManager.Major.MajorTemporarilyRemovedSpecification,
+                _superSpecificationManager.Major.MajorNameIsNotDefaultSpecification,
                 _superSpecificationManager.Major.SelectFieldsFromMajorSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

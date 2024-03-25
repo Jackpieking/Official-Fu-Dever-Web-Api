@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Position;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Position;
 
@@ -13,27 +14,37 @@ internal sealed class SelectFieldsFromPositionSpecification :
 {
     public ISelectFieldsFromPositionSpecification Ver1()
     {
-        SelectExpression = position => Domain.Entities.Position.InitFromDatabaseVer2(
-            position.Id,
-            position.Name);
+        PositionForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = position => builder
+            .WithId(position.Id)
+            .WithName(position.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromPositionSpecification Ver2()
     {
-        SelectExpression = position => Domain.Entities.Position.InitFromDatabaseVer3(
-            position.Id,
-            position.Name,
-            position.RemovedAt,
-            position.RemovedBy);
+        PositionForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = position => builder
+            .WithId(position.Id)
+            .WithName(position.Name)
+            .WithRemovedAt(position.RemovedAt)
+            .WithRemovedBy(position.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromPositionSpecification Ver3()
     {
-        SelectExpression = position => Domain.Entities.Position.InitFromDatabaseVer1(position.Name);
+        PositionForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = position => builder
+            .WithName(position.Name)
+            .Complete();
 
         return this;
     }

@@ -222,28 +222,25 @@ internal sealed class UpdateMajorByMajorIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUsers = await _unitOfWork.UserRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.User.UserAsNoTrackingSpecification,
                             _superSpecificationManager.User.UserByMajorIdSpecification(
                                 majorId: request.MajorId),
-                            _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5(),
+                            _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.MajorUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUser in foundUsers)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUser.Id,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.MajorUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.MajorRepository.BulkUpdateByMajorIdVer1Async(
-                        majorId: request.MajorId,
-                        majorName: request.NewMajorName,
+                    await _unitOfWork.MajorRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Major.MajorByIdSpecification(
+                                majorId: request.MajorId),
+                            _superSpecificationManager.Major.UpdateFieldOfMajorSpecification.Ver2(
+                                majorName: request.NewMajorName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

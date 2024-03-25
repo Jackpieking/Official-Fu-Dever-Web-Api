@@ -33,36 +33,36 @@ public static class SpecificationEvaluator
                 class,
                 IBaseEntity
     {
-        if (!Equals(objA: specification.WhereExpression, objB: null))
+        if (!Equals(objA: specification.WhereExpression, objB: default))
         {
             queryable = queryable.Where(predicate: specification.WhereExpression);
         }
 
-        if (!Equals(objA: specification.OrderByAscendingExpression, objB: null))
+        if (!Equals(objA: specification.OrderByAscendingExpression, objB: default))
         {
             queryable = queryable.OrderBy(keySelector: specification.OrderByAscendingExpression);
         }
 
-        if (!Equals(objA: specification.OrderByDescendingExpression, objB: null))
+        if (!Equals(objA: specification.OrderByDescendingExpression, objB: default))
         {
             queryable = queryable.OrderByDescending(keySelector: specification.OrderByDescendingExpression);
         }
 
-        if (!Equals(objA: specification.ThenOrderByAscendingExpressions, objB: null))
+        if (!Equals(objA: specification.ThenOrderByAscendingExpressions, objB: default))
         {
             var orderedQueryable = queryable as IOrderedQueryable<TEntity>;
 
             queryable = orderedQueryable.ThenBy(keySelector: specification.ThenOrderByAscendingExpressions);
         }
 
-        if (!Equals(objA: specification.ThenOrderByDescendingExpressions, objB: null))
+        if (!Equals(objA: specification.ThenOrderByDescendingExpressions, objB: default))
         {
             var orderedQueryable = queryable as IOrderedQueryable<TEntity>;
 
             queryable = orderedQueryable.ThenByDescending(keySelector: specification.OrderByDescendingExpression);
         }
 
-        if (!Equals(objA: specification.SelectExpression, objB: null))
+        if (!Equals(objA: specification.SelectExpression, objB: default))
         {
             queryable = queryable.Select(selector: specification.SelectExpression);
         }

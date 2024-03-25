@@ -12,6 +12,7 @@ internal sealed class UserRoleSpecificationManager : IUserRoleSpecificationManag
     // Backing fields.
     private IUserRoleAsNoTrackingSpecification _userRoleAsNoTrackingSpecification;
     private ISelectFieldsFromUserRoleSpecification _selectFieldsFromUserRoleSpecification;
+    private IUpdateFieldOfUserRoleSpecification _updateFieldOfUserRoleSpecification;
 
     public IUserRoleByRoleIdSpecification UserRoleByRoleIdSpecification(Guid roleId)
     {
@@ -35,6 +36,16 @@ internal sealed class UserRoleSpecificationManager : IUserRoleSpecificationManag
             _userRoleAsNoTrackingSpecification ??= new UserRoleAsNoTrackingSpecification();
 
             return _userRoleAsNoTrackingSpecification;
+        }
+    }
+
+    public IUpdateFieldOfUserRoleSpecification UpdateFieldOfUserRoleSpecification
+    {
+        get
+        {
+            _updateFieldOfUserRoleSpecification ??= new UpdateFieldOfUserRoleSpecification();
+
+            return _updateFieldOfUserRoleSpecification;
         }
     }
 }

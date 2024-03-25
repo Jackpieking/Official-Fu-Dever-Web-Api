@@ -23,6 +23,11 @@ public interface IHobbySpecificationManager
     IHobbyTemporarilyRemovedSpecification HobbyTemporarilyRemovedSpecification { get; }
 
     /// <summary>
+    ///     Update field of hobby specification.
+    /// </summary>
+    IUpdateFieldOfHobbySpecification UpdateFieldOfHobbySpecification { get; }
+
+    /// <summary>
     ///     Hobby by hobby id specification.
     /// </summary>
     /// <param name="hobbyId">
@@ -53,4 +58,9 @@ public interface IHobbySpecificationManager
     ///     Select field from "Hobbies" table specification.
     /// </summary>
     ISelectFieldsFromHobbySpecification SelectFieldsFromHobbySpecification { get; }
+
+    /// <summary>
+    ///     Hobby name is not default specification.
+    /// </summary>
+    IHobbyNameIsNotDefaultSpecification HobbyNameIsNotDefaultSpecification { get; }
 }

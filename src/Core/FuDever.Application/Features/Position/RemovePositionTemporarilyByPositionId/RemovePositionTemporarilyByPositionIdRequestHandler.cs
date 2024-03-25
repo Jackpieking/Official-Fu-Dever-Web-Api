@@ -178,10 +178,15 @@ internal sealed class RemovePositionTemporarilyByPositionIdRequestHandler : IReq
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.PositionRepository.BulkUpdateByPositionIdVer1Async(
-                        positionId: request.PositionId,
-                        positionRemovedAt: DateTime.UtcNow,
-                        positionRemovedBy: request.PositionRemovedBy,
+                    await _unitOfWork.PositionRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Position.PositionByIdSpecification(
+                                positionId: request.PositionId),
+                            _superSpecificationManager.Position.UpdateFieldOfPositionSpecification.Ver1(
+                                positionRemovedAt: DateTime.UtcNow,
+                                positionRemovedBy: request.PositionRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

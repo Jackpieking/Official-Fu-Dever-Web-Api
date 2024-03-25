@@ -29,5 +29,20 @@ internal sealed class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
         builder
             .Property(propertyExpression: role => role.RemovedBy)
             .IsRequired();
+
+        // Table relationships configurations.
+        // [Roles] - [UserRoles] (1 - N).
+        builder
+            .HasMany(navigationExpression: role => role.UserRoles)
+            .WithOne(navigationExpression: userRole => userRole.Role)
+            .HasForeignKey(foreignKeyExpression: userRole => userRole.RoleId)
+            .IsRequired();
+
+        // [Roles] - [RoleClaims] (1 - N).
+        builder
+            .HasMany(navigationExpression: role => role.RoleClaims)
+            .WithOne(navigationExpression: roleClaim => roleClaim.Role)
+            .HasForeignKey(foreignKeyExpression: roleClaim => roleClaim.RoleId)
+            .IsRequired();
     }
 }

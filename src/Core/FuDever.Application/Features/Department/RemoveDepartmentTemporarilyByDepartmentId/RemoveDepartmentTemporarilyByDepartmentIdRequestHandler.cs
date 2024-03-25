@@ -178,10 +178,15 @@ internal sealed class RemoveDepartmentTemporarilyByDepartmentIdRequestHandler : 
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.DepartmentRepository.BulkUpdateByDepartmentIdVer1Async(
-                        departmentId: request.DepartmentId,
-                        departmentRemovedAt: DateTime.UtcNow,
-                        departmentRemovedBy: request.DepartmentRemovedBy,
+                    await _unitOfWork.DepartmentRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Department.DepartmentByIdSpecification(
+                                departmentId: request.DepartmentId),
+                            _superSpecificationManager.Department.UpdateFieldOfDepartmentSpecification.Ver1(
+                                departmentRemovedAt: DateTime.UtcNow,
+                                departmentRemovedBy: request.DepartmentRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

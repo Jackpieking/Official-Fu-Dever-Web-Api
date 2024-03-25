@@ -81,6 +81,7 @@ internal sealed class GetAllHobbiesRequestHandler : IRequestHandler<
             [
                 _superSpecificationManager.Hobby.HobbyAsNoTrackingSpecification,
                 _superSpecificationManager.Hobby.HobbyNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Hobby.HobbyNameIsNotDefaultSpecification,
                 _superSpecificationManager.Hobby.SelectFieldsFromHobbySpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

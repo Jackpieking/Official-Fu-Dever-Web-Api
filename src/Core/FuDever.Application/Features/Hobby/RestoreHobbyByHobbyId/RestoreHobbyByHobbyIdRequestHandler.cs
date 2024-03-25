@@ -184,10 +184,15 @@ internal sealed class RestoreHobbyByHobbyIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.HobbyRepository.BulkUpdateByHobbyIdVer2Async(
-                        hobbyId: request.HobbyId,
-                        hobbyRemovedAt: _dbMinTimeHandler.Get(),
-                        hobbyRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.HobbyRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Hobby.HobbyByIdSpecification(
+                                hobbyId: request.HobbyId),
+                            _superSpecificationManager.Hobby.UpdateFieldOfHobbySpecification.Ver1(
+                                hobbyRemovedAt: _dbMinTimeHandler.Get(),
+                                hobbyRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

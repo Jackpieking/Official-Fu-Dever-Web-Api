@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Platform;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Platform;
 
@@ -13,27 +14,37 @@ internal sealed class SelectFieldsFromPlatformSpecification :
 {
     public ISelectFieldsFromPlatformSpecification Ver1()
     {
-        SelectExpression = platform => Domain.Entities.Platform.InitFromDatabaseVer1(
-            platform.Id,
-            platform.Name);
+        PlatformForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = platform => builder
+            .WithId(platform.Id)
+            .WithName(platform.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromPlatformSpecification Ver2()
     {
-        SelectExpression = platform => Domain.Entities.Platform.InitFromDatabaseVer3(
-            platform.Id,
-            platform.Name,
-            platform.RemovedAt,
-            platform.RemovedBy);
+        PlatformForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = platform => builder
+            .WithId(platform.Id)
+            .WithName(platform.Name)
+            .WithRemovedAt(platform.RemovedAt)
+            .WithRemovedBy(platform.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromPlatformSpecification Ver3()
     {
-        SelectExpression = platfrom => Domain.Entities.Platform.InitFromDatabaseVer2(platfrom.Name);
+        PlatformForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = platfrom => builder
+            .WithName(platfrom.Name)
+            .Complete();
 
         return this;
     }

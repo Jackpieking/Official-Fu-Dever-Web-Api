@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.UserJoiningStatus;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.UserJoiningStatus;
 
@@ -9,8 +10,11 @@ internal sealed class SelectFieldsFromUserJoiningStatusSpecification :
 {
     public ISelectFieldsFromUserJoiningStatusSpecification Ver1()
     {
-        SelectExpression = userJoiningStatus => Domain.Entities.UserJoiningStatus.InitFromDatabaseVer1(
-            userJoiningStatus.Id);
+        UserJoiningStatusForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = userJoiningStatus => builder
+            .WithId(userJoiningStatus.Id)
+            .Complete();
 
         return this;
     }

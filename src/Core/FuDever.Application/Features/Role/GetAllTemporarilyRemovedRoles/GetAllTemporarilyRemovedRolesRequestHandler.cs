@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedRolesRequestHandler : IRequestHand
             [
                 _superSpecificationManager.Role.RoleAsNoTrackingSpecification,
                 _superSpecificationManager.Role.RoleTemporarilyRemovedSpecification,
+                _superSpecificationManager.Role.RoleNameIsNotDefaultSpecification,
                 _superSpecificationManager.Role.SelectFieldsFromRoleSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

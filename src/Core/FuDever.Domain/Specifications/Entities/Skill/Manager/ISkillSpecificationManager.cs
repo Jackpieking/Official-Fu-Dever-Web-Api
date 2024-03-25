@@ -28,6 +28,11 @@ public interface ISkillSpecificationManager
     ISelectFieldsFromSkillSpecification SelectFieldsFromSkillSpecification { get; }
 
     /// <summary>
+    ///     Update field of skill specification.
+    /// </summary>
+    IUpdateFieldOfSkillSpecification UpdateFieldOfSkillSpecification { get; }
+
+    /// <summary>
     ///     Skill by skill id specification.
     /// </summary>
     /// <param name="skillId">
@@ -53,4 +58,9 @@ public interface ISkillSpecificationManager
     ISkillByNameSpecification SkillByNameSpecification(
         string skillName,
         bool isCaseSensitive);
+
+    /// <summary>
+    ///     Skill name is not default specification.
+    /// </summary>
+    ISkillNameIsNotDefaultSpecification SkillNameIsNotDefaultSpecification { get; }
 }

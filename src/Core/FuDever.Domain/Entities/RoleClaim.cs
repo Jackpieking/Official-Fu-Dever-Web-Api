@@ -7,8 +7,10 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "RoleClaims" table.
 /// </summary>
-public sealed class RoleClaim :
+public class RoleClaim :
     IdentityRoleClaim<Guid>,
     IBaseEntity
 {
+    // Navigation properties.
+    public Role Role { get; set; }
 }

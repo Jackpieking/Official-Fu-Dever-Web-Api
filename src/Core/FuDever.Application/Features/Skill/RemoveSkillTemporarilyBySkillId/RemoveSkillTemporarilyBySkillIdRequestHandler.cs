@@ -178,10 +178,15 @@ internal sealed class RemoveSkillTemporarilyBySkillIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
-                        skillId: request.SkillId,
-                        skillRemovedAt: DateTime.UtcNow,
-                        skillRemovedBy: request.SkillRemovedBy,
+                    await _unitOfWork.SkillRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Skill.SkillByIdSpecification(
+                                skillId: request.SkillId),
+                            _superSpecificationManager.Skill.UpdateFieldOfSkillSpecification.Ver1(
+                                skillRemovedAt: DateTime.UtcNow,
+                                skillRemovedBy: request.SkillRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

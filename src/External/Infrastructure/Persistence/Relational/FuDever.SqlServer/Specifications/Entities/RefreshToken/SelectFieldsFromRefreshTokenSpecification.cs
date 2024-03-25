@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.RefreshToken;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.RefreshToken;
 
@@ -13,14 +14,22 @@ internal sealed class SelectFieldsFromRefreshTokenSpecification :
 {
     public ISelectFieldsFromRefreshTokenSpecification Ver1()
     {
-        SelectExpression = refreshToken => Domain.Entities.RefreshToken.InitFromDatabaseVer1(refreshToken.Id);
+        RefreshTokenForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = refreshToken => builder
+            .WithId(refreshToken.Id)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromRefreshTokenSpecification Ver2()
     {
-        SelectExpression = refreshToken => Domain.Entities.RefreshToken.InitFromDatabaseVer2(refreshToken.CreatedBy);
+        RefreshTokenForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = refreshToken => builder
+            .WithCreatedBy(refreshToken.CreatedBy)
+            .Complete();
 
         return this;
     }

@@ -28,4 +28,9 @@ public interface IUserRoleSpecificationManager
     ///     User role as no tracking specification.
     /// </summary>
     IUserRoleAsNoTrackingSpecification UserRoleAsNoTrackingSpecification { get; }
+
+    /// <summary>
+    ///     Update field of user role specification.
+    /// </summary>
+    IUpdateFieldOfUserRoleSpecification UpdateFieldOfUserRoleSpecification { get; }
 }

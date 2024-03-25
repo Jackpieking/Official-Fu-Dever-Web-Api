@@ -222,28 +222,25 @@ internal sealed class UpdateDepartmentByDepartmentIdRequestHandler : IRequestHan
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUsers = await _unitOfWork.UserRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.User.UserAsNoTrackingSpecification,
                             _superSpecificationManager.User.UserByDepartmentIdSpecification(
                                 departmentId: request.DepartmentId),
-                            _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5(),
+                            _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.DepartmentUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUser in foundUsers)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUser.Id,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.DepartmentUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.DepartmentRepository.BulkUpdateByDepartmentIdVer2Async(
-                        departmentId: request.DepartmentId,
-                        departmentName: request.NewDepartmentName,
+                    await _unitOfWork.DepartmentRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Department.DepartmentByIdSpecification(
+                                departmentId: request.DepartmentId),
+                            _superSpecificationManager.Department.UpdateFieldOfDepartmentSpecification.Ver2(
+                                departmentName: request.NewDepartmentName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedHobbiesRequestHandler : IRequestHa
             [
                 _superSpecificationManager.Hobby.HobbyAsNoTrackingSpecification,
                 _superSpecificationManager.Hobby.HobbyTemporarilyRemovedSpecification,
+                _superSpecificationManager.Hobby.HobbyNameIsNotDefaultSpecification,
                 _superSpecificationManager.Hobby.SelectFieldsFromHobbySpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

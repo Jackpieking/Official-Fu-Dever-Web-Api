@@ -179,30 +179,31 @@ internal sealed class RemoveRolePermanentlyByRoleIdRequestHandler : IRequestHand
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserRoles = await _unitOfWork.UserRoleRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRoleRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserRole.UserRoleAsNoTrackingSpecification,
-                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(roleId: request.RoleId),
-                            _superSpecificationManager.UserRole.SelectFieldsFromUserRoleSpecification.Ver1(),
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
+                                roleId: request.RoleId),
+                            _superSpecificationManager.UserRole.UpdateFieldOfUserRoleSpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.RoleRemovedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserRole in foundUserRoles)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserRole.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.RoleRemovedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.UserRoleRepository.BulkRemoveByRoleIdAsync(
-                        roleId: request.RoleId,
+                    await _unitOfWork.UserRoleRepository.BulkDeleteAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
+                                roleId: request.RoleId)
+                        ],
                         cancellationToken: cancellationToken);
 
-                    await _unitOfWork.RoleRepository.BulkRemoveByRoleIdAsync(
-                        roleId: request.RoleId,
+                    await _unitOfWork.RoleRepository.BulkDeleteAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Role.RoleByIdSpecification(
+                                roleId: request.RoleId)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

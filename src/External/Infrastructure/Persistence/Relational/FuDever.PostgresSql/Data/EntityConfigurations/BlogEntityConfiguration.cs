@@ -30,7 +30,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // Title property configuration.
         builder
             .Property(propertyExpression: blog => blog.Title)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Blog
                     .Metadata
                     .Title
@@ -40,7 +40,7 @@ internal sealed class BlogEntityConfiguration : IEntityTypeConfiguration<Blog>
         // Thumbnail property configuration.
         builder
             .Property(propertyExpression: blog => blog.Thumbnail)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Blog
                     .Metadata
                     .Thumbnail

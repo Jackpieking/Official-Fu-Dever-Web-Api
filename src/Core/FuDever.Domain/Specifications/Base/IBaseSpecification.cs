@@ -1,4 +1,5 @@
 using FuDever.Domain.Entities.Base;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Linq.Expressions;
 
@@ -70,4 +71,9 @@ public interface IBaseSpecification<TEntity> where TEntity :
     ///     Int value that is used for "Take" method.
     /// </summary>
     int TakeNumberOfEntities { get; set; }
+
+    /// <summary>
+    ///     Expression that is used for "SetProperty" method.
+    /// </summary>
+    Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> UpdateExpression { get; set; }
 }

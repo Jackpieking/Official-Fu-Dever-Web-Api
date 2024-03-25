@@ -1,4 +1,5 @@
-﻿using FuDever.Domain.Specifications.Base;
+﻿using FuDever.Domain.EntityBuilders.UserRole;
+using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.UserRole;
 
 namespace FuDever.SqlServer.Specifications.Entities.UserRole;
@@ -13,8 +14,11 @@ internal sealed class SelectFieldsFromUserRoleSpecification :
 {
     public ISelectFieldsFromUserRoleSpecification Ver1()
     {
-        SelectExpression = userRole => Domain.Entities.UserRole.InitFromDatabaseVer1(
-            userRole.UserId);
+        UserRoleForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = userRole => builder
+            .WithUserId(userRole.UserId)
+            .Complete();
 
         return this;
     }

@@ -12,6 +12,7 @@ internal sealed class UserSkillSpecificationManager : IUserSkillSpecificationMan
     // Backing fields.
     private ISelectFieldsFromUserSkillSpecification _selectFieldsFromUserSkillSpecification;
     private IUserSkillAsNoTrackingSpecification _userSkillAsNoTrackingSpecification;
+    private IUpdateFieldOfUserSkillSpecification _updateFieldOfUserSkillSpecification;
 
     public ISelectFieldsFromUserSkillSpecification SelectFieldsFromUserSkillSpecification
     {
@@ -30,6 +31,16 @@ internal sealed class UserSkillSpecificationManager : IUserSkillSpecificationMan
             _userSkillAsNoTrackingSpecification ??= new UserSkillAsNoTrackingSpecification();
 
             return _userSkillAsNoTrackingSpecification;
+        }
+    }
+
+    public IUpdateFieldOfUserSkillSpecification UpdateFieldOfUserSkillSpecification
+    {
+        get
+        {
+            _updateFieldOfUserSkillSpecification ??= new UpdateFieldOfUserSkillSpecification();
+
+            return _updateFieldOfUserSkillSpecification;
         }
     }
 

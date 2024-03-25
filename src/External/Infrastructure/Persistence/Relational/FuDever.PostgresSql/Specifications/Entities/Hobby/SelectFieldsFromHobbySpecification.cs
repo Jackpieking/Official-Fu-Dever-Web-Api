@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Hobby;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Hobby;
 
@@ -13,36 +14,48 @@ internal sealed class SelectFieldsFromHobbySpecification :
 {
     public ISelectFieldsFromHobbySpecification Ver1()
     {
-        SelectExpression = hobby => Domain.Entities.Hobby.InitFromDatabaseVer1(
-            hobby.Id,
-            hobby.Name);
+        HobbyForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = hobby => builder
+            .WithId(hobby.Id)
+            .WithName(hobby.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromHobbySpecification Ver2()
     {
-        SelectExpression = hobby => Domain.Entities.Hobby.InitFromDatabaseVer2(
-            hobby.Id,
-            hobby.Name,
-            hobby.RemovedAt,
-            hobby.RemovedBy);
+        HobbyForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = hobby => builder
+            .WithId(hobby.Id)
+            .WithName(hobby.Name)
+            .WithRemovedAt(hobby.RemovedAt)
+            .WithRemovedBy(hobby.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromHobbySpecification Ver3()
     {
-        SelectExpression = hobby => Domain.Entities.Hobby.InitFromDatabaseVer3(
-            hobby.Id);
+        HobbyForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = hobby => builder
+            .WithId(hobby.Id)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromHobbySpecification Ver4()
     {
-        SelectExpression = hobby => Domain.Entities.Hobby.InitFromDatabaseVer4(
-            hobby.Name);
+        HobbyForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = hobby => builder
+            .WithName(hobby.Name)
+            .Complete();
 
         return this;
     }

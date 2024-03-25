@@ -89,6 +89,7 @@ internal sealed class GetAllSkillsBySkillNameRequestHandler : IRequestHandler<
                         skillName: skillName,
                         isCaseSensitive: false),
                 _superSpecificationManager.Skill.SkillNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Skill.SkillNameIsNotDefaultSpecification,
                 _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

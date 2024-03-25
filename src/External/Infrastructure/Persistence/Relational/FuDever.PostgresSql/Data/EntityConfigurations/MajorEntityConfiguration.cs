@@ -25,7 +25,7 @@ internal sealed class MajorEntityConfiguration : IEntityTypeConfiguration<Major>
         // Name property configuration.
         builder
             .Property(propertyExpression: major => major.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Major
                     .Metadata
                     .Name

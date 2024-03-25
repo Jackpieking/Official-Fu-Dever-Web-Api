@@ -179,10 +179,15 @@ internal sealed class RemoveHobbyTemporarilyByHobbyIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.HobbyRepository.BulkUpdateByHobbyIdVer2Async(
-                        hobbyId: request.HobbyId,
-                        hobbyRemovedAt: DateTime.UtcNow,
-                        hobbyRemovedBy: request.HobbyRemovedBy,
+                    await _unitOfWork.HobbyRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Hobby.HobbyByIdSpecification(
+                                hobbyId: request.HobbyId),
+                            _superSpecificationManager.Hobby.UpdateFieldOfHobbySpecification.Ver1(
+                                hobbyRemovedAt: DateTime.UtcNow,
+                                hobbyRemovedBy: request.HobbyRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

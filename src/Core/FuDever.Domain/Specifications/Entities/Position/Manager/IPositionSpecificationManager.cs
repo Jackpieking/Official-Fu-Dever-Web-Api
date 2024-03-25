@@ -28,6 +28,11 @@ public interface IPositionSpecificationManager
     ISelectFieldsFromPositionSpecification SelectFieldsFromPositionSpecification { get; }
 
     /// <summary>
+    ///     Update field of position specification.
+    /// </summary>
+    IUpdateFieldOfPositionSpecification UpdateFieldOfPositionSpecification { get; }
+
+    /// <summary>
     ///     Position by position id specification.
     /// </summary>
     /// <param name="positionId">
@@ -53,4 +58,9 @@ public interface IPositionSpecificationManager
     IPositionByNameSpecification PositionByNameSpecification(
         string positionName,
         bool isCaseSensitive);
+
+    /// <summary>
+    ///     Position name is not default specification.
+    /// </summary>
+    IPositionNameIsNotDefaultSpecification PositionNameIsNotDefaultSpecification { get; }
 }

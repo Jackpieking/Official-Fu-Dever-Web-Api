@@ -6,12 +6,12 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "Cvs" table.
 /// </summary>
-public sealed class Cv :
+public class Cv :
     IBaseEntity,
     ICreatedEntity,
     ITemporarilyRemovedEntity
 {
-    private Cv()
+    internal Cv()
     {
     }
 
@@ -32,23 +32,6 @@ public sealed class Cv :
     public DateTime RemovedAt { get; set; }
 
     public Guid RemovedBy { get; set; }
-
-    public static Cv InitFromDatabaseVer1(
-        Guid cvId,
-        string studentFullName,
-        string studentEmail,
-        string studentId,
-        string studentCvFieldId)
-    {
-        return new()
-        {
-            Id = cvId,
-            StudentFullName = studentFullName,
-            StudentEmail = studentEmail,
-            StudentId = studentId,
-            StudentCvFileId = studentCvFieldId
-        };
-    }
 
     public static class Metadata
     {

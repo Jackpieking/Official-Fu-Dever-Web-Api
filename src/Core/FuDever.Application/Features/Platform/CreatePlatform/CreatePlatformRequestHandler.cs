@@ -1,5 +1,6 @@
 ﻿using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Platfrom;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreatePlatformRequestHandler : IRequestHandler<
         CreatePlatformRequest request,
         CancellationToken cancellationToken)
     {
+        PlatformForNewRecordBuilder builder = new();
+
+        var newPlatform = builder
+            .WithId(platformId: Guid.NewGuid())
+            .WithName(platformName: request.NewPlatformName)
+            .WithRemovedAt(platformRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(platformRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newPlatform, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -189,11 +204,7 @@ internal sealed class CreatePlatformRequestHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.PlatformRepository.AddAsync(
-                        newEntity: Domain.Entities.Platform.InitVer1(
-                            platformId: Guid.NewGuid(),
-                            platformName: request.NewPlatformName,
-                            platformRemovedAt: _dbMinTimeHandler.Get(),
-                            platformRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newPlatform,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

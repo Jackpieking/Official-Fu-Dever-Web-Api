@@ -28,6 +28,11 @@ public interface IPlatformSpecificationManager
     ISelectFieldsFromPlatformSpecification SelectFieldsFromPlatformSpecification { get; }
 
     /// <summary>
+    ///     Update field of platform specification.
+    /// </summary>
+    IUpdateFieldOfPlatformSpecification UpdateFieldOfPlatformSpecification { get; }
+
+    /// <summary>
     ///     Platform by platform id specification.
     /// </summary>
     /// <param name="platformId">
@@ -53,4 +58,9 @@ public interface IPlatformSpecificationManager
     IPlatformByNameSpecification PlatformByNameSpecification(
         string platformName,
         bool isCaseSensitive);
+
+    /// <summary>
+    ///     Platform name is not default specification.
+    /// </summary>
+    IPlatformNameIsNotDefaultSpecification PlatformNameIsNotDefaultSpecification { get; }
 }

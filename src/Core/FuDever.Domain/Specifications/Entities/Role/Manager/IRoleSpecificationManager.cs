@@ -53,4 +53,14 @@ public interface IRoleSpecificationManager
     ///     Select field from "Roles" table specification.
     /// </summary>
     ISelectFieldsFromRoleSpecification SelectFieldsFromRoleSpecification { get; }
+
+    /// <summary>
+    ///     Update field of role specification.
+    /// </summary>
+    IUpdateFieldOfRoleSpecification UpdateFieldOfRoleSpecification { get; }
+
+    /// <summary>
+    ///     Role name is not default specification.
+    /// </summary>
+    IRoleNameIsNotDefaultSpecification RoleNameIsNotDefaultSpecification { get; }
 }

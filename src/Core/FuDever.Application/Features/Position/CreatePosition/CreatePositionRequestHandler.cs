@@ -1,5 +1,6 @@
 using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Position;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreatePositionRequestHandler : IRequestHandler<
         CreatePositionRequest request,
         CancellationToken cancellationToken)
     {
+        PositionForNewRecordBuilder builder = new();
+
+        var newPosition = builder
+            .WithId(positionId: Guid.NewGuid())
+            .WithName(positionName: request.NewPositionName)
+            .WithRemovedAt(positionRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(positionRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newPosition, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -189,11 +204,7 @@ internal sealed class CreatePositionRequestHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.PositionRepository.AddAsync(
-                        newEntity: Domain.Entities.Position.InitVer1(
-                            positionId: Guid.NewGuid(),
-                            positionName: request.NewPositionName,
-                            positionRemovedAt: _dbMinTimeHandler.Get(),
-                            positionRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newPosition,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

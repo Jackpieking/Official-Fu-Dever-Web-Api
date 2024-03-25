@@ -6,12 +6,12 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "BLogComments" table.
 /// </summary>
-public sealed class BlogComment :
+public class BlogComment :
     IBaseEntity,
     ICreatedEntity,
     IUpdatedEntity
 {
-    private BlogComment()
+    internal BlogComment()
     {
     }
 

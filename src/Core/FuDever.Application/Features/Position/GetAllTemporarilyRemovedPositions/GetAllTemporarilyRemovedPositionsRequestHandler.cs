@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedPositionsRequestHandler : IRequest
             [
                 _superSpecificationManager.Position.PositionAsNoTrackingSpecification,
                 _superSpecificationManager.Position.PositionTemporarilyRemovedSpecification,
+                _superSpecificationManager.Position.PositionNameIsNotDefaultSpecification,
                 _superSpecificationManager.Position.SelectFieldsFromPositionSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

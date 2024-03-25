@@ -81,6 +81,7 @@ internal sealed class GetAllRolesRequestHandler : IRequestHandler<
             [
                 _superSpecificationManager.Role.RoleAsNoTrackingSpecification,
                 _superSpecificationManager.Role.RoleNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Role.RoleNameIsNotDefaultSpecification,
                 _superSpecificationManager.Role.SelectFieldsFromRoleSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

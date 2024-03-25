@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace FuDever.WebApi.HttpResponse.Base;
 
+/// <summary>
+///     Base http response for all entities http response.
+/// </summary>
 internal interface IBaseHttpResponse
 {
     int HttpCode { get; init; }

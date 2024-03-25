@@ -1,4 +1,5 @@
 using FuDever.Domain.Entities.Base;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Linq.Expressions;
 
@@ -66,5 +67,22 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
 
             _takeNumberOfEntities = value;
         }
+    }
+
+    public Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> UpdateExpression { get; set; }
+
+    protected Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> AppendSetProperty(
+        Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> left,
+        Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> right)
+    {
+        ReplacingExpressionVisitor replace = new(
+            originals: right.Parameters,
+            replacements: left.Parameters);
+
+        var combined = replace.Visit(expression: right.Body);
+
+        return Expression.Lambda<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>>(
+            body: combined,
+            parameters: left.Parameters);
     }
 }

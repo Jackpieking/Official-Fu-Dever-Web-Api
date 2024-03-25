@@ -33,6 +33,11 @@ public interface IUserSpecificationManager
     ISelectFieldsFromUserSpecification SelectFieldsFromUserSpecification { get; }
 
     /// <summary>
+    ///     Update field of "Users" table specification.
+    /// </summary>
+    IUpdateFieldOfUserSpecification UpdateFieldOfUserSpecification { get; }
+
+    /// <summary>
     ///     User by user email specification.
     /// </summary>
     /// <param name="email">

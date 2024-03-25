@@ -222,27 +222,25 @@ internal sealed class UpdateSkillBySkillIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserSkills = await _unitOfWork.UserSkillRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserSkillRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserSkill.UserSkillAsNoTrackingSpecification,
-                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: request.SkillId),
-                            _superSpecificationManager.UserSkill.SelectFieldsFromUserSkillSpecification.Ver2(),
+                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(
+                                skillId: request.SkillId),
+                            _superSpecificationManager.UserSkill.UpdateFieldOfUserSkillSpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.SkillUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserSkill in foundUserSkills)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserSkill.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.SkillUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer2Async(
-                        skillId: request.SkillId,
-                        skillName: request.NewSkillName,
+                    await _unitOfWork.SkillRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Skill.SkillByIdSpecification(
+                                skillId: request.SkillId),
+                            _superSpecificationManager.Skill.UpdateFieldOfSkillSpecification.Ver2(
+                                skillName: request.NewSkillName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

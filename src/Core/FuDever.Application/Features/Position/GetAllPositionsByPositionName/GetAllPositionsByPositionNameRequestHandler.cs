@@ -91,6 +91,7 @@ internal sealed class GetAllPositionsByPositionNameRequestHandler : IRequestHand
                     positionName: positionName,
                     isCaseSensitive: false),
                 _superSpecificationManager.Position.PositionNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Position.PositionNameIsNotDefaultSpecification,
                 _superSpecificationManager.Position.SelectFieldsFromPositionSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

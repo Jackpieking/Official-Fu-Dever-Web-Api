@@ -25,7 +25,7 @@ internal sealed class UserJoiningStatusEntityConfiguration : IEntityTypeConfigur
         // Type property configuration.
         builder
             .Property(propertyExpression: userJoiningStatus => userJoiningStatus.Type)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: UserJoiningStatus
                     .Metadata
                     .Type

@@ -89,6 +89,7 @@ internal sealed class GetAllPlatformsByPlatformNameRequestHandler : IRequestHand
                         platformName: platformName,
                         isCaseSensitive: false),
                 _superSpecificationManager.Platform.PlatformNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Platform.PlatformNameIsNotDefaultSpecification,
                 _superSpecificationManager.Platform.SelectFieldsFromPlatformSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

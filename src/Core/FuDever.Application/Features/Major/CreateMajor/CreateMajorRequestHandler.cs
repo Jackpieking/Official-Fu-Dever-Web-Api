@@ -1,5 +1,6 @@
 ﻿using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Major;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreateMajorRequestHandler : IRequestHandler<
         CreateMajorRequest request,
         CancellationToken cancellationToken)
     {
+        MajorForNewRecordBuilder builder = new();
+
+        var newMajor = builder
+            .WithId(majorId: Guid.NewGuid())
+            .WithName(majorName: request.NewMajorName)
+            .WithRemovedAt(majorRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(majorRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newMajor, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -186,28 +201,16 @@ internal sealed class CreateMajorRequestHandler : IRequestHandler<
             {
                 try
                 {
-                    // This line initiates a new database transaction
-                    // using the _unitOfWork instance. It prepares the
-                    // database for a series of operations that should
-                    // be treated as a single unit of work.
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    // This block of code adds a new major entity to the major repository.
                     await _unitOfWork.MajorRepository.AddAsync(
-                        newEntity: Domain.Entities.Major.InitVer1(
-                            majorId: Guid.NewGuid(),
-                            majorName: request.NewMajorName,
-                            majorRemovedAt: _dbMinTimeHandler.Get(),
-                            majorRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newMajor,
                         cancellationToken: cancellationToken);
 
-                    // Save changes to the database.
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);
 
-                    // Commit changes to the database.
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
 
-                    // Transaction is executed successfully.
                     executedTransactionResult = true;
                 }
                 catch

@@ -6,12 +6,12 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "Projects" table.
 /// </summary>
-public sealed class Project :
+public class Project :
     IBaseEntity,
     IUpdatedEntity,
     ICreatedEntity
 {
-    private Project()
+    internal Project()
     {
     }
 
@@ -40,57 +40,6 @@ public sealed class Project :
     // Navigation properties.
     public User User { get; set; }
 
-    public static Project InitFromDatabaseVer1(
-        Guid projectId,
-        string projectTitle,
-        string projectDescription,
-        string projectSourceCodeUrl,
-        string projectDemoUrl,
-        string projectThumbnailUrl,
-        DateTime projectCreatedAt,
-        DateTime projectUpdatedAt)
-    {
-        return new()
-        {
-            Id = projectId,
-            Title = projectTitle,
-            Description = projectDescription,
-            SourceCodeUrl = projectSourceCodeUrl,
-            DemoUrl = projectDemoUrl,
-            ThumbnailUrl = projectThumbnailUrl,
-            CreatedAt = projectCreatedAt,
-            UpdatedAt = projectUpdatedAt
-        };
-    }
-
-    public static Project InitFromDatabaseVer2(
-        Guid projectId,
-        string projectTitle,
-        Guid projectAuthorId,
-        string projectDescription,
-        string projectSourceCodeUrl,
-        string projectDemoUrl,
-        string projectThumbnailUrl,
-        DateTime projectCreatedAt,
-        DateTime projectUpdatedAt)
-    {
-        return new()
-        {
-            Id = projectId,
-            Title = projectTitle,
-            AuthorId = projectAuthorId,
-            Description = projectDescription,
-            SourceCodeUrl = projectSourceCodeUrl,
-            DemoUrl = projectDemoUrl,
-            ThumbnailUrl = projectThumbnailUrl,
-            CreatedAt = projectCreatedAt,
-            UpdatedAt = projectUpdatedAt
-        };
-    }
-
-    /// <summary>
-    ///     Represent metadata of property.
-    /// </summary>
     public static class Metadata
     {
         public static class Title

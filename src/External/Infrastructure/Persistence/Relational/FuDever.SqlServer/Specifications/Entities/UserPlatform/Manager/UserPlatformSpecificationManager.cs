@@ -12,6 +12,7 @@ internal sealed class UserPlatformSpecificationManager : IUserPlatformSpecificat
     // Backing fields.
     private ISelectFieldsFromUserPlatformSpecification _selectFieldsFromUserPlatformSpecification;
     private IUserPlatformAsNoTrackingSpecification _userPlatformAsNoTrackingSpecification;
+    private IUpdateFieldOfUserPlatformSpecification _updateFieldOfUserPlatformSpecification;
 
     public ISelectFieldsFromUserPlatformSpecification SelectFieldsFromUserPlatformSpecification
     {
@@ -30,6 +31,16 @@ internal sealed class UserPlatformSpecificationManager : IUserPlatformSpecificat
             _userPlatformAsNoTrackingSpecification ??= new UserPlatformAsNoTrackingSpecification();
 
             return _userPlatformAsNoTrackingSpecification;
+        }
+    }
+
+    public IUpdateFieldOfUserPlatformSpecification UpdateFieldOfUserPlatformSpecification
+    {
+        get
+        {
+            _updateFieldOfUserPlatformSpecification ??= new UpdateFieldOfUserPlatformSpecification();
+
+            return _updateFieldOfUserPlatformSpecification;
         }
     }
 

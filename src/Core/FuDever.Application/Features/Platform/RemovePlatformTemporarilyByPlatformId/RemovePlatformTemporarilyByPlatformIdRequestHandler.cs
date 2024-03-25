@@ -179,10 +179,15 @@ internal sealed class RemovePlatformTemporarilyByPlatformIdRequestHandler : IReq
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.PlatformRepository.BulkUpdateByPlatformIdVer1Async(
-                        platformId: request.PlatformId,
-                        platformRemovedAt: DateTime.UtcNow,
-                        platformRemovedBy: request.PlatformRemovedBy,
+                    await _unitOfWork.PlatformRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Platform.PlatformByIdSpecification(
+                                platformId: request.PlatformId),
+                            _superSpecificationManager.Platform.UpdateFieldOfPlatformSpecification.Ver1(
+                                platformRemovedAt: DateTime.UtcNow,
+                                platformRemovedBy: request.PlatformRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

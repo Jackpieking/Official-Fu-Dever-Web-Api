@@ -98,4 +98,14 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 
         return queryable.FirstOrDefaultAsync(cancellationToken: cancellationToken);
     }
+
+    public Task<int> BulkUpdateAsync(IEnumerable<IBaseSpecification<TEntity>> specifications, CancellationToken cancellationToken)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Task<int> BulkDeleteAsync(IEnumerable<IBaseSpecification<TEntity>> specifications, CancellationToken cancellationToken)
+    {
+        throw new System.NotImplementedException();
+    }
 }

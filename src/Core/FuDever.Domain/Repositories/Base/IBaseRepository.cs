@@ -120,4 +120,42 @@ public interface IBaseRepository<TEntity> where TEntity :
     Task<TEntity> FindBySpecificationsAsync(
         IEnumerable<IBaseSpecification<TEntity>> specifications,
         CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Asynchronously update the entity using bulk method.
+    /// </summary>
+    /// <param name="specifications">
+    ///     List of specifications that are used for
+    ///     constructing a complete query.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used to notify the system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     A task containing result of operation.
+    /// </returns>
+    Task<int> BulkUpdateAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    ///     Asynchronously delete the entity using bulk method.
+    /// </summary>
+    /// <param name="specifications">
+    ///     List of specifications that are used for
+    ///     constructing a complete query.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A token that is used to notify the system
+    ///     to cancel the current operation when user stop
+    ///     the request.
+    /// </param>
+    /// <returns>
+    ///     A task containing result of operation.
+    /// </returns>
+    Task<int> BulkDeleteAsync(
+        IEnumerable<IBaseSpecification<TEntity>> specifications,
+        CancellationToken cancellationToken);
 }

@@ -12,6 +12,7 @@ internal sealed class UserHobbySpecificationManager : IUserHobbySpecificationMan
     // Backing fields.
     private ISelectFieldsFromUserHobbySpecification _selectFieldsFromUserHobbySpecification;
     private IUserHobbyAsNoTrackingSpecification _userHobbyAsNoTrackingSpecification;
+    private IUpdateFieldOfUserHobbySpecification _updateFieldOfUserHobbySpecification;
 
     public ISelectFieldsFromUserHobbySpecification SelectFieldsFromUserHobbySpecification
     {
@@ -30,6 +31,16 @@ internal sealed class UserHobbySpecificationManager : IUserHobbySpecificationMan
             _userHobbyAsNoTrackingSpecification ??= new UserHobbyAsNoTrackingSpecification();
 
             return _userHobbyAsNoTrackingSpecification;
+        }
+    }
+
+    public IUpdateFieldOfUserHobbySpecification UpdateFieldOfUserHobbySpecification
+    {
+        get
+        {
+            _updateFieldOfUserHobbySpecification ??= new UpdateFieldOfUserHobbySpecification();
+
+            return _updateFieldOfUserHobbySpecification;
         }
     }
 

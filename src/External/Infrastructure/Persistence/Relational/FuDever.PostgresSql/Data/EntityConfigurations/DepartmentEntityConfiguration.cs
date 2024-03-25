@@ -25,7 +25,7 @@ internal sealed class DepartmentEntityConfiguration : IEntityTypeConfiguration<D
         // Name property configuration.
         builder
             .Property(propertyExpression: department => department.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Department.Metadata.Name.MaxLength))
             .IsRequired();
 

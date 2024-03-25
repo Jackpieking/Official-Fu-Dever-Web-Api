@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedPlatformsRequestHandler : IRequest
             [
                 _superSpecificationManager.Platform.PlatformAsNoTrackingSpecification,
                 _superSpecificationManager.Platform.PlatformTemporarilyRemovedSpecification,
+                _superSpecificationManager.Platform.PlatformNameIsNotDefaultSpecification,
                 _superSpecificationManager.Platform.SelectFieldsFromPlatformSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

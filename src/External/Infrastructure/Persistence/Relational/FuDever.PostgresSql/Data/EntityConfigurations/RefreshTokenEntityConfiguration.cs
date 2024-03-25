@@ -25,7 +25,7 @@ internal sealed class RefreshTokenEntityConfiguration : IEntityTypeConfiguration
         // Value property configuration.
         builder
             .Property(propertyExpression: refreshToken => refreshToken.Value)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: RefreshToken
                     .Metadata
                     .Value

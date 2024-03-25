@@ -178,10 +178,15 @@ internal sealed class RemoveRoleTemporarilyByRoleIdRequestHandler : IRequestHand
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.RoleRepository.BulkUpdateByRoleIdVer1Async(
-                        roleId: request.RoleId,
-                        roleRemovedAt: DateTime.UtcNow,
-                        roleRemovedBy: request.RoleRemovedBy,
+                    await _unitOfWork.RoleRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Role.RoleByIdSpecification(
+                                roleId: request.RoleId),
+                            _superSpecificationManager.Role.UpdateFieldOfRoleSpecification.Ver1(
+                                roleRemovedAt: DateTime.UtcNow,
+                                roleRemovedBy: request.RoleRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

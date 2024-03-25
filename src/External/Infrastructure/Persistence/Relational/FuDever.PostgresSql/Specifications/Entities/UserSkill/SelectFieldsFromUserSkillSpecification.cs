@@ -1,3 +1,5 @@
+using FuDever.Domain.EntityBuilders.Skill;
+using FuDever.Domain.EntityBuilders.UserSkill;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.UserSkill;
 
@@ -13,17 +15,26 @@ internal sealed class SelectFieldsFromUserSkillSpecification :
 {
     public ISelectFieldsFromUserSkillSpecification Ver1()
     {
-        SelectExpression = userSkill => Domain.Entities.UserSkill.InitFromDatabaseVer2(
-            userSkill.SkillId,
-            Domain.Entities.Skill.InitFromDatabaseVer3(userSkill.Skill.Name));
+        UserSkillForDatabaseRetrievingBuilder userSkillBuilder = new();
+        SkillForDatabaseRetrievingBuilder skillBuilder = new();
+
+        SelectExpression = userSkill => userSkillBuilder
+            .WithSkillId(userSkill.SkillId)
+            .WithSkill(skillBuilder
+                .WithName(userSkill.Skill.Name)
+                .Complete())
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserSkillSpecification Ver2()
     {
-        SelectExpression = userSkill => Domain.Entities.UserSkill.InitFromDatabaseVer3(
-            userSkill.UserId);
+        UserSkillForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = userSkill => builder
+            .WithUserId(userSkill.UserId)
+            .Complete();
 
         return this;
     }

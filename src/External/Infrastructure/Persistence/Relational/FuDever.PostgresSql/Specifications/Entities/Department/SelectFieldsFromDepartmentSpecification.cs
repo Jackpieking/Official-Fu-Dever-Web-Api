@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Department;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Department;
 
@@ -13,28 +14,37 @@ internal sealed class SelectFieldsFromDepartmentSpecification :
 {
     public ISelectFieldsFromDepartmentSpecification Ver1()
     {
-        SelectExpression = department => Domain.Entities.Department.InitFromDatabaseVer1(
-            department.Id,
-            department.Name);
+        DepartmentForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = department => builder
+            .WithId(department.Id)
+            .WithName(department.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromDepartmentSpecification Ver2()
     {
-        SelectExpression = department => Domain.Entities.Department.InitFromDatabaseVer2(
-            department.Id,
-            department.Name,
-            department.RemovedAt,
-            department.RemovedBy);
+        DepartmentForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = department => builder
+            .WithId(department.Id)
+            .WithName(department.Name)
+            .WithRemovedAt(department.RemovedAt)
+            .WithRemovedBy(department.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromDepartmentSpecification Ver3()
     {
-        SelectExpression = department => Domain.Entities.Department.InitFromDatabaseVer3(
-            department.Name);
+        DepartmentForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = department => builder
+            .WithName(department.Name)
+            .Complete();
 
         return this;
     }

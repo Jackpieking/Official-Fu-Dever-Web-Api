@@ -14,6 +14,8 @@ internal sealed class PlatformSpecificationManager : IPlatformSpecificationManag
     private IPlatformTemporarilyRemovedSpecification _platformTemporarilyRemovedSpecification;
     private IPlatformAsNoTrackingSpecification _platformAsNoTrackingSpecification;
     private ISelectFieldsFromPlatformSpecification _selectFieldsFromPlatformSpecification;
+    private IUpdateFieldOfPlatformSpecification _updateFieldOfPlatformSpecification;
+    private IPlatformNameIsNotDefaultSpecification _platformNameIsNotDefaultSpecification;
 
     public IPlatformNotTemporarilyRemovedSpecification PlatformNotTemporarilyRemovedSpecification
     {
@@ -52,6 +54,26 @@ internal sealed class PlatformSpecificationManager : IPlatformSpecificationManag
             _selectFieldsFromPlatformSpecification ??= new SelectFieldsFromPlatformSpecification();
 
             return _selectFieldsFromPlatformSpecification;
+        }
+    }
+
+    public IUpdateFieldOfPlatformSpecification UpdateFieldOfPlatformSpecification
+    {
+        get
+        {
+            _updateFieldOfPlatformSpecification ??= new UpdateFieldOfPlatformSpecification();
+
+            return _updateFieldOfPlatformSpecification;
+        }
+    }
+
+    public IPlatformNameIsNotDefaultSpecification PlatformNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _platformNameIsNotDefaultSpecification ??= new PlatformNameIsNotDefaultSpecification();
+
+            return _platformNameIsNotDefaultSpecification;
         }
     }
 

@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Skill;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Skill;
 
@@ -13,34 +14,48 @@ internal sealed class SelectFieldsFromSkillSpecification :
 {
     public ISelectFieldsFromSkillSpecification Ver1()
     {
-        SelectExpression = skill => Domain.Entities.Skill.InitFromDatabaseVer1(
-            skill.Id,
-            skill.Name);
+        SkillForDatabaseSeedingBuilder builder = new();
+
+        SelectExpression = skill => builder
+            .WithId(skill.Id)
+            .WithName(skill.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromSkillSpecification Ver2()
     {
-        SelectExpression = skill => Domain.Entities.Skill.InitFromDatabaseVer4(
-            skill.Id,
-            skill.Name,
-            skill.RemovedAt,
-            skill.RemovedBy);
+        SkillForDatabaseSeedingBuilder builder = new();
+
+        SelectExpression = skill => builder
+            .WithId(skill.Id)
+            .WithName(skill.Name)
+            .WithRemovedAt(skill.RemovedAt)
+            .WithRemovedBy(skill.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromSkillSpecification Ver3()
     {
-        SelectExpression = skill => Domain.Entities.Skill.InitFromDatabaseVer2(skill.Id);
+        SkillForDatabaseSeedingBuilder builder = new();
+
+        SelectExpression = skill => builder
+            .WithId(skill.Id)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromSkillSpecification Ver4()
     {
-        SelectExpression = skill => Domain.Entities.Skill.InitFromDatabaseVer3(skill.Name);
+        SkillForDatabaseSeedingBuilder builder = new();
+
+        SelectExpression = skill => builder
+            .WithName(skill.Name)
+            .Complete();
 
         return this;
     }

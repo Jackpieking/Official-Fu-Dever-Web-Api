@@ -184,10 +184,15 @@ internal sealed class RestoreMajorByMajorIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.MajorRepository.BulkUpdateByMajorIdVer2Async(
-                        majorId: request.MajorId,
-                        majorRemovedAt: _dbMinTimeHandler.Get(),
-                        majorRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.MajorRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Major.MajorByIdSpecification(
+                                majorId: request.MajorId),
+                            _superSpecificationManager.Major.UpdateFieldOfMajorSpecification.Ver1(
+                                majorRemovedAt: _dbMinTimeHandler.Get(),
+                                majorRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

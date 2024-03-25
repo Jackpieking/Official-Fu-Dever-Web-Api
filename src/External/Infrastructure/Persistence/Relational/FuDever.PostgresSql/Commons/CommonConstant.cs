@@ -17,7 +17,7 @@ internal static class CommonConstant
         /// <summary>
         ///     Nvarchar datatype resolver.
         /// </summary>
-        internal static class NvarcharGenerator
+        internal static class VarcharGenerator
         {
             private static readonly Dictionary<int, string> _storage = [];
             private const string varcharDataTypeName = "VARCHAR";

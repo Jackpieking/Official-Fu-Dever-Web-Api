@@ -30,7 +30,7 @@ internal sealed class ProjectEntityConfiguration : IEntityTypeConfiguration<Proj
         // Title property configuration.
         builder
             .Property(propertyExpression: project => project.Title)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Project
                     .Metadata
                     .Title

@@ -222,27 +222,25 @@ internal sealed class UpdatePlatformByPlatformIdRequestHandler : IRequestHandler
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserPlatforms = await _unitOfWork.UserPlatformRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserPlatformRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserPlatform.UserPlatformAsNoTrackingSpecification,
-                            _superSpecificationManager.UserPlatform.UserPlatformByPlatformIdSpecification(platformId: request.PlatformId),
-                            _superSpecificationManager.UserPlatform.SelectFieldsFromUserPlatformSpecification.Ver1(),
+                            _superSpecificationManager.UserPlatform.UserPlatformByPlatformIdSpecification(
+                                platformId: request.PlatformId),
+                            _superSpecificationManager.UserPlatform.UpdateFieldOfUserPlatformSpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.PlatformUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserPlatform in foundUserPlatforms)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserPlatform.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.PlatformUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.PlatformRepository.BulkUpdateByPlatformIdVer2Async(
-                        platformId: request.PlatformId,
-                        platformName: request.NewPlatformName,
+                    await _unitOfWork.PlatformRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Platform.PlatformByIdSpecification(
+                                platformId: request.PlatformId),
+                            _superSpecificationManager.Platform.UpdateFieldOfPlatformSpecification.Ver2(
+                                platformName: request.NewPlatformName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

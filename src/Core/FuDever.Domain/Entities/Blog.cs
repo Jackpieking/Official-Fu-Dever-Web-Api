@@ -7,13 +7,13 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "Blogs" table.
 /// </summary>
-public sealed class Blog :
+public class Blog :
     IBaseEntity,
     ICreatedEntity,
     ITemporarilyRemovedEntity,
     IUpdatedEntity
 {
-    private Blog()
+    internal Blog()
     {
     }
 

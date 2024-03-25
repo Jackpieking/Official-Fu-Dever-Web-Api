@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Project;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Project;
 
@@ -13,15 +14,18 @@ internal sealed class SelectFieldsFromProjectSpecification :
 {
     public ISelectFieldsFromProjectSpecification Ver1()
     {
-        SelectExpression = project => Domain.Entities.Project.InitFromDatabaseVer1(
-            project.Id,
-            project.Title,
-            project.Description,
-            project.SourceCodeUrl,
-            project.DemoUrl,
-            project.ThumbnailUrl,
-            project.CreatedAt,
-            project.UpdatedAt);
+        ProjectForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = project => builder
+            .WithId(project.Id)
+            .WithTitle(project.Title)
+            .WithDescription(project.Description)
+            .WithSourceCodeUrl(project.SourceCodeUrl)
+            .WithDemoUrl(project.DemoUrl)
+            .WithThumbnailUrl(project.ThumbnailUrl)
+            .WithCreatedAt(project.CreatedAt)
+            .WithUpdatedAt(project.UpdatedAt)
+            .Complete();
 
         return this;
     }

@@ -33,6 +33,11 @@ public interface IDepartmentSpecificationManager
     IDepartmentNameIsNotDefaultSpecification DepartmentNameIsNotDefaultSpecification { get; }
 
     /// <summary>
+    ///     Update field of department specification.
+    /// </summary>
+    IUpdateFieldOfDepartmentSpecification UpdateFieldOfDepartmentSpecification { get; }
+
+    /// <summary>
     ///     Department by department id specification
     /// </summary>
     /// <param name="departmentId">

@@ -6,9 +6,9 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "UserPlatforms" table.
 /// </summary>
-public sealed class UserPlatform : IBaseEntity
+public class UserPlatform : IBaseEntity
 {
-    private UserPlatform()
+    internal UserPlatform()
     {
     }
 
@@ -23,30 +23,6 @@ public sealed class UserPlatform : IBaseEntity
 
     public User User { get; set; }
 
-    public static UserPlatform InitFromDatabaseVer1(
-        Guid platformId,
-        string platformUrl,
-        Platform platform)
-    {
-        return new()
-        {
-            PlatformId = platformId,
-            PlatformUrl = platformUrl,
-            Platform = platform
-        };
-    }
-
-    public static UserPlatform InitFromDatabaseVer2(Guid userId)
-    {
-        return new()
-        {
-            UserId = userId
-        };
-    }
-
-    /// <summary>
-    ///     Represent metadata of property.
-    /// </summary>
     public static class Metadata
     {
         public static class PlatformUrl

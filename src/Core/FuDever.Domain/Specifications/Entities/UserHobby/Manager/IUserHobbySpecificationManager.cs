@@ -29,6 +29,11 @@ public interface IUserHobbySpecificationManager
     IUserHobbyAsNoTrackingSpecification UserHobbyAsNoTrackingSpecification { get; }
 
     /// <summary>
+    ///     Update field of "UserHobbies" table specification.
+    /// </summary>
+    IUpdateFieldOfUserHobbySpecification UpdateFieldOfUserHobbySpecification { get; }
+
+    /// <summary>
     ///     User hobby by hobby id specification.
     /// </summary>
     /// <param name="hobbyId">

@@ -25,7 +25,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // FullName property configuration.
         builder
             .Property(propertyExpression: cv => cv.StudentFullName)
-            .HasColumnType(CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Cv
                     .Metadata
                     .StudentFullName
@@ -41,7 +41,7 @@ internal sealed class CvEntityConfiguration : IEntityTypeConfiguration<Cv>
         // StudentId property configuration.
         builder
             .Property(propertyExpression: cv => cv.StudentId)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Cv
                     .Metadata
                     .StudentId

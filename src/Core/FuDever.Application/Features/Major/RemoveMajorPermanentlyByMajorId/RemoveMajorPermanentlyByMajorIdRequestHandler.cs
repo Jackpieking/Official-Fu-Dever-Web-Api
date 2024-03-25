@@ -180,28 +180,23 @@ internal sealed class RemoveMajorPermanentlyByMajorIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUsers = await _unitOfWork.UserRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.User.UserAsNoTrackingSpecification,
                             _superSpecificationManager.User.UserByMajorIdSpecification(
                                 majorId: request.MajorId),
-                            _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5(),
+                            _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver3(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.MajorRemovedBy,
+                                userMajorId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUser in foundUsers)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer3Async(
-                            userId: foundUser.Id,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.MajorRemovedBy,
-                            userDepartmentId: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.DepartmentRepository.BulkRemoveByDepartmentIdAsync(
-                        departmentId: request.MajorId,
+                    await _unitOfWork.MajorRepository.BulkDeleteAsync(
+                        [
+                            _superSpecificationManager.Major.MajorByIdSpecification(
+                                majorId: request.MajorId),
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

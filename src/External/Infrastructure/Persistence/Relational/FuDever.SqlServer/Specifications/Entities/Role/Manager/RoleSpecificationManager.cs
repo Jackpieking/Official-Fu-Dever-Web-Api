@@ -14,6 +14,8 @@ internal sealed class RoleSpecificationManager : IRoleSpecificationManager
     private IRoleNotTemporarilyRemovedSpecification _roleNotTemporarilyRemovedSpecification;
     private IRoleTemporarilyRemovedSpecification _roleTemporarilyRemovedSpecification;
     private ISelectFieldsFromRoleSpecification _selectFieldsFromRoleSpecification;
+    private IUpdateFieldOfRoleSpecification _updateFieldOfRoleSpecification;
+    private IRoleNameIsNotDefaultSpecification _roleNameIsNotDefaultSpecification;
 
     public IRoleAsNoTrackingSpecification RoleAsNoTrackingSpecification
     {
@@ -52,6 +54,26 @@ internal sealed class RoleSpecificationManager : IRoleSpecificationManager
             _selectFieldsFromRoleSpecification ??= new SelectFieldsFromRoleSpecification();
 
             return _selectFieldsFromRoleSpecification;
+        }
+    }
+
+    public IUpdateFieldOfRoleSpecification UpdateFieldOfRoleSpecification
+    {
+        get
+        {
+            _updateFieldOfRoleSpecification ??= new UpdateFieldOfRoleSpecification();
+
+            return _updateFieldOfRoleSpecification;
+        }
+    }
+
+    public IRoleNameIsNotDefaultSpecification RoleNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _roleNameIsNotDefaultSpecification ??= new RoleNameIsNotDefaultSpecification();
+
+            return _roleNameIsNotDefaultSpecification;
         }
     }
 

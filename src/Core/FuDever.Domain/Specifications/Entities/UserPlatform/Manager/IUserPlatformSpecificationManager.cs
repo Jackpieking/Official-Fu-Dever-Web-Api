@@ -38,4 +38,9 @@ public interface IUserPlatformSpecificationManager
     ///     User platform as no tracking specification.
     /// </summary>
     IUserPlatformAsNoTrackingSpecification UserPlatformAsNoTrackingSpecification { get; }
+
+    /// <summary>
+    ///     Update field of "UserPlatforms" table specification.
+    /// </summary>
+    IUpdateFieldOfUserPlatformSpecification UpdateFieldOfUserPlatformSpecification { get; }
 }

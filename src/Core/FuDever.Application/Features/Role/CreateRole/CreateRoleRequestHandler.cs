@@ -1,8 +1,10 @@
 using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Role;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
@@ -17,6 +19,7 @@ internal sealed class CreateRoleRequestHandler : IRequestHandler<
     CreateRoleRequest,
     CreateRoleResponse>
 {
+    private readonly RoleManager<Domain.Entities.Role> _roleManager;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
     private readonly IDbMinTimeHandler _dbMinTimeHandler;
@@ -24,11 +27,13 @@ internal sealed class CreateRoleRequestHandler : IRequestHandler<
     public CreateRoleRequestHandler(
         IUnitOfWork unitOfWork,
         ISuperSpecificationManager superSpecificationManager,
-        IDbMinTimeHandler dbMinTimeHandler)
+        IDbMinTimeHandler dbMinTimeHandler,
+        RoleManager<Domain.Entities.Role> roleManager)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
         _dbMinTimeHandler = dbMinTimeHandler;
+        _roleManager = roleManager;
     }
 
     /// <summary>
@@ -178,6 +183,20 @@ internal sealed class CreateRoleRequestHandler : IRequestHandler<
         CreateRoleRequest request,
         CancellationToken cancellationToken)
     {
+        RoleForNewRecordBuilder builder = new();
+
+        var newRole = builder
+            .WithId(roleId: Guid.NewGuid())
+            .WithName(roleName: request.NewRoleName)
+            .WithRemovedAt(roleRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(roleRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newRole, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -186,23 +205,9 @@ internal sealed class CreateRoleRequestHandler : IRequestHandler<
             {
                 try
                 {
-                    // This line initiates a new database
-                    // transaction using the _unitOfWork
-                    // instance. It prepares the database
-                    // for a series of operations that should
-                    // be treated as a single unit of work.
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    // This block of code adds a new role entity to the role repository
-                    await _unitOfWork.RoleRepository.AddAsync(
-                        newEntity: Domain.Entities.Role.InitVer1(
-                            roleId: Guid.NewGuid(),
-                            roleName: request.NewRoleName,
-                            roleRemovedAt: _dbMinTimeHandler.Get(),
-                            roleRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
-                        cancellationToken: cancellationToken);
-
-                    await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);
+                    await _roleManager.CreateAsync(role: newRole);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
 

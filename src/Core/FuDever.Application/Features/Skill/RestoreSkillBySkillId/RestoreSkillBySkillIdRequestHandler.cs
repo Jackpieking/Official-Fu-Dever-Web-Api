@@ -184,10 +184,15 @@ internal sealed class RestoreSkillBySkillIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.SkillRepository.BulkUpdateBySkillIdVer1Async(
-                        skillId: request.SkillId,
-                        skillRemovedAt: _dbMinTimeHandler.Get(),
-                        skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.SkillRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Skill.SkillByIdSpecification(
+                                skillId: request.SkillId),
+                            _superSpecificationManager.Skill.UpdateFieldOfSkillSpecification.Ver1(
+                                skillRemovedAt: _dbMinTimeHandler.Get(),
+                                skillRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

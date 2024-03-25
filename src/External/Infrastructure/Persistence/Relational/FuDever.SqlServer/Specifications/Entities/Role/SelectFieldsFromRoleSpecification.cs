@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Role;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Role;
 
@@ -13,27 +14,37 @@ internal sealed class SelectFieldsFromRoleSpecification :
 {
     public ISelectFieldsFromRoleSpecification Ver1()
     {
-        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer1(
-            role.Id,
-            role.Name);
+        RoleForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = role => builder
+            .WithId(role.Id)
+            .WithName(role.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromRoleSpecification Ver2()
     {
-        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer3(
-            role.Id,
-            role.Name,
-            role.RemovedAt,
-            role.RemovedBy);
+        RoleForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = role => builder
+            .WithId(role.Id)
+            .WithName(role.Name)
+            .WithRemovedAt(role.RemovedAt)
+            .WithRemovedBy(role.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromRoleSpecification Ver3()
     {
-        SelectExpression = role => Domain.Entities.Role.InitFromDatabaseVer2(role.Name);
+        RoleForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = role => builder
+            .WithName(role.Name)
+            .Complete();
 
         return this;
     }

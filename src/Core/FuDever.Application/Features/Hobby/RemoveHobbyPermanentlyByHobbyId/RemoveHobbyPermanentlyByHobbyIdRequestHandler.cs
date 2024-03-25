@@ -10,7 +10,7 @@ namespace FuDever.Application.Features.Hobby.RemoveHobbyPermanentlyByHobbyId;
 
 /// <summary>
 ///     Remove hobby permanently by hobby id request handler.
-/// </summary> 
+/// </summary>
 internal sealed class RemoveHobbyPermanentlyByHobbyIdRequestHandler : IRequestHandler<
     RemoveHobbyPermanentlyByHobbyIdRequest,
     RemoveHobbyPermanentlyByHobbyIdResponse>
@@ -179,30 +179,31 @@ internal sealed class RemoveHobbyPermanentlyByHobbyIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserHobbies = await _unitOfWork.UserHobbyRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserHobbyRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserHobby.UserHobbyAsNoTrackingSpecification,
-                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(hobbyId: request.HobbyId),
-                            _superSpecificationManager.UserHobby.SelectFieldsFromUserHobbySpecification.Ver2(),
+                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(
+                                hobbyId: request.HobbyId),
+                            _superSpecificationManager.UserHobby.UpdateFieldOfUserHobbySpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.HobbyRemovedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserHobby in foundUserHobbies)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserHobby.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.HobbyRemovedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.UserHobbyRepository.BulkRemoveByHobbyIdAsync(
-                        hobbyId: request.HobbyId,
+                    await _unitOfWork.UserHobbyRepository.BulkDeleteAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(
+                                hobbyId: request.HobbyId)
+                        ],
                         cancellationToken: cancellationToken);
 
-                    await _unitOfWork.HobbyRepository.BulkRemoveByHobbyIdAsync(
-                        hobbyId: request.HobbyId,
+                    await _unitOfWork.HobbyRepository.BulkDeleteAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Hobby.HobbyByIdSpecification(
+                                hobbyId: request.HobbyId)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

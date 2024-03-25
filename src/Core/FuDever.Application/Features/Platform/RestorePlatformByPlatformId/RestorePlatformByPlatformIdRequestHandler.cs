@@ -184,10 +184,15 @@ internal sealed class RestorePlatformByPlatformIdRequestHandler : IRequestHandle
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.PlatformRepository.BulkUpdateByPlatformIdVer1Async(
-                        platformId: request.PlatformId,
-                        platformRemovedAt: _dbMinTimeHandler.Get(),
-                        platformRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.PlatformRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Platform.PlatformByIdSpecification(
+                                platformId: request.PlatformId),
+                            _superSpecificationManager.Platform.UpdateFieldOfPlatformSpecification.Ver1(
+                                platformRemovedAt: _dbMinTimeHandler.Get(),
+                                platformRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

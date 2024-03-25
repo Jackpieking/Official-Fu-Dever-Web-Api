@@ -83,6 +83,7 @@ internal sealed class GetAllTemporarilyRemovedSkillsRequestHandler : IRequestHan
             [
                 _superSpecificationManager.Skill.SkillAsNoTrackingSpecification,
                 _superSpecificationManager.Skill.SkillTemporarilyRemovedSpecification,
+                _superSpecificationManager.Skill.SkillNameIsNotDefaultSpecification,
                 _superSpecificationManager.Skill.SelectFieldsFromSkillSpecification.Ver2()
             ],
             cancellationToken: cancellationToken);

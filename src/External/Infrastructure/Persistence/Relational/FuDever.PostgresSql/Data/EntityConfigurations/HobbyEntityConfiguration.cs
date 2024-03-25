@@ -25,7 +25,7 @@ internal sealed class HobbyEntityConfiguration : IEntityTypeConfiguration<Hobby>
         // Name property configuration.
         builder
             .Property(propertyExpression: hobby => hobby.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Hobby
                     .Metadata
                     .Name

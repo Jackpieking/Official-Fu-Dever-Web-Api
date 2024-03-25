@@ -222,27 +222,25 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    var foundUserRoles = await _unitOfWork.UserRoleRepository.GetAllBySpecificationsAsync(
+                    await _unitOfWork.UserRoleRepository.BulkUpdateAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserRole.UserRoleAsNoTrackingSpecification,
-                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(roleId: request.RoleId),
-                            _superSpecificationManager.UserRole.SelectFieldsFromUserRoleSpecification.Ver1(),
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
+                                roleId: request.RoleId),
+                            _superSpecificationManager.UserRole.UpdateFieldOfUserRoleSpecification.Ver1(
+                                userUpdatedAt: DateTime.UtcNow,
+                                userUpdatedBy: request.RoleUpdatedBy)
                         ],
                         cancellationToken: cancellationToken);
 
-                    foreach (var foundUserRole in foundUserRoles)
-                    {
-                        await _unitOfWork.UserRepository.BulkUpdateByUserIdVer1Async(
-                            userId: foundUserRole.UserId,
-                            userUpdatedAt: DateTime.UtcNow,
-                            userUpdatedBy: request.RoleUpdatedBy,
-                            cancellationToken: cancellationToken);
-                    }
-
-                    await _unitOfWork.RoleRepository.BulkUpdateByRoleIdVer2Async(
-                        roleId: request.RoleId,
-                        roleName: request.NewRoleName,
+                    await _unitOfWork.RoleRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Role.RoleByIdSpecification(
+                                roleId: request.RoleId),
+                            _superSpecificationManager.Role.UpdateFieldOfRoleSpecification.Ver2(
+                                roleName: request.NewRoleName)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

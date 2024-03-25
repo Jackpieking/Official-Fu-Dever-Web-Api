@@ -29,6 +29,11 @@ public interface IUserSkillSpecificationManager
     IUserSkillAsNoTrackingSpecification UserSkillAsNoTrackingSpecification { get; }
 
     /// <summary>
+    ///     Update field of user skill specification.
+    /// </summary>
+    IUpdateFieldOfUserSkillSpecification UpdateFieldOfUserSkillSpecification { get; }
+
+    /// <summary>
     ///     User skill by skill id specification.
     /// </summary>
     /// <param name="skillId">

@@ -1,5 +1,6 @@
 using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Department;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreateDepartmentRequestHandler : IRequestHandler<
         CreateDepartmentRequest request,
         CancellationToken cancellationToken)
     {
+        DepartmentForNewRecordBuilder builder = new();
+
+        var newDepartment = builder
+            .WithId(departmentId: Guid.NewGuid())
+            .WithName(departmentName: request.NewDepartmentName)
+            .WithRemovedAt(departmentRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(departmentRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newDepartment, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -188,13 +203,8 @@ internal sealed class CreateDepartmentRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    // This block of code adds a new department entity to the department repository
                     await _unitOfWork.DepartmentRepository.AddAsync(
-                        newEntity: Domain.Entities.Department.InitVer1(
-                            departmentId: Guid.NewGuid(),
-                            departmentName: request.NewDepartmentName,
-                            departmentRemovedAt: _dbMinTimeHandler.Get(),
-                            departmentRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newDepartment,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

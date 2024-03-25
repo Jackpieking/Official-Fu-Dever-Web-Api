@@ -184,10 +184,15 @@ internal sealed class RestoreDepartmentByDepartmentIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.DepartmentRepository.BulkUpdateByDepartmentIdVer1Async(
-                        departmentId: request.DepartmentId,
-                        departmentRemovedAt: _dbMinTimeHandler.Get(),
-                        departmentRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.DepartmentRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Department.DepartmentByIdSpecification(
+                                departmentId: request.DepartmentId),
+                            _superSpecificationManager.Department.UpdateFieldOfDepartmentSpecification.Ver1(
+                                departmentRemovedAt: _dbMinTimeHandler.Get(),
+                                departmentRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

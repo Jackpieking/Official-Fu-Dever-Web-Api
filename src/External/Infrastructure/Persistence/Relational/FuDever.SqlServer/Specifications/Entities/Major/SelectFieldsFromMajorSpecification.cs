@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Major;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Major;
 
@@ -13,27 +14,37 @@ internal sealed class SelectFieldsFromMajorSpecification :
 {
     public ISelectFieldsFromMajorSpecification Ver1()
     {
-        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer1(
-            major.Id,
-            major.Name);
+        MajorForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = major => builder
+            .WithId(major.Id)
+            .WithName(major.Name)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromMajorSpecification Ver2()
     {
-        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer3(
-            major.Id,
-            major.Name,
-            major.RemovedAt,
-            major.RemovedBy);
+        MajorForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = major => builder
+            .WithId(major.Id)
+            .WithName(major.Name)
+            .WithRemovedAt(major.RemovedAt)
+            .WithRemovedBy(major.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromMajorSpecification Ver3()
     {
-        SelectExpression = major => Domain.Entities.Major.InitFromDatabaseVer2(major.Name);
+        MajorForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = major => builder
+            .WithName(major.Name)
+            .Complete();
 
         return this;
     }

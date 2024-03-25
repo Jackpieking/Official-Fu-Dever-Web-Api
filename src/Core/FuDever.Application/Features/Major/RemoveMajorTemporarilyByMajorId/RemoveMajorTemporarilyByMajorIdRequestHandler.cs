@@ -178,10 +178,15 @@ internal sealed class RemoveMajorTemporarilyByMajorIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.MajorRepository.BulkUpdateByMajorIdVer2Async(
-                        majorId: request.MajorId,
-                        majorRemovedAt: DateTime.UtcNow,
-                        majorRemovedBy: request.MajorRemovedBy,
+                    await _unitOfWork.MajorRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Major.MajorByIdSpecification(
+                                majorId: request.MajorId),
+                            _superSpecificationManager.Major.UpdateFieldOfMajorSpecification.Ver1(
+                                majorRemovedAt: DateTime.UtcNow,
+                                majorRemovedBy: request.MajorRemovedBy)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

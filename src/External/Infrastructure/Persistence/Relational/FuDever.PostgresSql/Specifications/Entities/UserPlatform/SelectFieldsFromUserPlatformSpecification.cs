@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.UserPlatform;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.UserPlatform;
 
@@ -13,8 +14,11 @@ internal sealed class SelectFieldsFromUserPlatformSpecification :
 {
     public ISelectFieldsFromUserPlatformSpecification Ver1()
     {
-        SelectExpression = userPlatform => Domain.Entities.UserPlatform.InitFromDatabaseVer2(
-            userPlatform.UserId);
+        UserPlatformForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = userPlatform => builder
+            .WithUserId(userPlatform.UserId)
+            .Complete();
 
         return this;
     }

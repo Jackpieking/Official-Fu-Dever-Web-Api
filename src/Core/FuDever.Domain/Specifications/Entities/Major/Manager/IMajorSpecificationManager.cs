@@ -53,4 +53,14 @@ public interface IMajorSpecificationManager
     ///     Select field from "Majors" table specification.
     /// </summary>
     ISelectFieldsFromMajorSpecification SelectFieldsFromMajorSpecification { get; }
+
+    /// <summary>
+    ///     Update field of major specification.
+    /// </summary>
+    IUpdateFieldOfMajorSpecification UpdateFieldOfMajorSpecification { get; }
+
+    /// <summary>
+    ///     Major name is not default specification.
+    /// </summary>
+    IMajorNameIsNotDefaultSpecification MajorNameIsNotDefaultSpecification { get; }
 }

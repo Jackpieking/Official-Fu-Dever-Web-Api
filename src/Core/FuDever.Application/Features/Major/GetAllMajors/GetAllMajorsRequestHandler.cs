@@ -81,6 +81,7 @@ internal sealed class GetAllMajorsRequestHandler : IRequestHandler<
             [
                 _superSpecificationManager.Major.MajorAsNoTrackingSpecification,
                 _superSpecificationManager.Major.MajorNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Major.MajorNameIsNotDefaultSpecification,
                 _superSpecificationManager.Major.SelectFieldsFromMajorSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

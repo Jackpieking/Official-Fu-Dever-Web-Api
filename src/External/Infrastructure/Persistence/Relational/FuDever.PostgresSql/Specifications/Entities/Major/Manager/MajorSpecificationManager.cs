@@ -14,6 +14,8 @@ internal sealed class MajorSpecificationManager : IMajorSpecificationManager
     private IMajorNotTemporarilyRemovedSpecification _majorNotTemporarilyRemovedSpecification;
     private IMajorTemporarilyRemovedSpecification _majorTemporarilyRemovedSpecification;
     private ISelectFieldsFromMajorSpecification _selectFieldsFromMajorSpecification;
+    private IUpdateFieldOfMajorSpecification _updateFieldOfMajorSpecification;
+    private IMajorNameIsNotDefaultSpecification _majorNameIsNotDefaultSpecification;
 
     public IMajorAsNoTrackingSpecification MajorAsNoTrackingSpecification
     {
@@ -52,6 +54,26 @@ internal sealed class MajorSpecificationManager : IMajorSpecificationManager
             _selectFieldsFromMajorSpecification ??= new SelectFieldsFromMajorSpecification();
 
             return _selectFieldsFromMajorSpecification;
+        }
+    }
+
+    public IUpdateFieldOfMajorSpecification UpdateFieldOfMajorSpecification
+    {
+        get
+        {
+            _updateFieldOfMajorSpecification ??= new UpdateFieldOfMajorSpecification();
+
+            return _updateFieldOfMajorSpecification;
+        }
+    }
+
+    public IMajorNameIsNotDefaultSpecification MajorNameIsNotDefaultSpecification
+    {
+        get
+        {
+            _majorNameIsNotDefaultSpecification ??= new MajorNameIsNotDefaultSpecification();
+
+            return _majorNameIsNotDefaultSpecification;
         }
     }
 

@@ -392,10 +392,10 @@ internal static class DependencyInjection
         IConfigurationManager configuration)
     {
         services
-            .AddScoped(implementationFactory: _ =>
+            .AddSingleton(implementationFactory: _ =>
                 GetTokenValidationParameters(configuration: configuration))
-            .AddScoped<SecurityTokenHandler, JwtSecurityTokenHandler>()
-            .AddScoped<EntityHttpResponseManager>();
+            .AddSingleton<SecurityTokenHandler, JwtSecurityTokenHandler>()
+            .AddSingleton<EntityHttpResponseManager>();
     }
 
     /// <summary>

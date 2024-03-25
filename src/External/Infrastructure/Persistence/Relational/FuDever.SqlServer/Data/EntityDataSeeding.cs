@@ -1,4 +1,13 @@
 using FuDever.Domain.Entities;
+using FuDever.Domain.EntityBuilders.Department;
+using FuDever.Domain.EntityBuilders.Hobby;
+using FuDever.Domain.EntityBuilders.Major;
+using FuDever.Domain.EntityBuilders.Platform;
+using FuDever.Domain.EntityBuilders.Position;
+using FuDever.Domain.EntityBuilders.Role;
+using FuDever.Domain.EntityBuilders.Skill;
+using FuDever.Domain.EntityBuilders.User;
+using FuDever.Domain.EntityBuilders.UserJoiningStatus;
 using FuDever.SqlServer.Commons;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -310,14 +319,18 @@ public static class EntityDataSeeding
         ];
 
         List<Department> newDepartments = [];
+        DepartmentForDatabaseSeedingBuilder builder = new();
 
         foreach (var newDepartmentName in newDepartmentNames)
         {
-            newDepartments.Add(item: Department.InitForSeeding(
-                departmentId: Guid.NewGuid(),
-                departmentName: newDepartmentName,
-                departmentRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                departmentRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newDepartments.Add(item: builder
+                .WithId(departmentId: Guid.NewGuid())
+                .WithName(departmentName: newDepartmentName)
+                .WithRemovedAt(departmentRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(departmentRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newDepartments
@@ -368,15 +381,19 @@ public static class EntityDataSeeding
         ];
 
         List<Hobby> newHobbies = [];
+        HobbyForDatabaseSeedingBuilder builder = new();
 
         foreach (var newHobbyName in newHobbyNames)
         {
-            newHobbies.Add(item: Hobby.InitForSeeding(
-                hobbyId: Guid.NewGuid(),
-                hobbyName: newHobbyName,
-                hobbyRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                hobbyRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID
-            ));
+            newHobbies.Add(item: builder
+                .WithId(hobbyId: Guid.NewGuid())
+                .WithName(hobbyName: newHobbyName)
+                .WithRemovedAt(hobbyRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(hobbyRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete()
+            );
         }
 
         newHobbies
@@ -405,14 +422,18 @@ public static class EntityDataSeeding
         ];
 
         List<Major> newMajors = [];
+        MajorForDatabaseSeedingBuilder builder = new();
 
         foreach (var newMajorName in newMajorNames)
         {
-            newMajors.Add(item: Major.InitForSeeding(
-                majorId: Guid.NewGuid(),
-                majorName: newMajorName,
-                majorRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                majorRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newMajors.Add(item: builder
+                .WithId(majorId: Guid.NewGuid())
+                .WithName(majorName: newMajorName)
+                .WithRemovedAt(majorRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(majorRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newMajors
@@ -442,14 +463,18 @@ public static class EntityDataSeeding
         ];
 
         List<Platform> newPlatforms = [];
+        PlatformForDatabaseSeedingBuilder builder = new();
 
         foreach (var newPlatformName in newPlatformNames)
         {
-            newPlatforms.Add(item: Platform.InitForSeeding(
-                platformId: Guid.NewGuid(),
-                platformName: newPlatformName,
-                platformRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                platformRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newPlatforms.Add(item: builder
+                .WithId(platformId: Guid.NewGuid())
+                .WithName(platformName: newPlatformName)
+                .WithRemovedAt(platformRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(platformRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newPlatforms
@@ -484,14 +509,18 @@ public static class EntityDataSeeding
         ];
 
         List<Position> newPositions = [];
+        PositionForDatabaseSeedingBuilder builder = new();
 
         foreach (var newPositionName in newPositionNames)
         {
-            newPositions.Add(item: Position.InitForSeeding(
-                positionId: Guid.NewGuid(),
-                positionName: newPositionName,
-                positionRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                positionRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newPositions.Add(item: builder
+                .WithId(positionId: Guid.NewGuid())
+                .WithName(positionName: newPositionName)
+                .WithRemovedAt(positionRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(positionRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newPositions
@@ -558,14 +587,18 @@ public static class EntityDataSeeding
         ];
 
         List<Skill> newSkills = [];
+        SkillForDatabaseSeedingBuilder builder = new();
 
         foreach (var newSkillName in newSkillNames)
         {
-            newSkills.Add(item: Skill.InitForSeeding(
-                skillId: Guid.NewGuid(),
-                skillName: newSkillName,
-                skillRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                skillRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newSkills.Add(item: builder
+                .WithId(skillId: Guid.NewGuid())
+                .WithName(skillName: newSkillName)
+                .WithRemovedAt(skillRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(skillRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newSkills
@@ -593,14 +626,18 @@ public static class EntityDataSeeding
         ];
 
         List<UserJoiningStatus> newUserJoiningStatuses = [];
+        UserJoiningStatusForDatabaseSeedingBuilder builder = new();
 
         foreach (var newUserJoiningStatusType in newUserJoiningStatusTypes)
         {
-            newUserJoiningStatuses.Add(item: UserJoiningStatus.InitForSeeding(
-                userJoiningStatusId: Guid.NewGuid(),
-                userJoiningStatusType: newUserJoiningStatusType,
-                userJoiningStatusRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                userJoiningStatusRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newUserJoiningStatuses.Add(item: builder
+                .WithId(userJoiningStatusId: Guid.NewGuid())
+                .WithType(userJoiningStatusType: newUserJoiningStatusType)
+                .WithRemovedAt(userJoiningStatusRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(userJoiningStatusRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         newUserJoiningStatuses
@@ -625,14 +662,18 @@ public static class EntityDataSeeding
         ];
 
         List<Role> newRoles = [];
+        RoleForDatabaseSeedingBuilder builder = new();
 
         foreach (var newRoleName in newRoleNames)
         {
-            newRoles.Add(item: Role.InitVer1(
-                roleId: Guid.NewGuid(),
-                roleName: newRoleName,
-                roleRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-                roleRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID));
+            newRoles.Add(item: builder
+                .WithId(roleId: Guid.NewGuid())
+                .WithName(roleName: newRoleName)
+                .WithRemovedAt(roleRemovedAt: CommonConstant.DbDefaultValue
+                    .MIN_DATE_TIME)
+                .WithRemovedBy(roleRemovedBy: Application.Commons.CommonConstant.App
+                    .DEFAULT_ENTITY_ID_AS_GUID)
+                .Complete());
         }
 
         return newRoles;
@@ -649,31 +690,33 @@ public static class EntityDataSeeding
     /// </returns>
     private static User InitAdmin(UserJoiningStatus userJoiningStatus)
     {
-        User admin = new()
-        {
-            Id = Guid.NewGuid(),
-            UserName = "ledinhdangkhoa10a9@gmail.com",
-            Email = "ledinhdangkhoa10a9@gmail.com",
-            UserJoiningStatusId = userJoiningStatus.Id,
-            PositionId = Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            MajorId = Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            DepartmentId = Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            FirstName = string.Empty,
-            LastName = string.Empty,
-            Career = string.Empty,
-            Workplaces = string.Empty,
-            EducationPlaces = string.Empty,
-            BirthDay = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-            HomeAddress = string.Empty,
-            SelfDescription = string.Empty,
-            JoinDate = DateTime.UtcNow,
-            AvatarUrl = "https://firebasestorage.googleapis.com/v0/b/comic-image-storage.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=2309abba-282c-4f81-846e-6336235103dc",
-            CreatedAt = DateTime.UtcNow,
-            RemovedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-            RemovedBy = Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-            UpdatedAt = CommonConstant.DbDefaultValue.MIN_DATE_TIME,
-            UpdatedBy = Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
-        };
+        UserForDatabaseSeedingBuilder builder = new();
+
+        User admin = builder
+            .WithId(userId: Guid.NewGuid())
+            .WithUserName(username: "ledinhdangkhoa10a9@gmail.com")
+            .WithEmail(userEmail: "ledinhdangkhoa10a9@gmail.com")
+            .WithUserJoiningStatusId(userJoiningStatusId: userJoiningStatus.Id)
+            .WithPositionId(userPositionId: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .WithMajorId(userMajorId: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .WithDepartmentId(userDepartmentId: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .WithFirstName(userFirstName: string.Empty)
+            .WithLastName(userLastName: string.Empty)
+            .WithCareer(userCareer: string.Empty)
+            .WithWorkplaces(userWorkplaces: string.Empty)
+            .WithEducationPlaces(userEducationPlaces: string.Empty)
+            .WithBirthDay(userBirthDay: CommonConstant.DbDefaultValue.MIN_DATE_TIME)
+            .WithHomeAddress(userHomeAddress: string.Empty)
+            .WithSelfDescription(userSelfDescription: string.Empty)
+            .WithJoinDate(userJoinDate: DateTime.UtcNow)
+            .WithAvatarUrl(userAvatarUrl: "https://firebasestorage.googleapis.com/v0/b/comic-image-storage.appspot.com/o/blank-profile-picture-973460_1280.png?alt=media&token=2309abba-282c-4f81-846e-6336235103dc")
+            .WithCreatedAt(userCreatedAt: DateTime.UtcNow)
+            .WithCreatedBy(userCreatedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .WithRemovedAt(userRemovedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME)
+            .WithRemovedBy(userRemovedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .WithUpdatedAt(userUpdatedAt: CommonConstant.DbDefaultValue.MIN_DATE_TIME)
+            .WithUpdatedBy(userUpdatedBy: Application.Commons.CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
 
         return admin;
     }

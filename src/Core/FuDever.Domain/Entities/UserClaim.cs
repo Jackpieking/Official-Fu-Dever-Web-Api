@@ -7,8 +7,10 @@ namespace FuDever.Domain.Entities;
 /// <summary>
 ///     Represent the "UserClaims" table.
 /// </summary>
-public sealed class UserClaim :
+public class UserClaim :
     IdentityUserClaim<Guid>,
     IBaseEntity
 {
+    // Navigation properties.
+    public User User { get; set; }
 }

@@ -91,6 +91,7 @@ internal sealed class GetAllMajorsByMajorNameRequestHandler : IRequestHandler<
                     majorName: majorName,
                     isCaseSensitive: false),
                 _superSpecificationManager.Major.MajorNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Major.MajorNameIsNotDefaultSpecification,
                 _superSpecificationManager.Major.SelectFieldsFromMajorSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

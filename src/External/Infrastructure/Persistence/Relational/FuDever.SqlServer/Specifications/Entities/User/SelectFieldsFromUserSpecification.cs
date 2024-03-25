@@ -1,3 +1,15 @@
+using FuDever.Domain.EntityBuilders.Department;
+using FuDever.Domain.EntityBuilders.Hobby;
+using FuDever.Domain.EntityBuilders.Major;
+using FuDever.Domain.EntityBuilders.Platform;
+using FuDever.Domain.EntityBuilders.Position;
+using FuDever.Domain.EntityBuilders.Project;
+using FuDever.Domain.EntityBuilders.Skill;
+using FuDever.Domain.EntityBuilders.User;
+using FuDever.Domain.EntityBuilders.UserHobby;
+using FuDever.Domain.EntityBuilders.UserJoiningStatus;
+using FuDever.Domain.EntityBuilders.UserPlatform;
+using FuDever.Domain.EntityBuilders.UserSkill;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.User;
 using System.Linq;
@@ -14,123 +26,164 @@ internal sealed class SelectFieldsFromUserSpecification :
 {
     public ISelectFieldsFromUserSpecification Ver1()
     {
-        SelectExpression = user => Domain.Entities.User.InitVer2(
-            Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(
-                user.UserJoiningStatus.Type));
+        UserForDatabaseRetrievingBuilder userBuilder = new();
+        UserJoiningStatusForDatabaseRetrievingBuilder userJoiningStatusBuilder = new();
+
+        SelectExpression = user => userBuilder
+            .WithUserJoiningStatus(userJoiningStatusBuilder
+                .WithType(user.UserJoiningStatus.Type)
+                .Complete())
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserSpecification Ver2()
     {
-        SelectExpression = user => Domain.Entities.User.InitVer3(
-            user.Id,
-            user.FirstName,
-            user.LastName,
-            user.Email,
-            Domain.Entities.Position.InitFromDatabaseVer1(user.Position.Name),
-            Domain.Entities.Department.InitFromDatabaseVer3(user.Department.Name),
-            Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(user.UserJoiningStatus.Type),
-            user.AvatarUrl,
-            user.RemovedAt,
-            user.RemovedBy);
+        UserForDatabaseRetrievingBuilder userBuilder = new();
+        PositionForDatabaseRetrievingBuilder positionBuilder = new();
+        DepartmentForDatabaseRetrievingBuilder departmentBuilder = new();
+        UserJoiningStatusForDatabaseRetrievingBuilder userJoiningStatusBuilder = new();
+
+        SelectExpression = user => userBuilder
+            .WithId(user.Id)
+            .WithFirstName(user.FirstName)
+            .WithLastName(user.LastName)
+            .WithEmail(user.Email)
+            .WithPosition(positionBuilder
+                .WithName(user.Position.Name)
+                .Complete())
+            .WithDepartment(departmentBuilder
+                .WithName(user.Department.Name)
+                .Complete())
+            .WithUserJoiningStatus(userJoiningStatusBuilder
+                .WithType(user.UserJoiningStatus.Type)
+                .Complete())
+            .WithAvatarUrl(user.AvatarUrl)
+            .WithRemovedAt(user.RemovedAt)
+            .WithRemovedBy(user.RemovedBy)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserSpecification Ver3()
     {
-        SelectExpression = user => new()
-        {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Career = user.Career,
-            BirthDay = user.BirthDay,
-            Email = user.Email,
-            HomeAddress = user.HomeAddress,
-            PhoneNumber = user.PhoneNumber,
-            SelfDescription = user.SelfDescription,
-            JoinDate = user.JoinDate,
-            EducationPlaces = user.EducationPlaces,
-            Position = Domain.Entities.Position.InitFromDatabaseVer2(
-                user.PositionId,
-                user.Position.Name),
-            Major = Domain.Entities.Major.InitFromDatabaseVer1(
-                user.MajorId,
-                user.Major.Name),
-            Department = Domain.Entities.Department.InitFromDatabaseVer1(
-                user.DepartmentId,
-                user.Department.Name),
-            AvatarUrl = user.AvatarUrl,
-            UserPlatforms = user.UserPlatforms.Select(userPlatform =>
-                Domain.Entities.UserPlatform.InitFromDatabaseVer1(
-                    userPlatform.PlatformId,
-                    userPlatform.PlatformUrl,
-                    Domain.Entities.Platform.InitFromDatabaseVer2(
-                        userPlatform.Platform.Name))),
-            Workplaces = user.Workplaces,
-            Projects = user.Projects.Select(project =>
-                Domain.Entities.Project.InitFromDatabaseVer2(
-                    project.Id,
-                    project.Title,
-                    project.AuthorId,
-                    project.Description,
-                    project.SourceCodeUrl,
-                    project.DemoUrl,
-                    project.ThumbnailUrl,
-                    project.CreatedAt,
-                    project.UpdatedAt)),
-            UserSkills = user.UserSkills.Select(userSkill =>
-                Domain.Entities.UserSkill.InitFromDatabaseVer1(
-                    Domain.Entities.Skill.InitFromDatabaseVer3(userSkill.Skill.Name))),
-            UserHobbies = user.UserHobbies.Select(userHobby =>
-                Domain.Entities.UserHobby.InitFromDatabaseVer3(
-                    Domain.Entities.Hobby.InitFromDatabaseVer4(userHobby.Hobby.Name)))
-        };
+        UserForDatabaseRetrievingBuilder userBuilder = new();
+        PositionForDatabaseRetrievingBuilder positionBuilder = new();
+        UserPlatformForDatabaseRetrievingBuilder userPlatformBuilder = new();
+        DepartmentForDatabaseRetrievingBuilder departmentBuilder = new();
+        MajorForDatabaseRetrievingBuilder majorBuilder = new();
+        ProjectForDatabaseRetrievingBuilder projectBuilder = new();
+        PlatformForDatabaseRetrievingBuilder platformBuilder = new();
+        UserSkillForDatabaseRetrievingBuilder userSkillBuilder = new();
+        UserHobbyForDatabaseRetrievingBuilder userHobbyBuilder = new();
+        SkillForDatabaseRetrievingBuilder skillBuilder = new();
+        HobbyForDatabaseRetrievingBuilder hobbyBuilder = new();
+
+        SelectExpression = user => userBuilder
+            .WithId(user.Id)
+            .WithFirstName(user.FirstName)
+            .WithLastName(user.LastName)
+            .WithCareer(user.Career)
+            .WithBirthDay(user.BirthDay)
+            .WithEmail(user.Email)
+            .WithHomeAddress(user.HomeAddress)
+            .WithPhoneNumber(user.PhoneNumber)
+            .WithSelfDescription(user.SelfDescription)
+            .WithJoinDate(user.JoinDate)
+            .WithEducationPlaces(user.EducationPlaces)
+            .WithPosition(positionBuilder
+                .WithId(user.PositionId)
+                .WithName(user.Position.Name)
+                .Complete())
+            .WithMajor(majorBuilder
+                .WithId(user.MajorId)
+                .WithName(user.Major.Name)
+                .Complete())
+            .WithDepartment(departmentBuilder
+                .WithId(user.DepartmentId)
+                .WithName(user.Department.Name)
+                .Complete())
+            .WithAvatarUrl(user.AvatarUrl)
+            .WithUserPlatforms(user.UserPlatforms
+                .Select(userPlatform => userPlatformBuilder
+                    .WithPlatformId(userPlatform.PlatformId)
+                    .WithPlatformUrl(userPlatform.PlatformUrl)
+                    .WithPlatform(platformBuilder
+                        .WithName(userPlatform.Platform.Name)
+                        .Complete())
+                    .Complete()))
+            .WithWorkplaces(user.Workplaces)
+            .WithProjects(user.Projects
+                .Select(project => projectBuilder
+                    .WithId(project.Id)
+                    .WithTitle(project.Title)
+                    .WithAuthorId(project.AuthorId)
+                    .WithDescription(project.Description)
+                    .WithSourceCodeUrl(project.SourceCodeUrl)
+                    .WithDemoUrl(project.DemoUrl)
+                    .WithThumbnailUrl(project.ThumbnailUrl)
+                    .WithCreatedAt(project.CreatedAt)
+                    .WithUpdatedAt(project.UpdatedAt)
+                    .Complete()))
+            .WithUserSkills(user.UserSkills
+                .Select(userSkill => userSkillBuilder
+                    .WithSkill(skillBuilder
+                        .WithName(userSkill.Skill.Name)
+                        .Complete())
+                    .Complete()))
+            .WithUserHobbies(user.UserHobbies
+                .Select(userHobby => userHobbyBuilder
+                    .WithHobby(hobbyBuilder
+                        .WithName(userHobby.Hobby.Name)
+                        .Complete())
+                    .Complete()))
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserSpecification Ver4()
     {
-        SelectExpression = user => new()
-        {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Email = user.Email,
-            Position = Domain.Entities.Position.InitFromDatabaseVer1(user.Position.Name),
-            Department = Domain.Entities.Department.InitFromDatabaseVer3(user.Department.Name),
-            UserJoiningStatus = Domain.Entities.UserJoiningStatus.InitFromDatabaseVer2(user.UserJoiningStatus.Type),
-            AvatarUrl = user.AvatarUrl
-        };
+        UserForDatabaseRetrievingBuilder userBuilder = new();
+        PositionForDatabaseRetrievingBuilder positionBuilder = new();
+        DepartmentForDatabaseRetrievingBuilder departmentBuilder = new();
+        UserJoiningStatusForDatabaseRetrievingBuilder userJoiningStatusBuilder = new();
+
+        SelectExpression = user => userBuilder
+            .WithId(user.Id)
+            .WithFirstName(user.FirstName)
+            .WithLastName(user.LastName)
+            .WithEmail(user.Email)
+            .WithPosition(positionBuilder
+                .WithName(user.Position.Name)
+                .Complete())
+            .WithDepartment(departmentBuilder
+                .WithName(user.Department.Name)
+                .Complete())
+            .WithUserJoiningStatus(userJoiningStatusBuilder
+                .WithType(user.UserJoiningStatus.Type)
+                .Complete())
+            .WithAvatarUrl(user.AvatarUrl)
+            .Complete();
 
         return this;
     }
 
     public ISelectFieldsFromUserSpecification Ver5()
     {
-        SelectExpression = user => new()
-        {
-            Id = user.Id
-        };
+        UserForDatabaseRetrievingBuilder userBuilder = new();
 
-        return this;
-    }
-
-    public ISelectFieldsFromUserSpecification Ver6()
-    {
-        SelectExpression = user => new()
-        {
-            Id = user.Id,
-            PasswordHash = user.PasswordHash,
-            LockoutEnd = user.LockoutEnd,
-            AccessFailedCount = user.AccessFailedCount,
-            EmailConfirmed = user.EmailConfirmed,
-            Email = user.Email,
-            AvatarUrl = user.AvatarUrl
-        };
+        SelectExpression = user => userBuilder
+            .WithId(user.Id)
+            .WithPasswordHash(user.PasswordHash)
+            .WithLockoutEnd(user.LockoutEnd.Value)
+            .WithAccessFailedCount(user.AccessFailedCount)
+            .WithEmailConfirmed(user.EmailConfirmed)
+            .WithEmail(user.Email)
+            .WithAvatarUrl(user.AvatarUrl)
+            .Complete();
 
         return this;
     }

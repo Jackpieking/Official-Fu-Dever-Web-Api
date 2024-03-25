@@ -184,10 +184,15 @@ internal sealed class RestoreRoleByRoleIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.RoleRepository.BulkUpdateByRoleIdVer1Async(
-                        roleId: request.RoleId,
-                        roleRemovedAt: _dbMinTimeHandler.Get(),
-                        roleRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID,
+                    await _unitOfWork.RoleRepository.BulkUpdateAsync(
+                        specifications:
+                        [
+                            _superSpecificationManager.Role.RoleByIdSpecification(
+                                roleId: request.RoleId),
+                            _superSpecificationManager.Role.UpdateFieldOfRoleSpecification.Ver1(
+                                roleRemovedAt: _dbMinTimeHandler.Get(),
+                                roleRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+                        ],
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);

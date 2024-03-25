@@ -25,7 +25,7 @@ internal sealed class PlatformEntityConfiguration : IEntityTypeConfiguration<Pla
         // Name property configuration.
         builder
             .Property(propertyExpression: platform => platform.Name)
-            .HasColumnType(typeName: CommonConstant.DbDataType.NvarcharGenerator.Get(
+            .HasColumnType(typeName: CommonConstant.DbDataType.VarcharGenerator.Get(
                 length: Platform
                     .Metadata
                     .Name

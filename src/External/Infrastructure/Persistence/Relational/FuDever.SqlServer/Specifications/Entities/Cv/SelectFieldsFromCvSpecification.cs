@@ -1,3 +1,4 @@
+using FuDever.Domain.EntityBuilders.Cv;
 using FuDever.Domain.Specifications.Base;
 using FuDever.Domain.Specifications.Entities.Cv;
 
@@ -13,12 +14,15 @@ internal sealed class SelectFieldsFromCvSpecification :
 {
     public ISelectFieldsFromCvSpecification Ver1()
     {
-        SelectExpression = cv => Domain.Entities.Cv.InitFromDatabaseVer1(
-            cv.Id,
-            cv.StudentFullName,
-            cv.StudentEmail,
-            cv.StudentId,
-            cv.StudentCvFileId);
+        CvForDatabaseRetrievingBuilder builder = new();
+
+        SelectExpression = cv => builder
+            .WithId(cv.Id)
+            .WithStudentFullName(cv.StudentFullName)
+            .WithStudentEmail(cv.StudentEmail)
+            .WithStudentId(cv.StudentId)
+            .WithStudentCvFileId(cv.StudentCvFileId)
+            .Complete();
 
         return this;
     }

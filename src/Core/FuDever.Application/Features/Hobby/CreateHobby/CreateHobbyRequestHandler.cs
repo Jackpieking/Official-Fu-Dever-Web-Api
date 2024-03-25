@@ -1,5 +1,6 @@
 ﻿using FuDever.Application.Commons;
 using FuDever.Application.Interfaces.Data;
+using FuDever.Domain.EntityBuilders.Hobby;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
@@ -178,6 +179,20 @@ internal sealed class CreateHobbyRequestHandler : IRequestHandler<
         CreateHobbyRequest request,
         CancellationToken cancellationToken)
     {
+        HobbyForNewRecordBuilder builder = new();
+
+        var newHobby = builder
+            .WithId(hobbyId: Guid.NewGuid())
+            .WithName(hobbyName: request.NewHobbyName)
+            .WithRemovedAt(hobbyRemovedAt: _dbMinTimeHandler.Get())
+            .WithRemovedBy(hobbyRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID)
+            .Complete();
+
+        if (Equals(objA: newHobby, objB: default))
+        {
+            return false;
+        }
+
         var executedTransactionResult = false;
 
         await _unitOfWork
@@ -189,11 +204,7 @@ internal sealed class CreateHobbyRequestHandler : IRequestHandler<
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
                     await _unitOfWork.HobbyRepository.AddAsync(
-                        newEntity: Domain.Entities.Hobby.InitVer1(
-                            hobbyId: Guid.NewGuid(),
-                            hobbyName: request.NewHobbyName,
-                            hobbyRemovedAt: _dbMinTimeHandler.Get(),
-                            hobbyRemovedBy: CommonConstant.App.DEFAULT_ENTITY_ID_AS_GUID),
+                        newEntity: newHobby,
                         cancellationToken: cancellationToken);
 
                     await _unitOfWork.SaveToDatabaseAsync(cancellationToken: cancellationToken);

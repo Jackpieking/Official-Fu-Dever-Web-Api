@@ -89,6 +89,7 @@ internal sealed class GetAllHobbiesByHobbyNameRequestHandler : IRequestHandler<
                         hobbyName: hobbyName,
                         isCaseSensitive: false),
                 _superSpecificationManager.Hobby.HobbyNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Hobby.HobbyNameIsNotDefaultSpecification,
                 _superSpecificationManager.Hobby.SelectFieldsFromHobbySpecification.Ver1()
             ],
             cancellationToken: cancellationToken);

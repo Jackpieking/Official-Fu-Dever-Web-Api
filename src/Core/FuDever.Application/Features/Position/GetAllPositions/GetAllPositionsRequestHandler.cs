@@ -81,6 +81,7 @@ internal sealed class GetAllPositionsRequestHandler : IRequestHandler<
             [
                 _superSpecificationManager.Position.PositionAsNoTrackingSpecification,
                 _superSpecificationManager.Position.PositionNotTemporarilyRemovedSpecification,
+                _superSpecificationManager.Position.PositionNameIsNotDefaultSpecification,
                 _superSpecificationManager.Position.SelectFieldsFromPositionSpecification.Ver1()
             ],
             cancellationToken: cancellationToken);
