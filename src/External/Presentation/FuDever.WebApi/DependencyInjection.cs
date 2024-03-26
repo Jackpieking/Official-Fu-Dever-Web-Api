@@ -7,7 +7,7 @@ using FuDever.WebApi.ActionResults;
 using FuDever.WebApi.AppCodes.Base;
 using FuDever.WebApi.Authorization.Requires;
 using FuDever.WebApi.Commons;
-using FuDever.WebApi.HttpResponse.Others;
+using FuDever.WebApi.EntityHttpResponse.Others;
 using FuDever.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

@@ -11,7 +11,7 @@ internal abstract class PlatformAppCode : BaseAppCode
 
     internal const int PLATFORM_ALREADY_EXISTS = 4;
 
-    internal const int PLATFORM_IS_ALREADY_SOFT_REMOVED = 5;
+    internal const int PLATFORM_IS_ALREADY_TEMPORARILY_REMOVED = 5;
 
-    internal const int PLATFORM_IS_NOT_SOFT_REMOVED = 6;
+    internal const int PLATFORM_IS_NOT_TEMPORARILY_REMOVED = 6;
 }

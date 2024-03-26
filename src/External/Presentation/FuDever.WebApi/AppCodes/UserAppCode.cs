@@ -29,9 +29,9 @@ internal abstract class UserAppCode : BaseAppCode
 
     internal const int UPDATE_USER_IS_FORBIDDEN = 13;
 
-    internal const int USER_IS_ALREADY_SOFT_REMOVED = 14;
+    internal const int USER_IS_ALREADY_TEMPORARILY_REMOVED = 14;
 
-    internal const int USER_IS_NOT_SOFT_REMOVED = 15;
+    internal const int USER_IS_NOT_TEMPORARILY_REMOVED = 15;
 
     internal const int PROJECT_IS_NOT_FOUND = 16;
 

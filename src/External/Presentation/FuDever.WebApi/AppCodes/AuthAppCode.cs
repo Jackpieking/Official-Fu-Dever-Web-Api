@@ -31,7 +31,7 @@ internal abstract class AuthAppCode : BaseAppCode
 
     internal const int ASK_USER_TO_CONFIRM_EMAIL = 14;
 
-    internal const int USER_IS_SOFT_REMOVED = 15;
+    internal const int USER_IS_TEMPORARILY_REMOVED = 15;
 
     internal const int USER_IS_LOCKED_OUT = 16;
 

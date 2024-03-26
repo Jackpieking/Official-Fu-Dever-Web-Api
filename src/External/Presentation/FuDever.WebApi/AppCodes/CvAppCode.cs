@@ -15,7 +15,7 @@ internal abstract class CvAppCode : BaseAppCode
 
     internal const int STUDENT_ID_NOT_FOUND = 6;
 
-    internal const int CV_IS_SOFT_REMOVED = 7;
+    internal const int CV_IS_TEMPORARILY_REMOVED = 7;
 
-    internal const int CV_IS_NOT_SOFT_REMOVED = 8;
+    internal const int CV_IS_NOT_TEMPORARILY_REMOVED = 8;
 }

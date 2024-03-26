@@ -7,7 +7,6 @@ namespace FuDever.WebApi.ApiReturnCodes;
 /// </summary>
 internal abstract class SkillAppCode : BaseAppCode
 {
-
     internal const int SKILL_IS_NOT_FOUND = 3;
 
     internal const int SKILL_ALREADY_EXISTS = 4;

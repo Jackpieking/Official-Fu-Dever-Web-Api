@@ -71,9 +71,9 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
 
     public Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> UpdateExpression { get; set; }
 
-    protected Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> AppendSetProperty(
-        Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> left,
-        Expression<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>> right)
+    protected Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> AppendSetProperty(
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> left,
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> right)
     {
         ReplacingExpressionVisitor replace = new(
             originals: right.Parameters,
@@ -81,7 +81,7 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
 
         var combined = replace.Visit(expression: right.Body);
 
-        return Expression.Lambda<Func<SetPropertyCalls<TEntity>,SetPropertyCalls<TEntity>>>(
+        return Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
             body: combined,
             parameters: left.Parameters);
     }

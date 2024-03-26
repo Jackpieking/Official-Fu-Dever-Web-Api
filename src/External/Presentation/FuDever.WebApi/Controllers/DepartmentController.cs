@@ -9,7 +9,7 @@ using FuDever.Application.Features.Department.UpdateDepartmentByDepartmentId;
 using FuDever.Domain.Entities;
 using FuDever.WebApi.Attributes;
 using FuDever.WebApi.DTOs.Department.Incomings;
-using FuDever.WebApi.HttpResponse.Others;
+using FuDever.WebApi.EntityHttpResponse.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

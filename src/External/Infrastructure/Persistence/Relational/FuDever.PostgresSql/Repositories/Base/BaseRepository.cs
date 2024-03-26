@@ -190,9 +190,9 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         CancellationToken cancellationToken)
     {
         // Validate specification list.
-        if (Equals(objA: specifications,objB: default) ||
+        if (Equals(objA: specifications, objB: default) ||
             !specifications.Any() ||
-            !specifications.Any(predicate: specification =>!Equals(
+            !specifications.Any(predicate: specification => !Equals(
                 objA: specification.WhereExpression,
                 objB: default)))
         {
