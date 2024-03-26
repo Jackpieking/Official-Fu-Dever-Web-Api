@@ -11,6 +11,14 @@ public sealed class MajorForDatabaseSeedingBuilder :
     IBaseMajorBuilder,
     IMajorBuilder<MajorForDatabaseSeedingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Major Complete()
     {
         return new()

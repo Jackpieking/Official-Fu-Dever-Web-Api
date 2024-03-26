@@ -1,6 +1,7 @@
 using FuDever.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace FuDever.Domain.Specifications.Base;
@@ -76,4 +77,9 @@ public interface IBaseSpecification<TEntity> where TEntity :
     ///     Expression that is used for "SetProperty" method.
     /// </summary>
     Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> UpdateExpression { get; set; }
+
+    /// <summary>
+    ///     List of expressions that are used for "Include" method.
+    /// </summary>
+    List<Expression<Func<TEntity, object>>> IncludeExpressions { get; }
 }

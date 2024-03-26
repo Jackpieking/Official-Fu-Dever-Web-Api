@@ -105,4 +105,19 @@ public sealed class ProjectForDatabaseRetrievingBuilder :
 
         return this;
     }
+
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        AuthorId = Guid.Empty;
+        Title = default;
+        Description = default;
+        SourceCodeUrl = default;
+        DemoUrl = default;
+        ThumbnailUrl = default;
+        CreatedBy = Guid.Empty;
+        CreatedAt = default;
+        UpdatedBy = Guid.Empty;
+        UpdatedAt = default;
+    }
 }

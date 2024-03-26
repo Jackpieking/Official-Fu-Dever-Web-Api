@@ -12,4 +12,9 @@ public interface IBaseEntityHandler<out TEntity>
     ///     Entity with supplied fields.
     /// </returns>
     TEntity Complete();
+
+    /// <summary>
+    ///     Set all properties to default.
+    /// </summary>
+    void Clear();
 }

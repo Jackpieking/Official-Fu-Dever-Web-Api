@@ -11,6 +11,16 @@ public sealed class RoleForNewRecordBuilder :
     IBaseRoleBuilder,
     IRoleBuilder<RoleForNewRecordBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        NormalizedName = default;
+        ConcurrencyStamp = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Role Complete()
     {
         return new()

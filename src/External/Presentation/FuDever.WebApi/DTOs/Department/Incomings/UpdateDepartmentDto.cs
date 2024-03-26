@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FuDever.WebApi.DTOs.Department.Incomings;
 
+/// <summary>
+///     Incoming DTO for updating existing Department.
+/// </summary>
 public sealed class UpdateDepartmentDto : IDtoNormalization
 {
     [Required]

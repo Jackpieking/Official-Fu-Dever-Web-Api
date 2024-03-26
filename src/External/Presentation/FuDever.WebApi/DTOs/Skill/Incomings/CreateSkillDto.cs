@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FuDever.WebApi.DTOs.Skill.Incomings;
 
+/// <summary>
+///     Incoming DTO for creating new Skill.
+/// </summary>
 public sealed class CreateSkillDto : IDtoNormalization
 {
     [Required]

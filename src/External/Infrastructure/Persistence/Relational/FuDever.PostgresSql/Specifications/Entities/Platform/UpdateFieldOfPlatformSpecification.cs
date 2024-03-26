@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfPlatformSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    platform => platform.RemovedAt,
-                    platformRemovedAt)
-                .SetProperty(
-                    platform => platform.RemovedBy,
-                    platformRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                platform => platform.RemovedAt,
+                platformRemovedAt)
+            .SetProperty(
+                platform => platform.RemovedBy,
+                platformRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfPlatformSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                platform => platform.Name,
-                platformName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            platform => platform.Name,
+            platformName);
 
         return this;
     }

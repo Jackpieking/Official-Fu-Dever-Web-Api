@@ -1,5 +1,4 @@
 ﻿using FuDever.Domain.Specifications.Base;
-using System;
 
 namespace FuDever.Domain.Specifications.Entities.UserHobby;
 
@@ -8,7 +7,4 @@ namespace FuDever.Domain.Specifications.Entities.UserHobby;
 /// </summary>
 public interface IUpdateFieldOfUserHobbySpecification : IBaseSpecification<Domain.Entities.UserHobby>
 {
-    IUpdateFieldOfUserHobbySpecification Ver1(
-        DateTime userUpdatedAt,
-        Guid userUpdatedBy);
 }

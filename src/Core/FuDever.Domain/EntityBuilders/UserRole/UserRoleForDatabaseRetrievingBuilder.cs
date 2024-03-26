@@ -11,6 +11,12 @@ public sealed class UserRoleForDatabaseRetrievingBuilder :
     IBaseUserRoleBuilder,
     IUserRoleBuilder<UserRoleForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        RoleId = Guid.Empty;
+        UserId = Guid.Empty;
+    }
+
     public Entities.UserRole Complete()
     {
         return new()

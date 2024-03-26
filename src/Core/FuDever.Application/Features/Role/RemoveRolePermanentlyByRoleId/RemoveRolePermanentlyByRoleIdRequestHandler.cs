@@ -1,6 +1,8 @@
+using FuDever.Domain.EntityBuilders.Role;
 using FuDever.Domain.Specifications.Others.Interfaces;
 using FuDever.Domain.UnitOfWorks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
@@ -17,13 +19,16 @@ internal sealed class RemoveRolePermanentlyByRoleIdRequestHandler : IRequestHand
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISuperSpecificationManager _superSpecificationManager;
+    private readonly RoleManager<Domain.Entities.Role> _roleManager;
 
     public RemoveRolePermanentlyByRoleIdRequestHandler(
         IUnitOfWork unitOfWork,
-        ISuperSpecificationManager superSpecificationManager)
+        ISuperSpecificationManager superSpecificationManager,
+        RoleManager<Domain.Entities.Role> roleManager)
     {
         _unitOfWork = unitOfWork;
         _superSpecificationManager = superSpecificationManager;
+        _roleManager = roleManager;
     }
 
     /// <summary>
@@ -179,32 +184,36 @@ internal sealed class RemoveRolePermanentlyByRoleIdRequestHandler : IRequestHand
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserRoleRepository.BulkUpdateAsync(
+                    var foundUserRoles = await _unitOfWork.UserRoleRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
-                                roleId: request.RoleId),
-                            _superSpecificationManager.UserRole.UpdateFieldOfUserRoleSpecification.Ver1(
-                                userUpdatedAt: DateTime.UtcNow,
-                                userUpdatedBy: request.RoleRemovedBy)
+                            _superSpecificationManager.UserRole.UserRoleAsNoTrackingSpecification,
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(roleId: request.RoleId),
+                            _superSpecificationManager.UserRole.SelectFieldsFromUserRoleSpecification.Ver1()
                         ],
                         cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserRoleRepository.BulkDeleteAsync(
-                        specifications:
-                        [
-                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
-                                roleId: request.RoleId)
-                        ],
-                        cancellationToken: cancellationToken);
+                    foreach (var foundUserRole in foundUserRoles)
+                    {
+                        await _unitOfWork.UserRepository.BulkUpdateAsync(
+                            specifications:
+                            [
+                                _superSpecificationManager.User.UserByIdSpecification(
+                                    userId: foundUserRole.UserId),
+                                _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                    userUpdatedAt: DateTime.UtcNow,
+                                    userUpdatedBy: request.RoleRemovedBy)
+                            ],
+                            cancellationToken: cancellationToken);
+                    }
 
-                    await _unitOfWork.RoleRepository.BulkDeleteAsync(
-                        specifications:
-                        [
-                            _superSpecificationManager.Role.RoleByIdSpecification(
-                                roleId: request.RoleId)
-                        ],
-                        cancellationToken: cancellationToken);
+                    RoleForNewRecordBuilder roleBuilder = new();
+
+                    var deletedRole = roleBuilder
+                        .WithId(roleId: request.RoleId)
+                        .Complete();
+
+                    await _roleManager.DeleteAsync(role: deletedRole);
 
                     await _unitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
 

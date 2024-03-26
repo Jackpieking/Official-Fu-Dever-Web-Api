@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfRoleSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    role => role.RemovedAt,
-                    roleRemovedAt)
-                .SetProperty(
-                    role => role.RemovedBy,
-                    roleRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                role => role.RemovedAt,
+                roleRemovedAt)
+            .SetProperty(
+                role => role.RemovedBy,
+                roleRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfRoleSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                role => role.Name,
-                roleName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            role => role.Name,
+            roleName);
 
         return this;
     }

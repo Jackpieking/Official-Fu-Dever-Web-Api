@@ -12,6 +12,13 @@ public sealed class UserHobbyForDatabaseRetrievingBuilder :
     IUserHobbyBuilder<UserHobbyForDatabaseRetrievingBuilder>,
     IUserHobbyNavigationPropertyBuilder<UserHobbyForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        UserId = Guid.Empty;
+        HobbyId = Guid.Empty;
+        Hobby = default;
+    }
+
     public Entities.UserHobby Complete()
     {
         return new()

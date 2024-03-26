@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfMajorSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    major => major.RemovedAt,
-                    majorRemovedAt)
-                .SetProperty(
-                    major => major.RemovedBy,
-                    majorRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                major => major.RemovedAt,
+                majorRemovedAt)
+            .SetProperty(
+                major => major.RemovedBy,
+                majorRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfMajorSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                major => major.Name,
-                majorName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            major => major.Name,
+            majorName);
 
         return this;
     }

@@ -11,6 +11,14 @@ public sealed class PlatformForNewRecordBuilder :
     IBasePlatformBuilder,
     IPlatformBuilder<PlatformForNewRecordBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public PlatformForNewRecordBuilder WithId(Guid platformId)
     {
         // Validate platform Id.

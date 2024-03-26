@@ -11,6 +11,14 @@ public sealed class SkillForDatabaseSeedingBuilder :
     IBaseSkillBuilder,
     ISkillBuilder<SkillForDatabaseSeedingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Skill Complete()
     {
         return new()

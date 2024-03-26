@@ -11,6 +11,14 @@ public sealed class DepartmentForDatabaseSeedingBuilder :
     IBaseDepartmentBuilder,
     IDepartmentBuilder<DepartmentForDatabaseSeedingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Department Complete()
     {
         return new()

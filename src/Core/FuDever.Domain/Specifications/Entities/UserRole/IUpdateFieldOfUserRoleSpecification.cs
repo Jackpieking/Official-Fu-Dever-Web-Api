@@ -1,5 +1,4 @@
 ﻿using FuDever.Domain.Specifications.Base;
-using System;
 
 namespace FuDever.Domain.Specifications.Entities.UserRole;
 
@@ -8,7 +7,4 @@ namespace FuDever.Domain.Specifications.Entities.UserRole;
 /// </summary>
 public interface IUpdateFieldOfUserRoleSpecification : IBaseSpecification<Domain.Entities.UserRole>
 {
-    IUpdateFieldOfUserRoleSpecification Ver1(
-        DateTime userUpdatedAt,
-        Guid userUpdatedBy);
 }

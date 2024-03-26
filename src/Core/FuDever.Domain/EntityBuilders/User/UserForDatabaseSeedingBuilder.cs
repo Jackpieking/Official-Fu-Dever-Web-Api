@@ -11,6 +11,61 @@ public sealed class UserForDatabaseSeedingBuilder :
     IBaseUserBuilder,
     IUserBuilder<UserForDatabaseSeedingBuilder>
 {
+    public void Clear()
+    {
+        AccessFailedCount = default;
+        ActivityPoints = default;
+        AvatarUrl = default;
+        BirthDay = default;
+        Career = default;
+        ConcurrencyStamp = default;
+        CreatedAt = default;
+        CreatedBy = Guid.Empty;
+        DepartmentId = Guid.Empty;
+        EducationPlaces = default;
+        FirstName = default;
+        HomeAddress = default;
+        JoinDate = default;
+        LastName = default;
+        LockoutEnd = default;
+        LockoutEnabled = default;
+        MajorId = Guid.Empty;
+        PasswordHash = default;
+        PhoneNumber = default;
+        PhoneNumberConfirmed = default;
+        PositionId = Guid.Empty;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+        SecurityStamp = default;
+        SelfDescription = default;
+        TwoFactorEnabled = default;
+        UpdatedAt = default;
+        UpdatedBy = Guid.Empty;
+        UserJoiningStatusId = Guid.Empty;
+        Email = default;
+        EmailConfirmed = default;
+        Id = Guid.Empty;
+        NormalizedUserName = default;
+        NormalizedEmail = default;
+        UserName = default;
+        Workplaces = default;
+        Position = default;
+        Major = default;
+        Department = default;
+        UserJoiningStatus = default;
+        UserSkills = default;
+        Blogs = default;
+        UserHobbies = default;
+        Projects = default;
+        BlogComments = default;
+        UserPlatforms = default;
+        RefreshTokens = default;
+        UserRoles = default;
+        UserClaims = default;
+        UserLogins = default;
+        UserTokens = default;
+    }
+
     public UserForDatabaseSeedingBuilder WithAccessFailedCount(int userAccessFailedCount)
     {
         AccessFailedCount = userAccessFailedCount;

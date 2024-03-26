@@ -28,7 +28,7 @@ internal sealed class RoleHttpResponseManager
     private RemoveRoleTemporarilyByRoleIdHttpResponseManager
         _removeRoleTemporarilyByRoleIdHttpResponseManager;
     private UpdateRoleByRoleIdHttpResponseManager
-        _roleByRoleIdHttpResponseManager;
+        _updateRoleByRoleIdHttpResponseManager;
     private RestoreRoleByRoleIdHttpResponseManager
         _restoreRoleByRoleIdHttpResponseManager;
 
@@ -92,13 +92,13 @@ internal sealed class RoleHttpResponseManager
         }
     }
 
-    internal UpdateRoleByRoleIdHttpResponseManager RoleByRoleId
+    internal UpdateRoleByRoleIdHttpResponseManager UpdateRoleByRoleId
     {
         get
         {
-            _roleByRoleIdHttpResponseManager ??= new();
+            _updateRoleByRoleIdHttpResponseManager ??= new();
 
-            return _roleByRoleIdHttpResponseManager;
+            return _updateRoleByRoleIdHttpResponseManager;
         }
     }
 

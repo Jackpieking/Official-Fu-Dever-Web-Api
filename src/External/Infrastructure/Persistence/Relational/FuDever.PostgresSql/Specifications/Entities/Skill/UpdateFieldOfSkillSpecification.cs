@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfSkillSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    skill => skill.RemovedAt,
-                    skillRemovedAt)
-                .SetProperty(
-                    skill => skill.RemovedBy,
-                    skillRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                skill => skill.RemovedAt,
+                skillRemovedAt)
+            .SetProperty(
+                skill => skill.RemovedBy,
+                skillRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfSkillSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                skill => skill.Name,
-                skillName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            skill => skill.Name,
+            skillName);
 
         return this;
     }

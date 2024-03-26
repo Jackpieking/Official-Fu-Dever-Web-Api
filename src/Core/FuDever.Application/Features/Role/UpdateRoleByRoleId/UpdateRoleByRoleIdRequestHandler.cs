@@ -222,16 +222,28 @@ internal sealed class UpdateRoleByRoleIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserRoleRepository.BulkUpdateAsync(
+                    var foundUserRoles = await _unitOfWork.UserRoleRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(
-                                roleId: request.RoleId),
-                            _superSpecificationManager.UserRole.UpdateFieldOfUserRoleSpecification.Ver1(
-                                userUpdatedAt: DateTime.UtcNow,
-                                userUpdatedBy: request.RoleUpdatedBy)
+                            _superSpecificationManager.UserRole.UserRoleAsNoTrackingSpecification,
+                            _superSpecificationManager.UserRole.UserRoleByRoleIdSpecification(roleId: request.RoleId),
+                            _superSpecificationManager.UserRole.SelectFieldsFromUserRoleSpecification.Ver1()
                         ],
                         cancellationToken: cancellationToken);
+
+                    foreach (var foundUserRole in foundUserRoles)
+                    {
+                        await _unitOfWork.UserRepository.BulkUpdateAsync(
+                            specifications:
+                            [
+                                _superSpecificationManager.User.UserByIdSpecification(
+                                    userId: foundUserRole.UserId),
+                                _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                    userUpdatedAt: DateTime.UtcNow,
+                                    userUpdatedBy: request.RoleUpdatedBy)
+                            ],
+                            cancellationToken: cancellationToken);
+                    }
 
                     await _unitOfWork.RoleRepository.BulkUpdateAsync(
                         specifications:

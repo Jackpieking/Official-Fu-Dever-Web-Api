@@ -222,16 +222,28 @@ internal sealed class UpdateSkillBySkillIdRequestHandler : IRequestHandler<
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserSkillRepository.BulkUpdateAsync(
+                    var foundUserSkills = await _unitOfWork.UserSkillRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(
-                                skillId: request.SkillId),
-                            _superSpecificationManager.UserSkill.UpdateFieldOfUserSkillSpecification.Ver1(
-                                userUpdatedAt: DateTime.UtcNow,
-                                userUpdatedBy: request.SkillUpdatedBy)
+                            _superSpecificationManager.UserSkill.UserSkillAsNoTrackingSpecification,
+                            _superSpecificationManager.UserSkill.UserSkillBySkillIdSpecification(skillId: request.SkillId),
+                            _superSpecificationManager.UserSkill.SelectFieldsFromUserSkillSpecification.Ver2()
                         ],
                         cancellationToken: cancellationToken);
+
+                    foreach (var foundUserSkill in foundUserSkills)
+                    {
+                        await _unitOfWork.UserRepository.BulkUpdateAsync(
+                            specifications:
+                            [
+                                _superSpecificationManager.User.UserByIdSpecification(
+                                    userId: foundUserSkill.UserId),
+                                _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                    userUpdatedAt: DateTime.UtcNow,
+                                    userUpdatedBy: request.SkillUpdatedBy)
+                            ],
+                            cancellationToken: cancellationToken);
+                    }
 
                     await _unitOfWork.SkillRepository.BulkUpdateAsync(
                         specifications:

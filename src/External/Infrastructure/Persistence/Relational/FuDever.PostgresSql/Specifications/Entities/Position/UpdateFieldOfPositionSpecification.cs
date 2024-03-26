@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfPositionSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    position => position.RemovedAt,
-                    positionRemovedAt)
-                .SetProperty(
-                    position => position.RemovedBy,
-                    positionRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                position => position.RemovedAt,
+                positionRemovedAt)
+            .SetProperty(
+                position => position.RemovedBy,
+                positionRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfPositionSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                position => position.Name,
-                positionName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            position => position.Name,
+            positionName);
 
         return this;
     }

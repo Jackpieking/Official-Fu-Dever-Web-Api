@@ -12,6 +12,13 @@ public sealed class UserSkillForDatabaseRetrievingBuilder :
     IUserSkillBuilder<UserSkillForDatabaseRetrievingBuilder>,
     IUserSkillNavigationPropertyBuilder<UserSkillForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        SkillId = Guid.Empty;
+        UserId = Guid.Empty;
+        Skill = default;
+    }
+
     public Entities.UserSkill Complete()
     {
         return new()

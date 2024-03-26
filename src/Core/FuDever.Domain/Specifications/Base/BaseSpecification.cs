@@ -1,6 +1,7 @@
 using FuDever.Domain.Entities.Base;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace FuDever.Domain.Specifications.Base;
@@ -71,18 +72,10 @@ public abstract class BaseSpecification<TEntity> : IBaseSpecification<TEntity>
 
     public Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> UpdateExpression { get; set; }
 
-    protected Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> AppendSetProperty(
-        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> left,
-        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> right)
+    public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
+
+    protected void AddInclude(Expression<Func<TEntity, object>> includeExpression)
     {
-        ReplacingExpressionVisitor replace = new(
-            originals: right.Parameters,
-            replacements: left.Parameters);
-
-        var combined = replace.Visit(expression: right.Body);
-
-        return Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
-            body: combined,
-            parameters: left.Parameters);
+        IncludeExpressions.Add(includeExpression);
     }
 }

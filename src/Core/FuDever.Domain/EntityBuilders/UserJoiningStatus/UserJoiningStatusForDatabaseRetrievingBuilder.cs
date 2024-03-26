@@ -49,4 +49,12 @@ public sealed class UserJoiningStatusForDatabaseRetrievingBuilder :
 
         return this;
     }
+
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Type = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
 }

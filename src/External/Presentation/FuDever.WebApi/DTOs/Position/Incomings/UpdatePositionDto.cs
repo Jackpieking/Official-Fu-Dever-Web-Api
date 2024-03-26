@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FuDever.WebApi.DTOs.Position.Incomings;
 
+/// <summary>
+///     Incoming DTO for updating existing Position.
+/// </summary>
 public sealed class UpdatePositionDto : IDtoNormalization
 {
     [Required]

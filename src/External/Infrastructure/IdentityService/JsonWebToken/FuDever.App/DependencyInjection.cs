@@ -28,7 +28,8 @@ public static class DependencyInjection
     /// </param>
     private static void ConfigureCore(this IServiceCollection services)
     {
-        services.AddScoped<IAccessTokenHandler, AccessTokenHandler>();
-        services.AddScoped<IRefreshTokenHandler, RefreshTokenHandler>();
+        services
+            .AddScoped<IAccessTokenHandler, AccessTokenHandler>()
+            .AddScoped<IRefreshTokenHandler, RefreshTokenHandler>();
     }
 }

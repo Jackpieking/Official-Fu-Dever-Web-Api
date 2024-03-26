@@ -11,6 +11,14 @@ public sealed class HobbyForDatabaseRetrievingBuilder :
     IBaseHobbyBuilder,
     IHobbyBuilder<HobbyForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Hobby Complete()
     {
         return new()

@@ -27,17 +27,13 @@ internal sealed class UpdateFieldOfDepartmentSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    department => department.RemovedAt,
-                    departmentRemovedAt)
-                .SetProperty(
-                    department => department.RemovedBy,
-                    departmentRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                department => department.RemovedAt,
+                departmentRemovedAt)
+            .SetProperty(
+                department => department.RemovedBy,
+                departmentRemovedBy);
 
         return this;
     }
@@ -52,13 +48,9 @@ internal sealed class UpdateFieldOfDepartmentSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                department => department.Name,
-                departmentName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            department => department.Name,
+            departmentName);
 
         return this;
     }

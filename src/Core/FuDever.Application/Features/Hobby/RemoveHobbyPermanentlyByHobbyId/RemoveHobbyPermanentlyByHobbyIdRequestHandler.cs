@@ -179,16 +179,28 @@ internal sealed class RemoveHobbyPermanentlyByHobbyIdRequestHandler : IRequestHa
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserHobbyRepository.BulkUpdateAsync(
+                    var foundUserHobbies = await _unitOfWork.UserHobbyRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(
-                                hobbyId: request.HobbyId),
-                            _superSpecificationManager.UserHobby.UpdateFieldOfUserHobbySpecification.Ver1(
-                                userUpdatedAt: DateTime.UtcNow,
-                                userUpdatedBy: request.HobbyRemovedBy)
+                            _superSpecificationManager.UserHobby.UserHobbyAsNoTrackingSpecification,
+                            _superSpecificationManager.UserHobby.UserHobbyByHobbyIdSpecification(hobbyId: request.HobbyId),
+                            _superSpecificationManager.UserHobby.SelectFieldsFromUserHobbySpecification.Ver2(),
                         ],
                         cancellationToken: cancellationToken);
+
+                    foreach (var foundUserHobby in foundUserHobbies)
+                    {
+                        await _unitOfWork.UserRepository.BulkUpdateAsync(
+                            specifications:
+                            [
+                                _superSpecificationManager.User.UserByIdSpecification(
+                                    userId: foundUserHobby.UserId),
+                                _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                    userUpdatedAt: DateTime.UtcNow,
+                                    userUpdatedBy: request.HobbyRemovedBy)
+                            ],
+                            cancellationToken: cancellationToken);
+                    }
 
                     await _unitOfWork.UserHobbyRepository.BulkDeleteAsync(
                         specifications:

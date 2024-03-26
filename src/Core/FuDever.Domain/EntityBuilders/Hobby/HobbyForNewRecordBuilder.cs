@@ -11,6 +11,14 @@ public sealed class HobbyForNewRecordBuilder :
     IBaseHobbyBuilder,
     IHobbyBuilder<HobbyForNewRecordBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public HobbyForNewRecordBuilder WithId(Guid hobbyId)
     {
         // Validate hobby Id.

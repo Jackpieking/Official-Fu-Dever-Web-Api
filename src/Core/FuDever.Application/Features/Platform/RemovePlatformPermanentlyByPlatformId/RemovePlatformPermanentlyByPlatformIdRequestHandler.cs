@@ -179,16 +179,28 @@ internal sealed class RemovePlatformPermanentlyByPlatformIdRequestHandler : IReq
                 {
                     await _unitOfWork.CreateTransactionAsync(cancellationToken: cancellationToken);
 
-                    await _unitOfWork.UserPlatformRepository.BulkUpdateAsync(
+                    var foundUserPlatforms = await _unitOfWork.UserPlatformRepository.GetAllBySpecificationsAsync(
                         specifications:
                         [
-                            _superSpecificationManager.UserPlatform.UserPlatformByPlatformIdSpecification(
-                                platformId: request.PlatformId),
-                            _superSpecificationManager.UserPlatform.UpdateFieldOfUserPlatformSpecification.Ver1(
-                                userUpdatedAt: DateTime.UtcNow,
-                                userUpdatedBy: request.PlatformRemovedBy)
+                            _superSpecificationManager.UserPlatform.UserPlatformAsNoTrackingSpecification,
+                            _superSpecificationManager.UserPlatform.UserPlatformByPlatformIdSpecification(platformId: request.PlatformId),
+                            _superSpecificationManager.UserPlatform.SelectFieldsFromUserPlatformSpecification.Ver1()
                         ],
                         cancellationToken: cancellationToken);
+
+                    foreach (var foundUserPlatform in foundUserPlatforms)
+                    {
+                        await _unitOfWork.UserRepository.BulkUpdateAsync(
+                            specifications:
+                            [
+                                _superSpecificationManager.User.UserByIdSpecification(
+                                    userId: foundUserPlatform.UserId),
+                                _superSpecificationManager.User.UpdateFieldOfUserSpecification.Ver2(
+                                    userUpdatedAt: DateTime.UtcNow,
+                                    userUpdatedBy: request.PlatformRemovedBy)
+                            ],
+                            cancellationToken: cancellationToken);
+                    }
 
                     await _unitOfWork.UserPlatformRepository.BulkDeleteAsync(
                         specifications:

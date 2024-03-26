@@ -11,6 +11,14 @@ public sealed class PositionForDatabaseRetrievingBuilder :
     IBasePositionBuilder,
     IPositionBuilder<PositionForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Position Complete()
     {
         return new()

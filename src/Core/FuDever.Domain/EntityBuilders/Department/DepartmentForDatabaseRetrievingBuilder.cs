@@ -11,6 +11,14 @@ public sealed class DepartmentForDatabaseRetrievingBuilder :
     IBaseDepartmentBuilder,
     IDepartmentBuilder<DepartmentForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Department Complete()
     {
         return new()

@@ -28,17 +28,13 @@ internal sealed class UpdateFieldOfHobbySpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    hobby => hobby.RemovedAt,
-                    hobbyRemovedAt)
-                .SetProperty(
-                    hobby => hobby.RemovedBy,
-                    hobbyRemovedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                hobby => hobby.RemovedAt,
+                hobbyRemovedAt)
+            .SetProperty(
+                hobby => hobby.RemovedBy,
+                hobbyRemovedBy);
 
         return this;
     }
@@ -53,13 +49,9 @@ internal sealed class UpdateFieldOfHobbySpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall.SetProperty(
-                hobby => hobby.Name,
-                hobbyName));
+        UpdateExpression = setPropertyCall => setPropertyCall.SetProperty(
+            hobby => hobby.Name,
+            hobbyName);
 
         return this;
     }

@@ -11,6 +11,14 @@ public sealed class MajorForNewRecordBuilder :
     IBaseMajorBuilder,
     IMajorBuilder<MajorForNewRecordBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public MajorForNewRecordBuilder WithId(Guid majorId)
     {
         // Validate major Id.

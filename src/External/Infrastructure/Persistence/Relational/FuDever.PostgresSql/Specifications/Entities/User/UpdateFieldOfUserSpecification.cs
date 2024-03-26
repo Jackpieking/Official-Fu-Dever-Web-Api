@@ -34,20 +34,16 @@ internal sealed class UpdateFieldOfUserSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    user => user.UpdatedAt,
-                    userUpdatedAt)
-                .SetProperty(
-                    user => user.UpdatedBy,
-                    userUpdatedBy)
-                .SetProperty(
-                    user => user.DepartmentId,
-                    userDepartmentId));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                user => user.UpdatedAt,
+                userUpdatedAt)
+            .SetProperty(
+                user => user.UpdatedBy,
+                userUpdatedBy)
+            .SetProperty(
+                user => user.DepartmentId,
+                userDepartmentId);
 
         return this;
     }
@@ -68,17 +64,13 @@ internal sealed class UpdateFieldOfUserSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    user => user.UpdatedAt,
-                    userUpdatedAt)
-                .SetProperty(
-                    user => user.UpdatedBy,
-                    userUpdatedBy));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                user => user.UpdatedAt,
+                userUpdatedAt)
+            .SetProperty(
+                user => user.UpdatedBy,
+                userUpdatedBy);
 
         return this;
     }
@@ -106,20 +98,16 @@ internal sealed class UpdateFieldOfUserSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    user => user.UpdatedAt,
-                    userUpdatedAt)
-                .SetProperty(
-                    user => user.UpdatedBy,
-                    userUpdatedBy)
-                .SetProperty(
-                    user => user.MajorId,
-                    userMajorId));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                user => user.UpdatedAt,
+                userUpdatedAt)
+            .SetProperty(
+                user => user.UpdatedBy,
+                userUpdatedBy)
+            .SetProperty(
+                user => user.MajorId,
+                userMajorId);
 
         return this;
     }
@@ -147,20 +135,16 @@ internal sealed class UpdateFieldOfUserSpecification :
             return default;
         }
 
-        UpdateExpression = setPropertyCall => setPropertyCall;
-
-        UpdateExpression = AppendSetProperty(
-            left: UpdateExpression,
-            right: setPropertyCall => setPropertyCall
-                .SetProperty(
-                    user => user.UpdatedAt,
-                    userUpdatedAt)
-                .SetProperty(
-                    user => user.UpdatedBy,
-                    userUpdatedBy)
-                .SetProperty(
-                    user => user.PositionId,
-                    userPositionId));
+        UpdateExpression = setPropertyCall => setPropertyCall
+            .SetProperty(
+                user => user.UpdatedAt,
+                userUpdatedAt)
+            .SetProperty(
+                user => user.UpdatedBy,
+                userUpdatedBy)
+            .SetProperty(
+                user => user.PositionId,
+                userPositionId);
 
         return this;
     }

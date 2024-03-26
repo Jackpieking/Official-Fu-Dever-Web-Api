@@ -11,6 +11,19 @@ public sealed class CvForDatabaseRetrievingBuilder :
     IBaseCvBuilder,
     ICvBuilder<CvForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        CreatedAt = default;
+        CreatedBy = Guid.Empty;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+        StudentCvFileId = default;
+        StudentEmail = default;
+        StudentFullName = default;
+        StudentId = default;
+    }
+
     public Entities.Cv Complete()
     {
         return new()

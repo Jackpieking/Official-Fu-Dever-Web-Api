@@ -90,7 +90,7 @@ public static class DependencyInjection
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddSingleton<ISuperSpecificationManager, SuperSpecificationManager>()
-            .AddScoped<IDbMinTimeHandler, DbMinTimeHandler>();
+            .AddSingleton<IDbMinTimeHandler, DbMinTimeHandler>();
     }
 
     /// <summary>

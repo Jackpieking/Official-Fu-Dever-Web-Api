@@ -328,7 +328,7 @@ public sealed class DepartmentController : ControllerBase
     [HttpGet(template: "remove/all")]
     public async Task<IActionResult> GetAllTemporarilyRemovedAsync(CancellationToken cancellationToken)
     {
-        // Get all temporarily removed department.
+        // Get all temporarily removed departments.
         GetAllTemporarilyRemovedDepartmentsRequest featureRequest = new()
         {
             CacheExpiredTime = 60

@@ -64,4 +64,13 @@ public sealed class RefreshTokenForDatabaseRetrievingBuilder :
 
         return this;
     }
+
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Value = default;
+        AccessTokenId = Guid.Empty;
+        ExpiredDate = default;
+        CreatedAt = default;
+    }
 }

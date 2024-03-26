@@ -11,6 +11,14 @@ public sealed class PlatformForDatabaseSeedingBuilder :
     IBasePlatformBuilder,
     IPlatformBuilder<PlatformForDatabaseSeedingBuilder>
 {
+    public void Clear()
+    {
+        Id = Guid.Empty;
+        Name = default;
+        RemovedAt = default;
+        RemovedBy = Guid.Empty;
+    }
+
     public Entities.Platform Complete()
     {
         return new()

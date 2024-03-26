@@ -12,6 +12,14 @@ public sealed class UserPlatformForDatabaseRetrievingBuilder :
     IUserPlatformBuilder<UserPlatformForDatabaseRetrievingBuilder>,
     IUserPlatformNavigationPropertyBuilder<UserPlatformForDatabaseRetrievingBuilder>
 {
+    public void Clear()
+    {
+        Platform = default;
+        PlatformId = Guid.Empty;
+        PlatformUrl = default;
+        UserId = Guid.Empty;
+    }
+
     public Entities.UserPlatform Complete()
     {
         return new()
