@@ -170,21 +170,4 @@ internal sealed class SelectFieldsFromUserSpecification :
 
         return this;
     }
-
-    public ISelectFieldsFromUserSpecification Ver5()
-    {
-        UserForDatabaseRetrievingBuilder userBuilder = new();
-
-        SelectExpression = user => userBuilder
-            .WithId(user.Id)
-            .WithPasswordHash(user.PasswordHash)
-            .WithLockoutEnd(user.LockoutEnd)
-            .WithAccessFailedCount(user.AccessFailedCount)
-            .WithEmailConfirmed(user.EmailConfirmed)
-            .WithEmail(user.Email)
-            .WithAvatarUrl(user.AvatarUrl)
-            .Complete();
-
-        return this;
-    }
 }

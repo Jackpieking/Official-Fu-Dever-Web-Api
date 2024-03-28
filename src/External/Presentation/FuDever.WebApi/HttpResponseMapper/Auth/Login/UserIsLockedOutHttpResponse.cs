@@ -21,7 +21,7 @@ internal sealed class UserIsLockedOutHttpResponse :
         ErrorMessages =
         [
             $"User with username = {request.Username} has been temporarily locked due to entering the wrong password too many times",
-            $"Please try again after 1 minute."
+            $"Please try again after 15 seconds."
         ];
     }
 }

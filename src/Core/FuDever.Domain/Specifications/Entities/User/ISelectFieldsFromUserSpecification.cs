@@ -14,6 +14,4 @@ public interface ISelectFieldsFromUserSpecification : IBaseSpecification<Domain.
     ISelectFieldsFromUserSpecification Ver3();
 
     ISelectFieldsFromUserSpecification Ver4();
-
-    ISelectFieldsFromUserSpecification Ver5();
 }

@@ -61,9 +61,7 @@ public sealed class LoginRequestHandler : IRequestHandler<
         CancellationToken cancellationToken)
     {
         // Find user by username.
-        var foundUser = await GetUserByUsernameQueryAsync(
-            username: request.Username,
-            cancellationToken: cancellationToken);
+        var foundUser = await GetUserByUsernameQueryAsync(username: request.Username);
 
         // User with username does not exist.
         if (Equals(objA: foundUser, objB: default))
@@ -259,25 +257,13 @@ public sealed class LoginRequestHandler : IRequestHandler<
     /// <param name="username">
     ///     The username of the user to retrieve.
     /// </param>
-    /// <param name="cancellationToken">
-    ///     The cancellation token.
-    /// </param>
     /// <returns>
     ///     A task that represents the asynchronous operation.
     ///     The task result contains the user entity.
     /// </returns>
-    private Task<Domain.Entities.User> GetUserByUsernameQueryAsync(
-        string username,
-        CancellationToken cancellationToken)
+    private Task<Domain.Entities.User> GetUserByUsernameQueryAsync(string username)
     {
-        return _unitOfWork.UserRepository.FindBySpecificationsAsync(
-            specifications:
-            [
-                _superSpecificationManager.User.UserAsNoTrackingSpecification,
-                _superSpecificationManager.User.UserByUsernameSpecification(username: username),
-                _superSpecificationManager.User.SelectFieldsFromUserSpecification.Ver5()
-            ],
-            cancellationToken: cancellationToken);
+        return _userManager.FindByNameAsync(userName: username);
     }
 
     /// <summary>
