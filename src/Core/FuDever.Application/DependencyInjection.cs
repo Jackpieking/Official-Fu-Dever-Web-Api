@@ -903,12 +903,7 @@ public static class DependencyInjection
                 typeof(IPipelineBehavior<
                     LoginRequest,
                     LoginResponse>),
-                typeof(LoginValidationMiddleware))
-            .AddScoped(
-                typeof(IPipelineBehavior<
-                    LoginRequest,
-                    LoginResponse>),
-                typeof(LoginCachingMiddleware));
+                typeof(LoginValidationMiddleware));
         #endregion
     }
 }

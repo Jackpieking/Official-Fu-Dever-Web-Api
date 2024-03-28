@@ -28,9 +28,5 @@ public sealed class LoginRequestValidator : AbstractValidator<LoginRequest>
                 Domain.Entities.User.Metadata.Password.MaxLength)
             .Must(predicate: password => password.Length >=
                 Domain.Entities.User.Metadata.Password.MinLength);
-
-        RuleFor(expression: request => request.CacheExpiredTime)
-            .Cascade(cascadeMode: CascadeMode.Stop)
-            .Must(predicate: cacheExpiredTime => cacheExpiredTime >= default(int));
     }
 }

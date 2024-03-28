@@ -62,7 +62,6 @@ public sealed class AuthController : ControllerBase
         // Get all departments which are not temporarily removed.
         LoginRequest featureRequest = new()
         {
-            CacheExpiredTime = 60,
             Username = dto.Username,
             Password = dto.Password,
             RememberMe = dto.RememberMe
