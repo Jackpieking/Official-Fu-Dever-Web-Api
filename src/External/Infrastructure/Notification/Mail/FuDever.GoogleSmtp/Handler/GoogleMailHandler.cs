@@ -35,8 +35,8 @@ internal sealed class GoogleMailHandler : IMailHandler
             .Get<GoogleGmailSmtpServerOption>();
 
         _googleGmailSendingOption = configuration
-            .GetRequiredSection("MailSending")
-            .GetRequiredSection("GoogleGmail")
+            .GetRequiredSection(key: "MailSending")
+            .GetRequiredSection(key: "GoogleGmail")
             .Get<GoogleGmailSendingOption>();
 
         _webHostEnvironment = webHostEnvironment;

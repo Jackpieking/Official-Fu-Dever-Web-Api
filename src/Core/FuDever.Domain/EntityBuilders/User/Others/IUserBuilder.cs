@@ -149,7 +149,7 @@ public interface IUserBuilder<TBuilder> :
     /// <returns>
     ///     Itself.
     /// </returns>
-    TBuilder WithLockoutEnd(DateTimeOffset userLockoutEnd);
+    TBuilder WithLockoutEnd(DateTimeOffset? userLockoutEnd);
 
     /// <summary>
     ///     Set lockout enabled of user.

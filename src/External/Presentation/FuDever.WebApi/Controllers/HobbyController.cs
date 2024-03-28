@@ -1,5 +1,5 @@
 ﻿using FuDever.WebApi.Attributes;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class HobbyController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public HobbyController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.GetAllHobbies
+        var apiResponse = _httpResponseMapperManager.Hobby.GetAllHobbies
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -134,7 +134,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.GetAllHobbiesByHobbyName
+        var apiResponse = _httpResponseMapperManager.Hobby.GetAllHobbiesByHobbyName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -186,7 +186,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.CreateHobby
+        var apiResponse = _httpResponseMapperManager.Hobby.CreateHobby
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -243,7 +243,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.RemoveHobbyTemporarilyByHobbyId
+        var apiResponse = _httpResponseMapperManager.Hobby.RemoveHobbyTemporarilyByHobbyId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -302,7 +302,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.UpdateHobbyByHobbyId
+        var apiResponse = _httpResponseMapperManager.Hobby.UpdateHobbyByHobbyId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -338,7 +338,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.GetAllTemporarilyRemovedHobbies
+        var apiResponse = _httpResponseMapperManager.Hobby.GetAllTemporarilyRemovedHobbies
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -385,7 +385,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.RemoveHobbyPermanentlyByHobbyId
+        var apiResponse = _httpResponseMapperManager.Hobby.RemoveHobbyPermanentlyByHobbyId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -432,7 +432,7 @@ public sealed class HobbyController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Hobby.RestoreHobbyByHobbyId
+        var apiResponse = _httpResponseMapperManager.Hobby.RestoreHobbyByHobbyId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

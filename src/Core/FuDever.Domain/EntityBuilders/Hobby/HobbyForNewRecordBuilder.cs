@@ -36,8 +36,8 @@ public sealed class HobbyForNewRecordBuilder :
     {
         // Validate hobby name.
         if (string.IsNullOrWhiteSpace(value: hobbyName) ||
-            hobbyName.Length > Entities.Hobby.Metadata.Name.MaxLength ||
-            hobbyName.Length < Entities.Hobby.Metadata.Name.MinLength)
+            hobbyName.Length > Metadata.Name.MaxLength ||
+            hobbyName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -50,7 +50,8 @@ public sealed class HobbyForNewRecordBuilder :
     public HobbyForNewRecordBuilder WithRemovedAt(DateTime hobbyRemovedAt)
     {
         // Validate hobby removed at.
-        if (hobbyRemovedAt == DateTime.MaxValue)
+        if (hobbyRemovedAt == DateTime.MaxValue ||
+            hobbyRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

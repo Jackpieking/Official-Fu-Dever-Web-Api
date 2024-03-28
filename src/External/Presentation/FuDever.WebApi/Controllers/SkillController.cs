@@ -9,7 +9,7 @@ using FuDever.Application.Features.Skill.UpdateSkillBySkillId;
 using FuDever.Domain.Entities;
 using FuDever.WebApi.Attributes;
 using FuDever.WebApi.DTOs.Skill.Incomings;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class SkillController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public SkillController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.GetAllSkills
+        var apiResponse = _httpResponseMapperManager.Skill.GetAllSkills
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -134,7 +134,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.GetAllSkillsBySkillName
+        var apiResponse = _httpResponseMapperManager.Skill.GetAllSkillsBySkillName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -186,7 +186,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.CreateSkill
+        var apiResponse = _httpResponseMapperManager.Skill.CreateSkill
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -243,7 +243,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.RemoveSkillTemporarilyBySkillId
+        var apiResponse = _httpResponseMapperManager.Skill.RemoveSkillTemporarilyBySkillId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -302,7 +302,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.UpdateSkillBySkillId
+        var apiResponse = _httpResponseMapperManager.Skill.UpdateSkillBySkillId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -338,7 +338,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.GetAllTemporarilyRemovedSkills
+        var apiResponse = _httpResponseMapperManager.Skill.GetAllTemporarilyRemovedSkills
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -385,7 +385,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.RemoveSkillPermanentlyBySkillId
+        var apiResponse = _httpResponseMapperManager.Skill.RemoveSkillPermanentlyBySkillId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -432,7 +432,7 @@ public sealed class SkillController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Skill.RestoreSkillBySkillId
+        var apiResponse = _httpResponseMapperManager.Skill.RestoreSkillBySkillId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

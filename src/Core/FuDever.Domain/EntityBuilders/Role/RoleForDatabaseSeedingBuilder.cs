@@ -71,7 +71,8 @@ public sealed class RoleForDatabaseSeedingBuilder :
     public RoleForDatabaseSeedingBuilder WithRemovedAt(DateTime roleRemovedAt)
     {
         // Validate role removed at.
-        if (roleRemovedAt == DateTime.MaxValue)
+        if (roleRemovedAt == DateTime.MaxValue ||
+            roleRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

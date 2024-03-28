@@ -1,5 +1,5 @@
 ﻿using FuDever.WebApi.Attributes;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class PlatformController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public PlatformController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.GetAllPlatforms
+        var apiResponse = _httpResponseMapperManager.Platform.GetAllPlatforms
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -134,7 +134,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.GetAllPlatformsByPlatformName
+        var apiResponse = _httpResponseMapperManager.Platform.GetAllPlatformsByPlatformName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -186,7 +186,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.CreatePlatform
+        var apiResponse = _httpResponseMapperManager.Platform.CreatePlatform
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -243,7 +243,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.RemovePlatformTemporarilyByPlatformId
+        var apiResponse = _httpResponseMapperManager.Platform.RemovePlatformTemporarilyByPlatformId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -302,7 +302,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.UpdatePlatformByPlatformId
+        var apiResponse = _httpResponseMapperManager.Platform.UpdatePlatformByPlatformId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -338,7 +338,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.GetAllTemporarilyRemovedPlatforms
+        var apiResponse = _httpResponseMapperManager.Platform.GetAllTemporarilyRemovedPlatforms
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -385,7 +385,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.RemovePlatformPermanentlyByPlatformId
+        var apiResponse = _httpResponseMapperManager.Platform.RemovePlatformPermanentlyByPlatformId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -432,7 +432,7 @@ public sealed class PlatformController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Platform.RestorePlatformByPlatformId
+        var apiResponse = _httpResponseMapperManager.Platform.RestorePlatformByPlatformId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

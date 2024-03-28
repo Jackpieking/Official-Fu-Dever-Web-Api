@@ -53,7 +53,8 @@ public sealed class SkillForDatabaseSeedingBuilder :
     public SkillForDatabaseSeedingBuilder WithRemovedAt(DateTime skillRemovedAt)
     {
         // Validate skill removed at.
-        if (skillRemovedAt == DateTime.MaxValue)
+        if (skillRemovedAt == DateTime.MaxValue ||
+            skillRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

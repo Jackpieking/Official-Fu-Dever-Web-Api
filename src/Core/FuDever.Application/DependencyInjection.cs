@@ -1,4 +1,6 @@
 using FluentValidation;
+using FuDever.Application.Features.Auth.Login;
+using FuDever.Application.Features.Auth.Login.Middlewares;
 using FuDever.Application.Features.Department.CreateDepartment;
 using FuDever.Application.Features.Department.CreateDepartment.Middlewares;
 using FuDever.Application.Features.Department.GetAllDepartments;
@@ -158,6 +160,7 @@ public static class DependencyInjection
         services.HobbyFeatureMiddlewaresConfig();
         services.PlatformFeatureMiddlewaresConfig();
         services.MajorFeatureMiddlewaresConfig();
+        services.AuthFeatureMiddlewaresConfig();
     }
 
     /// <summary>
@@ -883,6 +886,29 @@ public static class DependencyInjection
                     GetAllTemporarilyRemovedMajorsRequest,
                     GetAllTemporarilyRemovedMajorsResponse>),
                 typeof(GetAllTemporarilyRemovedMajorsCachingMiddleware));
+        #endregion
+    }
+
+    /// <summary>
+    ///     Configuring auth features middlewares.
+    /// </summary>
+    /// <param name="services">
+    ///     Service container.
+    /// </param>
+    private static void AuthFeatureMiddlewaresConfig(this IServiceCollection services)
+    {
+        #region Login
+        services
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    LoginRequest,
+                    LoginResponse>),
+                typeof(LoginValidationMiddleware))
+            .AddScoped(
+                typeof(IPipelineBehavior<
+                    LoginRequest,
+                    LoginResponse>),
+                typeof(LoginCachingMiddleware));
         #endregion
     }
 }

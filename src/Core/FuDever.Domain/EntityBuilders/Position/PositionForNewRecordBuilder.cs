@@ -47,8 +47,8 @@ public sealed class PositionForNewRecordBuilder :
     {
         // Validate position name.
         if (string.IsNullOrWhiteSpace(value: positionName) ||
-            positionName.Length > Entities.Position.Metadata.Name.MaxLength ||
-            positionName.Length < Entities.Position.Metadata.Name.MinLength)
+            positionName.Length > Metadata.Name.MaxLength ||
+            positionName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -61,7 +61,8 @@ public sealed class PositionForNewRecordBuilder :
     public PositionForNewRecordBuilder WithRemovedAt(DateTime positionRemovedAt)
     {
         // Validate position removed at.
-        if (positionRemovedAt == DateTime.MaxValue)
+        if (positionRemovedAt == DateTime.MaxValue ||
+            positionRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

@@ -1,5 +1,5 @@
 ﻿using FuDever.WebApi.Attributes;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class RoleController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public RoleController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.GetAllRoles
+        var apiResponse = _httpResponseMapperManager.Role.GetAllRoles
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -134,7 +134,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.GetAllRolesByRoleName
+        var apiResponse = _httpResponseMapperManager.Role.GetAllRolesByRoleName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -186,7 +186,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.CreateRole
+        var apiResponse = _httpResponseMapperManager.Role.CreateRole
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -243,7 +243,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.RemoveRoleTemporarilyByRoleId
+        var apiResponse = _httpResponseMapperManager.Role.RemoveRoleTemporarilyByRoleId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -302,7 +302,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.UpdateRoleByRoleId
+        var apiResponse = _httpResponseMapperManager.Role.UpdateRoleByRoleId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -338,7 +338,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.GetAllTemporarilyRemovedRoles
+        var apiResponse = _httpResponseMapperManager.Role.GetAllTemporarilyRemovedRoles
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -385,7 +385,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.RemoveRolePermanentlyByRoleId
+        var apiResponse = _httpResponseMapperManager.Role.RemoveRolePermanentlyByRoleId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -432,7 +432,7 @@ public sealed class RoleController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Role.RestoreRoleByRoleId
+        var apiResponse = _httpResponseMapperManager.Role.RestoreRoleByRoleId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

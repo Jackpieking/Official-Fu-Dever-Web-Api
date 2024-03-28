@@ -36,8 +36,8 @@ public sealed class PlatformForNewRecordBuilder :
     {
         // Validate platform name.
         if (string.IsNullOrWhiteSpace(value: platformName) ||
-            platformName.Length > Entities.Platform.Metadata.Name.MaxLength ||
-            platformName.Length < Entities.Platform.Metadata.Name.MinLength)
+            platformName.Length > Metadata.Name.MaxLength ||
+            platformName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -50,7 +50,8 @@ public sealed class PlatformForNewRecordBuilder :
     public PlatformForNewRecordBuilder WithRemovedAt(DateTime platformRemovedAt)
     {
         // Validate platform removed at.
-        if (platformRemovedAt == DateTime.MaxValue)
+        if (platformRemovedAt == DateTime.MaxValue ||
+            platformRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

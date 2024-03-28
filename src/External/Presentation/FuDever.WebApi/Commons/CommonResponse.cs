@@ -8,7 +8,7 @@ namespace FuDever.WebApi.Commons;
 ///     Contain common response for all api.
 /// </summary>
 /// <remarks>
-///     All api responses format must be this format.
+///     All http responses format must be this format.
 /// </remarks>
 internal sealed class CommonResponse
 {

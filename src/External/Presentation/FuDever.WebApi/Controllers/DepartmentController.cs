@@ -9,7 +9,7 @@ using FuDever.Application.Features.Department.UpdateDepartmentByDepartmentId;
 using FuDever.Domain.Entities;
 using FuDever.WebApi.Attributes;
 using FuDever.WebApi.DTOs.Department.Incomings;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -29,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class DepartmentController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public DepartmentController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.GetAllDepartments
+        var apiResponse = _httpResponseMapperManager.Department.GetAllDepartments
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -134,7 +134,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.GetAllDepartmentsByDepartmentName
+        var apiResponse = _httpResponseMapperManager.Department.GetAllDepartmentsByDepartmentName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -186,7 +186,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.CreateDepartment
+        var apiResponse = _httpResponseMapperManager.Department.CreateDepartment
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -243,7 +243,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.RemoveDepartmentTemporarilyByDepartmentId
+        var apiResponse = _httpResponseMapperManager.Department.RemoveDepartmentTemporarilyByDepartmentId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -302,7 +302,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.UpdateDepartmentByDepartmentId
+        var apiResponse = _httpResponseMapperManager.Department.UpdateDepartmentByDepartmentId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -338,7 +338,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.GetAllTemporarilyRemovedDepartments
+        var apiResponse = _httpResponseMapperManager.Department.GetAllTemporarilyRemovedDepartments
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -385,7 +385,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.RemoveDepartmentPermanentlyByDepartmentId
+        var apiResponse = _httpResponseMapperManager.Department.RemoveDepartmentPermanentlyByDepartmentId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -432,7 +432,7 @@ public sealed class DepartmentController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Department.RestoreDepartmentByDepartmentId
+        var apiResponse = _httpResponseMapperManager.Department.RestoreDepartmentByDepartmentId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

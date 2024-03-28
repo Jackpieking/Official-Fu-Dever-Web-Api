@@ -53,7 +53,8 @@ public sealed class PlatformForDatabaseSeedingBuilder :
     public PlatformForDatabaseSeedingBuilder WithRemovedAt(DateTime platformRemovedAt)
     {
         // Validate platform removed at.
-        if (platformRemovedAt == DateTime.MaxValue)
+        if (platformRemovedAt == DateTime.MaxValue ||
+            platformRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

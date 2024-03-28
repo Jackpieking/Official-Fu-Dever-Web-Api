@@ -47,8 +47,8 @@ public sealed class SkillForNewRecordBuilder :
     {
         // Validate skill name.
         if (string.IsNullOrWhiteSpace(value: skillName) ||
-            skillName.Length > Entities.Skill.Metadata.Name.MaxLength ||
-            skillName.Length < Entities.Skill.Metadata.Name.MinLength)
+            skillName.Length > Metadata.Name.MaxLength ||
+            skillName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -61,7 +61,8 @@ public sealed class SkillForNewRecordBuilder :
     public SkillForNewRecordBuilder WithRemovedAt(DateTime skillRemovedAt)
     {
         // Validate skill removed at.
-        if (skillRemovedAt == DateTime.MaxValue)
+        if (skillRemovedAt == DateTime.MaxValue ||
+            skillRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

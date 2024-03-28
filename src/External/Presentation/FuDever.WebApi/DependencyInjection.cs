@@ -7,7 +7,7 @@ using FuDever.WebApi.ActionResults;
 using FuDever.WebApi.AppCodes.Base;
 using FuDever.WebApi.Authorization.Requires;
 using FuDever.WebApi.Commons;
-using FuDever.WebApi.EntityHttpResponse.Others;
+using FuDever.WebApi.HttpResponseMapper.Others;
 using FuDever.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -395,7 +395,7 @@ internal static class DependencyInjection
             .AddSingleton(implementationFactory: _ =>
                 GetTokenValidationParameters(configuration: configuration))
             .AddSingleton<SecurityTokenHandler, JwtSecurityTokenHandler>()
-            .AddSingleton<EntityHttpResponseManager>();
+            .AddSingleton<HttpResponseMapperManager>();
     }
 
     /// <summary>

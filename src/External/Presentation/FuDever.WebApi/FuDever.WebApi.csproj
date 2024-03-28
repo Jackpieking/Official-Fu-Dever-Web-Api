@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="Authorization\RequireHandlers\" />
+    <Folder Include="HttpResponseMapper\Auth\" />
   </ItemGroup>
 
 </Project>

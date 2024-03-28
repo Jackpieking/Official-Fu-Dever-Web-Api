@@ -28,6 +28,6 @@ public static class DependencyInjection
     /// </param>
     private static void ConfigureCore(this IServiceCollection services)
     {
-        services.AddScoped<IDefaultUserAvatarAsUrlHandler, DefaultUserAvatarAsUrlFirebaseSourceHandler>();
+        services.AddSingleton<IDefaultUserAvatarAsUrlHandler, DefaultUserAvatarAsUrlFirebaseSourceHandler>();
     }
 }

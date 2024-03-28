@@ -45,7 +45,8 @@ public sealed class UserJoiningStatusForDatabaseSeedingBuilder :
     public UserJoiningStatusForDatabaseSeedingBuilder WithRemovedAt(DateTime userJoiningStatusRemovedAt)
     {
         // Validate userJoiningStatus removed at.
-        if (userJoiningStatusRemovedAt == DateTime.MaxValue)
+        if (userJoiningStatusRemovedAt == DateTime.MaxValue ||
+            userJoiningStatusRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

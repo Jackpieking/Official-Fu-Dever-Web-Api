@@ -53,7 +53,8 @@ public sealed class DepartmentForDatabaseSeedingBuilder :
     public DepartmentForDatabaseSeedingBuilder WithRemovedAt(DateTime departmentRemovedAt)
     {
         // Validate department removed at.
-        if (departmentRemovedAt == DateTime.MaxValue)
+        if (departmentRemovedAt == DateTime.MaxValue ||
+            departmentRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

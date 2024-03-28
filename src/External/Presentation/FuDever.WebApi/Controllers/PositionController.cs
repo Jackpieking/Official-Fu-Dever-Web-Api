@@ -1,5 +1,4 @@
 ﻿using FuDever.WebApi.Attributes;
-using FuDever.WebApi.EntityHttpResponse.Others;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,7 @@ using FuDever.Application.Features.Position.UpdatePositionByPositionId;
 using FuDever.Application.Features.Position.GetAllTemporarilyRemovedPositions;
 using FuDever.Application.Features.Position.RemovePositionPermanentlyByPositionId;
 using FuDever.Application.Features.Position.RestorePositionByPositionId;
-using FuDever.WebApi.DTOs.Role.Incomings;
+using FuDever.WebApi.HttpResponseMapper.Others;
 
 namespace FuDever.WebApi.Controllers;
 
@@ -30,14 +29,14 @@ namespace FuDever.WebApi.Controllers;
 public sealed class PositionController : ControllerBase
 {
     private readonly ISender _sender;
-    private readonly EntityHttpResponseManager _entityHttpResponseManager;
+    private readonly HttpResponseMapperManager _httpResponseMapperManager;
 
     public PositionController(
         ISender sender,
-        EntityHttpResponseManager entityHttpResponseManager)
+        HttpResponseMapperManager httpResponseMapperManager)
     {
         _sender = sender;
-        _entityHttpResponseManager = entityHttpResponseManager;
+        _httpResponseMapperManager = httpResponseMapperManager;
     }
 
     /// <summary>
@@ -73,7 +72,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.GetAllPositions
+        var apiResponse = _httpResponseMapperManager.Position.GetAllPositions
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -135,7 +134,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.GetAllPositionsByPositionName
+        var apiResponse = _httpResponseMapperManager.Position.GetAllPositionsByPositionName
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -187,7 +186,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.CreatePosition
+        var apiResponse = _httpResponseMapperManager.Position.CreatePosition
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -244,7 +243,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.RemovePositionTemporarilyByPositionId
+        var apiResponse = _httpResponseMapperManager.Position.RemovePositionTemporarilyByPositionId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -303,7 +302,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.UpdatePositionByPositionId
+        var apiResponse = _httpResponseMapperManager.Position.UpdatePositionByPositionId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -339,7 +338,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.GetAllTemporarilyRemovedPositions
+        var apiResponse = _httpResponseMapperManager.Position.GetAllTemporarilyRemovedPositions
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -386,7 +385,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.RemovePositionPermanentlyByPositionId
+        var apiResponse = _httpResponseMapperManager.Position.RemovePositionPermanentlyByPositionId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 
@@ -433,7 +432,7 @@ public sealed class PositionController : ControllerBase
             request: featureRequest,
             cancellationToken: cancellationToken);
 
-        var apiResponse = _entityHttpResponseManager.Position.RestorePositionByPositionId
+        var apiResponse = _httpResponseMapperManager.Position.RestorePositionByPositionId
             .Resolve(statusCode: featureResponse.StatusCode)
             .Invoke(arg1: featureRequest, arg2: featureResponse);
 

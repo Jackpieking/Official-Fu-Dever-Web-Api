@@ -53,7 +53,8 @@ public sealed class MajorForDatabaseSeedingBuilder :
     public MajorForDatabaseSeedingBuilder WithRemovedAt(DateTime majorRemovedAt)
     {
         // Validate major removed at.
-        if (majorRemovedAt == DateTime.MaxValue)
+        if (majorRemovedAt == DateTime.MaxValue ||
+            majorRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

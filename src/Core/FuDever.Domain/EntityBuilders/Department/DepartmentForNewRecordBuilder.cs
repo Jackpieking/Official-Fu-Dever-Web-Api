@@ -47,8 +47,8 @@ public sealed class DepartmentForNewRecordBuilder :
     {
         // Validate department name.
         if (string.IsNullOrWhiteSpace(value: departmentName) ||
-            departmentName.Length > Entities.Department.Metadata.Name.MaxLength ||
-            departmentName.Length < Entities.Department.Metadata.Name.MinLength)
+            departmentName.Length > Metadata.Name.MaxLength ||
+            departmentName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -61,7 +61,8 @@ public sealed class DepartmentForNewRecordBuilder :
     public DepartmentForNewRecordBuilder WithRemovedAt(DateTime departmentRemovedAt)
     {
         // Validate department removed at.
-        if (departmentRemovedAt == DateTime.MaxValue)
+        if (departmentRemovedAt == DateTime.MaxValue ||
+            departmentRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

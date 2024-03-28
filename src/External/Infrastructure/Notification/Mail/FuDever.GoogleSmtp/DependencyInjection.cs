@@ -28,6 +28,6 @@ public static class DependencyInjection
     /// </param>
     private static void ConfigureMail(this IServiceCollection services)
     {
-        services.AddScoped<IMailHandler, GoogleMailHandler>();
+        services.AddSingleton<IMailHandler, GoogleMailHandler>();
     }
 }

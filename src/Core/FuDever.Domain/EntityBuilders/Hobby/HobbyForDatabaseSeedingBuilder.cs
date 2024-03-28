@@ -53,7 +53,8 @@ public sealed class HobbyForDatabaseSeedingBuilder :
     public HobbyForDatabaseSeedingBuilder WithRemovedAt(DateTime hobbyRemovedAt)
     {
         // Validate hobby removed at.
-        if (hobbyRemovedAt == DateTime.MaxValue)
+        if (hobbyRemovedAt == DateTime.MaxValue ||
+            hobbyRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

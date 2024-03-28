@@ -75,8 +75,8 @@ public sealed class UserForDatabaseSeedingBuilder :
 
     public UserForDatabaseSeedingBuilder WithActivityPoints(short userActivityPoints)
     {
-        if (userActivityPoints < Entities.User.Metadata.ActitvityPoints.MinValue ||
-            userActivityPoints < Entities.User.Metadata.ActitvityPoints.MaxValue)
+        if (userActivityPoints < Metadata.ActitvityPoints.MinValue ||
+            userActivityPoints < Metadata.ActitvityPoints.MaxValue)
         {
             return default;
         }
@@ -260,7 +260,7 @@ public sealed class UserForDatabaseSeedingBuilder :
         return this;
     }
 
-    public UserForDatabaseSeedingBuilder WithLockoutEnd(DateTimeOffset userLockoutEnd)
+    public UserForDatabaseSeedingBuilder WithLockoutEnd(DateTimeOffset? userLockoutEnd)
     {
         LockoutEnd = userLockoutEnd;
 

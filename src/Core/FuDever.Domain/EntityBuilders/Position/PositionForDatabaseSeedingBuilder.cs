@@ -53,7 +53,8 @@ public sealed class PositionForDatabaseSeedingBuilder :
     public PositionForDatabaseSeedingBuilder WithRemovedAt(DateTime positionRemovedAt)
     {
         // Validate position removed at.
-        if (positionRemovedAt == DateTime.MaxValue)
+        if (positionRemovedAt == DateTime.MaxValue ||
+            positionRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

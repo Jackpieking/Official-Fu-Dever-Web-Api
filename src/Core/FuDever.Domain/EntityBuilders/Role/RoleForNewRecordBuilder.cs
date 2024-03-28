@@ -51,8 +51,8 @@ public sealed class RoleForNewRecordBuilder :
     {
         // Validate role name.
         if (string.IsNullOrWhiteSpace(value: roleName) ||
-            roleName.Length > Entities.Role.Metadata.Name.MaxLength ||
-            roleName.Length < Entities.Role.Metadata.Name.MinLength)
+            roleName.Length > Metadata.Name.MaxLength ||
+            roleName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -79,7 +79,8 @@ public sealed class RoleForNewRecordBuilder :
     public RoleForNewRecordBuilder WithRemovedAt(DateTime roleRemovedAt)
     {
         // Validate role removed at.
-        if (roleRemovedAt == DateTime.MaxValue)
+        if (roleRemovedAt == DateTime.MaxValue ||
+            roleRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

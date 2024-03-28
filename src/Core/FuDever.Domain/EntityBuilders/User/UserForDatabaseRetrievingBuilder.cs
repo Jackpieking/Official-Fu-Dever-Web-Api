@@ -178,7 +178,7 @@ public sealed class UserForDatabaseRetrievingBuilder :
         return this;
     }
 
-    public UserForDatabaseRetrievingBuilder WithLockoutEnd(DateTimeOffset userLockoutEnd)
+    public UserForDatabaseRetrievingBuilder WithLockoutEnd(DateTimeOffset? userLockoutEnd)
     {
         LockoutEnd = userLockoutEnd;
 

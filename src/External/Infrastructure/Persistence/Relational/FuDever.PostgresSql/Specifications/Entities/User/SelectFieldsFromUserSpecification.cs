@@ -178,7 +178,7 @@ internal sealed class SelectFieldsFromUserSpecification :
         SelectExpression = user => userBuilder
             .WithId(user.Id)
             .WithPasswordHash(user.PasswordHash)
-            .WithLockoutEnd(user.LockoutEnd.Value)
+            .WithLockoutEnd(user.LockoutEnd)
             .WithAccessFailedCount(user.AccessFailedCount)
             .WithEmailConfirmed(user.EmailConfirmed)
             .WithEmail(user.Email)

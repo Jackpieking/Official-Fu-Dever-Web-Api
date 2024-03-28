@@ -36,8 +36,8 @@ public sealed class MajorForNewRecordBuilder :
     {
         // Validate major name.
         if (string.IsNullOrWhiteSpace(value: majorName) ||
-            majorName.Length > Entities.Major.Metadata.Name.MaxLength ||
-            majorName.Length < Entities.Major.Metadata.Name.MinLength)
+            majorName.Length > Metadata.Name.MaxLength ||
+            majorName.Length < Metadata.Name.MinLength)
         {
             return default;
         }
@@ -50,7 +50,8 @@ public sealed class MajorForNewRecordBuilder :
     public MajorForNewRecordBuilder WithRemovedAt(DateTime majorRemovedAt)
     {
         // Validate major removed at.
-        if (majorRemovedAt == DateTime.MaxValue)
+        if (majorRemovedAt == DateTime.MaxValue ||
+            majorRemovedAt.Kind != DateTimeKind.Utc)
         {
             return default;
         }

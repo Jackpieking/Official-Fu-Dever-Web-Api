@@ -87,10 +87,13 @@ public static class SpecificationEvaluator
             queryable = queryable.Take(count: specification.TakeNumberOfEntities);
         }
 
-        queryable = specification.IncludeExpressions.Aggregate(
-            seed: queryable,
-            func: (current, includeExpression) =>
-                current.Include(navigationPropertyPath: includeExpression));
+        if (specification.IncludeExpressions.Count != 0)
+        {
+            queryable = specification.IncludeExpressions.Aggregate(
+                seed: queryable,
+                func: (current, includeExpression) =>
+                    current.Include(navigationPropertyPath: includeExpression));
+        }
 
         return queryable;
     }
